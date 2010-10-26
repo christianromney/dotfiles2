@@ -1,4 +1,5 @@
 set nocompatible
+set relativenumber
 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
@@ -12,16 +13,15 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap / /\v
 vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>a :Ack
-
-map ,b :LustyJuggler<CR>
+nnoremap <leader>a :Ack 
 
 behave xterm
 filetype on
 filetype plugin on
 filetype indent on
 
-colors molokai
+"colors molokai
+colors pyte
 
 if has('autocmd')
 	autocmd filetype python set expandtab
@@ -40,7 +40,6 @@ set shiftround
 set autoindent
 set copyindent
 set number 
-set relativenumber
 set ruler
 set nowrap
 set title
