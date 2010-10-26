@@ -12,6 +12,7 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap / /\v
 vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
+nnoremap <leader>a :Ack
 
 behave xterm
 filetype on
