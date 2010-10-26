@@ -19,13 +19,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
-if &t_Co >= 256 || has("gui_running")
-	colorscheme molokai
-endif
-
-if &t_Co > 2 || has("gui_running")   
-	syntax on
-endif
+colors molokai
 
 if has('autocmd')
 	autocmd filetype python set expandtab
