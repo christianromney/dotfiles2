@@ -14,6 +14,8 @@ vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack
 
+map ,b :LustyJuggler<CR>
+
 behave xterm
 filetype on
 filetype plugin on

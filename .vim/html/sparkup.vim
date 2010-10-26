@@ -21,11 +21,11 @@
 set rtp+=~/.vim/ftplugin/html
 
 if !exists('g:sparkupExecuteMapping')
-  let g:sparkupExecuteMapping = '<c-e>'
+  let g:sparkupExecuteMapping = '<leader>e'
 endif
 
 if !exists('g:sparkupNextMapping')
-  let g:sparkupNextMapping = '<c-n>'
+  let g:sparkupNextMapping = '<leader>sn'
 endif
 
 exec 'nmap <buffer> ' . g:sparkupExecuteMapping . ' :call <SID>Sparkup()<cr>'
