@@ -8,9 +8,20 @@ let mapleader = "\<SPACE>"
 
 nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Handle window *s*plitting with leader
+nmap <silent> <leader>ws <C-w>s
+nmap <silent> <leader>wv <C-w>v
+nmap <silent> <leader>wc <C-w>c
+nmap <silent> <leader>ww <C-w>w
+nmap <silent> <leader>wh <C-w>h
+nmap <silent> <leader>wj <C-w>j
+nmap <silent> <leader>wk <C-w>k
+nmap <silent> <leader>wl <C-w>l
+
 nmap <leader>b :buffers<CR>
 nmap <leader>pt :!phake test<CR>
+
 cmap w!! w !sudo tee % >/dev/null
 
 nnoremap / /\v
