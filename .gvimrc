@@ -4,8 +4,9 @@ set relativenumber
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-let mapleader = ","
+let mapleader = "\<SPACE>"
 
+nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 cmap w!! w !sudo tee % >/dev/null
@@ -20,14 +21,11 @@ filetype on
 filetype plugin on
 filetype indent on
 
-"colors molokai
-colors pyte
+colors molokai
 
 if has('autocmd')
 	autocmd filetype python set expandtab
 endif	
-
-nnoremap ; :
 
 set pastetoggle=<F2>
 set nobackup
