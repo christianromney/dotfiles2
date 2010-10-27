@@ -9,6 +9,8 @@ let mapleader = "\<SPACE>"
 nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <leader>b :buffers<CR>
+nmap <leader>pt :!phake test<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 nnoremap / /\v
