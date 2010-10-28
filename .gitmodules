@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/xmlblog-googlereader-vim"]
 	path = .vim/bundle/xmlblog-googlereader-vim
 	url = git@github.com:xmlblog/googlereader-vim.git
+[submodule ".vim/bundle/ervandew-supertab"]
+	path = .vim/bundle/ervandew-supertab
+	url = http://github.com/ervandew/supertab.git
