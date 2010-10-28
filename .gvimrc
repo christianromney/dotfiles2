@@ -36,7 +36,6 @@ vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack 
 
-
 filetype on
 filetype plugin on
 filetype indent on
@@ -44,15 +43,15 @@ filetype indent on
 " Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
+  autocmd BufRead,BufNewFile *.scss set filetype=scss
+  augroup module
+    autocmd BufRead,BufNewFile *.install set filetype=php
+    autocmd BufRead,BufNewFile *.module set filetype=php
+  augroup END
+  augroup inc
+    autocmd BufRead,BufNewFile *.inc set filetype=php
+  augroup END
 endif	
-
-augroup module
-  autocmd BufRead *.module set filetype=php
-augroup END
-
-augroup inc
-  autocmd BufRead *.inc set filetype=php
-augroup END
 
 set pastetoggle=<F2>
 set nobackup
