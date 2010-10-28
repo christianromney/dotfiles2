@@ -43,6 +43,6 @@
 [submodule ".vim/bundle/pangloss-vim-simplefold"]
 	path = .vim/bundle/pangloss-vim-simplefold
 	url = http://github.com/pangloss/vim-simplefold.git
-[submodule ".vim/bundle/mattn-caw-vim"]
-	path = .vim/bundle/mattn-caw-vim
-	url = http://github.com/mattn/caw.vim.git
+[submodule ".vim/bundle/tyru-caw-vim"]
+	path = .vim/bundle/tyru-caw-vim
+	url = http://github.com/tyru/caw.vim.git
