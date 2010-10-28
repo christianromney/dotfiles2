@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/tyru-caw-vim"]
 	path = .vim/bundle/tyru-caw-vim
 	url = http://github.com/tyru/caw.vim.git
+[submodule ".vim/bundle/mattn-googlereader-vim"]
+	path = .vim/bundle/mattn-googlereader-vim
+	url = http://github.com/mattn/googlereader-vim.git

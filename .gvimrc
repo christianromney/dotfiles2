@@ -26,6 +26,7 @@ nmap <silent> <leader>wl <C-w>l
 nmap <leader>gi :Git 
 nmap <leader>gt :Gist
 nmap <leader>gp :Gist -p
+nmap <leader>gr :GoogleReader<CR>
 nmap <leader>b :buffers<CR>
 nmap <leader>pt :!phake test<CR>
 nmap <silent> <leader>rn :set relativenumber<CR>
