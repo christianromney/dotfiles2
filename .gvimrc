@@ -1,5 +1,8 @@
+behave xterm
 set nocompatible
 set relativenumber
+
+colors molokai
 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
@@ -19,9 +22,13 @@ nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
 
+" Map Git
+nmap <leader>gi :Git 
+nmap <leader>gt :Gist
+nmap <leader>gp :Gist -p
 nmap <leader>b :buffers<CR>
 nmap <leader>pt :!phake test<CR>
-
+nmap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 nnoremap / /\v
@@ -29,16 +36,23 @@ vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack 
 
-behave xterm
+
 filetype on
 filetype plugin on
 filetype indent on
 
-colors molokai
-
+" Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
 endif	
+
+augroup module
+  autocmd BufRead *.module set filetype=php
+augroup END
+
+augroup inc
+  autocmd BufRead *.inc set filetype=php
+augroup END
 
 set pastetoggle=<F2>
 set nobackup
