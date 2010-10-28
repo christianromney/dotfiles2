@@ -31,3 +31,6 @@
 [submodule ".vim/bundle/tpope-vim-endwise"]
 	path = .vim/bundle/tpope-vim-endwise
 	url = http://github.com/tpope/vim-endwise.git
+[submodule ".vim/bundle/gist-vim"]
+	path = .vim/bundle/gist-vim
+	url = http://github.com/mattn/gist-vim.git
