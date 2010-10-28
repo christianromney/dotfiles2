@@ -34,3 +34,15 @@
 [submodule ".vim/bundle/gist-vim"]
 	path = .vim/bundle/gist-vim
 	url = http://github.com/mattn/gist-vim.git
+[submodule ".vim/bundle/scss-syntax-vim"]
+	path = .vim/bundle/scss-syntax-vim
+	url = http://github.com/cakebaker/scss-syntax.vim.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = http://github.com/pangloss/vim-javascript.git
+[submodule ".vim/bundle/pangloss-vim-simplefold"]
+	path = .vim/bundle/pangloss-vim-simplefold
+	url = http://github.com/pangloss/vim-simplefold.git
+[submodule ".vim/bundle/mattn-caw-vim"]
+	path = .vim/bundle/mattn-caw-vim
+	url = http://github.com/mattn/caw.vim.git
