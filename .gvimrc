@@ -22,6 +22,9 @@ nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
 
+" Taglist
+nmap <silent> <leader>, :TlistToggle<CR>
+
 " Map Git
 nmap <leader>gi :Git 
 nmap <leader>gt :Gist
