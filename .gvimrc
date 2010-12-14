@@ -35,10 +35,20 @@ nmap <leader>pt :!phake test<CR>
 nmap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
+" Fix searches
 nnoremap / /\v
 vnoremap / /\v
+
+" Misc Mappings
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack 
+
+" Omni-Completion Mappings
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 filetype on
 filetype plugin on
@@ -96,3 +106,4 @@ set undolevels=1000
 set enc=utf-8
 set encoding=utf8 nobomb
 set backupskip=/tmp/*,/private/tmp/*
+set completeopt=longest,menuone
