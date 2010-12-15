@@ -55,6 +55,3 @@
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = git@github.com:xmlblog/emacs-starter-kit.git
-[submodule ".vim/bundle/supertab"]
-	path = .vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
