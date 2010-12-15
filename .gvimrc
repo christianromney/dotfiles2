@@ -48,16 +48,36 @@ cmap w!! w !sudo tee % >/dev/null
 filetype on
 filetype plugin on
 filetype indent on
+set omnifunc=syntaxcomplete#Complete
+
+" Custom Functions
+function! OpenPhpFunction (keyword)
+  let proc_keyword = substitute(a:keyword , '_', '-', 'g')
+  try
+    exe 'pedit'
+  catch /.*/
+  endtry
+  exe 'wincmd P'
+  exe 'enew'
+  exe "set buftype=nofile"
+  exe "setlocal noswapfile"
+  exe 'silent r!links -dump http://php.net/'.proc_keyword
+  exe 'norm gg'
+  exe 'call search("____________________________________")'
+  exe 'norm dgg'
+  exe 'call search("User Contributed Notes")'
+  exe 'norm dGgg'
+endfunction
 
 " Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
+  autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>
+  "autocmd filetype php set keywordprg=":help"
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
-  augroup END
-  augroup inc
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
 endif	
@@ -69,6 +89,7 @@ set hlsearch
 set incsearch
 set tabstop=2
 set shiftwidth=2
+set pumheight=20
 set shiftround
 set autoindent
 set copyindent
@@ -98,7 +119,6 @@ set anti
 set backspace=indent,eol,start
 set history=1000
 set undolevels=1000
-set enc=utf-8
-set encoding=utf8 nobomb
+set encoding=utf-8 nobomb
 set backupskip=/tmp/*,/private/tmp/*
-set completeopt=longest,menuone
+set completeopt=longest,menuone,preview
