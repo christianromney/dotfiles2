@@ -24,6 +24,29 @@ nmap <silent> <leader>wl <C-w>l
 
 " Taglist
 nmap <silent> <leader>, :TlistToggle<CR>
+nmap <leader>. :tag 
+
+" Cscope
+if has("cscope")
+  set cscopetag
+  set csto=0
+
+  if filereadable("cscope.out")
+    cs reset
+    cs add cscope.out  
+  endif
+  "set cscopeverbose 
+  
+  nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
 
 " Map Git
 nmap <leader>gi :Git 
@@ -82,6 +105,9 @@ if has('autocmd')
   augroup END
 endif	
 
+set timeoutlen=3000
+set ttimeout 
+set ttimeoutlen=300
 set pastetoggle=<F2>
 set nobackup
 set noswapfile
