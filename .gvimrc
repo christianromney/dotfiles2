@@ -1,4 +1,5 @@
 behave xterm
+set t_Co=256
 set nocompatible
 set relativenumber
 
@@ -22,11 +23,24 @@ nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
+
+" Conque Shell
+
+if has("python")
+  let g:ConqueTerm_Color = 1
+  let g:ConqueTerm_TERM = 'xterm'
+  let g:ConqueTerm_ReadUnfocused = 1
+
+  nmap <silent> <leader>ct :ConqueTerm login -fp christian<CR>
+  nmap <silent> <leader>ch :ConqueTermSplit login -fp christian<CR>
+  nmap <silent> <leader>cv :ConqueTermVSplit login -fp christian<CR>
+endif
+
 " Taglist
 nmap <silent> <leader>, :TlistToggle<CR>
 nmap <leader>. :tag 
 
-" Cscope
+" cscope
 if has("cscope")
   set cscopetag
   set csto=0
@@ -35,7 +49,6 @@ if has("cscope")
     cs reset
     cs add cscope.out  
   endif
-  "set cscopeverbose 
   
   nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
   nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -59,7 +72,7 @@ vnoremap / /\v
 
 " Misc Mappings
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>ch :CalendarH<CR>
+nnoremap <leader>cah :CalendarH<CR>
 nnoremap <leader>a :Ack 
 nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
