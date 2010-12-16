@@ -21,7 +21,7 @@ nmap <silent> <leader>wh <C-w>h
 nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
-
+nmap <silent> <leader>w] <C-w>]
 " Taglist
 nmap <silent> <leader>, :TlistToggle<CR>
 nmap <leader>. :tag 
