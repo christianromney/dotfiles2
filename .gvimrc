@@ -64,6 +64,7 @@ endif
 nmap <leader>gt :Gist
 nmap <leader>gp :Gist -p
 nmap <leader>gi :Git
+nmap <leader>gl :Glog<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gb :Gblame<CR>
 nmap <leader>gc :Gcommit<CR>
@@ -164,3 +165,5 @@ set undolevels=1000
 set encoding=utf-8 nobomb
 set backupskip=/tmp/*,/private/tmp/*
 set completeopt=longest,menuone,preview
+set laststatus=2
+set statusline=%{fugitive#statusline()}\ %r\ %t%m\ %y\ Buf\ #%n\ format:\ %{&ff};\ [col\ %c:\ line\ %l\ of\ %L\ -\ %p%%]
