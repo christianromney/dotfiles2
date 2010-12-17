@@ -25,7 +25,6 @@ nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
 
 " Conque Shell
-
 if has("python")
   let g:ConqueTerm_Color = 1
   let g:ConqueTerm_TERM = 'xterm'
@@ -62,9 +61,13 @@ endif
 
 
 " Map Git
-nmap <leader>gi :Git 
 nmap <leader>gt :Gist
 nmap <leader>gp :Gist -p
+nmap <leader>gi :Git
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>gb :Gblame<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gs :Gstatus<CR>
 
 " Fix searches
 nnoremap / /\v
