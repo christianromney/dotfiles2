@@ -63,7 +63,7 @@ endif
 " Map Git
 nmap <leader>gt :Gist
 nmap <leader>gp :Gist -p
-nmap <leader>gi :Git
+nmap <leader>gi :Git 
 nmap <leader>gl :Glog<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gb :Gblame<CR>
