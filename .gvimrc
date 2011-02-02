@@ -2,7 +2,7 @@ behave xterm
 set t_Co=256
 set nocompatible
 set relativenumber
-
+set nofsync
 colors molokai
 
 call pathogen#helptags()
