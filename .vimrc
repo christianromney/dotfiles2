@@ -1,4 +1,6 @@
 behave xterm
+
+" 256 Color Support
 set t_Co=256
 set nocompatible
 set relativenumber
@@ -85,6 +87,7 @@ nnoremap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " Filetype / Syntax Highlighting
+syntax on
 filetype on
 filetype plugin on
 filetype indent on
