@@ -15,6 +15,8 @@ let mapleader = "\<SPACE>"
 nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 
+" Save file
+nmap <leader>s :w<CR>
 " Handle window *s*plitting with leader
 nmap <silent> <leader>ws <C-w>s
 nmap <silent> <leader>wv <C-w>v
