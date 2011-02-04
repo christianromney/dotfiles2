@@ -1,31 +1,32 @@
+# Standard tool aliases
 alias ...="cd ../.."
 alias ..="cd .."
 alias cd...="cd ../.."
 alias cd..="cd .."
-alias cons="script/console"
-alias drush="drush -v -r ~/src/ibm/drupal -l http://local.ncl.com:8888"
-alias dcc="drush cc all -y"
 alias df="df -h"
-alias flushdns="dscacheutil -flushcache"
 alias grep="egrep"
-alias gs="git st"
-alias hosts="sudo vim /etc/hosts"
-alias iol="rlwrap io"
-alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
+alias la="ls -a"
 alias ll="ls -lah"
 alias lll="ls -lah | less"
-alias lshosts="cat /etc/hosts"
-alias mongoe="mongod run --config /usr/local/Cellar/mongodb/1.6.5-x86_64/mongod.conf"
-alias myhosts="dscl localhost -list /Local/Default/Hosts"
-alias nclip="ifconfig | grep -e \"inet 167.*\" | cut -d' ' -f2"
-alias njs="rlwrap node-repl"
-alias noproxy="source ~/.noproxy"
-alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
-alias proxies="printenv | sort | grep proxy"
-alias proxyon="source ~/.proxies"
-alias realias="source ~/.bash_aliases"
 alias rf="rm -rf"
-alias routes="nroute && iroute"
-alias truncate="cp /dev/null"
-alias untgz="tar xvzf"
 alias z="clear"
+
+# Misc
+alias realias="source ~/.bash_aliases"
+alias flushdns="dscacheutil -flushcache"
+
+# Programming
+alias njs="rlwrap node-repl"
+alias iol="rlwrap io"
+alias drush="drush -v -r ~/src/ibm/drupal -l http://local.ncl.com:8888"
+
+# VPN routing and IP configuration
+alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
+alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
+alias routes="nroute && iroute"
+alias ip="ifconfig | grep -e \"inet 167.*\" | cut -d' ' -f2"
+
+# Proxy Support
+alias proxyon="source ~/.proxies"
+alias noproxy="source ~/.noproxy"
+alias proxies="printenv | sort | grep proxy"
