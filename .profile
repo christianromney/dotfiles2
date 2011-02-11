@@ -1,7 +1,7 @@
 # EC2 API keys
 if [ -d $HOME/.ec2 ]; then
-  if [ -f $HOME/.ec2/ec2.bash ]; then
-    source $HOME/.ec2/ec2.bash
+  if [ -f $HOME/.ec2/ec2.sh ]; then
+    source $HOME/.ec2/ec2.sh
   fi
 fi  
 
