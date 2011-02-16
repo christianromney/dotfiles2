@@ -13,7 +13,7 @@ fi
 # Source scripts for specific tasks
 source $HOME/.path
 source $HOME/.node
-source $HOME/.bash_aliases
+source $HOME/.aliases
 source $HOME/.javarc
 source $HOME/.oraclerc
 source /usr/local/etc/bash_completion.d/*.bash

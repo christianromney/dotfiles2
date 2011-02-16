@@ -1,18 +1,26 @@
-# Standard tool aliases
-alias ...="cd ../.."
-alias ..="cd .."
+# Push and pop directories on directory stack
+alias ..='cd ../'
+alias ...='cd ../..'
 alias cd...="cd ../.."
 alias cd..="cd .."
+alias _='sudo'
+
+# List direcory contents
+alias la='ls -a'
+alias ll='ls -lah'
+alias sl=ls # often screw this up
+alias lll="ls -lah | less"
+
+alias x=extract
+
+# Standard tool aliases
 alias df="df -h"
 alias grep="egrep"
-alias la="ls -a"
-alias ll="ls -lah"
-alias lll="ls -lah | less"
 alias rf="rm -rf"
 alias z="clear"
 
 # Misc
-alias realias="source ~/.bash_aliases"
+alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 
 # Programming
