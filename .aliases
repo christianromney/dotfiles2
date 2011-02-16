@@ -9,10 +9,13 @@ alias _='sudo'
 alias la='ls -a'
 alias ll='ls -lah'
 alias kk="ll"
-alias sl=ls # often screw this up
-alias lll="ls -lah | less"
+alias a='la'
+alias l='ll'
+alias s='ls'
+alias sl='ls'
+alias lll="ll | less"
 
-alias x=extract
+alias x='extract'
 
 # Standard tool aliases
 alias df="df -h"
