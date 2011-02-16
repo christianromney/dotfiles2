@@ -8,6 +8,7 @@ alias _='sudo'
 # List direcory contents
 alias la='ls -a'
 alias ll='ls -lah'
+alias kk="ll"
 alias sl=ls # often screw this up
 alias lll="ls -lah | less"
 
