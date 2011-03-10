@@ -18,11 +18,11 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 " Save file
 nmap <leader>s :w<CR>
 " Handle window *s*plitting with leader
-nmap <silent> <leader>ws <C-w>s
-nmap <silent> <leader>wv <C-w>v
+nmap <silent> <leader>\ <C-w>v <C-w>l
+nmap <silent> <leader>- <C-w>s <C-w>j
+nmap <silent> <leader>wh <C-w>h
 nmap <silent> <leader>wc <C-w>c
 nmap <silent> <leader>ww <C-w>w
-nmap <silent> <leader>wh <C-w>h
 nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
@@ -38,6 +38,10 @@ if has("python")
   nmap <silent> <leader>ch :ConqueTermSplit login -fp christian<CR>
   nmap <silent> <leader>cv :ConqueTermVSplit login -fp christian<CR>
 endif
+
+" Yankring
+let g:yankring_max_history = 100
+let g:yankring_history_file = '.yankring'
 
 " Taglist
 nmap <silent> <leader>, :TlistToggle<CR>
@@ -62,7 +66,6 @@ if has("cscope")
   nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
   nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
-
 
 " Map Git
 nmap <leader>gt :Gist
@@ -126,7 +129,8 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
 endif	
-
+" Because paren matching makes me want to kill somebody
+let loaded_matchparen = 1
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300

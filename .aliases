@@ -31,7 +31,7 @@ alias flushdns="dscacheutil -flushcache"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
 alias drush="drush -v -r ~/src/ibm/drupal -l http://local.ncl.com:8888"
-
+alias autospec="autotest -s rspec"
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
 alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
