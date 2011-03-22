@@ -61,3 +61,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = git@github.com:xmlblog/oh-my-zsh.git
+[submodule ".vim/bundle/int3-taglist-plus"]
+	path = .vim/bundle/int3-taglist-plus
+	url = https://github.com/int3/vim-taglist-plus.git
