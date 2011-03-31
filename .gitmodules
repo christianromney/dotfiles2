@@ -52,9 +52,6 @@
 [submodule ".vim/bundle/command-t"]
 	path = .vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
-[submodule ".emacs.d"]
-	path = .emacs.d
-	url = git@github.com:xmlblog/emacs-starter-kit.git
 [submodule ".vim/bundle/pangloss-vim-javascript"]
 	path = .vim/bundle/pangloss-vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
