@@ -31,6 +31,8 @@ alias flushdns="dscacheutil -flushcache"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
 alias autospec="autotest -s rspec"
+alias ndrush="drush -l http://local.ncl.com"
+
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
 alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"

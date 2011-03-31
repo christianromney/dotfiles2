@@ -162,7 +162,7 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak
+set wildignore=*.swp,*.bak,*.orig,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
 set showmatch
 set foldmethod=syntax
 set gfn=Inconsolata-dz:h14
