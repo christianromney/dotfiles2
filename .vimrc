@@ -13,6 +13,7 @@ call pathogen#runtime_append_all_bundles()
 
 let g:solarized_termcolors=16
 let g:solarized_italic=0
+set background=dark
 colors solarized
 
 let mapleader = "\<SPACE>"
