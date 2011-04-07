@@ -61,3 +61,6 @@
 [submodule ".vim/bundle/int3-taglist-plus"]
 	path = .vim/bundle/int3-taglist-plus
 	url = https://github.com/int3/vim-taglist-plus.git
+[submodule ".vim/bundle/vim-colors-solarized"]
+	path = .vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
