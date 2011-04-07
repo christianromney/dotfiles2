@@ -1,14 +1,20 @@
 behave xterm
 
 " 256 Color Support
-set t_Co=256
+"set t_Co=256
+"colors molokai
+
 set nocompatible
 set relativenumber
 set nofsync
-colors molokai
 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+
+let g:solarized_termcolors=16
+let g:solarized_italic=0
+set background=dark
+colors solarized
 
 let mapleader = "\<SPACE>"
 
