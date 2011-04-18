@@ -4,4 +4,4 @@ export PATH=/Applications/MAMP/bin/php5/bin:$PATH
 
 # Paths to search when changing directories
 export CDPATH=.:$HOME:$HOME/src/ps:$HOME/src/ibm:$HOME/src/ncl:$HOME/src/ibm/drupal/sites/all/themes:$HOME/src/ibm/drupal/sites/all/modules:$HOME/src/foss
-
+export NODE_PATH=/usr/local/lib/node
