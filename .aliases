@@ -28,6 +28,7 @@ alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 
 # Programming
+alias gt="guilt"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
 alias autospec="autotest -s rspec"

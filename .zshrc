@@ -54,6 +54,10 @@ setopt hist_verify
 setopt share_history 
 setopt rm_star_wait
 
+# GNU coreutils (for guilt, etc)
+coreutils=`brew info coreutils | grep source | awk '{print \$2}'`
+source $coreutils
+
 # Source scripts for specific tasks
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
