@@ -3,7 +3,8 @@ export ZSH=$HOME/.oh-my-zsh
 fpath=($ZSH/functions $fpath)
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
-plugin=${plugin:=(brew cap dirpersist git git-flow github npm rails3)}
+plugin=${plugin:=()}
+plugins=(brew cap dirpersist git git-flow github npm rails3)
 for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
 
 # Url quote magic
