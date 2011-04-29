@@ -1,0 +1,76 @@
+source ~/.mutt/sunspot.muttrc
+source ~/.mutt/autoviews.muttrc
+
+set mbox_type=Maildir
+set folder=~/Mail
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set mail_check=300
+set editor="vim +/^$"
+set ispell="aspell -e -c"
+
+# Hooks
+folder-hook Gmail/*       source ~/.mutt/gmail.muttrc
+folder-hook KIP/*         source ~/.mutt/kip.muttrc
+folder-hook Pointslope/*  source ~/.mutt/pointslope.muttrc
+folder-hook NCL/*         source ~/.mutt/ncl.muttrc
+
+# Customization / Settings
+set copy=no
+set move=no
+set abort_nosubject=yes
+set abort_unmodified=yes
+set include=yes
+set delete=yes
+set print=yes
+set sort=threads
+set sort_aux=reverse-last-date-received
+set reverse_name=yes
+set smart_wrap
+
+alternative_order text/html text/plain text/enriched 
+
+# Sidebar Configuration
+set sidebar_width=32
+set sidebar_visible=yes
+set sidebar_delim='|'
+set sidebar_sort=yes
+
+# # which mailboxes to list in the sidebar
+mailboxes "+_Search"
+mailboxes "+Gmail/INBOX" "+Gmail/Drafts" "+Gmail/Patches" 
+mailboxes "+KIP/INBOX" "+KIP/Drafts" "+KIP/Patches" 
+mailboxes "+Pointslope/INBOX" "+Pointslope/Drafts" "+Pointslope/Patches"  
+mailboxes "+NCL/INBOX" 
+
+# Keybindings
+bind index <up> previous-entry
+bind index <down> next-entry
+macro index <right> <display-message>
+macro index <left> <sync-mailbox><change-folder>? "Go to the folder menu"
+macro index <tab> <next-unread-mailbox><enter>
+
+# ctrl-n, ctrl-p to select next, prev folder
+# ctrl-o to open selected folder
+bind index \CP sidebar-prev
+bind index \CN sidebar-next
+bind index \CO sidebar-open
+bind pager \CP sidebar-prev
+bind pager \CN sidebar-next
+bind pager \CO sidebar-open
+
+# b toggles sidebar visibility
+#macro index b '<enter-command>toggle sidebar_visible<enter>'
+#macro pager b '<enter-command>toggle sidebar_visible<enter>'
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+macro index M "T.*\n;WN" "Mark all messages as read"
+# Remap bounce-message function to "B"
+bind index B bounce-message
+
+macro index S "<shell-escape>$HOME/bin/Msearch.sh " "Run a Mairix search"
+macro index A    "<change-folder-readonly>=_Search\n" "Switch to Mairix search results"
+
+macro pager S    "<shell-escape>$HOME/bin/Msearch.sh " "Run a Mairix search"
+macro pager A    "<change-folder-readonly>=_Search\n" "Switch to Mairix search results"
