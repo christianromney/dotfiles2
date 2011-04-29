@@ -52,6 +52,7 @@ setopt rm_star_wait
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
+unsetopt auto_name_dirs
 
 # Source scripts for specific tasks
 alias history="fc -l 1"
