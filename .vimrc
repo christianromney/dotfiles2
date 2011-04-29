@@ -108,6 +108,7 @@ set omnifunc=syntaxcomplete#Complete
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
+  autocmd FileType mail nmap <leader>A :w<CR>:!aspell -e -c %<CR>:e<CR>
   "autocmd filetype php set keywordprg=":help"
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
