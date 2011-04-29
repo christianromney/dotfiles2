@@ -26,6 +26,7 @@ alias z="clear"
 # Misc
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
+alias offlineimap="nocorrect offlineimap"
 
 # Programming
 alias gt="guilt"
