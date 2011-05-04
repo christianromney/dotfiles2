@@ -152,6 +152,9 @@ set wildmode=list:longest
 set wildignore=*.swp,*.bak,*.orig,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
 set showmatch
 set foldmethod=syntax
+set foldenable
+set foldlevel=2
+set foldnestmax=10
 set gfn=Inconsolata-dz:h14
 set gfw=Inconsolata-dz:h14
 set anti
