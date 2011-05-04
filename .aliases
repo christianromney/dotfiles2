@@ -27,11 +27,12 @@ alias z="clear"
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 alias offlineimap="nocorrect offlineimap"
-
+#
 # Programming
 alias gt="guilt"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
+alias cljr="rlwrap clj"
 alias autospec="autotest -s rspec"
 alias ndrush="drush -l http://local.ncl.com"
 
