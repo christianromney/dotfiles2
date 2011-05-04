@@ -1,6 +1,7 @@
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 export PATH=$PATH:$EC2_HOME/bin:$AWS_RDS_HOME/bin
 export PATH=/Applications/MAMP/bin/php5/bin:$PATH
+export PATH=/usr/local/share/python:$PATH
 
 # Paths to search when changing directories
 export CDPATH=.:$HOME:$HOME/src/ps:$HOME/src/ibm:$HOME/src/ncl:$HOME/src/ibm/drupal/sites/all/themes:$HOME/src/ibm/drupal/sites/all/modules:$HOME/src/foss
