@@ -4,7 +4,7 @@ fpath=($ZSH/functions $fpath)
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
 plugin=${plugin:=()}
-plugins=(brew cap dirpersist git git-flow github npm rails3)
+plugins=(brew cap dirpersist git github npm rails3)
 for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
 
 # Url quote magic
@@ -62,6 +62,6 @@ source $HOME/.passwd
 source $HOME/.path
 source $HOME/.javarc
 source $HOME/.oraclerc
-
+source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
