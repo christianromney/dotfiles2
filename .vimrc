@@ -63,13 +63,29 @@ if has("cscope")
     cs add cscope.out  
   endif
   
+  " Find all *r*eferences to *s*ymbol under cursor
   nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>r :cs find s <C-R>=expand("<cword>")<CR><CR>
+
+  " Find *g*lobal definition of token under cursor
   nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find *c*alls to function under cursor
   nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find all instances of *t*ext under cursor
   nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find using *e*grep
   nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  
+  " Open *f*ilename under cursor 
   nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  
+  " Find files that *i*nclude file under cursor
   nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  
+  " Find all functions calle*d*
   nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 

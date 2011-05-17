@@ -62,6 +62,10 @@ source $HOME/.passwd
 source $HOME/.path
 source $HOME/.javarc
 source $HOME/.oraclerc
+
+# Additional completions
 source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
+source $HOME/.rvm/scripts/zsh/Completion/_rvm
+
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
