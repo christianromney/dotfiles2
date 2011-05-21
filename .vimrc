@@ -23,6 +23,13 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 
 " Save file
 nmap <leader>s :w<CR>
+
+" Text bubbling
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
 " Handle window *s*plitting with leader
 nmap <silent> <leader>\ <C-w>v <C-w>l
 nmap <silent> <leader>- <C-w>s <C-w>j
