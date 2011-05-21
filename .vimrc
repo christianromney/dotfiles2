@@ -20,6 +20,7 @@ let mapleader = "\<SPACE>"
 
 nnoremap ; :
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <leader>Q :q!<CR>
 
 " Save file
 nmap <leader>s :w<CR>
@@ -41,16 +42,11 @@ nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
 
-" Conque Shell
-if has("python")
-  let g:ConqueTerm_Color = 1
-  let g:ConqueTerm_TERM = 'xterm'
-  let g:ConqueTerm_ReadUnfocused = 1
-
-  nmap <silent> <leader>ct :ConqueTerm login -fp christian<CR>
-  nmap <silent> <leader>ch :ConqueTermSplit login -fp christian<CR>
-  nmap <silent> <leader>cv :ConqueTermVSplit login -fp christian<CR>
-endif
+" Tabular Plugin mappings
+nmap <leader>== :Tabularize /=<CR>
+vmap <leader>== :Tabularize /=<CR>
+nmap <leader>=- :Tabularize /:\zs<CR>
+vmap <leader>=- :Tabularize /:\zs<CR>
 
 " Yankring
 let g:yankring_max_history = 100
