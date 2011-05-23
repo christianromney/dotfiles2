@@ -19,12 +19,13 @@ colors solarized
 let mapleader = "\<SPACE>"
 
 nnoremap ; :
+
+" Source the vimrc file after saving it
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <leader>Q :q!<CR>
-
-" Save file
-nmap <leader>s :w<CR>
-
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+  
 " Text bubbling
 nmap <C-Up> [e
 nmap <C-Down> ]e
