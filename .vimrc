@@ -94,8 +94,6 @@ if has("cscope")
 endif
 
 " Map Git
-nmap <leader>gt :Gist
-nmap <leader>gp :Gist -p
 nmap <leader>gi :Git 
 nmap <leader>gl :Glog<CR>
 nmap <leader>gd :Gdiff<CR>
@@ -129,13 +127,14 @@ if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
   autocmd FileType mail nmap <leader>A :w<CR>:!aspell -e -c %<CR>:e<CR>
-  "autocmd filetype php set keywordprg=":help"
+
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
 endif	
+
 " Because paren matching makes me want to kill somebody
 let loaded_matchparen = 1
 set timeoutlen=3000
