@@ -13,6 +13,11 @@ call pathogen#runtime_append_all_bundles()
 
 let g:solarized_termcolors=16
 let g:solarized_italic=0
+let g:vimclojure#HighlightBuiltins=1
+let g:vimclojure#ParenRainbow=1
+let g:vimclojure#DynamicHighlighting=1
+
+
 set background=dark
 colors solarized
 
