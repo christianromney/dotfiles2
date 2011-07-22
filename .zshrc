@@ -59,9 +59,9 @@ alias history="fc -l 1"
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
 source $HOME/.passwd
-source $HOME/.path
 source $HOME/.javarc
 source $HOME/.oraclerc
+source $HOME/.path
 
 # Additional completions
 source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
