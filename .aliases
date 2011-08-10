@@ -36,6 +36,9 @@ alias cljr="rlwrap clj"
 alias autospec="autotest -s rspec"
 alias ndrush="drush -l http://local.ncl.com"
 
+alias pdstart='sudo pound -v -f /usr/local/etc/pound.cfg'
+alias pdstop='sudo killall -HUP pound'
+
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
 alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
