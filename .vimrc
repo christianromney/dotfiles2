@@ -1,9 +1,5 @@
 behave xterm
 
-" 256 Color Support
-"set t_Co=256
-"colors molokai
-
 set nocompatible
 set relativenumber
 set nofsync
@@ -11,18 +7,19 @@ set nofsync
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-let g:solarized_termcolors=16
-let g:solarized_italic=0
+" Globals for VimClojure
 let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
 let g:vimclojure#DynamicHighlighting=1
 
-
+" Solarized settings
+let g:solarized_termcolors=16
+let g:solarized_italic=0
 set background=dark
 colors solarized
 
+" Mapping
 let mapleader = "\<SPACE>"
-
 nnoremap ; :
 
 " Source the vimrc file after saving it
@@ -173,7 +170,7 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak,*.orig,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
+set wildignore=*.swp,*.bak,*.orig,*.class,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
 set showmatch
 set foldmethod=syntax
 set foldenable
