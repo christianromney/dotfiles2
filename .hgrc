@@ -2,7 +2,6 @@
 hgext.extdiff =
 hgext.mq =
 hgext.bookmarks =
-hg-git = /usr/local/lib/python2.7/site-packages/hg_git-0.2.6-py2.7.egg/hggit
 color =
 hgk = 
 eol =

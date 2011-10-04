@@ -170,7 +170,7 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak,*.orig,*.class,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
+set wildignore=*.swp,*.bak,*.orig,*.class,*.jar,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
 set showmatch
 set foldmethod=syntax
 set foldenable
