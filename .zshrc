@@ -4,7 +4,7 @@ fpath=($ZSH/functions $fpath)
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
 plugin=${plugin:=()}
-plugins=(brew cap dirpersist gem git github lein npm rails3 vagrant)
+plugins=(brew cap cake dirpersist extract gem git github heroku lein node npm)
 for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
 
 # Url quote magic
@@ -16,7 +16,8 @@ autoload -U compinit
 compinit -i
 
 # Exports
-export ZSH_THEME="bira"
+export ZSH_THEME="romney"
+
 export CASE_SENSITIVE="true"
 export DISABLE_AUTO_UPDATE="false"
 export RUBYOPT="rubygems"
@@ -35,7 +36,8 @@ export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
 
 # Load the theme
-source "$ZSH/themes/$ZSH_THEME.zsh-theme"
+#source "$ZSH/themes/$ZSH_THEME.zsh-theme"
+source "$HOME/$ZSH_THEME.zsh-theme"
 
 # Shell options
 setopt append_history
