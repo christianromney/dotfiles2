@@ -4,7 +4,7 @@ fpath=($ZSH/functions $fpath)
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
 plugin=${plugin:=()}
-plugins=(brew cap cake dirpersist extract gem git github heroku lein node npm)
+plugins=(cap cake dirpersist extract lein node npm)
 for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
 
 # Url quote magic
