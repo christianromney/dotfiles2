@@ -16,6 +16,7 @@ alias sl='ls'
 alias lll="ll | less"
 
 alias x='extract'
+alias q='quit'
 
 # Standard tool aliases
 alias df="df -h"
@@ -38,6 +39,9 @@ alias ndrush="drush -l http://local.ncl.com"
 
 alias pdstart='sudo pound -v -f /usr/local/etc/pound.cfg'
 alias pdstop='sudo killall -HUP pound'
+
+alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
+alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
