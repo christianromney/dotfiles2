@@ -1,6 +1,6 @@
 export PATH=$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 export PATH=$PATH:$EC2_HOME/bin:$AWS_RDS_HOME/bin
-export PATH=/Applications/MAMP/bin/php5/bin:$PATH
+#export PATH=/Applications/MAMP/bin/php/php5.2.17/bin:$PATH
 export PATH=/usr/local/share/python:$PATH
 
 # Paths dependent on other rc files in home folder (oracle, java)
@@ -8,5 +8,6 @@ export PATH=$PATH:$DYLD_LIBRARY_PATH:$SQLPATH
 export PATH=$CLOJURESCRIPT_HOME/bin:$PATH
 
 # Paths to search when changing directories
-export CDPATH=.:$HOME:$HOME/src/study/clojure:$HOME/src/ps:$HOME/src/ibm:$HOME/src/ncl:$HOME/src/ibm/drupal/sites/all/themes:$HOME/src/ibm/drupal/sites/all/modules:$HOME/src/foss
+export CDPATH=.:$HOME:$HOME/src/mine:$HOME/src/mine/clojure:$HOME/src/work/pointslope:$HOME/src/work/ncl:$HOME/src/work/ncl/drupal/sites/all/themes:$HOME/src/work/ncl/drupal/sites/all/modules:$HOME/src/foss
 export NODE_PATH=/usr/local/lib/node
+export DRUPAL_ROOT=$HOME/src/work/ncl/drupal
