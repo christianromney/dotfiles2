@@ -1,16 +1,27 @@
 behave xterm
-set t_Co=256
+
 set nocompatible
 set relativenumber
 set nofsync
-colors molokai
 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-let mapleader = "\<SPACE>"
+" Globals for VimClojure
+let g:vimclojure#HighlightBuiltins=1
+let g:vimclojure#ParenRainbow=1
+let g:vimclojure#DynamicHighlighting=1
 
+" Solarized settings
+let g:solarized_termcolors=16
+let g:solarized_italic=0
+set background=dark
+colors solarized
+
+" Mapping
+let mapleader = "\<SPACE>"
 nnoremap ; :
+
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 
 " Handle window *s*plitting with leader
@@ -156,8 +167,8 @@ set wildmode=list:longest
 set wildignore=*.swp,*.bak
 set showmatch
 set foldmethod=syntax
-set gfn=Inconsolata-dz:h14
-set gfw=Inconsolata-dz:h14
+set gfn=Inconsolata-dz:h18
+set gfw=Inconsolata-dz:h18
 set anti
 set backspace=indent,eol,start
 set history=1000
