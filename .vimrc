@@ -22,6 +22,15 @@ colors solarized
 let mapleader = "\<SPACE>"
 nnoremap ; :
 
+" Command-T
+let g:CommandTMaxHeight = 15
+set wildignore+=.git,.svn
+set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig
+set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
+set wildignore+=files/**,sites/default/files/**
+set wildignore+=backup/modules/**,no-deploy/**
+set wildignore+=sites/all/modules/ncl_endeca/docs/**
+
 " Source the vimrc file after saving it
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 if has("autocmd")
@@ -113,7 +122,6 @@ nnoremap <leader>cah :CalendarH<CR>
 nnoremap <leader>a :Ack 
 nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
-nnoremap <leader>pt :!phake test<CR>
 nnoremap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
@@ -170,7 +178,6 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak,*.orig,*.class,*.jar,*.jpg,*.gif,*.png,*.swf,*.fla,*.o,.git,.svn,files/**,sites/default/files/**,backup/modules/**,no-deploy/**,sites/all/modules/ncl_endeca/docs/**,sites/all/themes/norway/html_mockups/**
 set showmatch
 set foldmethod=syntax
 set foldenable
