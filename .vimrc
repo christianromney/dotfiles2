@@ -122,7 +122,6 @@ nnoremap <leader>cah :CalendarH<CR>
 nnoremap <leader>a :Ack 
 nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
-nnoremap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " Filetype / Syntax Highlighting
@@ -132,11 +131,30 @@ filetype plugin on
 filetype indent on
 set omnifunc=syntaxcomplete#Complete
 
+" Custom Functions
+function! OpenPhpFunction (keyword)
+  let proc_keyword = substitute(a:keyword , '_', '-', 'g')
+  try
+    exe 'pedit'
+  catch /.*/
+  endtry
+  exe 'wincmd P'
+  exe 'enew'
+  exe "set buftype=nofile"
+  exe "setlocal noswapfile"
+  exe 'silent r!links -dump http://php.net/'.proc_keyword
+  exe 'norm gg'
+  exe 'call search("____________________________________")'
+  exe 'norm dgg'
+  exe 'call search("User Contributed Notes")'
+  exe 'norm dGgg'
+endfunction
+
 " Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
-  autocmd FileType mail nmap <leader>A :w<CR>:!aspell -e -c %<CR>:e<CR>
+	autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
 
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php

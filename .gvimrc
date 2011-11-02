@@ -22,7 +22,26 @@ colors solarized
 let mapleader = "\<SPACE>"
 nnoremap ; :
 
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
+" Command-T
+let g:CommandTMaxHeight = 15
+set wildignore+=.git,.svn
+set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig
+set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
+set wildignore+=files/**,sites/default/files/**
+set wildignore+=backup/modules/**,no-deploy/**
+set wildignore+=sites/all/modules/ncl_endeca/docs/**
+
+" Vim Settings
+nmap <silent> <leader>ev :e $MYGVIMRC<CR>
+if has("autocmd")
+  autocmd bufwritepost .gvimrc source $MYGVIMRC
+endif
+
+" Text bubbling
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
 
 " Handle window *s*plitting with leader
 nmap <silent> <leader>ws <C-w>s
@@ -35,16 +54,15 @@ nmap <silent> <leader>wk <C-w>k
 nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
 
-" Conque Shell
-if has("python")
-  let g:ConqueTerm_Color = 1
-  let g:ConqueTerm_TERM = 'xterm'
-  let g:ConqueTerm_ReadUnfocused = 1
+" Tabular Plugin mappings
+nmap <leader>== :Tabularize /=<CR>
+vmap <leader>== :Tabularize /=<CR>
+nmap <leader>=- :Tabularize /:\zs<CR>
+vmap <leader>=- :Tabularize /:\zs<CR>
 
-  nmap <silent> <leader>ct :ConqueTerm login -fp christian<CR>
-  nmap <silent> <leader>ch :ConqueTermSplit login -fp christian<CR>
-  nmap <silent> <leader>cv :ConqueTermVSplit login -fp christian<CR>
-endif
+" Yankring
+let g:yankring_max_history = 100
+let g:yankring_history_file = '.yankring'
 
 " Taglist
 nmap <silent> <leader>, :TlistToggle<CR>
@@ -60,13 +78,29 @@ if has("cscope")
     cs add cscope.out  
   endif
   
+  " Find all *r*eferences to *s*ymbol under cursor
   nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>r :cs find s <C-R>=expand("<cword>")<CR><CR>
+
+  " Find *g*lobal definition of token under cursor
   nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find *c*alls to function under cursor
   nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find all instances of *t*ext under cursor
   nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+  
+  " Find using *e*grep
   nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  
+  " Open *f*ilename under cursor 
   nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  
+  " Find files that *i*nclude file under cursor
   nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  
+  " Find all functions calle*d*
   nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
@@ -92,7 +126,6 @@ nnoremap <leader>a :Ack
 nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
 nnoremap <leader>pt :!phake test<CR>
-nnoremap <silent> <leader>rn :set relativenumber<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 " Filetype / Syntax Highlighting
@@ -133,6 +166,8 @@ if has('autocmd')
   augroup END
 endif	
 
+" Because paren matching makes me want to kill somebody
+let loaded_matchparen = 1
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300
@@ -164,7 +199,6 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak
 set showmatch
 set foldmethod=syntax
 set gfn=Inconsolata-dz:h18
