@@ -1,11 +1,12 @@
 behave xterm
 
 set nocompatible
-set relativenumber
 set nofsync
 
 call pathogen#helptags()
+filetype off
 call pathogen#runtime_append_all_bundles()
+filetype plugin indent on
 
 " Globals for VimClojure
 let g:vimclojure#HighlightBuiltins=1
@@ -18,9 +19,13 @@ let g:solarized_italic=0
 set background=dark
 colors solarized
 
-" Mapping
+" Key Mappings
+" Space is the only leader big enough for my tastes
 let mapleader = "\<SPACE>"
 nnoremap ; :
+" Tab matches parens...
+nnoremap <tab> %
+vnoremap <tab> %
 
 " Command-T
 let g:CommandTMaxHeight = 15
@@ -128,10 +133,6 @@ nnoremap <leader>b :buffers<CR>
 nnoremap <leader>pt :!phake test<CR>
 cmap w!! w !sudo tee % >/dev/null
 
-" Filetype / Syntax Highlighting
-filetype on
-filetype plugin on
-filetype indent on
 set omnifunc=syntaxcomplete#Complete
 
 " Custom Functions
@@ -155,6 +156,7 @@ endfunction
 
 " Auto-commands
 if has('autocmd')
+  autocmd FocusLost * :wa
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
   autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>
@@ -165,17 +167,21 @@ if has('autocmd')
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
 endif	
-
 " Because paren matching makes me want to kill somebody
 let loaded_matchparen = 1
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300
+set modelines=0
+set ttyfast
+set relativenumber
 set pastetoggle=<F2>
+set cursorline
 set nobackup
 set noswapfile
 set hlsearch
 set incsearch
+set showmatch
 set tabstop=2
 set shiftwidth=2
 set pumheight=20
@@ -184,9 +190,12 @@ set autoindent
 set copyindent
 set number 
 set ruler
+set colorcolumn=85
+set formatoptions=qrn1
 set nowrap
 set title
 set ignorecase
+set gdefault
 set smartcase
 set smarttab
 set showcmd
@@ -199,7 +208,6 @@ set noerrorbells
 set scrolloff=3
 set wildmenu
 set wildmode=list:longest
-set showmatch
 set foldmethod=syntax
 set gfn=Inconsolata-dz:h18
 set gfw=Inconsolata-dz:h18

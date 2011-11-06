@@ -23,7 +23,7 @@ alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
 alias z="clear"
-
+alias tail="colortail -k ~/.colortail/global.conf"
 # Misc
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
@@ -35,8 +35,7 @@ alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
 alias cljr="rlwrap clj"
 alias autospec="autotest -s rspec"
-alias ndrush="drush -l http://local.ncl.com"
-
+alias dcc="drush cc all -y"
 alias pdstart='sudo pound -v -f /usr/local/etc/pound.cfg'
 alias pdstop='sudo killall -HUP pound'
 
