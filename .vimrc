@@ -30,6 +30,8 @@ set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
 set wildignore+=files/**,sites/default/files/**
 set wildignore+=backup/modules/**,no-deploy/**
 set wildignore+=sites/all/modules/ncl_endeca/docs/**
+set wildignore+=classes
+" set wildignore+=lib
 
 " Source the vimrc file after saving it
 nmap <silent> <leader>ev :e $MYVIMRC<CR>

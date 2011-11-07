@@ -23,6 +23,8 @@ colors solarized
 let NERDCommentWholeLinesInVMode=1
 let NERDSpaceDelims=1
 let NERDCompactSexyComs=0
+let NERD_java_alt_style=1
+let NERD_javascript_alt_style=1
 
 " Key Mappings
 " Space is the only leader big enough for my tastes
@@ -34,9 +36,19 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 " Four semi-colons go back to normal mode
-inoremap ;;;; <ESC>
+inoremap jj <ESC>
 
+" Select pasted item
 nnoremap <leader>v V`]
+
+" It's 2011.
+noremap j gj
+noremap k gk
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv:call PulseCursorLine()<cr>
+nnoremap N Nzzzv:call PulseCursorLine()<cr>
 
 " NERDCommenter
 " [count] <leader>cc  (comment current line in visual mode)
@@ -102,25 +114,18 @@ if has("cscope")
   " Find all *r*eferences to *s*ymbol under cursor
   nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
   nmap <C-\>r :cs find s <C-R>=expand("<cword>")<CR><CR>
-
   " Find *g*lobal definition of token under cursor
   nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-  
   " Find *c*alls to function under cursor
   nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-  
   " Find all instances of *t*ext under cursor
   nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  
   " Find using *e*grep
   nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-  
   " Open *f*ilename under cursor 
   nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  
   " Find files that *i*nclude file under cursor
   nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-  
   " Find all functions calle*d*
   nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
@@ -151,44 +156,37 @@ cmap w!! w !sudo tee % >/dev/null
 
 set omnifunc=syntaxcomplete#Complete
 
-" Custom Functions
-function! OpenPhpFunction (keyword)
-  let proc_keyword = substitute(a:keyword , '_', '-', 'g')
-  try
-    exe 'pedit'
-  catch /.*/
-  endtry
-  exe 'wincmd P'
-  exe 'enew'
-  exe "set buftype=nofile"
-  exe "setlocal noswapfile"
-  exe 'silent r!links -dump http://php.net/'.proc_keyword
-  exe 'norm gg'
-  exe 'call search("____________________________________")'
-  exe 'norm dgg'
-  exe 'call search("User Contributed Notes")'
-  exe 'norm dGgg'
-endfunction
-
 " Auto-commands
 if has('autocmd')
   autocmd FocusLost * :wa
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
   autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>
-  "autocmd filetype php set keywordprg=":help"
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
+  augroup ft_java
+      au!
+      au FileType java setlocal foldmethod=marker
+      au FileType java setlocal foldmarker={,}
+  augroup END
+
+  augroup ft_javascript
+      au!
+      au FileType javascript setlocal foldmethod=marker
+      au FileType javascript setlocal foldmarker={,}
+  augroup END
 endif	
+
 " Because paren matching makes me want to kill somebody
 let loaded_matchparen = 1
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300
 set modelines=0
+set autoread
 set ttyfast
 set relativenumber
 set pastetoggle=<F2>
@@ -236,3 +234,73 @@ set backupskip=/tmp/*,/private/tmp/*
 set completeopt=longest,menuone,preview
 set laststatus=2
 set statusline=%{fugitive#statusline()}\ %r\ %t%m\ %y\ Buf\ #%n\ format:\ %{&ff};\ [col\ %c:\ line\ %l\ of\ %L\ -\ %p%%]
+
+" Custom Functions
+function! OpenPhpFunction (keyword)
+  let proc_keyword = substitute(a:keyword , '_', '-', 'g')
+  try
+    exe 'pedit'
+  catch /.*/
+  endtry
+  exe 'wincmd P'
+  exe 'enew'
+  exe "set buftype=nofile"
+  exe "setlocal noswapfile"
+  exe 'silent r!links -dump http://php.net/'.proc_keyword
+  exe 'norm gg'
+  exe 'call search("____________________________________")'
+  exe 'norm dgg'
+  exe 'call search("User Contributed Notes")'
+  exe 'norm dGgg'
+endfunction
+
+" Pulse Cusor Line (Steve Losh) {{{
+function! PulseCursorLine()
+    let current_window = winnr()
+
+    windo set nocursorline
+    execute current_window . 'wincmd w'
+
+    setlocal cursorline
+
+    redir => old_hi
+        silent execute 'hi CursorLine'
+    redir END
+    let old_hi = split(old_hi, '\n')[0]
+    let old_hi = substitute(old_hi, 'xxx', '', '')
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+  
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#444444 ctermbg=239
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+
+    execute 'hi ' . old_hi
+
+    windo set cursorline
+    execute current_window . 'wincmd w'
+endfunction
+
+" }}}
