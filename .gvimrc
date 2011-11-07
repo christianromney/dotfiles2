@@ -19,6 +19,11 @@ let g:solarized_italic=0
 set background=dark
 colors solarized
 
+" NERDCommenter Settings
+let NERDCommentWholeLinesInVMode=1
+let NERDSpaceDelims=1
+let NERDCompactSexyComs=0
+
 " Key Mappings
 " Space is the only leader big enough for my tastes
 let mapleader = "\<SPACE>"
@@ -32,6 +37,11 @@ vnoremap <tab> %
 inoremap ;;;; <ESC>
 
 nnoremap <leader>v V`]
+
+" NERDCommenter
+" [count] <leader>cc  (comment current line in visual mode)
+" [count] <leader>c<space> NERDComToggleComment 
+" [count] <leader>cs NERDComSexyComment comment out 'sexily'
 
 " Command-T
 let g:CommandTMaxHeight = 15
