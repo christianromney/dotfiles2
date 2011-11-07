@@ -23,9 +23,13 @@ colors solarized
 " Space is the only leader big enough for my tastes
 let mapleader = "\<SPACE>"
 nnoremap ; :
+
 " Tab matches parens...
 nnoremap <tab> %
 vnoremap <tab> %
+
+" Four semi-colons go back to normal mode
+inoremap ;;;; <ESC>
 
 " Command-T
 let g:CommandTMaxHeight = 15
