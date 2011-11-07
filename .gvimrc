@@ -31,6 +31,8 @@ vnoremap <tab> %
 " Four semi-colons go back to normal mode
 inoremap ;;;; <ESC>
 
+nnoremap <leader>v V`]
+
 " Command-T
 let g:CommandTMaxHeight = 15
 set wildignore+=.git,.svn
