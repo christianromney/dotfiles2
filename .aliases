@@ -16,7 +16,7 @@ alias sl='ls'
 alias lll="ll | less"
 
 alias x='extract'
-alias q='quit'
+alias q='exit'
 
 # Standard tool aliases
 alias df="df -h"
@@ -24,12 +24,16 @@ alias grep="egrep"
 alias rf="rm -rf"
 alias z="clear"
 alias tail="colortail -k ~/.colortail/global.conf"
+
 # Misc
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 alias offlineimap="nocorrect offlineimap"
 #
 # Programming
+alias diff="nocorrect colordiff"
+alias gh="grephosts"
+alias pair="nocorrect pair"
 alias gt="guilt"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
@@ -38,9 +42,10 @@ alias autospec="autotest -s rspec"
 alias dcc="drush cc all -y"
 alias pdstart='sudo pound -v -f /usr/local/etc/pound.cfg'
 alias pdstop='sudo killall -HUP pound'
-
+alias pear="nocorrect pear"
 alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+alias mampsql="mysql -uroot -S /Applications/MAMP/tmp/mysql/mysql.sock"
 
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"

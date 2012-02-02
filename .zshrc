@@ -20,7 +20,6 @@ export ZSH_THEME="romney"
 
 export CASE_SENSITIVE="true"
 export DISABLE_AUTO_UPDATE="false"
-export RUBYOPT="rubygems"
 export ARCHFLAGS="-arch x86_64"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="7;33"
@@ -56,6 +55,11 @@ setopt pushd_ignore_dups
 setopt long_list_jobs
 unsetopt auto_name_dirs
 
+# Grep my hosts file
+function grephosts() {
+  grep $1 /etc/hosts
+}
+
 # Source scripts for specific tasks
 alias history="fc -l 1"
 source $HOME/.aliases
@@ -70,3 +74,4 @@ source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
 
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
+
