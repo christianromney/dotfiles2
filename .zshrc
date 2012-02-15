@@ -4,7 +4,7 @@ fpath=($ZSH/functions $fpath)
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
 plugin=${plugin:=()}
-plugins=(cap cake dirpersist extract lein node npm)
+plugins=(brew cap cake dirpersist extract lein node npm)
 for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
 
 # Url quote magic
@@ -58,6 +58,11 @@ unsetopt auto_name_dirs
 # Grep my hosts file
 function grephosts() {
   grep $1 /etc/hosts
+}
+
+# Todo: improve this to take multiple cols
+function columns {
+  awk "{ print \$$1 }"
 }
 
 # Source scripts for specific tasks
