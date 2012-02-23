@@ -93,9 +93,8 @@ vmap <leader>=- :Tabularize /:\zs<CR>
 let g:yankring_max_history = 100
 let g:yankring_history_file = '.yankring'
 
-" Taglist
-nmap <silent> <leader>, :TlistToggle<CR>
-nmap <leader>. :tag 
+" Tagbar
+nmap <silent> <leader>, :TagbarToggle<CR>
 
 " cscope
 if has("cscope")
