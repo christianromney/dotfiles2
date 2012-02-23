@@ -19,13 +19,6 @@ let g:solarized_italic=0
 set background=dark
 colors solarized
 
-" NERDCommenter Settings
-let NERDCommentWholeLinesInVMode=1
-let NERDSpaceDelims=1
-let NERDCompactSexyComs=0
-let NERD_java_alt_style=1
-let NERD_javascript_alt_style=1
-
 " Key Mappings
 " Space is the only leader big enough for my tastes
 let mapleader = "\<SPACE>"
@@ -45,7 +38,7 @@ nnoremap <leader>v V`]
 noremap j gj
 noremap k gk
 
-"NERDTree
+" NERDTree
 let g:nerdtree_tabs_open_on_gui_startup=0
 map <leader>n <plug>NERDTreeTabsToggle<cr>
 
@@ -53,11 +46,6 @@ map <leader>n <plug>NERDTreeTabsToggle<cr>
 " to them.
 nnoremap n nzzzv:call PulseCursorLine()<cr>
 nnoremap N Nzzzv:call PulseCursorLine()<cr>
-
-" NERDCommenter
-" [count] <leader>cc  (comment current line in visual mode)
-" [count] <leader>c<space> NERDComToggleComment 
-" [count] <leader>cs NERDComSexyComment comment out 'sexily'
 
 " Ctrl-P (command-t replacement)
 nnoremap <leader>t :CtrlP<cr>

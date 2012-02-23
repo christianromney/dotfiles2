@@ -67,9 +67,6 @@
 [submodule ".vim/bundle/geek-tabular"]
 	path = .vim/bundle/geek-tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule ".vim/bundle/scrooloose-nerdcommenter"]
-	path = .vim/bundle/scrooloose-nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
 [submodule ".vim/bundle/scrooloose-nerdtree"]
 	path = .vim/bundle/scrooloose-nerdtree
 	url = https://github.com/scrooloose/nerdtree.git

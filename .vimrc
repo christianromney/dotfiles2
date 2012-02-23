@@ -22,8 +22,20 @@ colors solarized
 let mapleader = "\<SPACE>"
 nnoremap ; :
 
-" Command-T
-let g:CommandTMaxHeight = 15
+" Tab matches parens...
+nnoremap <tab> %
+vnoremap <tab> %
+
+" NERDTree
+let g:nerdtree_tabs_open_on_gui_startup=0
+map <leader>n <plug>NERDTreeTabsToggle<cr>
+
+" Ctrl-P
+nnoremap <leader>t :CtrlP<cr>
+ 
+" Changes cwd to nearest ancestor containing a .git folder
+let g:ctrlp_working_path_mode=2
+
 set wildignore+=.git,.svn
 set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig
 set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
