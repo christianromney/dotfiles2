@@ -46,6 +46,9 @@ alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/serv
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias mampsql="mysql -uroot -S /Applications/MAMP/tmp/mysql/mysql.sock"
 
+alias fixup="git apply patches/*.patch"
+alias unfix="git apply -R patches/*.patch"
+
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
 alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
