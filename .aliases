@@ -9,21 +9,20 @@ alias _='sudo'
 alias la='ls -a'
 alias ll='ls -lah'
 alias kk="ll"
-alias a='la'
-alias l='ll'
-alias s='ls'
 alias sl='ls'
 alias lll="ll | less"
 
+# One-letter aliases
 alias x='extract'
 alias q='exit'
+alias v="f -e vim"
 
 # Standard tool aliases
 alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
-alias z="clear"
-alias tail="colortail -k ~/.colortail/global.conf"
+alias c="clear"
+alias ctail="colortail -k ~/.colortail/global.conf"
 
 # Misc
 alias realias="source ~/.aliases"

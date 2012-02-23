@@ -62,6 +62,9 @@ vmap <leader>== :Tabularize /=<CR>
 nmap <leader>=- :Tabularize /:\zs<CR>
 vmap <leader>=- :Tabularize /:\zs<CR>
 
+" Ctags
+map <leader>m :!ctags -f tags<cr>
+
 " Yankring
 let g:yankring_max_history = 100
 let g:yankring_history_file = '.yankring'

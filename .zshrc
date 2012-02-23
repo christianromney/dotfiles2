@@ -34,6 +34,9 @@ export HISTSIZE=25000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
 
+# For git-vendors
+export vendors="PointSlope Sapient IBM"
+
 # Load the theme
 #source "$ZSH/themes/$ZSH_THEME.zsh-theme"
 source "$HOME/$ZSH_THEME.zsh-theme"
@@ -71,6 +74,9 @@ source $HOME/.path
 
 # Additional completions
 source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
+
+# FASD
+eval "$(fasd --init posix-alias zsh-hook)"
 
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 

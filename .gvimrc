@@ -41,9 +41,13 @@ inoremap jj <ESC>
 " Select pasted item
 nnoremap <leader>v V`]
 
-" It's 2011.
+" It's the 21st Century.
 noremap j gj
 noremap k gk
+
+"NERDTree
+let g:nerdtree_tabs_open_on_gui_startup=0
+map <leader>n <plug>NERDTreeTabsToggle<cr>
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
@@ -55,8 +59,12 @@ nnoremap N Nzzzv:call PulseCursorLine()<cr>
 " [count] <leader>c<space> NERDComToggleComment 
 " [count] <leader>cs NERDComSexyComment comment out 'sexily'
 
-" Command-T
-let g:CommandTMaxHeight = 15
+" Ctrl-P (command-t replacement)
+nnoremap <leader>t :CtrlP<cr>
+
+" Changes cwd to nearest ancestor containing a .git folder
+let g:ctrlp_working_path_mode=2
+
 set wildignore+=.git,.svn
 set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig
 set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
