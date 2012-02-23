@@ -63,13 +63,9 @@ function grephosts() {
   grep $1 /etc/hosts
 }
 
-# Todo: improve this to take multiple cols
-function columns {
-  awk "{ print \$$1 }"
-}
-
 # Source scripts for specific tasks
 alias history="fc -l 1"
+
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
 source $HOME/.passwd
