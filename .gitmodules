@@ -55,9 +55,6 @@
 [submodule ".vim/bundle/int3-taglist-plus"]
 	path = .vim/bundle/int3-taglist-plus
 	url = https://github.com/int3/vim-taglist-plus.git
-[submodule ".vim/bundle/vim-colors-solarized"]
-	path = .vim/bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
 [submodule ".vim/bundle/kchmck-vim-coffee-script"]
 	path = .vim/bundle/kchmck-vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
@@ -76,3 +73,12 @@
 [submodule ".vim/bundle/kien-ctrlp"]
 	path = .vim/bundle/kien-ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule ".vim/bundle/majutsushi-tagbar"]
+	path = .vim/bundle/majutsushi-tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule ".vim/bundle/vimscripts-showmarks"]
+	path = .vim/bundle/vimscripts-showmarks
+	url = https://github.com/vim-scripts/ShowMarks.git
+[submodule ".vim/bundle/vimscripts-tComment"]
+	path = .vim/bundle/vimscripts-tComment
+	url = https://github.com/vim-scripts/tComment.git
