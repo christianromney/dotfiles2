@@ -69,8 +69,8 @@ alias history="fc -l 1"
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
 source $HOME/.passwd
-source $HOME/.javarc
 source $HOME/.oraclerc
+source $HOME/.javarc
 source $HOME/.path
 
 # Additional completions

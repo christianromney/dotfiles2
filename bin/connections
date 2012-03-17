@@ -1,0 +1,3 @@
+#!/bin/bash
+set -e
+netstat -np tcp | awk '$6 !~ /Foreign/ && $6 !="" {print $6}' | sort | uniq -c | sort -gnrk1,7
