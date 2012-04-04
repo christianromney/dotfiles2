@@ -15,6 +15,9 @@ zle -N self-insert url-quote-magic
 autoload -U compinit
 compinit -i
 
+# Don't tell me about new mail
+biff n
+
 # Exports
 export ZSH_THEME="romney"
 
@@ -62,6 +65,7 @@ unsetopt auto_name_dirs
 function grephosts() {
   grep $1 /etc/hosts
 }
+
 
 # Source scripts for specific tasks
 alias history="fc -l 1"
