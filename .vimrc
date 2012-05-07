@@ -134,10 +134,9 @@ vnoremap / /\v
 
 " Misc Mappings
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>cah :CalendarH<CR>
 nnoremap <leader>a :Ack 
-nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
+nnoremap <silent><leader>sp :setlocal spell spelllang=en_us<cr>
 cmap w!! w !sudo tee % >/dev/null
 
 " Filetype / Syntax Highlighting
