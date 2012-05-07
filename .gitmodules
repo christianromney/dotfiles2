@@ -85,3 +85,6 @@
 [submodule ".vim/bundle/vim-colors-solarized"]
 	path = .vim/bundle/vim-colors-solarized
 	url = https://github.com/skwp/vim-colors-solarized.git
+[submodule ".vim/bundle/tpope-vim-afterimage"]
+	path = .vim/bundle/tpope-vim-afterimage
+	url = https://github.com/tpope/vim-afterimage.git
