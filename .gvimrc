@@ -168,6 +168,10 @@ if has('autocmd')
       au FileType java setlocal foldmarker={,}
   augroup END
 
+  augroup ft_cljs
+    au BufRead,BufNewFile *.cljs set filetype=clojure
+  augroup END
+
   augroup ft_javascript
       au!
       au FileType javascript setlocal foldmethod=marker

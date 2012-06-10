@@ -171,6 +171,9 @@ if has('autocmd')
   autocmd BufRead,BufNewFile *.scss set filetype=scss
 	autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
 
+  augroup clojurescript
+    autocmd BufRead,BufNewFile *.cljs set filetype=clojure
+  augroup END
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
