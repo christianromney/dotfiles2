@@ -1,7 +1,6 @@
 behave xterm
 
 set nocompatible
-set relativenumber
 set nofsync
 
 call pathogen#helptags()
@@ -165,20 +164,48 @@ function! OpenPhpFunction (keyword)
   exe 'norm dGgg'
 endfunction
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+
+
 " Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
 	autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
+  autocmd FileType python set sw=4 sts=4 et
 
   augroup clojurescript
     autocmd BufRead,BufNewFile *.cljs set filetype=clojure
   augroup END
+
+  augroup htdata
+    autocmd BufRead,BufNewFile *.htdata set filetype=html
+  augroup END
+
+
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
 endif	
 
 " Because paren matching makes me want to kill somebody
@@ -197,7 +224,8 @@ set pumheight=20
 set shiftround
 set autoindent
 set copyindent
-set number 
+set relativenumber 
+set numberwidth=5
 set ruler
 set nowrap
 set title
@@ -230,3 +258,6 @@ set backupskip=/tmp/*,/private/tmp/*
 set completeopt=longest,menuone,preview
 set laststatus=2
 set statusline=%{fugitive#statusline()}\ %r\ %t%m\ %y\ Buf\ #%n\ format:\ %{&ff};\ [col\ %c:\ line\ %l\ of\ %L\ -\ %p%%]
+set cursorline
+set cmdheight=2
+
