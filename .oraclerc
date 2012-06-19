@@ -1,0 +1,8 @@
+export ORACLE_HOME=/usr/local/oracle/instantclient_10_2
+export CLASSPATH=$ORACLE_HOME:$ORACLE_HOME/ojdbc14.jar:$CLASSPATH
+export DYLD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/sdk/include
+export LD_LIBRARY_PATH=$ORACLE_HOME
+export SQLPATH=$ORACLE_HOME
+export TNS_ADMIN=/usr/local/oracle/network/admin
+export NLS_LANG=AMERICAN_AMERICA.UTF8
+export RC_ARCHS=x86_64
