@@ -5,6 +5,9 @@ export PATH=/usr/local/share/python:$PATH
 # Paths dependent on other rc files in home folder (oracle, java)
 export PATH=$PATH:$DYLD_LIBRARY_PATH:$SQLPATH
 export PATH=$CLOJURESCRIPT_HOME/bin:$PATH
+# Git Utils Path
+export PATH=$HOME/src/work/pointslope/git-utils:$PATH
+
 
 # MAMP PHP path
 # export PATH=/Applications/MAMP/bin/php/php5.3.6/bin:$PATH
@@ -13,3 +16,6 @@ export PATH=$HOME/lib/php/pear/bin:$PATH
 export CDPATH=.:$HOME:$HOME/src/mine:$HOME/src/mine/clojure:$HOME/src/work/pointslope:$HOME/src/work/ncl:$HOME/src/work/ncl/drupal/sites/all/themes:$HOME/src/work/ncl/drupal/sites/all/modules:$HOME/src/foss
 export NODE_PATH=/usr/local/lib/node
 export DRUPAL_ROOT=$HOME/src/work/ncl/drupal
+
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH
+

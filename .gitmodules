@@ -88,3 +88,6 @@
 [submodule ".vim/bundle/tpope-vim-afterimage"]
 	path = .vim/bundle/tpope-vim-afterimage
 	url = https://github.com/tpope/vim-afterimage.git
+[submodule ".vim/bundle/tpope-vim-eunuch"]
+	path = .vim/bundle/tpope-vim-eunuch
+	url = git://github.com/tpope/vim-eunuch.git

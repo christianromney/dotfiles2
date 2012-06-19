@@ -55,7 +55,8 @@ alias unfix="git apply -R patches/*.patch"
 # VPN routing and IP configuration
 alias iroute="sudo route -n add -net 10.5.0.0/16 -interface ppp0"
 alias nroute="sudo route -n add -net 192.168.200 -interface ppp0"
-alias routes="nroute && iroute"
+alias sroute="sudo route -n add -net 192.168.170 -interface ppp0"
+alias routes="nroute && iroute && sroute"
 alias ip="ifconfig | grep -e \"inet 167.*\" | cut -d' ' -f2"
 
 # Proxy Support

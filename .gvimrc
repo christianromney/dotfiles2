@@ -8,6 +8,8 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
+let g:LustyJugglerSuppressRubyWarning = 1
+
 " Globals for VimClojure
 let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
@@ -19,6 +21,10 @@ let g:solarized_italic=0
 set background=dark
 colors solarized
 
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
 " Key Mappings
 " Space is the only leader big enough for my tastes
 let mapleader = "\<SPACE>"
@@ -28,7 +34,7 @@ nnoremap ; :
 nnoremap <tab> %
 vnoremap <tab> %
 
-" Four semi-colons go back to normal mode
+" Two j's in a row
 inoremap jj <ESC>
 
 " Select pasted item
@@ -37,6 +43,12 @@ nnoremap <leader>v V`]
 " It's the 21st Century.
 noremap j gj
 noremap k gk
+
+" Learn to use Vim
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
 
 " NERDTree
 let g:nerdtree_tabs_open_on_gui_startup=0
@@ -84,10 +96,12 @@ nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
 
 " Tabular Plugin mappings
-nmap <leader>== :Tabularize /=<CR>
-vmap <leader>== :Tabularize /=<CR>
-nmap <leader>=- :Tabularize /:\zs<CR>
-vmap <leader>=- :Tabularize /:\zs<CR>
+nmap <leader>tt :Tabularize /=><CR>
+vmap <leader>tt :Tabularize /=><CR>
+nmap <leader>te :Tabularize /=<CR>
+vmap <leader>te :Tabularize /=<CR>
+nmap <leader>tc :Tabularize /:\zs<CR>
+vmap <leader>tc :Tabularize /:\zs<CR>
 
 " Yankring
 let g:yankring_max_history = 100
@@ -127,8 +141,6 @@ endif
 
 
 " Map Git
-nmap <leader>gt :Gist
-nmap <leader>gp :Gist -p
 nmap <leader>gi :Git 
 nmap <leader>gl :Glog<CR>
 nmap <leader>gd :Gdiff<CR>
@@ -142,26 +154,44 @@ vnoremap / /\v
 
 " Misc Mappings
 nnoremap <leader><space> :noh<cr>
-nnoremap <leader>cah :CalendarH<CR>
 nnoremap <leader>a :Ack 
-nnoremap <leader>gr :GoogleReader<CR>
 nnoremap <leader>b :buffers<CR>
-nnoremap <leader>pt :!phake test<CR>
 cmap w!! w !sudo tee % >/dev/null
+
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+ 
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>                                                                                                                                                
+ 
+" Clear the search buffer when hitting return
+function! MapCR()
+  nnoremap <cr> :nohlsearch<cr>
+endfunction
+call MapCR()
 
 set omnifunc=syntaxcomplete#Complete
 
 " Auto-commands
 if has('autocmd')
   autocmd FocusLost * :wa
-	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
   autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et                                                                            
+  autocmd FileType python set sw=4 sts=4 et
+
   augroup module
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
     autocmd BufRead,BufNewFile *.inc set filetype=php
   augroup END
+
   augroup ft_java
       au!
       au FileType java setlocal foldmethod=marker
@@ -177,10 +207,16 @@ if has('autocmd')
       au FileType javascript setlocal foldmethod=marker
       au FileType javascript setlocal foldmarker={,}
   augroup END
+
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
 endif	
 
 " Because paren matching makes me want to kill somebody
 let loaded_matchparen = 1
+set switchbuf=useopen
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300
@@ -188,6 +224,7 @@ set modelines=0
 set autoread
 set ttyfast
 set relativenumber
+set numberwidth=5
 set pastetoggle=<F2>
 set cursorline
 set nobackup
@@ -201,7 +238,6 @@ set pumheight=20
 set shiftround
 set autoindent
 set copyindent
-set number 
 set ruler
 set colorcolumn=85
 set formatoptions=qrn1
@@ -222,8 +258,11 @@ set scrolloff=3
 set wildmenu
 set wildmode=list:longest
 set foldmethod=syntax
-set gfn=Inconsolata-dz:h18
-set gfw=Inconsolata-dz:h18
+set foldenable
+set foldlevel=2
+set foldnestmax=10
+set gfn=Menlo:h18
+set gfw=Menlo:h18
 set anti
 set backspace=indent,eol,start
 set history=1000
@@ -233,6 +272,19 @@ set backupskip=/tmp/*,/private/tmp/*
 set completeopt=longest,menuone,preview
 set laststatus=2
 set statusline=%{fugitive#statusline()}\ %r\ %t%m\ %y\ Buf\ #%n\ format:\ %{&ff};\ [col\ %c:\ line\ %l\ of\ %L\ -\ %p%%]
+set cursorline
+
+" RENAME CURRENT FILE
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
 
 " Custom Functions
 function! OpenPhpFunction (keyword)

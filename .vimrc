@@ -49,6 +49,12 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
+
+" Learn to use Vim
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
   
 " Text bubbling
 nmap <C-Up> [e
@@ -68,13 +74,27 @@ nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>w] <C-w>]
 
 " Tabular Plugin mappings
-nmap <leader>== :Tabularize /=<CR>
-vmap <leader>== :Tabularize /=<CR>
-nmap <leader>=- :Tabularize /:\zs<CR>
-vmap <leader>=- :Tabularize /:\zs<CR>
+nmap <leader>tt :Tabularize /=><CR>
+vmap <leader>tt :Tabularize /=><CR>
+nmap <leader>te :Tabularize /=<CR>
+vmap <leader>te :Tabularize /=<CR>
+nmap <leader>tc :Tabularize /:\zs<CR>
+vmap <leader>tc :Tabularize /:\zs<CR>
 
 " Ctags
 map <leader>m :!ctags -f tags<cr>
+
+" RENAME CURRENT FILE
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+map <leader>n :call RenameFile()<cr>
 
 " Yankring
 let g:yankring_max_history = 100
@@ -148,21 +168,14 @@ set omnifunc=syntaxcomplete#Complete
 " Custom Functions
 function! OpenPhpFunction (keyword)
   let proc_keyword = substitute(a:keyword , '_', '-', 'g')
-  try
-    exe 'pedit'
-  catch /.*/
-  endtry
-  exe 'wincmd P'
-  exe 'enew'
-  exe "set buftype=nofile"
-  exe "setlocal noswapfile"
-  exe 'silent r!links -dump http://php.net/'.proc_keyword
-  exe 'norm gg'
-  exe 'call search("____________________________________")'
-  exe 'norm dgg'
-  exe 'call search("User Contributed Notes")'
-  exe 'norm dGgg'
+  exe 'silent r!open http://php.net/'.proc_keyword
 endfunction
+
+function! OpenDrupalFunction (keyword)
+  let proc_keyword = substitute(a:keyword , '#', '-', 'g')
+  exe 'silent r!open http://api.drupal.org/api/search/6/'.proc_keyword
+endfunction
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
@@ -176,28 +189,31 @@ function! InsertTabWrapper()
     return "\<c-p>"
   endif
 endfunction
+
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
+" Clear the search buffer when hitting return
+function! MapCR()
+  nnoremap <cr> :nohlsearch<cr>
+endfunction
+call MapCR()
 
 " Auto-commands
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
-	autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
+  autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
+  autocmd FileType php map <leader>k :call OpenDrupalFunction('<C-r><C-w>')<CR>  
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
 
-  augroup clojurescript
-    autocmd BufRead,BufNewFile *.cljs set filetype=clojure
-  augroup END
+  " File extension mappings
+  autocmd BufRead,BufNewFile *.cljs set filetype=clojure
+  autocmd BufRead,BufNewFile *.ddl set filetype=sql
+  autocmd BufRead,BufNewFile *.htdata set filetype=html
 
-  augroup htdata
-    autocmd BufRead,BufNewFile *.htdata set filetype=html
-  augroup END
-
-
-  augroup module
+  augroup drupal
     autocmd BufRead,BufNewFile *.install set filetype=php
     autocmd BufRead,BufNewFile *.module set filetype=php
     autocmd BufRead,BufNewFile *.inc set filetype=php
@@ -210,6 +226,7 @@ endif
 
 " Because paren matching makes me want to kill somebody
 let loaded_matchparen = 1
+set switchbuf=useopen
 set timeoutlen=3000
 set ttimeout 
 set ttimeoutlen=300
@@ -247,8 +264,8 @@ set foldmethod=syntax
 set foldenable
 set foldlevel=2
 set foldnestmax=10
-set gfn=Inconsolata-dz:h14
-set gfw=Inconsolata-dz:h14
+set gfn=Menlo:h14
+set gfw=Menlo:h14
 set anti
 set backspace=indent,eol,start
 set history=1000
@@ -259,5 +276,3 @@ set completeopt=longest,menuone,preview
 set laststatus=2
 set statusline=%{fugitive#statusline()}\ %r\ %t%m\ %y\ Buf\ #%n\ format:\ %{&ff};\ [col\ %c:\ line\ %l\ of\ %L\ -\ %p%%]
 set cursorline
-set cmdheight=2
-
