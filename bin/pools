@@ -1,0 +1,23 @@
+#!/bin/bash
+_usage() {
+  cat <<EOF
+
+USAGE: `basename $0` <ip_1> [<ip_2>] [<ip_N>]
+
+DESCRIPTION:
+
+This script uses curl to retrieve /lb/healthtest.php
+over http from the ips or server names passed in as 
+arguments and reports the contents of that file.
+
+EOF
+
+exit 1
+}
+
+test $# -gt 0 || _usage
+
+for x in $@; do
+  pool=$(curl -s http://$x/lb/healthtest.php 2>/dev/null)
+  echo "$x: $pool"
+done | sort -t "." -k 2.1

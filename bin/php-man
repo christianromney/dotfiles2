@@ -1,0 +1,19 @@
+#!/bin/bash
+
+_usage() {
+cat <<EOF
+  USAGE $(basename $0) <keyword>
+
+  Lookup <keyword> at PHP's API reference.
+  Return formatted text.
+EOF
+  exit 0
+}
+
+
+fn=$(echo "$1" | tr "_" "-")
+content=$(links -dump "http://us2.php.net/$fn")
+strt=$(echo "$content" | grep -n -h '(PHP' | head -n1 | cut -d':' -f1)
+fnsh=$(echo "$content" | grep -n -h "Notes" | head -n1 | cut -d':' -f1)
+
+echo "$content" | sed -n "$strt,$((fnsh - 1)) p"

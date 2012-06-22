@@ -171,6 +171,14 @@ function! OpenPhpFunction (keyword)
   exe 'silent r!open http://php.net/'.proc_keyword
 endfunction
 
+function! OpenPhpPane (keyword)
+  exe 'vnew'
+  exe "set buftype=nofile"
+  exe "setlocal noswapfile"
+  exe 'silent r!php-man '.a:keyword
+  exe 'go 1'
+endfunction
+
 function! OpenDrupalFunction (keyword)
   let proc_keyword = substitute(a:keyword , '#', '-', 'g')
   exe 'silent r!open http://api.drupal.org/api/search/6/'.proc_keyword
@@ -203,8 +211,8 @@ call MapCR()
 if has('autocmd')
 	autocmd filetype python set expandtab
   autocmd BufRead,BufNewFile *.scss set filetype=scss
-  autocmd FileType php map K :call OpenPhpFunction('<C-r><C-w>')<CR>  
   autocmd FileType php map <leader>k :call OpenDrupalFunction('<C-r><C-w>')<CR>  
+  autocmd FileType php map K :call OpenPhpPane('<C-r><C-w>')<CR>  
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
 
