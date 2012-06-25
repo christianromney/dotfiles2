@@ -1,0 +1,4 @@
+--langmap=lisp:+.clj 
+--langmap=lisp:+.cljs
+--langmap=PHP:+.module
+--langmap=PHP:+.inc

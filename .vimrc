@@ -82,7 +82,7 @@ nmap <leader>tc :Tabularize /:\zs<CR>
 vmap <leader>tc :Tabularize /:\zs<CR>
 
 " Ctags
-map <leader>m :!ctags -f tags<cr>
+map <leader>m :!ctags -rf tags<cr>
 
 " RENAME CURRENT FILE
 function! RenameFile()
@@ -233,6 +233,10 @@ if has('autocmd')
 endif	
 
 " Because paren matching makes me want to kill somebody
+let vimclojure#WantNailgun = 1 
+let vimclojure#SplitPos = "right"
+let tlist_clojure_settings = 'lisp;f:function'
+let tlist_exit_OnlyWindow = 1
 let loaded_matchparen = 1
 set switchbuf=useopen
 set timeoutlen=3000
