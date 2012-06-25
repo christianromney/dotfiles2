@@ -30,6 +30,7 @@ alias flushdns="dscacheutil -flushcache"
 alias offlineimap="nocorrect offlineimap"
 alias fortune="nocorrect fortune"
 alias lsman="nocorrect lsman"
+alias mc="nocorrect mc"
 #
 # Programming
 alias diff="nocorrect colordiff"

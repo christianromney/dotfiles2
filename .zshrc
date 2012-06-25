@@ -27,6 +27,7 @@ export ARCHFLAGS="-arch x86_64"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="7;33"
 export EDITOR="vim"
+export VIEWER="view"
 export CLICOLOR="yes"
 export REPORTTIME=30
 export LESS="--ignore-case --LONG-PROMPT --QUIET --chop-long-lines -Sm --RAW-CONTROL-CHARS --quit-if-one-screen --no-init"
