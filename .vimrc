@@ -73,9 +73,6 @@ let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
 let g:vimclojure#DynamicHighlighting=1
 
-" Tagbar
-nmap <silent> <leader>, :TagbarToggle<CR>
-
 " Map Git (requires tpope's vim-fugitive)
 nmap <leader>gi :Git 
 nmap <leader>gl :Glog<CR>
