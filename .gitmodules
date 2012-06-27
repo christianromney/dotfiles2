@@ -1,27 +1,15 @@
-[submodule ".vim/bundle/snipmate"]
-	path = .vim/bundle/snipmate
-	url = http://github.com/msanders/snipmate.vim.git
 [submodule ".vim/bundle/tpope-vim-fugitive"]
 	path = .vim/bundle/tpope-vim-fugitive
 	url = http://github.com/tpope/vim-fugitive.git
-[submodule ".vim/bundle/tpope-vim-rails"]
-	path = .vim/bundle/tpope-vim-rails
-	url = http://github.com/tpope/vim-rails.git
 [submodule ".vim/bundle/tpope-vim-markdown"]
 	path = .vim/bundle/tpope-vim-markdown
 	url = http://github.com/tpope/vim-markdown.git
 [submodule ".vim/bundle/tpope-vim-rake"]
 	path = .vim/bundle/tpope-vim-rake
 	url = http://github.com/tpope/vim-rake.git
-[submodule ".vim/bundle/tpope-vim-ragtag"]
-	path = .vim/bundle/tpope-vim-ragtag
-	url = http://github.com/tpope/vim-ragtag.git
 [submodule ".vim/bundle/tpope-vim-surround"]
 	path = .vim/bundle/tpope-vim-surround
 	url = http://github.com/tpope/vim-surround.git
-[submodule ".vim/bundle/tpope-vim-haml"]
-	path = .vim/bundle/tpope-vim-haml
-	url = http://github.com/tpope/vim-haml.git
 [submodule ".vim/bundle/tpope-vim-git"]
 	path = .vim/bundle/tpope-vim-git
 	url = http://github.com/tpope/vim-git.git
@@ -37,24 +25,15 @@
 [submodule ".vim/bundle/scss-syntax-vim"]
 	path = .vim/bundle/scss-syntax-vim
 	url = http://github.com/cakebaker/scss-syntax.vim.git
-[submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
-	url = http://github.com/pangloss/vim-javascript.git
 [submodule ".vim/bundle/pangloss-vim-simplefold"]
 	path = .vim/bundle/pangloss-vim-simplefold
 	url = http://github.com/pangloss/vim-simplefold.git
-[submodule ".vim/bundle/tyru-caw-vim"]
-	path = .vim/bundle/tyru-caw-vim
-	url = http://github.com/tyru/caw.vim.git
 [submodule ".vim/bundle/pangloss-vim-javascript"]
 	path = .vim/bundle/pangloss-vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = git@github.com:xmlblog/oh-my-zsh.git
-[submodule ".vim/bundle/int3-taglist-plus"]
-	path = .vim/bundle/int3-taglist-plus
-	url = https://github.com/int3/vim-taglist-plus.git
 [submodule ".vim/bundle/kchmck-vim-coffee-script"]
 	path = .vim/bundle/kchmck-vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
@@ -64,18 +43,9 @@
 [submodule ".vim/bundle/geek-tabular"]
 	path = .vim/bundle/geek-tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule ".vim/bundle/scrooloose-nerdtree"]
-	path = .vim/bundle/scrooloose-nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule ".vim/bundle/jistr-nerdtree-tabs"]
-	path = .vim/bundle/jistr-nerdtree-tabs
-	url = https://github.com/jistr/vim-nerdtree-tabs.git
 [submodule ".vim/bundle/kien-ctrlp"]
 	path = .vim/bundle/kien-ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
-[submodule ".vim/bundle/majutsushi-tagbar"]
-	path = .vim/bundle/majutsushi-tagbar
-	url = https://github.com/majutsushi/tagbar.git
 [submodule ".vim/bundle/vimscripts-showmarks"]
 	path = .vim/bundle/vimscripts-showmarks
 	url = https://github.com/vim-scripts/ShowMarks.git
