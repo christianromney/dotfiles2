@@ -37,7 +37,7 @@ export HISTIGNORE="&:exit:reset:clear"
 export HISTSIZE=25000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
-
+export UNCRUSTIFY_CONFIG="/usr/local/Cellar/uncrustify/0.59/share/uncrustify/gnu-indent.cfg"
 # For git-vendors
 export vendors="PointSlope Sapient IBM"
 
@@ -61,12 +61,6 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
 unsetopt auto_name_dirs
-
-# Grep my hosts file
-function grephosts() {
-  grep $1 /etc/hosts
-}
-
 
 # Source scripts for specific tasks
 alias history="fc -l 1"

@@ -4,18 +4,9 @@ behave xterm
 set nocompatible
 set nofsync
 
-" Filetype / Syntax Highlighting
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-set omnifunc=syntaxcomplete#Complete
-
-" Pathogen for loading plugins
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-" ------------ Plugin Settings -----------
 
 " Solarized settings
 let g:solarized_termcolors=16
@@ -23,38 +14,61 @@ let g:solarized_italic=0
 set background=dark
 colors solarized
 
-" Mapping
+" Map Leader
 let mapleader = "\<SPACE>"
 nnoremap ; :
+noremap j gj
+noremap k gk
+
+
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
 
 " Tab matches parens...
 nnoremap <tab> %
 vnoremap <tab> %
+
+" Two j's in a row
+inoremap jj <ESC>
+
+" Select pasted item
+nnoremap <leader>v V`]
+
+" ------------ Plugin Settings -----------
 
 " Gist
 "let g:gist_clip_command = 'pbcopy'
 "let g:gist_detect_filetype = 1
 "let g:gist_open_browser_after_post = 1
 
+" Buffergator
+let g:buffergator_suppress_keymaps = 1
+nnoremap <leader>b :BuffergatorToggle<cr>
+
 " Ctrl-P
-nnoremap <leader>t :CtrlP<cr>
-nnoremap <leader>b :CtrlPBuffer<cr>
+nnoremap <leader>t :CtrlPLastMode<cr>
 
-let g:ctrlp_working_path_mode=1
-let g:ctrlp_user_command = 'find %s -type f'
-let g:ctrlp_use_caching = 1
+let g:ctrlp_max_files           = 10000
+let g:ctrlp_max_history         = 1000
+let g:ctrlp_mruf_max            = 250
+let g:ctrlp_max_depth           = 40
+let g:ctrlp_max_height          = 15
+let g:ctrlp_open_multiple_files = '2vr'
+let g:ctrlp_working_path_mode   = 2
+let g:ctrlp_default_input       = 0
+let g:ctrlp_use_caching         = 1
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-let g:ctrlp_max_files = 20000
-let g:ctrlp_lazy_update = 1
+let g:ctrlp_cache_dir           = $HOME.'/.cache/ctrlp'
+let g:ctrlp_lazy_update         = 0
+let g:ctrlp_custom_ignore       = '\.git$\|\.hg$\|\.svn$\|\.DS_Store'
 
-set wildignore+=.git,.svn
-set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig
+set wildignore+=*/.git/*,*/.svn/*,*/.hg/*
+set wildignore+=*.class,*.jar,*.swp,*.bak,*.orig,.DS_Store
 set wildignore+=*.jpg,*.gif,*.png,*.swf,*.fla,*.o
-set wildignore+=files/**,sites/default/files/**
-set wildignore+=backup/modules/**,no-deploy/**
-set wildignore+=sites/all/modules/ncl_endeca/docs/**
-set wildignore+=classes
+set wildignore+=*/sites/default/files/**
+set wildignore+=*/backup/modules/**,*/no-deploy/**
+set wildignore+=*/sites/all/modules/ncl_endeca/docs/**
 
 " Tabular Plugin mappings
 nmap <leader>tt :Tabularize /=><CR>
@@ -97,6 +111,18 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
+
+" Buffer navigation
+nnoremap <leader>1 :1b<cr>
+nnoremap <leader>2 :2b<cr>
+nnoremap <leader>3 :3b<cr>
+nnoremap <leader>4 :4b<cr>
+nnoremap <leader>5 :5b<cr>
+nnoremap <leader>6 :6b<cr>
+nnoremap <leader>7 :7b<cr>
+nnoremap <leader>8 :8b<cr>
+nnoremap <leader>9 :9b<cr>
+nnoremap <leader>0 :10b<cr>
   
 " Text bubbling (requires tpope's vim-unimpaired/vim-repeat)
 nmap <C-Up> [e
@@ -172,6 +198,62 @@ function! RenameFile()
   endif
 endfunction
 map <leader>n :call RenameFile()<cr>
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+" Pulse Cusor Line (Steve Losh)
+function! PulseCursorLine()
+    let current_window = winnr()
+
+    windo set nocursorline
+    execute current_window . 'wincmd w'
+
+    setlocal cursorline
+
+    redir => old_hi
+        silent execute 'hi CursorLine'
+    redir END
+    let old_hi = split(old_hi, '\n')[0]
+    let old_hi = substitute(old_hi, 'xxx', '', '')
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+  
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#444444 ctermbg=239
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+
+    execute 'hi ' . old_hi
+
+    windo set cursorline
+    execute current_window . 'wincmd w'
+endfunction
+
+
+nnoremap n nzzzv:call PulseCursorLine()<cr>
+nnoremap N Nzzzv:call PulseCursorLine()<cr>
+
 function! OpenPhpFunction (keyword)
   let proc_keyword = substitute(a:keyword , '_', '-', 'g')
   exe 'silent r!open http://php.net/'.proc_keyword
@@ -198,7 +280,6 @@ function! InsertTabWrapper()
     return "\<c-p>"
   endif
 endfunction
-
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
@@ -207,6 +288,13 @@ function! MapCR()
   nnoremap <cr> :nohlsearch<cr>
 endfunction
 call MapCR()
+
+" ----------- Filetype / Syntax ----------
+filetype on
+filetype plugin on 
+filetype indent on
+syntax on
+set omnifunc=syntaxcomplete#Complete
 
 " ------------ Auto-commands -------------
 if has('autocmd')
@@ -219,6 +307,12 @@ if has('autocmd')
   " Language-specific settings
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
+
+  augroup ft_java
+      au!
+      au FileType java setlocal foldmethod=marker
+      au FileType java setlocal foldmarker={,}
+  augroup END
 
   augroup php
     autocmd FileType php map <leader>k :call OpenDrupalFunction('<C-r><C-w>')<CR>  

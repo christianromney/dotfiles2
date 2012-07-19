@@ -8,8 +8,6 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
-let g:LustyJugglerSuppressRubyWarning = 1
-
 " Globals for VimClojure
 let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
@@ -49,10 +47,6 @@ map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
-
-" NERDTree
-let g:nerdtree_tabs_open_on_gui_startup=0
-map <leader>n <plug>NERDTreeTabsToggle<cr>
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
@@ -106,10 +100,7 @@ vmap <leader>tc :Tabularize /:\zs<CR>
 " Yankring
 let g:yankring_max_history = 100
 let g:yankring_history_file = '.yankring'
-
-" Tagbar
-nmap <silent> <leader>, :TagbarToggle<CR>
-
+"
 " cscope
 if has("cscope")
   set cscopetag
@@ -153,9 +144,6 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Misc Mappings
-nnoremap <leader><space> :noh<cr>
-nnoremap <leader>a :Ack 
-nnoremap <leader>b :buffers<CR>
 cmap w!! w !sudo tee % >/dev/null
 
 function! InsertTabWrapper()

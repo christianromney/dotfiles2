@@ -34,7 +34,6 @@ alias mc="nocorrect mc"
 #
 # Programming
 alias diff="nocorrect colordiff"
-alias gh="grephosts"
 alias pair="nocorrect pair"
 alias gt="guilt"
 alias njs="rlwrap node-repl"
@@ -48,6 +47,8 @@ alias pear="nocorrect pear"
 alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias mampsql="mysql -uroot -S /Applications/MAMP/tmp/mysql/mysql.sock"
+alias lein2="nocorrect lein2"
+alias uncrustify="nocorrect uncrustify -q"
 
 alias vg="nocorrect valgrind"
 alias fixup="git apply patches/*.patch"

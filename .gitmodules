@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/tpope-vim-repeat"]
 	path = .vim/bundle/tpope-vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule ".vim/bundle/jeet-vim-buffergator"]
+	path = .vim/bundle/jeet-vim-buffergator
+	url = https://github.com/jeetsukumaran/vim-buffergator.git
