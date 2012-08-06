@@ -17,5 +17,4 @@ export CDPATH=.:$HOME:$HOME/src/mine:$HOME/src/mine/clojure:$HOME/src/work/point
 export NODE_PATH=/usr/local/lib/node
 export DRUPAL_ROOT=$HOME/src/work/ncl/drupal
 
-export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH
-
+#export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH

@@ -1,28 +1,29 @@
-# add a function path
-export ZSH=$HOME/.oh-my-zsh
-fpath=($ZSH/functions $fpath)
-for config_file ($ZSH/lib/*.zsh) source $config_file
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-plugin=${plugin:=()}
-plugins=(brew cap cake dirpersist extract lein node npm)
-for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
+ZSH_THEME="prose"
+# Set to this to use case-sensitive completion
+CASE_SENSITIVE="true"
 
-# Url quote magic
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
+# Comment this out to disable weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
 
-# Load and run compinit
-autoload -U compinit
-compinit -i
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
 
-# Don't tell me about new mail
-biff n
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm pywhole python pip django virtualenvwrapper)
+
+source $ZSH/oh-my-zsh.sh
+
+# BEGIN CUSTOMIZATIONS
 
 # Exports
-export ZSH_THEME="romney"
-
-export CASE_SENSITIVE="true"
-export DISABLE_AUTO_UPDATE="false"
 export ARCHFLAGS="-arch x86_64"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="7;33"
@@ -38,12 +39,9 @@ export HISTSIZE=25000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
 export UNCRUSTIFY_CONFIG="/usr/local/Cellar/uncrustify/0.59/share/uncrustify/gnu-indent.cfg"
+
 # For git-vendors
 export vendors="PointSlope Sapient IBM"
-
-# Load the theme
-#source "$ZSH/themes/$ZSH_THEME.zsh-theme"
-source "$HOME/$ZSH_THEME.zsh-theme"
 
 # Shell options
 setopt append_history
@@ -60,11 +58,8 @@ setopt rm_star_wait
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
-unsetopt auto_name_dirs
 
 # Source scripts for specific tasks
-alias history="fc -l 1"
-
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
 source $HOME/.passwd
@@ -72,12 +67,8 @@ source $HOME/.oraclerc
 source $HOME/.javarc
 source $HOME/.path
 
-# Additional completions
-source $HOME/.oh-my-zsh/plugins/git-flow/git-flow.plugin.zsh
-
 # FASD
 eval "$(fasd --init posix-alias zsh-hook)"
 
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
-
