@@ -1,9 +1,13 @@
-# Structure
+Structure
+=========
 
 This project contains my personal dotfile collection.
 The *master* branch contains my Mac OS X dotfiles, while *linux* branch contains...duh.
 
-# License
+[![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
+
+License
+=======
 
 The MIT License
 
