@@ -42,6 +42,7 @@ alias grep="egrep"
 alias rf="rm -rf"
 alias c="clear"
 alias ctail="colortail -k ~/.colortail/global.conf"
+alias ack-grep="ack"
 
 # Misc
 alias realias="source ~/.aliases"

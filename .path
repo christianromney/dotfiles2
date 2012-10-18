@@ -1,4 +1,4 @@
-export PATH=$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:/usr/local/Cellar/emacs/24.2/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 export PATH=$PATH:$EC2_HOME/bin:$AWS_RDS_HOME/bin
 export PATH=/usr/local/share/python:$PATH
 export PATH=$SONAR_RUNNER_HOME/bin:$PATH
