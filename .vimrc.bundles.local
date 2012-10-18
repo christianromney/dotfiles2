@@ -1,0 +1,5 @@
+let g:spf13_leader="\<SPACE>"
+let g:spf13_no_fastTabs = 1
+let g:spf13_no_autochdir = 1 
+
+Bundle 'VimClojure'
