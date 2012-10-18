@@ -4,6 +4,7 @@ let g:solarized_visibility="normal"
 
 let g:snips_author = 'Christian Romney <cromney@pointslope.com>'
 
+" Don't clear the screen when I leave "man" 
 " http://www.shallowsky.com/linux/noaltscreen.html
 set t_ti= t_te=
 
@@ -11,14 +12,14 @@ set t_ti= t_te=
 nnoremap <leader>t :CtrlP<CR>
 nnoremap ; :
 
-" Two j's in a row
+" Two j's in a row in Insert mode takes me to command mode!
 inoremap jj <ESC>
 
 " Select pasted item
 nnoremap <leader>v V`]
 
-
-" vimclojure
+" Someday I'll get my head around Emacs. 
+" Until then, there's vimclojure
 let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
 let g:vimclojure#DynamicHighlighting=1
@@ -31,7 +32,7 @@ let tlist_exit_OnlyWindow = 1
 " ------------ Custom Mappings -----------
 
 " Edit .vimrc
-nmap <silent> <leader>vrc :e $MYVIMRC<CR>
+nmap <silent> <leader>vrc :e $MYVIMRC.local<CR>
 
 " Learn to use Vim
 map <Left> <Nop>
@@ -57,8 +58,10 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-" Handle window *s*plitting with leader
+" Handle *w*indow splitting with leader
+" Pipe looks like a vertical split
 nmap <silent> <leader>\ <C-w>v <C-w>l
+" Dash looks like a horizontal split
 nmap <silent> <leader>- <C-w>s <C-w>j
 nmap <silent> <leader>wh <C-w>h
 nmap <silent> <leader>wc <C-w>c
@@ -185,13 +188,6 @@ if has('autocmd')
   autocmd BufRead,BufNewFile *.clj set filetype=clojure
   autocmd BufRead,BufNewFile *.cljs set filetype=clojure
   autocmd BufRead,BufNewFile *.ddl set filetype=sql
-  autocmd BufRead,BufNewFile *.htdata set filetype=html
-
-  "augroup php
-    "autocmd BufRead,BufNewFile *.install set filetype=php
-    "autocmd BufRead,BufNewFile *.module set filetype=php
-    "autocmd BufRead,BufNewFile *.inc set filetype=php
-  "augroup END
 
   autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
