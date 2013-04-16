@@ -1,0 +1,1 @@
+/Users/christian/.oh-my-zsh/custom/funcs.zsh
