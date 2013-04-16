@@ -18,7 +18,7 @@ CASE_SENSITIVE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm pywhole python pip django virtualenvwrapper)
+plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm python pip)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,6 +60,13 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
 
+# These next two lines allow me to source any .javarc files that
+# are found in a working directory I 'cd' into. This can be extremely 
+# dangerous since I haven't yet added 'trusted file' functionality like rvm
+# does. Use only if you understand the risks.
+fpath=($ZSH_CUSTOM/funcs.zsh $fpath)
+chpwd_functions=(${chpwd_functions[@]} "source_javarc")
+
 # Source scripts for specific tasks
 source $HOME/.aliases
 source $HOME/.ec2/ec2.sh
@@ -73,3 +80,5 @@ eval "$(fasd --init posix-alias zsh-hook)"
 
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

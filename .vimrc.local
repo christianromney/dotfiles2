@@ -29,6 +29,11 @@ let vimclojure#SplitPos = "right"
 let tlist_clojure_settings = 'lisp;f:function'
 let tlist_exit_OnlyWindow = 1
 
+" CtrlP Settings
+
+let g:ctrlp_max_height = 10
+let g:ctrlp_working_path_mode = 'ra'
+
 " ------------ Custom Mappings -----------
 
 " Edit .vimrc
@@ -231,3 +236,4 @@ set anti
 set backspace=indent,eol,start
 set encoding=utf-8 nobomb
 set backupskip=/tmp/*,/private/tmp/*
+set wildignore+=*.class

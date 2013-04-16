@@ -1,10 +1,6 @@
-#export JAVA_HOME=`/usr/libexec/java_home`
 export ANT_HOME=/usr/share/ant
 export JUNIT_HOME=/usr/share/junit
 export ANT_OPTS="-Xms512M -Xmx512M -XX:+UseParallelGC"
-export FISHEYE_HOME=$HOME/lib/java/fecru-2.6.1
-export JIRA_HOME=$HOME/lib/java/jirahome
 export CLOJURESCRIPT_HOME=$HOME/src/foss/clojurescript
-export SHOREX_JVM=/System/Library/Java/JavaVirtualMachines/1.5.0/Contents/Home
-#export JAVA_HOME=$SHOREX_JVM
+export SHOREX_JVM=$(/usr/libexec/java_home -v 1.5)
 export JAVA_OPTS="-server"
