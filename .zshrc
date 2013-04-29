@@ -75,6 +75,9 @@ source $HOME/.oraclerc
 source $HOME/.javarc
 source $HOME/.path
 
+
+sudo () { ( unset LD_LIBRARY_PATH DYLD_LIBRARY_PATH; exec command sudo $* ) }
+
 # FASD
 eval "$(fasd --init posix-alias zsh-hook)"
 
