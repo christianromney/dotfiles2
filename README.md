@@ -8,17 +8,17 @@ Changes
 =======
 
 I used to use git submodules to bring in my own form of Robby Russell's excellent
-Oh My ZSH, and a bunch of Vim plugins. These days for ZSH, I just fork [ Robby's 
-repository](https://github.com/robbyrussell/oh-my-zsh) and overwrite .zshrc. 
-In the future, I will have a single bootstrap script here so you clone this repo, 
+Oh My ZSH, and a bunch of Vim plugins. These days for ZSH, I just fork [ Robby's
+repository](https://github.com/robbyrussell/oh-my-zsh) and overwrite .zshrc.
+In the future, I will have a single bootstrap script here so you clone this repo,
 run ```./bootstrap.sh``` and have everything "just work".
 
-For vim, I use the excellent [SPF-13](http://vim.spf13.com/) distro and 
-symlink the ```.vimrc.local``` and ```.vimrc.bundles.local``` files to my 
-home directory. The main difference between my setup and just about every other 
-Vimmer on the planet, is that I use ```"\<space>"``` as my ```<leader>```. 
-It's a giant freaking key in the middle of the keyboard and both my thumbs are 
-well-trained to locate it. Why anyone would want to aim for a target as small as 
+For vim, I use the excellent [SPF-13](http://vim.spf13.com/) distro and
+symlink the ```.vimrc.local``` and ```.vimrc.bundles.local``` files to my
+home directory. The main difference between my setup and just about every other
+Vimmer on the planet, is that I use ```"\<space>"``` as my ```<leader>```.
+It's a giant freaking key in the middle of the keyboard and both my thumbs are
+well-trained to locate it. Why anyone would want to aim for a target as small as
 the default (backslash) or everyone's favorite (comma)-even smaller on most keyboards-is beyond me.
 
 
@@ -29,7 +29,7 @@ License
 
 The MIT License
 
-Copyright (c) 2010-2012 Christian Romney <xmlblog@gmail.com>
+Copyright (c) 2010-2013 Christian Romney <xmlblog@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,4 +48,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
