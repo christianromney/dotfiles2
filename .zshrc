@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="fino"
+ZSH_THEME="ys"
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
@@ -18,7 +18,9 @@ CASE_SENSITIVE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm python pip)
+# needed for virtualenvwrapper plugin
+export PATH=/usr/local/share/python:$PATH
+plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm python pip virtualenv virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -39,7 +41,8 @@ export HISTIGNORE="&:exit:reset:clear"
 export HISTSIZE=25000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
-export UNCRUSTIFY_CONFIG="/usr/local/Cellar/uncrustify/0.59/share/uncrustify/gnu-indent.cfg"
+export UNCRUSTIFY_CONFIG="/usr/local/Cellar/etc/pointslope-beauty.cfg"
+export BYOBU_PREFIX=$(brew --prefix)
 
 # For git-vendors
 export vendors="PointSlope Sapient IBM"
@@ -50,22 +53,22 @@ setopt extended_history
 setopt inc_append_history
 setopt hist_expire_dups_first
 setopt hist_ignore_space
-setopt hist_ignore_dups 
+setopt hist_ignore_dups
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt hist_verify
-setopt share_history 
+setopt share_history
 setopt rm_star_wait
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt long_list_jobs
 
 # These next two lines allow me to source any .javarc files that
-# are found in a working directory I 'cd' into. This can be extremely 
+# are found in a working directory I 'cd' into. This can be extremely
 # dangerous since I haven't yet added 'trusted file' functionality like rvm
 # does. Use only if you understand the risks.
 fpath=($ZSH_CUSTOM/funcs.zsh $fpath)
-chpwd_functions=(${chpwd_functions[@]} "source_javarc")
+chpwd_functions=(${chpwd_functions[@]} "source_javarc" "workon_cwd")
 
 # Source scripts for specific tasks
 source $HOME/.aliases
@@ -82,6 +85,6 @@ sudo () { ( unset LD_LIBRARY_PATH DYLD_LIBRARY_PATH; exec command sudo $* ) }
 eval "$(fasd --init posix-alias zsh-hook)"
 
 # Ruby Version Manager
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm 
+[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

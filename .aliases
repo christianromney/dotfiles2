@@ -46,6 +46,8 @@ alias ctail="colortail -k ~/.colortail/global.conf"
 alias ack-grep="ack"
 alias es='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs --daemon'
 alias em='/usr/local/Cellar/emacs/24.3/bin/emacsclient -c -n'
+alias ek='/usr/local/Cellar/emacs/24.3/bin/emacsclient -e "(kill-emacs)"'
+alias edc="es && em"
 alias smirc='ssh -f -L 6667:irc.freenode.net:6667 www.pointslope.com -N'
 
 # Misc
@@ -74,7 +76,6 @@ alias mampsql="mysql -uroot -S /Applications/MAMP/tmp/mysql/mysql.sock"
 alias lein="nocorrect lein"
 alias offlein="lein with-profile offline"
 alias lvc="lein vimclojure"
-alias uncrustify="nocorrect uncrustify -q"
 alias dfree="nocorrect datomic-free"
 alias vg="nocorrect valgrind"
 
