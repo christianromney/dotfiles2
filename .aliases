@@ -51,6 +51,7 @@ alias edc="es && em"
 alias smirc='ssh -f -L 6667:irc.freenode.net:6667 www.pointslope.com -N'
 
 # Misc
+alias cheat="nocorrect cheat"
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 alias offlineimap="nocorrect offlineimap"
