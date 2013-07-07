@@ -9,7 +9,5 @@
                   live/bindings-pack))
 
 (live-add-packs '(~/.live-packs/install-packages-pack
-                  ~/.live-packs/chat-pack
-                  ~/.live-packs/twitter-pack
                   ~/.live-packs/romney-pack
                   ))
