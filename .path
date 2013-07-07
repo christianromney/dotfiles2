@@ -1,20 +1,15 @@
-export PATH=$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:/usr/local/Cellar/emacs/24.2/bin:/usr/local/mysql/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
-export PATH=$PATH:$EC2_HOME/bin:$AWS_RDS_HOME/bin
-export PATH=$HOME/src/foss/boris/bin:$PATH
-# Paths dependent on other rc files in home folder (oracle, java)
-export PATH=$PATH:$DYLD_LIBRARY_PATH:$SQLPATH
-export PATH=$CLOJURESCRIPT_HOME/bin:$PATH
-export PATH=/Applications/Racket\ v5.3.3/bin:$PATH
-export PATH=/usr/local/Cellar/smlnj/110.75/libexec/bin:$PATH
-# Git Utils Path
-export PATH=$HOME/src/work/pointslope/git-utils:$PATH
-export PATH=$HOME/src/foss/drake:$PATH
-export PATH=$HOME/lib/java/axis2-1.6.2/bin:$PATH
+# Core Path
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
 
-export PATH=$HOME/lib/php/pear/bin:$PATH
+# Tools
 
+# mysql, rvm, emacs, (npm: yeoman, bower, grunt)
+export PATH=/usr/local/mysql/bin:$HOME/.rvm/bin:$PATH
+export PATH=/usr/local/Cellar/emacs/24.3/bin:$PATH
+export PATH=export PATH=/usr/local/share/npm/bin:$PATH
+
+# Path-related stuff
 # Paths to search when changing directories
-export CDPATH=.:$HOME:$HOME/src/mine:$HOME/src/mine/clojure:$HOME/src/work/pointslope:$HOME/src/work/ncl:$HOME/src/work/ncl/drupal/sites/all/themes:$HOME/src/work/ncl/drupal/sites/all/modules:$HOME/src/foss
+export CDPATH=.:$HOME:$HOME/src/work
 export NODE_PATH=/usr/local/lib/node
 export DRUPAL_ROOT=$HOME/src/work/ncl/drupal
-export PATH=$HOME/src/foss/datomic-free/bin:$PATH
