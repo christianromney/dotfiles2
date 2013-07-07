@@ -1,0 +1,28 @@
+[user]
+	name = Christian Romney
+	email = cromney@pointslope.com
+[core]
+	autocrlf = input
+	excludesfile = /Users/christian/.gitignore_global
+	editor = emacs
+	pager = less
+[commit]
+	template = /Users/christian/.git-commit-template
+[help]
+	autocorrect = 1
+[alias]
+	br = branch
+	ci = commit -s
+	co = checkout
+	cp = cherry-pick
+	dc = diff --cached
+	fp = format-patch
+	ls = log --oneline
+	st = status
+	up = pull
+	ff = pull --ff-only
+	rl = reflog
+[color]
+	ui = auto
+[push]
+	default = simple
