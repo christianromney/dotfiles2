@@ -19,7 +19,6 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # needed for virtualenvwrapper plugin
-export PATH=/usr/local/share/python:$PATH
 plugins=(extract sprunge gnu-utils rvm brew vagrant cap heroku lein node npm python pip virtualenv virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
@@ -41,8 +40,7 @@ export HISTIGNORE="&:exit:reset:clear"
 export HISTSIZE=25000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
-export UNCRUSTIFY_CONFIG="/usr/local/Cellar/etc/pointslope-beauty.cfg"
-export BYOBU_PREFIX=$(brew --prefix)
+export FLAGS_GETOPT_CMD="$(brew --prefix gnu-getopt)/bin/getopt"
 
 # For git-vendors
 export vendors="PointSlope Sapient IBM"
@@ -68,16 +66,15 @@ setopt long_list_jobs
 # dangerous since I haven't yet added 'trusted file' functionality like rvm
 # does. Use only if you understand the risks.
 fpath=($ZSH_CUSTOM/funcs.zsh $fpath)
-chpwd_functions=(${chpwd_functions[@]} "source_javarc" "workon_cwd")
+chpwd_functions=(${chpwd_functions[@]} "workon_cwd")
 
 # Source scripts for specific tasks
 source $HOME/.aliases
-source $HOME/.ec2/ec2.sh
 source $HOME/.passwd
 source $HOME/.oraclerc
 source $HOME/.javarc
 source $HOME/.path
-
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 sudo () { ( unset LD_LIBRARY_PATH DYLD_LIBRARY_PATH; exec command sudo $* ) }
 
@@ -87,4 +84,5 @@ eval "$(fasd --init posix-alias zsh-hook)"
 # Ruby Version Manager
 [[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# Direnv
+eval "$(direnv hook $0)"
