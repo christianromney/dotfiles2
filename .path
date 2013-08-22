@@ -6,10 +6,13 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sb
 # mysql, rvm, emacs, (npm: yeoman, bower, grunt)
 export PATH=/usr/local/mysql/bin:$HOME/.rvm/bin:$PATH
 export PATH=/usr/local/Cellar/emacs/24.3/bin:$PATH
-export PATH=export PATH=/usr/local/share/npm/bin:$PATH
+export PATH=/usr/local/share/npm/bin:$PATH
+export PATH=$HOME/src/foss/datomic-free/bin:$PATH
+export PATH=$HOME/lib/php/pear/bin:$PATH
 
 # Path-related stuff
 # Paths to search when changing directories
 export CDPATH=.:$HOME:$HOME/src/work
 export NODE_PATH=/usr/local/lib/node
 export DRUPAL_ROOT=$HOME/src/work/ncl/drupal
+export GOPATH=$HOME/src/foss/go
