@@ -35,6 +35,8 @@
 .buildpath
 .classpath
 .cproject
+.direnv
+.envrc
 .elc
 .externalToolBuilders/
 .idea/
@@ -49,15 +51,25 @@
 .rvmrc
 .ruby-gemset
 .ruby-version
+.rbenv-gemsets
 .settings/
 /.emacs.desktop
 /.emacs.desktop.lock
 /classes/
 /targets/
 TAGS
+.ctags
 \#*\#
 auto-save-list
 atlassian-ide-plugin.xml
 local.properties
 tmtags
 tramp
+
+# Emacs-related files
+.mc-lists.el
+elpa/
+nrepl-history
+projectile-bookmarks.eld
+projectile.cache
+
