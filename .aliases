@@ -44,11 +44,20 @@ alias rf="rm -rf"
 alias c="clear"
 alias ctail="colortail -k ~/.colortail/global.conf"
 alias ack-grep="ack"
+alias new="nocorrect emacs -nw"
 alias es='/usr/local/Cellar/emacs/24.3/bin/emacs -nw --daemon'
 alias em='/usr/local/Cellar/emacs/24.3/bin/emacsclient -t'
 alias ek='/usr/local/Cellar/emacs/24.3/bin/emacsclient -e "(kill-emacs)"'
 alias edc="es && em"
 alias smirc='ssh -f -L 6667:irc.freenode.net:6667 www.pointslope.com -N'
+alias bzr="nocorrect bzr"
+alias quickserve="nocorrect python -m SimpleHTTPServer"
+
+alias termclj="flootty --owner=xmlblog --workspace=clojure --create clojure_terminal"
+alias termrub="flootty --owner=xmlblog --workspace=ruby --create ruby_terminal"
+
+alias cloozy="nocorrect flootty --owner=xmlblog --workspace=clojure clojure_terminal"
+alias roozy="nocorrect flootty --owner=xmlblog --workspace=ruby ruby_terminal"
 
 # Misc
 alias cheat="nocorrect cheat"
@@ -60,7 +69,6 @@ alias lsman="nocorrect lsman"
 alias mc="nocorrect mc"
 #
 # Programming
-alias diff="nocorrect colordiff"
 alias pair="nocorrect pair"
 alias gt="guilt"
 alias njs="rlwrap node-repl"
