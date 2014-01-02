@@ -1,3 +1,5 @@
+ulimit -n 4096
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -19,8 +21,9 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # needed for virtualenvwrapper plugin
-plugins=(extract sprunge gnu-utils brew vagrant cap heroku lein rbenv tmux node npm python pip virtualenv virtualenvwrapper)
+plugins=(extract gnu-utils brew vagrant cap heroku lein rbenv tmux node npm python pip virtualenv virtualenvwrapper)
 
+source $HOME/.path
 source $ZSH/oh-my-zsh.sh
 
 # BEGIN CUSTOMIZATIONS
@@ -67,13 +70,16 @@ chpwd_functions=(${chpwd_functions[@]} "workon_cwd")
 # Source scripts for specific tasks
 source $HOME/.aliases
 source $HOME/.passwd
-source $HOME/.oraclerc
 source $HOME/.javarc
-source $HOME/.path
 
+# Completion
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/bin/aws_zsh_completer.sh
+source $HOME/lib/racket/racket-completion.zsh
 
-sudo () { ( unset LD_LIBRARY_PATH DYLD_LIBRARY_PATH; exec command sudo $* ) }
+if [ -f $(brew --prefix)/bin/liquidprompt ]; then
+    . $(brew --prefix)/bin/liquidprompt
+fi
 
 # FASD
 eval "$(fasd --init posix-alias zsh-hook)"
@@ -83,4 +89,3 @@ eval "$(rbenv init -)"
 
 # Direnv
 eval "$(direnv hook $0)"
-
