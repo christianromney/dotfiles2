@@ -1,4 +1,1 @@
-export ANT_HOME=/usr/share/ant
-export JUNIT_HOME=/usr/share/junit
-export ANT_OPTS="-Xms512M -Xmx512M -XX:+UseParallelGC"
 export JAVA_OPTS="-server"
