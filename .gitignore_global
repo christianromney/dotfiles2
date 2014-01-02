@@ -52,6 +52,9 @@
 .ruby-gemset
 .ruby-version
 .rbenv-gemsets
+.lein-repl-history
+geiser-history.racket
+custom-configuration.el
 .settings/
 /.emacs.desktop
 /.emacs.desktop.lock
