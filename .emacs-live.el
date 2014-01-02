@@ -6,8 +6,10 @@
                   live/clojure-pack
                   live/lang-pack
                   live/power-pack
-                  live/bindings-pack))
+                  ))
 
 (live-add-packs '(~/.live-packs/install-packages-pack
                   ~/.live-packs/romney-pack
                   ))
+
+(live-use-packs '(live/bindings-pack))
