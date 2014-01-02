@@ -10,6 +10,9 @@ export PATH=/usr/local/share/npm/bin:$PATH
 export PATH=$HOME/src/foss/datomic-free/bin:$PATH
 export PATH=$HOME/lib/php/pear/bin:$PATH
 
+# Start using a symlink to the latest Racket
+export PATH=$HOME/Applications/Racket/bin:$PATH
+
 # Path-related stuff
 # Paths to search when changing directories
 export CDPATH=.:$HOME:$HOME/src/work
