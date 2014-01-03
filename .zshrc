@@ -71,11 +71,11 @@ chpwd_functions=(${chpwd_functions[@]} "workon_cwd")
 source $HOME/.aliases
 source $HOME/.passwd
 source $HOME/.javarc
+source $HOME/.racketrc
 
 # Completion
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/bin/aws_zsh_completer.sh
-source $HOME/lib/racket/racket-completion.zsh
 
 if [ -f $(brew --prefix)/bin/liquidprompt ]; then
     . $(brew --prefix)/bin/liquidprompt
