@@ -32,7 +32,7 @@ source $ZSH/oh-my-zsh.sh
 export ARCHFLAGS="-arch x86_64"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="7;33"
-export EDITOR="vim"
+export EDITOR="emacs -nw"
 export VIEWER="view"
 export CLICOLOR="yes"
 export REPORTTIME=30

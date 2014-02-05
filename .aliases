@@ -1,10 +1,3 @@
-# Push and pop directories on directory stack
-alias ..='cd ../'
-alias ...='cd ../..'
-alias cd...="cd ../.."
-alias cd..="cd .."
-alias _='sudo'
-
 # List direcory contents
 alias la='ls -a'
 alias ll='ls -lah'
@@ -15,47 +8,22 @@ alias lll="ll | less"
 # One-letter aliases
 alias x='extract'
 alias q='exit'
-alias v="f -e vim"
-
-# Git aliases (save my hands)
-alias g="nocorrect git"
-alias gaa="nocorrect git aa"
-alias gau="nocorrect git au"
-alias gbr="nocorrect git br"
-alias gch="nocorrect git cp"
-alias gci="nocorrect git ci"
-alias gco="nocorrect git co"
-alias gdc="nocorrect git dc"
-alias gdi="nocorrect git diff"
-alias gfp="nocorrect git fp"
-alias gll="nocorrect git ls"
-alias gmp="nocorrect git multipush -b"
-alias gmg="nocorrect git merge --no-ff"
-alias gpu="nocorrect git push"
-alias gra="nocorrect git ra"
-alias grl="nocorrect git rl"
-alias gst="nocorrect git st"
-alias gup="nocorrect git up"
 
 # Standard tool aliases
 alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
 alias c="clear"
-alias ctail="colortail -k ~/.colortail/global.conf"
 alias ack-grep="ack"
 alias new="nocorrect emacs -nw"
 alias es='/usr/local/Cellar/emacs/24.3/bin/emacs -nw --daemon'
 alias em='/usr/local/Cellar/emacs/24.3/bin/emacsclient -t'
 alias ek='/usr/local/Cellar/emacs/24.3/bin/emacsclient -e "(kill-emacs)"'
 alias edc="es && em"
-alias smirc='ssh -f -L 6667:irc.freenode.net:6667 www.pointslope.com -N'
 alias bzr="nocorrect bzr"
 alias quickserve="nocorrect python -m SimpleHTTPServer"
-
 alias termclj="flootty --owner=xmlblog --workspace=clojure --create clojure_terminal"
 alias termrub="flootty --owner=xmlblog --workspace=ruby --create ruby_terminal"
-
 alias cloozy="nocorrect flootty --owner=xmlblog --workspace=clojure clojure_terminal"
 alias roozy="nocorrect flootty --owner=xmlblog --workspace=ruby ruby_terminal"
 
@@ -69,13 +37,12 @@ alias lsman="nocorrect lsman"
 alias mc="nocorrect mc"
 #
 # Programming
+alias gst="nocorrect git st -s"
 alias pair="nocorrect pair"
-alias gt="guilt"
 alias njs="rlwrap node-repl"
 alias iol="rlwrap io"
 alias cljr="rlwrap clj"
 alias autospec="autotest -s rspec"
-alias dcc="drush cc all -y"
 alias pdstart='sudo pound -v -f /usr/local/etc/pound.cfg'
 alias pdstop='sudo killall -HUP pound'
 alias pear="nocorrect pear"
@@ -84,8 +51,6 @@ alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias mampsql="mysql -uroot -S /Applications/MAMP/tmp/mysql/mysql.sock"
 alias lein="nocorrect lein"
 alias offlein="lein with-profile offline"
-alias lvc="lein vimclojure"
-alias dfree="nocorrect datomic-free"
 alias vg="nocorrect valgrind"
 
 # Proxy Support
