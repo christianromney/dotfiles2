@@ -7,20 +7,22 @@ but most of this stuff should work equally well under Linux (with a few alias ex
 Changes
 =======
 
-I used to use git submodules to bring in my own form of Robby Russell's excellent
-Oh My ZSH, and a bunch of Vim plugins. These days for ZSH, I just fork [ Robby's
-repository](https://github.com/robbyrussell/oh-my-zsh) and overwrite .zshrc.
-In the future, I will have a single bootstrap script here so you clone this repo,
-run ```./bootstrap.sh``` and have everything "just work".
+I maintain a fork of Sorin Ionescu's [prezto](https://github.com/christianromney/prezto)
+with my customizations.
 
 For vim, I use the excellent [SPF-13](http://vim.spf13.com/) distro and
 symlink the ```.vimrc.local``` and ```.vimrc.bundles.local``` files to my
-home directory. The main difference between my setup and just about every other
-Vimmer on the planet, is that I use ```"\<space>"``` as my ```<leader>```.
-It's a giant freaking key in the middle of the keyboard and both my thumbs are
-well-trained to locate it. Why anyone would want to aim for a target as small as
-the default (backslash) or everyone's favorite (comma)-even smaller on most keyboards-is beyond me.
+home directory. 
 
+The main difference between my setup and just about every other
+Vimmer on the planet, is that I use ```"\<space>"``` as my ```<leader>```.
+
+For most work, however, I rely on Emacs. While most Emacs gurus hate them, 
+I find it easier to start with a curated starter kit like [Emacs Prelude](https://github.com/bbatsov/prelude) 
+and lay my customizations on top.
+
+You'll probably learn more from looking at the above-referenced projects than my
+idiosyncratic scripts, but one never knows so feel free to take whatever you like.
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
 
@@ -29,7 +31,7 @@ License
 
 The MIT License
 
-Copyright (c) 2010-2013 Christian Romney <xmlblog@gmail.com>
+Copyright (c) 2010-2014 Christian Romney <cromney@pointslope.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
