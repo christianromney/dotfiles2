@@ -1,6 +1,6 @@
 # List direcory contents
-alias la='ls -a'
-alias ll='ls -lah'
+alias la='ls -A'
+alias ll="ls -GAhlp"
 alias kk="ll"
 alias sl='ls'
 alias lll="ll | less"
@@ -24,7 +24,7 @@ alias cheat="nocorrect cheat"
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 alias fortune="nocorrect fortune"
-alias z="j"
+
 # Programming
 alias gst="nocorrect git st -s"
 alias njs="rlwrap node-repl"
