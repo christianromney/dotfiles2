@@ -36,7 +36,7 @@
 
 ;; Git gutter
 
-(require git-gutter-fringe+)
+;;(require git-gutter-fringe+)
 
 ;; Ctags
 (setq tags-revert-without-query t)
