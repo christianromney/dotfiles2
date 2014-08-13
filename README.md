@@ -1,28 +1,9 @@
 Structure
 =========
 
-This project contains my personal dotfiles collection. My primary machine is Mac OS X,
-but most of this stuff should work equally well under Linux (with a few alias exceptions).
+This project contains my personal dotfiles collection. My primary machine is Mac OS X, but most of this stuff should work equally well under Linux (with a few alias exceptions). 
 
-Changes
-=======
-
-I maintain a fork of Sorin Ionescu's [prezto](https://github.com/christianromney/prezto)
-with my customizations.
-
-For vim, I use the excellent [SPF-13](http://vim.spf13.com/) distro and
-symlink the ```.vimrc.local``` and ```.vimrc.bundles.local``` files to my
-home directory. 
-
-The main difference between my setup and just about every other
-Vimmer on the planet, is that I use ```"\<space>"``` as my ```<leader>```.
-
-For most work, however, I rely on Emacs. While most Emacs gurus hate them, 
-I find it easier to start with a curated starter kit like [Emacs Prelude](https://github.com/bbatsov/prelude) 
-and lay my customizations on top.
-
-You'll probably learn more from looking at the above-referenced projects than my
-idiosyncratic scripts, but one never knows so feel free to take whatever you like.
+I use GNU stow to manage the symlinks in this repository, and the `install.sh` script depends on it. (It's available through Homebrew).  
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
 
