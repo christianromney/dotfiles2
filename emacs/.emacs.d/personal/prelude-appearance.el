@@ -1,6 +1,6 @@
 ;; No stupid menu bar or scroll bar
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
+;; (scroll-bar-mode -1)
 
 ;; Appearance
 (disable-theme 'zenburn)

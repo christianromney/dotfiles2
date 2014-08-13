@@ -35,10 +35,8 @@
 (setq vc-follow-symlinks t)
 
 ;; Git gutter
-(require 'git-gutter-fringe)
-(global-git-gutter-mode t)
-(setq-default indicate-buffer-boundaries 'left)
-(setq-default indicate-empty-lines t)
+
+(require git-gutter-fringe+)
 
 ;; Ctags
 (setq tags-revert-without-query t)
