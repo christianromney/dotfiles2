@@ -1,2 +1,1 @@
-source $HOME/lib/racket/racket-completion.zsh
 export PLTCOLLECTS=":$HOME/Library/Racket/collections"
