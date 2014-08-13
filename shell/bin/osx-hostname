@@ -1,0 +1,6 @@
+#!/bin/bash
+name=$(scutil --get ComputerName)
+
+scutil --set HostName $name
+scutil --set LocalHostName $name
+defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $name
