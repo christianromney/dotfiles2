@@ -7,6 +7,12 @@ I use GNU stow to manage the symlinks in this repository, and the `install.sh` s
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
 
+TODO
+====
+
+The concept of drink is cool, but needs the ability to show the list of casks and brews as well as remove stuff.
+
+
 License
 =======
 
