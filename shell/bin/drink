@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+cat <<EOF
+  usage: $(basename $0) (brew|cask) <formula>
+EOF
+exit 0
+fi
+
+command=$1
+formula=$2
+
+state=".brews"
+
+if [ $command = "cask" ]; then
+  state=".casks"
+fi
+
+realfile=$HOME/$(readlink $HOME/$state)
+
+if [ ! -f $realfile ]; then
+  echo "$command file $realfile not found"
+  exit 1
+fi
+
+grep -e $formula $realfile > /dev/null
+
+if [ $? -eq 0 ]; then
+  echo "Formula $formula already in $command file"
+  exit 0
+else
+  echo "$formula" >> $realfile  
+  sync
+  sort $realfile -o $realfile 
+  uniq $realfile /tmp/.casks
+  mv /tmp/.casks $realfile
+  echo "Added $formula to $command file. Re-sync to install."
+fi
