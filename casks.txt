@@ -4,6 +4,7 @@ appcleaner
 arq
 beamer
 charles
+chefdk
 dropbox
 google-chrome
 gpgtools
