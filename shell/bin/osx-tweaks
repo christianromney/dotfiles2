@@ -45,3 +45,8 @@ defaults write com.apple.mail DisableSendAnimations -bool true
 
 # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+
+# Font smoothing makes text look like shit on my Asus MX279
+# this only marginally improves it.
+defaults -currentHost write -globalDomain AppleFontSmoothing -int 0
+
