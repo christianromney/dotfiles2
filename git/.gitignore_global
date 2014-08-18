@@ -75,5 +75,6 @@ elpa/
 nrepl-history
 projectile-bookmarks.eld
 projectile.cache
-
+personal/*.el
+personal/snippets
 sonar-project.properties
