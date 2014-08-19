@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash
 
 set -e
 
@@ -23,5 +23,5 @@ fi
 ipaddress=$(aws ec2 describe-instances --instance-ids $1 --output json | \
 jq -r ".Reservations[] .Instances[] .NetworkInterfaces[] .PrivateIpAddresses[] .PrivateIpAddress") 
 
-echo "Connecting to $ipaddress"
+echo "Connecting to EC2 instance $1 via private ip $ipaddress"
 exec /usr/bin/ssh -t $ipaddress
