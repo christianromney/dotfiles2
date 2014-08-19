@@ -18,7 +18,7 @@ alias em='/usr/local/Cellar/emacs/24.3/bin/emacsclient -t'
 alias ek='/usr/local/Cellar/emacs/24.3/bin/emacsclient -e "(kill-emacs)"'
 alias edc="es && em"
 alias bzr="nocorrect bzr"
-alias quickserve="nocorrect python -m SimpleHTTPServer"
+
 # Misc
 alias cheat="nocorrect cheat"
 alias realias="source ~/.aliases"
