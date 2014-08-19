@@ -26,9 +26,6 @@
    terraform-mode
 ))
 
-;; Make geiser work with org-babel scheme from http://samrat.me/blog/2013/06/using-geiser-with-org-babel/
-;;(live-add-pack-lib "ob-scheme.el")
-
 ;; Whoami
 (setq user-email-address "cromney@pointslope.com")
 (setq user-full-name "Christian Romney")
