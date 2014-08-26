@@ -30,6 +30,7 @@ fleetctl
 fortune
 gdbm
 gettext
+gist
 git
 git-extras
 git-flow
@@ -67,6 +68,7 @@ nmap
 node
 openssl
 osxutils
+packer
 patchutils
 pcre
 pkg-config
