@@ -34,7 +34,7 @@ fi
 
 command=$1
 formula=$2
-flag=$3
+flag=""
 
 state=".brews"
 
@@ -60,6 +60,10 @@ else
   sort $realfile -o $realfile 
   uniq $realfile /tmp/$state
   mv /tmp/$state $realfile
+
+  if [ $# -eq 3]; then
+    flag=$3
+  fi
 
   if [ $flag = "-i" ]; then
     brew drink

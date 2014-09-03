@@ -62,6 +62,7 @@ md5sha1sum
 mobile-shell
 moc
 moreutils
+mosh
 netcat
 ngrok
 nmap
@@ -98,6 +99,7 @@ xml-coreutils
 xmlstarlet
 xvid
 xz
+youtube-dl
 zsh
 zsh-completions
 zsh-syntax-highlighting
