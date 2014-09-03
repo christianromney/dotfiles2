@@ -4,8 +4,7 @@
 
 ;; Appearance
 (disable-theme 'zenburn)
-(require 'solarized)
-(load-theme 'solarized-dark t)
+(load-theme 'hickey t)
 (add-to-list 'default-frame-alist '(font . "Anonymous Pro-18"))
 
 (require 'ansi-color)
@@ -16,6 +15,9 @@
 (setq-default c-basic-offset 2)
 (setq-default js2-basic-offset 2)
 (setq-default js-indent-level 2)
+(setq-default web-mode-markup-indent-offset 2)
+(setq-default sgml-basic-offset 2)
+
 (setq-default indent-tabs-mode nil) ;; spaces
 (setq prelude-whitespace nil)
 
