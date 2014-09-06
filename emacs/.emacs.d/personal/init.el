@@ -1,6 +1,5 @@
 (prelude-require-packages
- '(solarized-theme
-   git-gutter-fringe+
+ '(git-gutter-fringe+
    smart-mode-line
    puppet-mode
    dired+
@@ -24,6 +23,8 @@
    indicators
    company
    terraform-mode
+   flatland-theme
+   display-theme
 ))
 
 ;; Whoami

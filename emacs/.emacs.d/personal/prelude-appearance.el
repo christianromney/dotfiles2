@@ -4,8 +4,8 @@
 
 ;; Appearance
 (disable-theme 'zenburn)
-(load-theme 'hickey t)
-(add-to-list 'default-frame-alist '(font . "Anonymous Pro-18"))
+(load-theme 'flatland t)
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-18"))
 
 (require 'ansi-color)
 (ansi-color-for-comint-mode-on)
