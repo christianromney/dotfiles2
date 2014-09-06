@@ -52,10 +52,6 @@
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 (global-set-key (kbd "M-p") 'fill-paragraph)
 
-
-;; (global-set-key (kbd "M-v") 'cua-scroll-down)
-;; (global-set-key (kbd "C-v") 'cua-scroll-up)
-
 ;; Smartparens
 (require 'smartparens-config)
 (smartparens-global-mode t)
@@ -118,30 +114,35 @@
 
 (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
 
-;;; markdown-mode
-;; (sp-with-modes '(markdown-mode gfm-mode rst-mode)
-;;   (sp-local-pair "*" "*" :bind "C-*")
-;;   (sp-local-tag "2" "**" "**")
-;;   (sp-local-tag "s" "```scheme" "```"'''"'''")
-;;   (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
-
-;;; tex-mode latex-mode
-;; (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-;;   (sp-local-tag "i" "\"<" "\">"))
-
+;;; Could this be the cause of my pain?
 ;;; html-mode
 (sp-with-modes '(html-mode sgml-mode)
   (sp-local-pair "<" ">"))
 
-;;; lisp modes
-;; (sp-with-modes sp--lisp-modes
-;;   (sp-local-pair "(" nil :bind "C-(")")"))
-
-
-;; Paredit
-;;(define-key paredit-mode-map (kbd "C-M-f") 'paredit-forward)
-;;(define-key paredit-mode-map (kbd "C-c M-f") 'live-paredit-forward)
-
-;; Fuck!
+;; F*ck!
 (global-set-key (kbd "TAB") 'tab-indent-or-complete)
 (global-set-key [tab] 'tab-indent-or-complete)
+
+;; Haskell Mode
+(define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
+(define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
+(define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
+(define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+(define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
+(define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+(define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+(define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+(define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+(define-key haskell-mode-map (kbd "C-c M-.") nil)
+(define-key haskell-mode-map (kbd "C-c C-d") nil)
+(define-key haskell-mode-map (kbd "C-x C-d") nil)
+(define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
+
+;; Cabal Mode
+;; (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
+;; (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+;; (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+;; (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
