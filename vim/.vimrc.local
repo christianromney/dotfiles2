@@ -1,6 +1,6 @@
+set t_Co=256
 set background=dark
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
+colorscheme smyck
 
 let g:snips_author = 'Christian Romney <cromney@pointslope.com>'
 
@@ -18,8 +18,6 @@ inoremap jj <ESC>
 " Select pasted item
 nnoremap <leader>v V`]
 
-" Someday I'll get my head around Emacs. 
-" Until then, there's vimclojure
 let g:vimclojure#HighlightBuiltins=1
 let g:vimclojure#ParenRainbow=1
 let g:vimclojure#DynamicHighlighting=1
