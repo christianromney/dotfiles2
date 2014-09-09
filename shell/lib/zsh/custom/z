@@ -1,0 +1,7 @@
+#
+# print useful data when i jump around
+#
+z() {
+  j $1
+  tree -L 1
+}

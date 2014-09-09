@@ -1,0 +1,10 @@
+#
+# print the ip address assigned to a given interface
+#
+ip() {
+  if [ $# -ne 1 ]; then
+    printf "usage: ip <interface> e.g. en0\n\n"
+  else
+    ifconfig $1 inet | awk '/inet/ {print $2}'
+  fi
+}
