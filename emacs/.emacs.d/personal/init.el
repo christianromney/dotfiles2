@@ -25,6 +25,7 @@
    terraform-mode
    flatland-theme
    display-theme
+   nginx-mode
 ))
 
 ;; Whoami
