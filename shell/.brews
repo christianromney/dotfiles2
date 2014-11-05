@@ -1,6 +1,7 @@
 ack
 ant
 aria2
+ascii
 asciidoc
 autoconf
 automake
@@ -37,6 +38,7 @@ git-flow
 git-multipush
 go
 graphviz
+heroku-toolbelt
 htop-osx
 ispell
 jack
@@ -73,8 +75,11 @@ packer
 patchutils
 pcre
 pkg-config
+postgresql
 psgrep
 pstree
+pyenv
+pyenv-virtualenv
 rbenv
 rbenv-gem-rehash
 rbenv-gemset
@@ -94,6 +99,7 @@ vim
 wakeonlan
 watch
 wget
+wtf
 x264
 xml-coreutils
 xmlstarlet

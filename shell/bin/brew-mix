@@ -21,7 +21,7 @@
 #   brew unmix (brew|cask) <formula> - removes a new brew/cask
 #   brew drink                       - installs everything in the lists (that isn't already)
 
-if [ $# -lt 2 ]; then
+if [[ $# -lt 2 ]]; then
 cat <<EOF
   usage: $(basename $0) (brew|cask) <formula> [options]
 
@@ -38,20 +38,20 @@ flag=""
 
 state=".brews"
 
-if [ $command = "cask" ]; then
+if [[ $command = "cask" ]]; then
   state=".casks"
 fi
 
 realfile=$HOME/$(readlink $HOME/$state)
 
-if [ ! -f $realfile ]; then
+if [[ ! -f $realfile ]]; then
   echo "$command file $realfile not found"
   exit 1
 fi
 
 grep -e $formula $realfile > /dev/null
 
-if [ $? -eq 0 ]; then
+if [[ $? -eq 0 ]]; then
     echo "$command $formula is already in the mix"
   exit 0
 else
@@ -61,11 +61,11 @@ else
   uniq $realfile /tmp/$state
   mv /tmp/$state $realfile
 
-  if [ $# -eq 3]; then
+  if [ $# -eq 3 ]; then
     flag=$3
   fi
 
-  if [ $flag = "-i" ]; then
+  if [[ $flag = "-i" ]]; then
     brew drink
   else
     echo "Added $command file $formula to the mix. 'brew drink' to install."
