@@ -32,9 +32,9 @@ EOF
 exit 0
 fi
 
+action=$(basename  $0)
 command=$1
 formula=$2
-flag=""
 
 state=".brews"
 
@@ -49,25 +49,32 @@ if [[ ! -f $realfile ]]; then
   exit 1
 fi
 
-grep -e $formula $realfile > /dev/null
-
-if [[ $? -eq 0 ]]; then
-    echo "$command $formula is already in the mix"
-  exit 0
+# Execute
+if [[ $action = "brew-unmix" ]]; then
+    # brew-unmix 
+    
+    # Remove from file
+    sed -e /$formula/d -i '' $realfile
+    
+    # Remove if installed
+    brew list | grep $formula
+    if [[ $? -eq 0 ]]; then
+      brew $command remove $formula
+    fi
 else
-  echo "$formula" >> $realfile  
-  sync
-  sort $realfile -o $realfile 
-  uniq $realfile /tmp/$state
-  mv /tmp/$state $realfile
+    # brew-mix
+    grep -e $formula $realfile > /dev/null
+    if [[ $? -eq 0 ]]; then   
+      echo "$command $formula is already in the mix"
+      exit 0
+    else
+        echo "$formula" >> $realfile  
+        sync
+        sort $realfile -o $realfile 
+        uniq $realfile /tmp/$state
+        mv /tmp/$state $realfile
 
-  if [ $# -eq 3 ]; then
-    flag=$3
-  fi
-
-  if [[ $flag = "-i" ]]; then
-    brew drink
-  else
-    echo "Added $command file $formula to the mix. 'brew drink' to install."
-  fi
+        echo "Added $command file $formula to the mix."
+        brew drink
+    fi
 fi
