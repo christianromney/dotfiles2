@@ -78,3 +78,4 @@ projectile.cache
 personal/*.el
 personal/snippets
 sonar-project.properties
+jmeter.log
