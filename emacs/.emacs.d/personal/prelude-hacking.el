@@ -39,6 +39,7 @@
 ;;(require git-gutter-fringe+)
 
 ;; Ctags
+(setq path-to-ctags "/usr/local/bin/ctags")
 (setq tags-revert-without-query t)
 (global-set-key (kbd "<f7>") 'ctags-create-or-update-tags-table)
 (global-set-key (kbd "M-.")  'ctags-search)
@@ -76,6 +77,9 @@
   (just-one-space -1))
 
 ;; TAGS management
+(require 'ctags)
+(setq projectile-tags-command "/usr/local/bin/ctags -Re %s %s")
+
 (autoload 'turn-on-ctags-auto-update-mode
   "ctags-update" "turn on ctags-auto-update-mode." t)
 

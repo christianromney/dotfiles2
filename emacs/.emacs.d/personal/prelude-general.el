@@ -62,3 +62,6 @@
 ;; File handling
 (setq backup-directory-alist
       '(("." . "~/.emacs.backups")))
+
+;; General File Associations
+(setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist))

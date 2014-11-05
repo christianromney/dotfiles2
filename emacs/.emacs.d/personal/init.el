@@ -26,6 +26,8 @@
    flatland-theme
    display-theme
    nginx-mode
+   multi-term
+   adoc-mode
 ))
 
 ;; Whoami

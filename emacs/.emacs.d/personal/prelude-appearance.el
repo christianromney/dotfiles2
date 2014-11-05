@@ -4,7 +4,7 @@
 
 ;; Appearance
 (disable-theme 'zenburn)
-(load-theme 'flatland t)
+(load-theme 'flatland)
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-18"))
 
 (require 'ansi-color)
