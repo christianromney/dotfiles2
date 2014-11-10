@@ -21,4 +21,4 @@
 (add-hook 'clojure-mode-hook
           (lambda ()
             (push '("fn" . ?𝑓) prettify-symbols-alist)
-            (push '("=/=" . ?≠) prettify-symbols-alist))))
+            (push '("=/=" . ?≠) prettify-symbols-alist) ))
