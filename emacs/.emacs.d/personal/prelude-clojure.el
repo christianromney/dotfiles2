@@ -16,3 +16,8 @@
 
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
+
+;; Make fn look nice
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (push '("fn" . ?ƒ) prettify-symbols-alist)))
