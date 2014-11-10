@@ -1,0 +1,93 @@
+.TH "GCLOUD PREVIEW CONTAINER CLUSTERS CREATE" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_container_clusters_create \- create a cluster for running containers
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ container\ clusters\ create\ \fINAME\fR [\fB\-\-cluster\-api\-version\fR\ \fICLUSTER_API_VERSION\fR] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-machine\-type\fR\ \fIMACHINE_TYPE\fR,\ \fB\-m\fR\ \fIMACHINE_TYPE\fR] [\fB\-\-no\-healthcheck\fR] [\fB\-\-num\-nodes\fR\ \fINUM_NODES\fR;\ default="3"] [\fB\-\-password\fR\ \fIPASSWORD\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] [\fB\-\-source\-image\fR\ \fISOURCE_IMAGE\fR] [\fB\-\-user\fR\ \fIUSER\fR,\ \fB\-u\fR\ \fIUSER\fR;\ default="admin"] [\fB\-\-zone\fR\ \fIZONE\fR,\ \fB\-z\fR\ \fIZONE\fR] [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+Create a cluster for running containers\&.
+.SH "POSITIONAL ARGUMENTS"
+.PP
+\fINAME\fR
+.RS 4
+The name of this cluster\&.
+.RE
+.SH "FLAGS"
+.PP
+\fB\-\-cluster\-api\-version\fR \fICLUSTER_API_VERSION\fR
+.RS 4
+The kubernetes release version to launch the cluster with\&. Defaults to server\-specified\&.
+.RE
+.PP
+\fB\-\-machine\-type\fR \fIMACHINE_TYPE\fR, \fB\-m\fR \fIMACHINE_TYPE\fR
+.RS 4
+The type of machine to use for workers\&. Defaults to server\-specified
+.RE
+.PP
+\fB\-\-no\-healthcheck\fR
+.RS 4
+Do not wait for the cluster api to initialize after creation\&. If set, return cluster description as soon as it is created\&.
+.RE
+.PP
+\fB\-\-num\-nodes\fR \fINUM_NODES\fR; default="3"
+.RS 4
+The number of nodes in the cluster\&.
+.RE
+.PP
+\fB\-\-password\fR \fIPASSWORD\fR
+.RS 4
+The password to use for cluster auth\&.
+.RE
+.PP
+\fB\-\-source\-image\fR \fISOURCE_IMAGE\fR
+.RS 4
+The source image to use for workers\&. Defaults to server\-specified
+.RE
+.PP
+\fB\-\-user\fR \fIUSER\fR, \fB\-u\fR \fIUSER\fR; default="admin"
+.RS 4
+The user name to use for cluster auth\&.
+.RE
+.SS "GLOBAL FLAGS"
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-\-zone\fR \fIZONE\fR, \fB\-z\fR \fIZONE\fR
+.RS 4
+The zone (e\&.g\&. us\-central1\-a) for the cluster
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

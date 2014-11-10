@@ -1,0 +1,159 @@
+<html devsite="">
+<head>
+<title>gcloud preview managed-instance-groups start-rolling-update</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="project_path" value="/sdk/_project.yaml">
+<meta name="book_path" value="/sdk/_book.yaml">
+<!--
+        THIS DOC IS GENERATED.  DO NOT EDIT.
+        -->
+<style>
+  dd { margin-bottom: 1ex; }
+  .hangingindent { padding-left: 1.5em; text-indent: -1.5em; }
+</style>
+</head>
+<body><dl>
+<section>
+<dt>NAME</dt>
+<dd>gcloud preview managed-instance-groups start-rolling-update - starts a new rolling update</dd>
+</section><section>
+<dt>SYNOPSIS</dt>
+<dd><dl>
+<dt class="hangingindent">
+<code>gcloud preview managed-instance-groups start-rolling-update</code>&nbsp;&nbsp;&#32;<code><var>GROUP</var></code>&nbsp;&nbsp;&#32;<nobr>[<code>--api-version</code>&nbsp;&nbsp;&#32;<code><var>API_VERSION</var></code>;&nbsp;&nbsp;&#32;default="v1beta2"]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--format</code>&nbsp;&nbsp;&#32;<code><var>FORMAT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--help</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--max-num-concurrent-instances</code>&nbsp;&nbsp;&#32;<code><var>MAX_NUM_CONCURRENT_INSTANCES</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--num-canary-instances</code>&nbsp;&nbsp;&#32;<code><var>NUM_CANARY_INSTANCES</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--project</code>&nbsp;&nbsp;&#32;<code><var>PROJECT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--quiet</code>,&nbsp;&nbsp;&#32;<code>-q</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--sleep-after-instance-restart</code>&nbsp;&nbsp;&#32;<code><var>SLEEP_AFTER_INSTANCE_RESTART</var></code>]&nbsp;&nbsp;&#32;<code>--template</code>&nbsp;&nbsp;&#32;<code><var>TEMPLATE</var></code>&nbsp;&nbsp;&#32;[<code>-h</code>]</nobr>
+</dt>
+
+
+</dl></dd>
+</section><section>
+<dt>DESCRIPTION</dt>
+<dd>A rolling update causes the service to gradually recreate your         existing instances with the new template. You can increase the number         of instances updated simultaneously with the         --max-num-concurrent-instances flag.</dd>
+<dd>If you are not sure you want to apply an update to all existing         instances, you can use the --num-canary-instances flag and the update         will automatically be paused after updating the number of instances         specified. Afterwards, you can decide whether to cancel or continue         the update.</dd>
+<dd>In case you notice your managed instance group misbehaving due to the         new template, you can roll back the update. This will stop the update         from being applied to more instances, and instances already created         with the new template will be recreated with the last template applied         before the current update.</dd>
+</section><section>
+<dt>POSITIONAL ARGUMENTS</dt>
+<dd><dl>
+<dt>
+<code><var>GROUP</var></code>
+</dt>
+
+<dd>
+Managed instance group name.
+</dd>
+
+</dl></dd>
+</section><section>
+<dt>FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--max-num-concurrent-instances</code> <code><var>MAX_NUM_CONCURRENT_INSTANCES</var></code>
+</dt>
+
+<dd>
+Maximum number of instances that can be updated simultaneously.
+</dd>
+
+
+<dt>
+<code>--num-canary-instances</code> <code><var>NUM_CANARY_INSTANCES</var></code>
+</dt>
+
+<dd>
+Number of instances updated as a part of canary phase.
+</dd>
+
+
+<dt>
+<code>--sleep-after-instance-restart</code> <code><var>SLEEP_AFTER_INSTANCE_RESTART</var></code>
+</dt>
+
+<dd>
+Time period after the instance has been restarted but before marking
+the update of this instance as done. Valid units for this flag are <code><var>s</var></code>
+for seconds, <code><var>m</var></code> for minutes, <code><var>h</var></code> for hours and <code><var>d</var></code> for days. If
+no unit is specified, seconds is assumed.
+</dd>
+
+
+<dt>
+<code>--template</code> <code><var>TEMPLATE</var></code>
+</dt>
+
+<dd>
+Name of the Compute Engine instance template resource.
+</dd>
+
+</dl></dd>
+<section id="_global_flags">
+<dt>GLOBAL FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--api-version</code> <code><var>API_VERSION</var></code>; default="v1beta2"
+</dt>
+
+<dd>
+Optional API version.
+</dd>
+
+
+<dt>
+<code>--format</code> <code><var>FORMAT</var></code>
+</dt>
+
+<dd>
+Specify a format for printed output. By default, a command-specific
+human-friendly output format is used. Setting this flag to one of
+the available options will serialize the result of the command in
+the chosen format and print it to stdout. Supported formats are:
+<code>json</code>, <code>text</code>, <code>yaml</code>.
+</dd>
+
+
+<dt>
+<code>--help</code>
+</dt>
+
+<dd>
+Display detailed help.
+</dd>
+
+
+<dt>
+<code>--project</code> <code><var>PROJECT</var></code>
+</dt>
+
+<dd>
+The Google Cloud Platform project name to use for this invocation. If
+omitted then the current project is assumed.
+</dd>
+
+
+<dt>
+<code>--quiet</code>, <code>-q</code>
+</dt>
+
+<dd>
+Disable all interactive prompts when running gcloud commands. If input
+is required, defaults will be used, or an error will be raised.
+</dd>
+
+
+<dt>
+<code>-h</code>
+</dt>
+
+<dd>
+Print a summary help and exit.
+</dd>
+
+</dl></dd>
+</section>
+</section><section>
+<dt>NOTES</dt>
+<dd>This command is in the Google Cloud SDK <code>preview</code> component. See
+<a href="/sdk/gcloud/#gcloud.components">installing components</a>
+if it is not installed.</dd>
+</section>
+</dl></body>
+</html>
+

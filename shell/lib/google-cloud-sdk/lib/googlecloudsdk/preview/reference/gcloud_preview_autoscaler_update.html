@@ -1,0 +1,199 @@
+<html devsite="">
+<head>
+<title>gcloud preview autoscaler update</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="project_path" value="/sdk/_project.yaml">
+<meta name="book_path" value="/sdk/_book.yaml">
+<!--
+        THIS DOC IS GENERATED.  DO NOT EDIT.
+        -->
+<style>
+  dd { margin-bottom: 1ex; }
+  .hangingindent { padding-left: 1.5em; text-indent: -1.5em; }
+</style>
+</head>
+<body><dl>
+<section>
+<dt>NAME</dt>
+<dd>gcloud preview autoscaler update - update Autoscaler instances</dd>
+</section><section>
+<dt>SYNOPSIS</dt>
+<dd><dl>
+<dt class="hangingindent">
+<code>gcloud preview autoscaler update</code>&nbsp;&nbsp;&#32;<code><var>NAME</var></code>&nbsp;&nbsp;&#32;<nobr>[<code>--cool-down-period</code>&nbsp;&nbsp;&#32;<code><var>COOL_DOWN_PERIOD</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--custom-metric</code>&nbsp;&nbsp;&#32;<code><var>CUSTOM_METRIC</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--custom-metric-utilization-target-type</code>&nbsp;&nbsp;&#32;<code><var>CUSTOM_METRIC_UTILIZATION_TARGET_TYPE</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--description</code>&nbsp;&nbsp;&#32;<code><var>DESCRIPTION</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--format</code>&nbsp;&nbsp;&#32;<code><var>FORMAT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--help</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--max-num-replicas</code>&nbsp;&nbsp;&#32;<code><var>MAX_NUM_REPLICAS</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--min-num-replicas</code>&nbsp;&nbsp;&#32;<code><var>MIN_NUM_REPLICAS</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--project</code>&nbsp;&nbsp;&#32;<code><var>PROJECT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--quiet</code>,&nbsp;&nbsp;&#32;<code>-q</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--target</code>&nbsp;&nbsp;&#32;<code><var>TARGET</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--target-cpu-utilization</code>&nbsp;&nbsp;&#32;<code><var>TARGET_CPU_UTILIZATION</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--target-custom-metric-utilization</code>&nbsp;&nbsp;&#32;<code><var>TARGET_CUSTOM_METRIC_UTILIZATION</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--target-load-balancer-utilization</code>&nbsp;&nbsp;&#32;<code><var>TARGET_LOAD_BALANCER_UTILIZATION</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>-h</code>]</nobr>
+</dt>
+
+
+</dl></dd>
+</section><section>
+<dt>DESCRIPTION</dt>
+<dd>Update Autoscaler instances.</dd>
+</section><section>
+<dt>POSITIONAL ARGUMENTS</dt>
+<dd><dl>
+<dt>
+<code><var>NAME</var></code>
+</dt>
+
+<dd>
+Autoscaler name.
+</dd>
+
+</dl></dd>
+</section><section>
+<dt>FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--cool-down-period</code> <code><var>COOL_DOWN_PERIOD</var></code>
+</dt>
+
+<dd>
+Number of seconds Autoscaler will wait between resizing collection.
+</dd>
+
+
+<dt>
+<code>--custom-metric</code> <code><var>CUSTOM_METRIC</var></code>
+</dt>
+
+<dd>
+A Google Cloud Monitoring instance metric (see <a href="https://developers.google.com/cloud-monitoring/metrics">https://developers.google.com/cloud-monitoring/metrics</a>).
+</dd>
+
+
+<dt>
+<code>--custom-metric-utilization-target-type</code> <code><var>CUSTOM_METRIC_UTILIZATION_TARGET_TYPE</var></code>
+</dt>
+
+<dd>
+Type of target you specified, you can choose from the following: GAUGE, DELTA_PER_SECOND, DELTA_PER_MINUTE.
+</dd>
+
+
+<dt>
+<code>--description</code> <code><var>DESCRIPTION</var></code>
+</dt>
+
+<dd>
+Notes about Autoscaler.
+</dd>
+
+
+<dt>
+<code>--max-num-replicas</code> <code><var>MAX_NUM_REPLICAS</var></code>
+</dt>
+
+<dd>
+Maximum number of replicas Autoscaler will set.
+</dd>
+
+
+<dt>
+<code>--min-num-replicas</code> <code><var>MIN_NUM_REPLICAS</var></code>
+</dt>
+
+<dd>
+Minimum number of replicas Autoscaler will set.
+</dd>
+
+
+<dt>
+<code>--target</code> <code><var>TARGET</var></code>
+</dt>
+
+<dd>
+Resource to be scaled.
+</dd>
+
+
+<dt>
+<code>--target-cpu-utilization</code> <code><var>TARGET_CPU_UTILIZATION</var></code>
+</dt>
+
+<dd>
+CPU utilization level Autoscaler will aim to maintain (0.0 to 1.0).
+</dd>
+
+
+<dt>
+<code>--target-custom-metric-utilization</code> <code><var>TARGET_CUSTOM_METRIC_UTILIZATION</var></code>
+</dt>
+
+<dd>
+Custom metric level Autoscaler will aim to maintain (greater than 0.0).
+</dd>
+
+
+<dt>
+<code>--target-load-balancer-utilization</code> <code><var>TARGET_LOAD_BALANCER_UTILIZATION</var></code>
+</dt>
+
+<dd>
+Load balancer utilization level Autoscaler will aim to maintain (greater than 0.0).
+</dd>
+
+</dl></dd>
+<section id="_global_flags">
+<dt>GLOBAL FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--format</code> <code><var>FORMAT</var></code>
+</dt>
+
+<dd>
+Specify a format for printed output. By default, a command-specific
+human-friendly output format is used. Setting this flag to one of
+the available options will serialize the result of the command in
+the chosen format and print it to stdout. Supported formats are:
+<code>json</code>, <code>text</code>, <code>yaml</code>.
+</dd>
+
+
+<dt>
+<code>--help</code>
+</dt>
+
+<dd>
+Display detailed help.
+</dd>
+
+
+<dt>
+<code>--project</code> <code><var>PROJECT</var></code>
+</dt>
+
+<dd>
+The Google Cloud Platform project name to use for this invocation. If
+omitted then the current project is assumed.
+</dd>
+
+
+<dt>
+<code>--quiet</code>, <code>-q</code>
+</dt>
+
+<dd>
+Disable all interactive prompts when running gcloud commands. If input
+is required, defaults will be used, or an error will be raised.
+</dd>
+
+
+<dt>
+<code>-h</code>
+</dt>
+
+<dd>
+Print a summary help and exit.
+</dd>
+
+</dl></dd>
+</section>
+</section><section>
+<dt>NOTES</dt>
+<dd>This command is in the Google Cloud SDK <code>preview</code> component. See
+<a href="/sdk/gcloud/#gcloud.components">installing components</a>
+if it is not installed.</dd>
+</section>
+</dl></body>
+</html>
+

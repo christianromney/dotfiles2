@@ -1,0 +1,67 @@
+.TH "GCLOUD PREVIEW RESOURCE-VIEWS RESOURCES ADDINSTANCE" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_resource-views_resources_addinstance \- adds resources to a resource view by resource name
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ resource\-views\ resources\ addinstance\ \fIRESOURCE\fR [\fIRESOURCE\fR\ \&...] [\fB\-\-api\-version\fR\ \fIAPI_VERSION\fR;\ default="v1beta1"] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] [\fB\-\-region\fR\ \fIREGION\fR] [\fB\-\-zone\fR\ \fIZONE\fR] [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+This command adds resources to a resource view by resource name\&. The resource name will be converted to fully\-qualified URLs before it is added\&.
+.SH "POSITIONAL ARGUMENTS"
+.PP
+\fIRESOURCE\fR [\fIRESOURCE\fR \&...]
+.RS 4
+Resources to add to the resource view\&.
+.RE
+.SH "FLAGS"
+.PP
+\fB\-\-api\-version\fR \fIAPI_VERSION\fR; default="v1beta1"
+.RS 4
+Optional API version\&.
+.RE
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-\-region\fR \fIREGION\fR
+.RS 4
+Resource view region name\&.
+.RE
+.PP
+\fB\-\-zone\fR \fIZONE\fR
+.RS 4
+Resource view zone name\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

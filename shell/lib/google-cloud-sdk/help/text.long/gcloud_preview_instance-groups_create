@@ -1,0 +1,68 @@
+NAME
+
+      gcloud preview instance-groups create - insert (create) an instance group
+
+SYNOPSIS
+
+      gcloud preview instance-groups create NAME
+         [--api-version API_VERSION; default="v1beta2"]
+         [--description DESCRIPTION] [--format FORMAT] [--help]
+         [--network NETWORK] [--project PROJECT] [--quiet, -q] [-h]
+
+DESCRIPTION
+
+      Insert (create) an instance group.
+
+POSITIONAL ARGUMENTS
+
+      NAME
+
+         Instance group name.
+
+FLAGS
+
+      --description DESCRIPTION
+
+         Description for the group.
+
+      --network NETWORK
+
+         Name of the Compute Engine network associated with the group.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta2"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

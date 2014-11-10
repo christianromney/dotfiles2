@@ -1,0 +1,81 @@
+NAME
+
+      gcloud preview replica-pools update-template - updates the template for an
+         existing replica pool
+
+SYNOPSIS
+
+      gcloud preview replica-pools update-template POOL
+         [--api-version API_VERSION; default="v1beta1"] [--format FORMAT]
+         [--help] [--param PARAM=VALUE [PARAM=VALUE ...]]
+         [--param-from-file PARAM=FILE_PATH [PARAM=FILE_PATH ...]]
+         [--project PROJECT] [--quiet, -q] --template TEMPLATE [-h]
+
+DESCRIPTION
+
+      This command updates the template for an existing replica pool.
+
+      The new template won't apply to existing replicas unless they are
+      restarted but applies to all new replicas added to the replica pool.
+
+POSITIONAL ARGUMENTS
+
+      POOL
+
+         Replica pool name.
+
+FLAGS
+
+      --param PARAM=VALUE [PARAM=VALUE ...]
+
+         A list of key=value parameters to substitute in the template before the
+         template is submitted to the replica pool. This does not change the
+         actual template file.
+
+      --param-from-file PARAM=FILE_PATH [PARAM=FILE_PATH ...]
+
+         A list of files each containing a key=value parameter to substitute in
+         the template before the template is submitted to the replica pool. This
+         does not change the actual template file.
+
+      --template TEMPLATE
+
+         Path to YAML or JSON file containing the new replica pool template.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta1"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

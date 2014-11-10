@@ -1,0 +1,44 @@
+name: nginx_php
+modules:
+  nginx_php:
+    type: REPLICA_POOL
+    replicaPoolModule:
+      numReplicas: 1
+      replicaPoolParams:
+        v1beta1:
+          machineType: n1-standard-1
+          zone: us-central1-a
+          baseInstanceName: nginx
+          disksToCreate:
+            - boot: true
+              initializeParams:
+                sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-7-wheezy-v20131120
+                diskSizeGb: 100
+          initAction: install_nginx_php
+          networkInterfaces:
+            - network: default
+              accessConfigs:
+                - name: External NAT
+                  type: ONE_TO_ONE_NAT
+      envVariables:
+        USE_FPM:
+          value: true
+
+actions:
+  install_nginx_php:
+    commands: [
+      "apt-get update",
+      "apt-get -y -qq install php5-cli php5-cgi php5-fpm spawn-fcgi psmisc nginx php-apc php5-mysql",
+      "apt-get -y -qq install php5-mysqlnd php5-memcache php5-memcached",
+      "mkdir -p /srv/www/example/public_html",
+      "mkdir -p /srv/www/example/logs",
+      "chown -R www-data:www-data /srv/www/example",
+      "%file:nginx-site.sh",
+      "%file:php-fastcgi.sh",
+      "%file:php5-fpm.sh",
+      "%file:test-php.sh",
+      "/etc/init.d/php5-fpm restart",
+      "/etc/init.d/php-fcgi start",
+      "/etc/init.d/nginx restart",
+    ]
+

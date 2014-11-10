@@ -1,0 +1,93 @@
+NAME
+
+      gcloud preview container clusters create - create a cluster for running
+         containers
+
+SYNOPSIS
+
+      gcloud preview container clusters create NAME
+         [--cluster-api-version CLUSTER_API_VERSION] [--format FORMAT] [--help]
+         [--machine-type MACHINE_TYPE, -m MACHINE_TYPE] [--no-healthcheck]
+         [--num-nodes NUM_NODES; default="3"] [--password PASSWORD]
+         [--project PROJECT] [--quiet, -q] [--source-image SOURCE_IMAGE]
+         [--user USER, -u USER; default="admin"] [--zone ZONE, -z ZONE] [-h]
+
+DESCRIPTION
+
+      Create a cluster for running containers.
+
+POSITIONAL ARGUMENTS
+
+      NAME
+
+         The name of this cluster.
+
+FLAGS
+
+      --cluster-api-version CLUSTER_API_VERSION
+
+         The kubernetes release version to launch the cluster with. Defaults to
+         server-specified.
+
+      --machine-type MACHINE_TYPE, -m MACHINE_TYPE
+
+         The type of machine to use for workers. Defaults to server-specified
+
+      --no-healthcheck
+
+         Do not wait for the cluster api to initialize after creation. If set,
+         return cluster description as soon as it is created.
+
+      --num-nodes NUM_NODES; default="3"
+
+         The number of nodes in the cluster.
+
+      --password PASSWORD
+
+         The password to use for cluster auth.
+
+      --source-image SOURCE_IMAGE
+
+         The source image to use for workers. Defaults to server-specified
+
+      --user USER, -u USER; default="admin"
+
+         The user name to use for cluster auth.
+
+GLOBAL FLAGS
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      --zone ZONE, -z ZONE
+
+         The zone (e.g. us-central1-a) for the cluster
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

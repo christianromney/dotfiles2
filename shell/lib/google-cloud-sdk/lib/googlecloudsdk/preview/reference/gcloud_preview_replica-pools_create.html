@@ -1,0 +1,190 @@
+<html devsite="">
+<head>
+<title>gcloud preview replica-pools create</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="project_path" value="/sdk/_project.yaml">
+<meta name="book_path" value="/sdk/_book.yaml">
+<!--
+        THIS DOC IS GENERATED.  DO NOT EDIT.
+        -->
+<style>
+  dd { margin-bottom: 1ex; }
+  .hangingindent { padding-left: 1.5em; text-indent: -1.5em; }
+</style>
+</head>
+<body><dl>
+<section>
+<dt>NAME</dt>
+<dd>gcloud preview replica-pools create - insert (Create) a replica pool</dd>
+</section><section>
+<dt>SYNOPSIS</dt>
+<dd><dl>
+<dt class="hangingindent">
+<code>gcloud preview replica-pools create</code>&nbsp;&nbsp;&#32;<code><var>POOL</var></code>&nbsp;&nbsp;&#32;<nobr>[<code>--api-version</code>&nbsp;&nbsp;&#32;<code><var>API_VERSION</var></code>;&nbsp;&nbsp;&#32;default="v1beta1"]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--description</code>&nbsp;&nbsp;&#32;<code><var>DESCRIPTION</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--format</code>&nbsp;&nbsp;&#32;<code><var>FORMAT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--help</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--no-auto-restart</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--param</code>&nbsp;&nbsp;&#32;<code><var>PARAM</var></code>=<code><var>VALUE</var></code>&nbsp;&nbsp;&#32;[<code><var>PARAM</var></code>=<code><var>VALUE</var></code>&nbsp;&nbsp;&#32;…]]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--param-from-file</code>&nbsp;&nbsp;&#32;<code><var>PARAM</var></code>=<code><var>FILE_PATH</var></code>&nbsp;&nbsp;&#32;[<code><var>PARAM</var></code>=<code><var>FILE_PATH</var></code>&nbsp;&nbsp;&#32;…]]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--project</code>&nbsp;&nbsp;&#32;<code><var>PROJECT</var></code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--quiet</code>,&nbsp;&nbsp;&#32;<code>-q</code>]</nobr>&nbsp;&nbsp;&#32;<nobr>[<code>--resource-views</code>&nbsp;&nbsp;&#32;[<code><var>RESOURCE_VIEWS</var></code>&nbsp;&nbsp;&#32;…]]&nbsp;&nbsp;&#32;<code>--size</code>&nbsp;&nbsp;&#32;<code><var>SIZE</var></code>&nbsp;&nbsp;&#32;[<code>--target-pools</code>&nbsp;&nbsp;&#32;[<code><var>TARGET_POOLS</var></code>&nbsp;&nbsp;&#32;…]]&nbsp;&nbsp;&#32;<code>--template</code>&nbsp;&nbsp;&#32;<code><var>TEMPLATE</var></code>&nbsp;&nbsp;&#32;[<code>-h</code>]</nobr>
+</dt>
+
+
+</dl></dd>
+</section><section>
+<dt>DESCRIPTION</dt>
+<dd>Insert (Create) a replica pool.</dd>
+</section><section>
+<dt>POSITIONAL ARGUMENTS</dt>
+<dd><dl>
+<dt>
+<code><var>POOL</var></code>
+</dt>
+
+<dd>
+Replica pool name.
+</dd>
+
+</dl></dd>
+</section><section>
+<dt>FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--description</code> <code><var>DESCRIPTION</var></code>
+</dt>
+
+<dd>
+Replica pool description.
+</dd>
+
+
+<dt>
+<code>--no-auto-restart</code>
+</dt>
+
+<dd>
+If provided, unhealthy replicas in this Replica pool will not be automatically restarted.
+</dd>
+
+
+<dt>
+<code>--param</code> <code><var>PARAM</var></code>=<code><var>VALUE</var></code> [<code><var>PARAM</var></code>=<code><var>VALUE</var></code> …]
+</dt>
+
+<dd>
+A list of key=value parameters to substitute in the template before the template is submitted to the replica pool. This does not change the actual template file.
+</dd>
+
+
+<dt>
+<code>--param-from-file</code> <code><var>PARAM</var></code>=<code><var>FILE_PATH</var></code> [<code><var>PARAM</var></code>=<code><var>FILE_PATH</var></code> …]
+</dt>
+
+<dd>
+A list of files each containing a key=value parameter to substitute in the template before the template is submitted to the replica pool. This does not change the actual template file.
+</dd>
+
+
+<dt>
+<code>--resource-views</code> [<code><var>RESOURCE_VIEWS</var></code> …]
+</dt>
+
+<dd>
+Compute Engine Resource Views to add replicas to. Resource Views must be specified by URL. Example: --resource-views "https://view-url1 <a href="https://view-url2">https://view-url2</a>"
+</dd>
+
+
+<dt>
+<code>--size</code> <code><var>SIZE</var></code>
+</dt>
+
+<dd>
+Initial number of replicas in replica pool
+</dd>
+
+
+<dt>
+<code>--target-pools</code> [<code><var>TARGET_POOLS</var></code> …]
+</dt>
+
+<dd>
+Compute Engine Target Pools to add replicas to. Target Pools must be specified by name, not by URL. Example: --target-pools "target-pool-1 target-pool-2"
+</dd>
+
+
+<dt>
+<code>--template</code> <code><var>TEMPLATE</var></code>
+</dt>
+
+<dd>
+Path to YAML or JSON file containing the Replica pool template.
+</dd>
+
+</dl></dd>
+<section id="_global_flags">
+<dt>GLOBAL FLAGS</dt>
+<dd><dl>
+<dt>
+<code>--api-version</code> <code><var>API_VERSION</var></code>; default="v1beta1"
+</dt>
+
+<dd>
+Optional API version.
+</dd>
+
+
+<dt>
+<code>--format</code> <code><var>FORMAT</var></code>
+</dt>
+
+<dd>
+Specify a format for printed output. By default, a command-specific
+human-friendly output format is used. Setting this flag to one of
+the available options will serialize the result of the command in
+the chosen format and print it to stdout. Supported formats are:
+<code>json</code>, <code>text</code>, <code>yaml</code>.
+</dd>
+
+
+<dt>
+<code>--help</code>
+</dt>
+
+<dd>
+Display detailed help.
+</dd>
+
+
+<dt>
+<code>--project</code> <code><var>PROJECT</var></code>
+</dt>
+
+<dd>
+The Google Cloud Platform project name to use for this invocation. If
+omitted then the current project is assumed.
+</dd>
+
+
+<dt>
+<code>--quiet</code>, <code>-q</code>
+</dt>
+
+<dd>
+Disable all interactive prompts when running gcloud commands. If input
+is required, defaults will be used, or an error will be raised.
+</dd>
+
+
+<dt>
+<code>-h</code>
+</dt>
+
+<dd>
+Print a summary help and exit.
+</dd>
+
+</dl></dd>
+</section>
+</section><section>
+<dt>NOTES</dt>
+<dd>This command is in the Google Cloud SDK <code>preview</code> component. See
+<a href="/sdk/gcloud/#gcloud.components">installing components</a>
+if it is not installed.</dd>
+</section>
+</dl></body>
+</html>
+

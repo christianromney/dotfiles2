@@ -1,0 +1,133 @@
+.TH "GCLOUD PREVIEW MANAGED-INSTANCE-GROUPS" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_managed-instance-groups \- managed Instance Groups client
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ managed\-instance\-groups\ \fIGROUP\fR\ | \ \fICOMMAND\fR [\fB\-\-api\-version\fR\ \fIAPI_VERSION\fR;\ default="v1beta2"] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] \fB\-\-zone\fR\ \fIZONE\fR [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+Managed Instance Groups client\&.
+.SH "FLAGS"
+.PP
+\fB\-\-api\-version\fR \fIAPI_VERSION\fR; default="v1beta2"
+.RS 4
+Optional API version\&.
+.RE
+.PP
+\fB\-\-zone\fR \fIZONE\fR
+.RS 4
+Managed instance group\(cqs zone name\&.
+.RE
+.SS "GLOBAL FLAGS"
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "GROUPS"
+.sp
+\fIGROUP\fR is one of the following:
+.PP
+\fBupdates\fR
+.RS 4
+Managed Instance Group Updater client\&.
+.RE
+.SH "COMMANDS"
+.sp
+\fICOMMAND\fR is one of the following:
+.PP
+\fBabandon\-instances\fR
+.RS 4
+Abandons one or more instances from a managed instance group\&.
+.RE
+.PP
+\fBcreate\fR
+.RS 4
+Insert (Create) a managed instance group\&.
+.RE
+.PP
+\fBdelete\fR
+.RS 4
+Deletes a managed instance group and its corresponding instances\&.
+.RE
+.PP
+\fBdelete\-instances\fR
+.RS 4
+Deletes one or more instances from a managed instance group\&.
+.RE
+.PP
+\fBdescribe\fR
+.RS 4
+Gets information about a single managed instance group\&.
+.RE
+.PP
+\fBget\-operation\fR
+.RS 4
+Gets information about a single managed instance group operation\&.
+.RE
+.PP
+\fBlist\fR
+.RS 4
+Lists all managed instance groups in a given project\&.
+.RE
+.PP
+\fBlist\-operations\fR
+.RS 4
+Lists managed instance group operations in a given project\&.
+.RE
+.PP
+\fBrecreate\-instances\fR
+.RS 4
+Recreates one or more instances in a managed instance group\&.
+.RE
+.PP
+\fBresize\fR
+.RS 4
+Resizes a managed\-instance\-group to a provided size\&.
+.RE
+.PP
+\fBset\-target\-pools\fR
+.RS 4
+Sets the target\-pools for an existing managed instance group\&.
+.RE
+.PP
+\fBset\-template\fR
+.RS 4
+Sets the template for an existing managed instance group\&.
+.RE
+.PP
+\fBstart\-rolling\-update\fR
+.RS 4
+Starts a new rolling update\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

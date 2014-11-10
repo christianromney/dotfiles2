@@ -1,0 +1,40 @@
+name: nodejs
+modules:
+  nodejs:
+    type: REPLICA_POOL
+    replicaPoolModule:
+      numReplicas: 1
+      replicaPoolParams:
+        v1beta1:
+          machineType: n1-standard-1
+          zone: us-central1-a
+          baseInstanceName: nodejs
+          disksToCreate:
+            - boot: true
+              initializeParams:
+                sourceImage: https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-7-wheezy-v20131120
+                diskSizeGb: 100
+          initAction: install
+          networkInterfaces:
+            - network: default
+              accessConfigs:
+                - name: External NAT
+                  type: ONE_TO_ONE_NAT
+      envVariables:
+        PORT:
+          value: 8080
+        VERSION:
+          value: 10.2
+actions:
+  install:
+    commands: [
+      "wget -O nodejs.tar.gz http://nodejs.org/dist/v0.${VERSION}/node-v0.${VERSION}-linux-x64.tar.gz",
+      "tar -xzf nodejs.tar.gz",
+      "cp node-v0.${VERSION}-linux-x64/bin/* /usr/local/bin/",
+      "cp -r node-v0.${VERSION}-linux-x64/lib/* /usr/local/lib/",
+      "mkdir -p /usr/local/share/man/man1",
+      "cp -r node-v0.${VERSION}-linux-x64/share/man/man1/node.1 /usr/local/share/man/man1",
+      "%file:setup-node.sh",
+      "/etc/init.d/nodejs start",
+    ]
+

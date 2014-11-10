@@ -1,0 +1,73 @@
+NAME
+
+      gcloud preview container - deploy and manage clusters of machines for
+         running containers
+
+SYNOPSIS
+
+      gcloud preview container GROUP [--format FORMAT] [--help]
+         [--project PROJECT] [--quiet, -q] [--zone ZONE, -z ZONE] [-h]
+
+DESCRIPTION
+
+      Deploy and manage clusters of machines for running containers.
+
+FLAGS
+
+      --zone ZONE, -z ZONE
+
+         The zone (e.g. us-central1-a) for the cluster
+
+GLOBAL FLAGS
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+GROUPS
+
+      GROUP is one of the following:
+
+      clusters
+
+         Deploy and teardown Google Container Engine clusters.
+
+      pods
+
+         Manage Kubernetes pods on a running cluster.
+
+      replicationcontrollers
+
+         Manage Kubernetes ReplicationControllers on a running cluster.
+
+      services
+
+         Manage Kubernetes Services on a running cluster.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

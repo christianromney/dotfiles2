@@ -1,0 +1,97 @@
+.TH "GCLOUD PREVIEW" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview \- manage Preview CLI command groups
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ \fIGROUP\fR\ | \ \fICOMMAND\fR [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+Manage Preview CLI command groups\&.
+.SH "FLAGS"
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "GROUPS"
+.sp
+\fIGROUP\fR is one of the following:
+.PP
+\fBapp\fR
+.RS 4
+Manage your App Engine app\&.
+.RE
+.PP
+\fBautoscaler\fR
+.RS 4
+Manage autoscalers of cloud resources\&.
+.RE
+.PP
+\fBcontainer\fR
+.RS 4
+Deploy and manage clusters of machines for running containers\&.
+.RE
+.PP
+\fBdatastore\fR
+.RS 4
+Manage your Cloud Datastore\&.
+.RE
+.PP
+\fBdeployment\-manager\fR
+.RS 4
+Manage Deployments of cloud resources\&.
+.RE
+.PP
+\fBinstance\-groups\fR
+.RS 4
+Manage Cloud Instance Groups\&.
+.RE
+.PP
+\fBmanaged\-instance\-groups\fR
+.RS 4
+Managed Instance Groups client\&.
+.RE
+.PP
+\fBreplica\-pools\fR
+.RS 4
+Manage cloud replica pools\&.
+.RE
+.PP
+\fBresource\-views\fR
+.RS 4
+Manage Cloud Resource Views\&.
+.RE
+.SH "COMMANDS"
+.sp
+\fICOMMAND\fR is one of the following:
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

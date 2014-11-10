@@ -1,0 +1,73 @@
+NAME
+
+      gcloud preview resource-views resources add - add resources to a resource
+         view
+
+SYNOPSIS
+
+      gcloud preview resource-views resources add RESOURCE [RESOURCE ...]
+         [--api-version API_VERSION; default="v1beta1"] [--format FORMAT]
+         [--help] [--project PROJECT] [--quiet, -q] [--region REGION]
+         [--zone ZONE] [-h]
+
+DESCRIPTION
+
+      This command adds resources to a resource view. You must provide a list of
+      fully-qualified URLs for each resource.
+
+      Alternatively, you can also use the addinstances command and provide
+      resource names rather than URLs.
+
+POSITIONAL ARGUMENTS
+
+      RESOURCE [RESOURCE ...]
+
+         A list of fully-qualified URLs to each resource that should be added to
+         this view. For example:
+         https://www.googleapis.com/compute/v1/projects/myproject/zones/us-central1-a/instances/instance-1
+
+FLAGS
+
+      --api-version API_VERSION; default="v1beta1"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      --region REGION
+
+         Resource view region name.
+
+      --zone ZONE
+
+         Resource view zone name.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

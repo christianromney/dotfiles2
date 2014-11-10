@@ -1,0 +1,62 @@
+.TH "GCLOUD PREVIEW REPLICA-POOLS LIST" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_replica-pools_list \- list all replica pools in a given project
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ replica\-pools\ list [\fB\-\-api\-version\fR\ \fIAPI_VERSION\fR;\ default="v1beta1"] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-limit\fR\ \fILIMIT\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] [\fB\-h\fR] [\fB\-l\fR]
+.SH "DESCRIPTION"
+.sp
+List all replica pools in a given project\&.
+.SH "FLAGS"
+.PP
+\fB\-\-limit\fR \fILIMIT\fR
+.RS 4
+The maximum number of results to list\&.
+.RE
+.PP
+\fB\-l\fR
+.RS 4
+If provided, prints a human\-readable table of replica pool names and currentNumReplicas for each replica pool\&. The table output is for convenience and should not be scripted against as it could change without notice\&.
+.RE
+.SS "GLOBAL FLAGS"
+.PP
+\fB\-\-api\-version\fR \fIAPI_VERSION\fR; default="v1beta1"
+.RS 4
+Optional API version\&.
+.RE
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

@@ -1,0 +1,72 @@
+NAME
+
+      gcloud preview managed-instance-groups resize - resizes a managed instance
+         group to a provided size
+
+SYNOPSIS
+
+      gcloud preview managed-instance-groups resize GROUP
+         [--api-version API_VERSION; default="v1beta2"] [--format FORMAT]
+         [--help] --new-size NEW_SIZE [--project PROJECT] [--quiet, -q] [-h]
+
+DESCRIPTION
+
+      This command resizes a managed instance group to a provided size.
+
+      If you resize down, the Instance Group Manager service deletes instances
+      from the group until the group reaches the desired size. To understand
+      what order the instances will be deleted in, please see the API
+      documentation.
+
+      If you resize up, the service adds instances to the group using the most
+      current instance template until the group reaches the desired size.
+
+POSITIONAL ARGUMENTS
+
+      GROUP
+
+         Managed instance group name.
+
+FLAGS
+
+      --new-size NEW_SIZE
+
+         New size for the managed instance group, must be >= 0.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta2"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

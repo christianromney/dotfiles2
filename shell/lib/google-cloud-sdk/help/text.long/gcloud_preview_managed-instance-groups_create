@@ -1,0 +1,85 @@
+NAME
+
+      gcloud preview managed-instance-groups create - insert (Create) a managed
+         instance group
+
+SYNOPSIS
+
+      gcloud preview managed-instance-groups create GROUP
+         [--api-version API_VERSION; default="v1beta2"]
+         --base-instance-name BASE_INSTANCE_NAME [--description DESCRIPTION]
+         [--format FORMAT] [--help] [--project PROJECT] [--quiet, -q]
+         --size SIZE [--target-pool [TARGET_POOL ...]] --template TEMPLATE [-h]
+
+DESCRIPTION
+
+      Insert (Create) a managed instance group.
+
+POSITIONAL ARGUMENTS
+
+      GROUP
+
+         Managed instance group name.
+
+FLAGS
+
+      --base-instance-name BASE_INSTANCE_NAME
+
+         The base name to use for the Compute Engine instances that will be
+         created in the managed instance group.
+
+      --description DESCRIPTION
+
+         Managed instance group description.
+
+      --size SIZE
+
+         Initial number of instances in the managed instance group.
+
+      --target-pool [TARGET_POOL ...]
+
+         Compute Engine Target Pools to add the instances to. Target Pools must
+         be specified by name, not by URL. Example: --target-pools
+         "target-pool-1 target-pool-2"
+
+      --template TEMPLATE
+
+         Name of the Compute Engine instance template resource to be used.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta2"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

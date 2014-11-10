@@ -1,0 +1,83 @@
+.TH "GCLOUD PREVIEW DEPLOYMENT-MANAGER DEPLOYMENTS CREATE" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_deployment-manager_deployments_create \- insert (Create) a deployment using a specified template
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ deployment\-manager\ deployments\ create\ \fIDEPLOYMENT\fR [\fB\-\-api\-version\fR\ \fIAPI_VERSION\fR;\ default="v1beta2"] [\fB\-\-description\fR\ \fIDESCRIPTION\fR] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-no\-poll\-for\-completion\fR] [\fB\-\-overrides\fR [\fIOVERRIDES\fR\ \&...]] [\fB\-\-polling\-period\fR\ \fIPOLLING_PERIOD\fR;\ default="10"] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] \fB\-\-template\fR\ \fITEMPLATE\fR [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+Insert (Create) a deployment using a specified template\&.
+.SH "POSITIONAL ARGUMENTS"
+.PP
+\fIDEPLOYMENT\fR
+.RS 4
+Deployment name\&.
+.RE
+.SH "FLAGS"
+.PP
+\fB\-\-description\fR \fIDESCRIPTION\fR
+.RS 4
+Deployment description\&.
+.RE
+.PP
+\fB\-\-no\-poll\-for\-completion\fR
+.RS 4
+Do not poll continuously for deployment completion\&. If set, only one Get API call is made\&. (default=False)
+.RE
+.PP
+\fB\-\-overrides\fR [\fIOVERRIDES\fR \&...]
+.RS 4
+Optional "Path=Value Path=Value \&..." template overrides\&. Overrides must be a list of space delimited key=value pairs\&. This overrides existing template settings for this deployment but does not change the template itself\&. Example: \-\-overrides $\&.modules\&.foo\&.replicaPoolModule\&.numReplicas=20 $\&.modules\&.bar\&.replicaPoolModule\&.numReplicas=5 \&...
+.RE
+.PP
+\fB\-\-polling\-period\fR \fIPOLLING_PERIOD\fR; default="10"
+.RS 4
+Number of seconds to sleep between consecutive polls\&. Only effective when \-\-poll\-for\-completion is provided\&.
+.RE
+.PP
+\fB\-\-template\fR \fITEMPLATE\fR
+.RS 4
+Name of the template to use\&. The template must exist in the system before creating the deployment\&.
+.RE
+.SS "GLOBAL FLAGS"
+.PP
+\fB\-\-api\-version\fR \fIAPI_VERSION\fR; default="v1beta2"
+.RS 4
+Optional API version\&.
+.RE
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

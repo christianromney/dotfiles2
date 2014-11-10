@@ -1,0 +1,104 @@
+.TH "GCLOUD PREVIEW AUTOSCALER CREATE" "1" "" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+.HP
+gcloud_preview_autoscaler_create \- create Autoscaler instances
+.SH "SYNOPSIS"
+.HP
+gcloud\ preview\ autoscaler\ create\ \fINAME\fR [\fB\-\-cool\-down\-period\fR\ \fICOOL_DOWN_PERIOD\fR] [\fB\-\-custom\-metric\fR\ \fICUSTOM_METRIC\fR] [\fB\-\-custom\-metric\-utilization\-target\-type\fR\ \fICUSTOM_METRIC_UTILIZATION_TARGET_TYPE\fR] [\fB\-\-description\fR\ \fIDESCRIPTION\fR] [\fB\-\-format\fR\ \fIFORMAT\fR] [\fB\-\-help\fR] [\fB\-\-max\-num\-replicas\fR\ \fIMAX_NUM_REPLICAS\fR] [\fB\-\-min\-num\-replicas\fR\ \fIMIN_NUM_REPLICAS\fR] [\fB\-\-project\fR\ \fIPROJECT\fR] [\fB\-\-quiet\fR,\ \fB\-q\fR] [\fB\-\-target\fR\ \fITARGET\fR] [\fB\-\-target\-cpu\-utilization\fR\ \fITARGET_CPU_UTILIZATION\fR] [\fB\-\-target\-custom\-metric\-utilization\fR\ \fITARGET_CUSTOM_METRIC_UTILIZATION\fR] [\fB\-\-target\-load\-balancer\-utilization\fR\ \fITARGET_LOAD_BALANCER_UTILIZATION\fR] [\fB\-h\fR]
+.SH "DESCRIPTION"
+.sp
+Create Autoscaler instances\&.
+.SH "POSITIONAL ARGUMENTS"
+.PP
+\fINAME\fR
+.RS 4
+Autoscaler name\&.
+.RE
+.SH "FLAGS"
+.PP
+\fB\-\-cool\-down\-period\fR \fICOOL_DOWN_PERIOD\fR
+.RS 4
+Number of seconds Autoscaler will wait between resizing collection\&.
+.RE
+.PP
+\fB\-\-custom\-metric\fR \fICUSTOM_METRIC\fR
+.RS 4
+A Google Cloud Monitoring instance metric (see
+https://developers\&.google\&.com/cloud\-monitoring/metrics)\&.
+.RE
+.PP
+\fB\-\-custom\-metric\-utilization\-target\-type\fR \fICUSTOM_METRIC_UTILIZATION_TARGET_TYPE\fR
+.RS 4
+Type of target you specified, you can choose from the following: GAUGE, DELTA_PER_SECOND, DELTA_PER_MINUTE\&.
+.RE
+.PP
+\fB\-\-description\fR \fIDESCRIPTION\fR
+.RS 4
+Notes about Autoscaler\&.
+.RE
+.PP
+\fB\-\-max\-num\-replicas\fR \fIMAX_NUM_REPLICAS\fR
+.RS 4
+Maximum number of replicas Autoscaler will set\&.
+.RE
+.PP
+\fB\-\-min\-num\-replicas\fR \fIMIN_NUM_REPLICAS\fR
+.RS 4
+Minimum number of replicas Autoscaler will set\&.
+.RE
+.PP
+\fB\-\-target\fR \fITARGET\fR
+.RS 4
+Resource to be scaled\&.
+.RE
+.PP
+\fB\-\-target\-cpu\-utilization\fR \fITARGET_CPU_UTILIZATION\fR
+.RS 4
+CPU utilization level Autoscaler will aim to maintain (0\&.0 to 1\&.0)\&.
+.RE
+.PP
+\fB\-\-target\-custom\-metric\-utilization\fR \fITARGET_CUSTOM_METRIC_UTILIZATION\fR
+.RS 4
+Custom metric level Autoscaler will aim to maintain (greater than 0\&.0)\&.
+.RE
+.PP
+\fB\-\-target\-load\-balancer\-utilization\fR \fITARGET_LOAD_BALANCER_UTILIZATION\fR
+.RS 4
+Load balancer utilization level Autoscaler will aim to maintain (greater than 0\&.0)\&.
+.RE
+.SS "GLOBAL FLAGS"
+.PP
+\fB\-\-format\fR \fIFORMAT\fR
+.RS 4
+Specify a format for printed output\&. By default, a command\-specific human\-friendly output format is used\&. Setting this flag to one of the available options will serialize the result of the command in the chosen format and print it to stdout\&. Supported formats are:
+json,
+text,
+yaml\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display detailed help\&.
+.RE
+.PP
+\fB\-\-project\fR \fIPROJECT\fR
+.RS 4
+The Google Cloud Platform project name to use for this invocation\&. If omitted then the current project is assumed\&.
+.RE
+.PP
+\fB\-\-quiet\fR, \fB\-q\fR
+.RS 4
+Disable all interactive prompts when running gcloud commands\&. If input is required, defaults will be used, or an error will be raised\&.
+.RE
+.PP
+\fB\-h\fR
+.RS 4
+Print a summary help and exit\&.
+.RE
+.SH "NOTES"
+.sp
+This command is in the Google Cloud SDK \fBpreview\fR component\&. See installing components if it is not installed\&.

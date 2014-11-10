@@ -1,0 +1,106 @@
+NAME
+
+      gcloud preview autoscaler create - create Autoscaler instances
+
+SYNOPSIS
+
+      gcloud preview autoscaler create NAME
+         [--cool-down-period COOL_DOWN_PERIOD] [--custom-metric CUSTOM_METRIC]
+         [--custom-metric-utilization-target-type CUSTOM_METRIC_UTILIZATION_TARGET_TYPE]
+         [--description DESCRIPTION] [--format FORMAT] [--help]
+         [--max-num-replicas MAX_NUM_REPLICAS]
+         [--min-num-replicas MIN_NUM_REPLICAS] [--project PROJECT] [--quiet, -q]
+         [--target TARGET] [--target-cpu-utilization TARGET_CPU_UTILIZATION]
+         [--target-custom-metric-utilization TARGET_CUSTOM_METRIC_UTILIZATION]
+         [--target-load-balancer-utilization TARGET_LOAD_BALANCER_UTILIZATION]
+         [-h]
+
+DESCRIPTION
+
+      Create Autoscaler instances.
+
+POSITIONAL ARGUMENTS
+
+      NAME
+
+         Autoscaler name.
+
+FLAGS
+
+      --cool-down-period COOL_DOWN_PERIOD
+
+         Number of seconds Autoscaler will wait between resizing collection.
+
+      --custom-metric CUSTOM_METRIC
+
+         A Google Cloud Monitoring instance metric (see
+         https://developers.google.com/cloud-monitoring/metrics).
+
+      --custom-metric-utilization-target-type
+         CUSTOM_METRIC_UTILIZATION_TARGET_TYPE
+
+         Type of target you specified, you can choose from the following: GAUGE,
+         DELTA_PER_SECOND, DELTA_PER_MINUTE.
+
+      --description DESCRIPTION
+
+         Notes about Autoscaler.
+
+      --max-num-replicas MAX_NUM_REPLICAS
+
+         Maximum number of replicas Autoscaler will set.
+
+      --min-num-replicas MIN_NUM_REPLICAS
+
+         Minimum number of replicas Autoscaler will set.
+
+      --target TARGET
+
+         Resource to be scaled.
+
+      --target-cpu-utilization TARGET_CPU_UTILIZATION
+
+         CPU utilization level Autoscaler will aim to maintain (0.0 to 1.0).
+
+      --target-custom-metric-utilization TARGET_CUSTOM_METRIC_UTILIZATION
+
+         Custom metric level Autoscaler will aim to maintain (greater than 0.0).
+
+      --target-load-balancer-utilization TARGET_LOAD_BALANCER_UTILIZATION
+
+         Load balancer utilization level Autoscaler will aim to maintain
+         (greater than 0.0).
+
+GLOBAL FLAGS
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

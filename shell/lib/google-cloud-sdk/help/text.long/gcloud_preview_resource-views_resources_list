@@ -1,0 +1,71 @@
+NAME
+
+      gcloud preview resource-views resources list - list resources in a
+         resource view
+
+SYNOPSIS
+
+      gcloud preview resource-views resources list
+         [--api-version API_VERSION; default="v1beta1"] [--format FORMAT]
+         [--help] [--limit LIMIT] [--project PROJECT] [--quiet, -q]
+         [--region REGION] [--zone ZONE] [-h] [-l]
+
+DESCRIPTION
+
+      List resources in a resource view.
+
+FLAGS
+
+      --limit LIMIT
+
+         The maximum number of results to list.
+
+      -l
+
+         If provided, a list of instance name is printed.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta1"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      --region REGION
+
+         Resource view region name.
+
+      --zone ZONE
+
+         Resource view zone name.
+
+      -h
+
+         Print a summary help and exit.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+

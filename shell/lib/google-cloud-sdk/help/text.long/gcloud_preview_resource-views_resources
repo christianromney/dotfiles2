@@ -1,0 +1,91 @@
+NAME
+
+      gcloud preview resource-views resources - manage Resources in Cloud
+         Resource Views
+
+SYNOPSIS
+
+      gcloud preview resource-views resources COMMAND
+         [--api-version API_VERSION; default="v1beta1"] [--format FORMAT]
+         [--help] [--project PROJECT] [--quiet, -q] [--region REGION]
+         --resourceview RESOURCEVIEW [--zone ZONE] [-h]
+
+DESCRIPTION
+
+      Manage Resources in Cloud Resource Views.
+
+FLAGS
+
+      --resourceview RESOURCEVIEW
+
+         Resource view name.
+
+GLOBAL FLAGS
+
+      --api-version API_VERSION; default="v1beta1"
+
+         Optional API version.
+
+      --format FORMAT
+
+         Specify a format for printed output. By default, a command-specific
+         human-friendly output format is used. Setting this flag to one of the
+         available options will serialize the result of the command in the
+         chosen format and print it to stdout. Supported formats are: json,
+         text, yaml.
+
+      --help
+
+         Display detailed help.
+
+      --project PROJECT
+
+         The Google Cloud Platform project name to use for this invocation. If
+         omitted then the current project is assumed.
+
+      --quiet, -q
+
+         Disable all interactive prompts when running gcloud commands. If input
+         is required, defaults will be used, or an error will be raised.
+
+      --region REGION
+
+         Resource view region name.
+
+      --zone ZONE
+
+         Resource view zone name.
+
+      -h
+
+         Print a summary help and exit.
+
+COMMANDS
+
+      COMMAND is one of the following:
+
+      add
+
+         Add resources to a resource view.
+
+      addinstance
+
+         Adds resources to a resource view by resource name.
+
+      list
+
+         List resources in a resource view.
+
+      remove
+
+         Remove resources from a resource view.
+
+      removeinstance
+
+         Removes resources from a resource view by resource name.
+
+NOTES
+
+      This command is in the Google Cloud SDK preview component. See installing
+      components if it is not installed.
+
