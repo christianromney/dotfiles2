@@ -12,3 +12,13 @@
 
 ;; Easy way to launch geiser
 (global-set-key (kbd "C-c M-g") 'run-geiser)
+
+;; Make fn look nice
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (push '("=/=" . ?≢) prettify-symbols-alist)
+            (push '("==" . ?≡) prettify-symbols-alist)
+            (push '("<=" . ?≤) prettify-symbols-alist)
+            (push '(">=" . ?≥) prettify-symbols-alist)
+            
+            ))
