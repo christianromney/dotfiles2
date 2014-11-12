@@ -12,7 +12,7 @@
 
 ;; TODO
 (setq org-todo-keywords
-      '((type "NEW" "WIP" "BLOCKED" "PAUSED" "TESTING" "|" "DONE")))
+      '((type "NEW" "IN-PROGRESS" "|" "DONE")))
 
 
 ;; Babel
