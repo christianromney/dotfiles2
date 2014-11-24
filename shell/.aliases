@@ -13,9 +13,10 @@ alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
 alias new="nocorrect emacs -nw"
-alias es='/usr/local/Cellar/emacs/24.3/bin/emacs -nw --daemon'
-alias em='/usr/local/Cellar/emacs/24.3/bin/emacsclient -t'
-alias ek='/usr/local/Cellar/emacs/24.3/bin/emacsclient -e "(kill-emacs)"'
+alias anew="nocorrect open /usr/local/Cellar/emacs/24.4/Emacs.app"
+alias es='/usr/local/Cellar/emacs/24.4//bin/emacs -nw --daemon'
+alias em='/usr/local/Cellar/emacs/24.4/bin/emacsclient -t'
+alias ek='/usr/local/Cellar/emacs/24.4/bin/emacsclient -e "(kill-emacs)"'
 alias edc="es && em"
 alias bzr="nocorrect bzr"
 
