@@ -1,6 +1,5 @@
 (require 'clojure-snippets)
 
-
 ;; Clojure Programming
 (setq auto-mode-alist (cons '("\\.edn$"  . clojure-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.clj(x|s)?$" . clojure-mode) auto-mode-alist))
@@ -21,7 +20,7 @@
 (add-hook 'clojure-mode-hook
           (lambda ()
             (push '("fn" . ?𝑓) prettify-symbols-alist)
-            (push '("=/=" . ?≢) prettify-symbols-alist)
+            (push '("!=" . ?≢) prettify-symbols-alist)
             (push '("==" . ?≡) prettify-symbols-alist)
             (push '("->" . ?⇝) prettify-symbols-alist)
             (push '("->>" . ?↠) prettify-symbols-alist)
@@ -33,3 +32,10 @@
             (push '(">=" . ?≥) prettify-symbols-alist)
             (push '("not=" . ?≠) prettify-symbols-alist)
             ))
+
+;; Refactor (requires ~/.lein/profiles.clj to have refactor-nrepl)
+(require 'clj-refactor)
+(add-hook 'clojure-mode-hook 
+          (lambda ()
+            (clj-refactor-mode 1)
+            (cljr-add-keybindings-with-prefix "C-c C-m")))

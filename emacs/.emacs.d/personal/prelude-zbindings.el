@@ -39,6 +39,10 @@
 (global-set-key (kbd "C-c m h") 'mc/mark-all-like-this-dwim)     ;; mnemonic 'h' for html
 (global-set-key (kbd "C-c m t") 'mc/mark-sgml-tag-pair)          ;; mnemonic 't' for tag
 
+
+;; REST client
+(global-set-key (kbd "C-c C-r") 'restclient-mode)
+
 ;; Window Management
 (global-set-key (kbd "C-c w s") 'swap-windows)
 (global-set-key (kbd "C-c w r") 'rotate-windows)
@@ -141,8 +145,5 @@
 (define-key haskell-mode-map (kbd "C-x C-d") nil)
 (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
 
-;; Cabal Mode
-;; (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
-;; (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-;; (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-;; (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
+;; Clojure stuff
+(define-key clojure-mode-map (kbd "C-c C-m a l") 'align-cljlet)

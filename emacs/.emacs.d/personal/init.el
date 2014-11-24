@@ -28,6 +28,10 @@
    nginx-mode
    multi-term
    adoc-mode
+   clj-refactor
+   typed-clojure-mode
+   restclient
+   rainbow-identifiers
 ))
 
 ;; Whoami

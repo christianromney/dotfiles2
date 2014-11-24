@@ -44,3 +44,4 @@
 
 ;; Enable pretty symbols in all languages
 (global-prettify-symbols-mode +1)
+(add-hook 'prog-mode-hook 'rainbow-identifiers-mode)

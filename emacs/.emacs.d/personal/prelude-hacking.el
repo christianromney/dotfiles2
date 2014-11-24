@@ -1,8 +1,8 @@
 ;; General programming and language settings not deserving of their own files
 (prelude-require-package 'yasnippet)
-(yas-global-mode +1)
+(yas/global-mode 1)
 (add-to-list 'yas-snippet-dirs
-      (expand-file-name "snippets" prelude-personal-dir))
+             (expand-file-name "snippets" prelude-personal-dir))
 
 ;; Complete everywhere
 (add-hook 'after-init-hook 'global-company-mode)
@@ -35,7 +35,6 @@
 (setq vc-follow-symlinks t)
 
 ;; Git gutter
-
 ;;(require git-gutter-fringe+)
 
 ;; Ctags
