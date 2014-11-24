@@ -2,3 +2,4 @@ tags
 lein/.lein/repl-history
 *.pyc
 *.pyc
+google-cloud-sdk
