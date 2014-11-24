@@ -1,41 +1,25 @@
-(defun cr-read-file-contents (path)
-  "Read a file and return its contents as a string"
-  (with-temp-buffer
-    (insert-file-contents path (current-buffer) nil nil nil)
-    (buffer-string)))
+;;; prelude-erc --- Summary
 
-(defun cr-credentials-for (authtype)
-  "Get a particular type of credentials from .authinfo as a pair"
-  (let* ((parts (first
-                 (cl-remove-if-not
-                  (apply-partially 'string-match-p authtype)
-                  (split-string (cr-read-file-contents "~/.authinfo") "\n" t))))
-         (token (split-string parts))
-         (login (cadr (member "login" token)))
-         (passw (cadr (member "password" token))))
-    (cons login passw)))
+;;; Commentary:
 
-(defun cr-credential-username (creds)
-  "Return the username part of credentials"
-  (car creds))
+;; For this to work, you must have GPG Suite for Mac installed
+;; (or be running Linux where gpg-agent just works)
+;; then, from Emacs, create a $HOME/.authinfo.gpg file
+;; with your info e.g.
+;; machine irc.freenode.net login cromney password <pick-a-good-pass> port 6667
+;; when you write the file, Emacs should prompt you for a public key to
+;; encrypt the file for (choose *your* GPG key). Your $HOME/.authinfo.gpg should
+;; now be encrypted (check using 'cat'). Kill the buffer then re-open.
+;; It should prompt you for your GPG private key's passphrase. When you
+;; enter it correctly, it will decrypt the file and show it to you.
 
-(defun cr-credential-password (creds)
-  "Return the password part of credentials"
-  (cdr creds))
-
-(defun cr-connect-to-irc-server (server)
-  "Connect to the specified IRC server using authinfo credentials"
-  (let ((creds (cr-credentials-for "erc")))
-    (erc :server server
-         :port 6667
-         :nick (cr-credential-username creds)
-         :password (cr-credential-password creds)
-         :full-name "Christian Romney")))
-
-(setq whitespace-global-modes '(not erc-mode))
-
+;;; Code:
 (require 'erc-services nil t)
 (erc-services-mode 1)
+
+;; Set to nil to use $HOME/.authinfo.gpg encrypted credentials
+(setq erc-prompt-for-password nil)
+(setq whitespace-global-modes '(not erc-mode))
 (setq erc-autojoin-channels-alist
       '(("freenode.net" "#clojure")
         ("freenode.net" "#racket")
@@ -53,4 +37,9 @@
 (global-set-key (kbd "<f9>")
   (lambda ()
     (interactive)
-    (cr-connect-to-irc-server "irc.freenode.net")))
+    (erc :server "irc.freenode.net"
+         :nick "cromney"
+         :full-name "Christian Romney")))
+
+(provide 'personal-prelude-erc)
+;;; prelude-erc.el ends here
