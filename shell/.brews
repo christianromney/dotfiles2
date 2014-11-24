@@ -8,6 +8,7 @@ automake
 awscli
 berkeley-db
 bison
+boot2docker
 brew-cask
 casperjs
 celt
@@ -66,7 +67,6 @@ md5sha1sum
 mobile-shell
 moc
 moreutils
-mosh
 netcat
 ngrok
 nmap
@@ -76,10 +76,12 @@ osxutils
 packer
 patchutils
 pcre
+phantomjs
 pkg-config
 postgresql
 psgrep
 pstree
+pup
 pyenv
 pyenv-virtualenv
 rbenv
@@ -89,10 +91,12 @@ readline
 rlwrap
 ruby-build
 s-lang
+saltstack
 sbcl
 ssh-copy-id
 stgit
 stow
+sword
 tig
 tmux
 tree
