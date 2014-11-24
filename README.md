@@ -3,7 +3,7 @@ Structure
 
 This project contains my personal dotfiles collection. My primary machine is Mac OS X, but most of this stuff should work equally well under Linux (with a few alias exceptions). 
 
-I use GNU stow to manage the symlinks in this repository, and the `install.sh` script depends on it. (It's available through Homebrew).  
+I use GNU stow to manage the symlinks in this repository, and the `homesync` script depends on it. (It's available through Homebrew).
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
 
