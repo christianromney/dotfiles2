@@ -22,6 +22,7 @@ docbook
 docker
 dos2unix
 elinks
+elixir
 emacs
 faac
 fasd
@@ -82,6 +83,7 @@ pcre
 phantomjs
 pkg-config
 postgresql
+profanity
 psgrep
 pstree
 pup
