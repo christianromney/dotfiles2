@@ -23,6 +23,7 @@
 (setq erc-autojoin-channels-alist
       '(("freenode.net" "#clojure")
         ("freenode.net" "#racket")
+        ("freenode.net" "#minikanren")
         ("localhost" "#clojure")))
 
 (require 'erc-match)
