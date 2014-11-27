@@ -1,5 +1,5 @@
 ;; ~/.lein/profiles.clj
-{:user {:plugins [[cider/cider-nrepl "0.8.0"]
+{:user {:plugins [[cider/cider-nrepl "0.8.1"]
                   [refactor-nrepl "0.1.0"]
                   [lein-pprint "1.1.2"]
                   [lein-difftest "2.0.0"]
