@@ -15,6 +15,9 @@
       '((type "NEW" "IN-PROGRESS" "|" "DONE")))
 
 
+
+(setq org-export-backends '(ascii html icalendar latex md))
+
 ;; Babel
 
 ;; (setq org-fontify-done-headline t)

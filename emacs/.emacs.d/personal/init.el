@@ -29,9 +29,9 @@
    multi-term
    adoc-mode
    clj-refactor
-   typed-clojure-mode
-   restclient
    rainbow-identifiers
+   typed-clojure-mode
+   restclient  
 ))
 
 ;; Whoami

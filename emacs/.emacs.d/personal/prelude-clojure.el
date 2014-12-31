@@ -5,8 +5,14 @@
 (setq auto-mode-alist (cons '("\\.clj(x|s)?$" . clojure-mode) auto-mode-alist))
 
 (setq cider-repl-use-pretty-printing t)
+
 (setq nrepl-hide-special-buffers t)
+
+;; open local files before remote ones
 (setq cider-prefer-local-resources t)
+
+;; see what the f is going on
+(setq nrepl-log-messages t)
 
 ;; Emacs complains about these being free variables
 (setq cider-repl-wrap-history t)
@@ -39,3 +45,16 @@
           (lambda ()
             (clj-refactor-mode 1)
             (cljr-add-keybindings-with-prefix "C-c C-m")))
+
+;; Compojure indentation
+(require 'clojure-mode)
+(define-clojure-indent
+  (defroutes 'defun)
+  (s/defn 'defun)
+  (GET 2)
+  (POST 2)
+  (PUT 2)
+  (DELETE 2)
+  (HEAD 2)
+  (ANY 2)
+  (context 2))
