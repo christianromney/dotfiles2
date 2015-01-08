@@ -24,10 +24,13 @@
       '(("freenode.net" "#clojure")
         ("freenode.net" "#racket")
         ("freenode.net" "#minikanren")
-        ("localhost" "#clojure")))
+        ("freenode.net" "#hoplon")))
 
 (require 'erc-match)
-(setq erc-keywords '("cromney" "pointslope"))
+(setq erc-keywords '("cromney" "pointslope" "romney"))
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
+(setq erc-interpret-mirc-color t)
+
 (erc-match-mode)
 
 (require 'erc-tweet)
