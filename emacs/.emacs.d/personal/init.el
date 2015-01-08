@@ -31,7 +31,8 @@
    clj-refactor
    rainbow-identifiers
    typed-clojure-mode
-   restclient  
+   restclient
+   floobits
 ))
 
 ;; Whoami
