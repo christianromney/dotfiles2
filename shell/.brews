@@ -3,6 +3,7 @@ ant
 aria2
 ascii
 asciidoc
+aspell
 autoconf
 automake
 awscli
@@ -45,6 +46,8 @@ graphviz
 guile
 heroku-toolbelt
 htop-osx
+httpie
+ipsum
 irssi
 ispell
 jack
@@ -82,6 +85,7 @@ patchutils
 pcre
 phantomjs
 pkg-config
+pngcrush
 postgresql
 profanity
 psgrep
@@ -95,6 +99,7 @@ rbenv-gemset
 readline
 rlwrap
 ruby-build
+rust
 s-lang
 saltstack
 sbcl
@@ -110,6 +115,7 @@ vicare
 vim
 wakeonlan
 watch
+weechat
 wget
 wtf
 x264
