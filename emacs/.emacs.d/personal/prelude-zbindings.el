@@ -18,8 +18,19 @@
 
 ;; (global-unset-key (kbd "C-z"))
 
+;; Floobits
+(global-set-key (kbd "C-c C-b C-p") 'floobits-share-dir-private)
+(global-set-key (kbd "C-c C-b C-s") 'floobits-summon)
+
 (require 'ace-jump-buffer)
-(global-set-key (kbd "C-c C-o") 'ace-jump-buffer)
+(global-set-key (kbd "C-c J") 'ace-jump-buffer)
+
+(require 'ace-window)
+(global-set-key (kbd "C-c H") 'ace-window)
+
+;; Replace prelude visit term with multi-term
+(define-key prelude-mode-map (kbd "C-c t") 'multi-term)
+(define-key prelude-mode-map (kbd "C-c o") nil)
 
 ;; Ctrl-x r i Useful rectangle binding
 (global-set-key (kbd "C-x r i") 'string-insert-rectangle)
