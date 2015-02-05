@@ -52,6 +52,7 @@
 
 ;; AWS
 (setq auto-mode-alist (cons '("\\.template$" . js-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.php$" . web-mode) auto-mode-alist))
 
 ;; Zen Coding
 (add-hook 'sgml-mode-hook 'emmet-mode)
