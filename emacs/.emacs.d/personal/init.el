@@ -2,13 +2,14 @@
  '(git-gutter-fringe+
    smart-mode-line
    puppet-mode
+   writegood-mode
    dired+
    javadoc-lookup
    ace-jump-buffer
+   ace-window
    geiser
    ctags
    ctags-update
-   csharp-mode
    less-css-mode
    erc-tweet
    4clojure
@@ -19,6 +20,7 @@
    align-cljlet
    emmet-mode
    cljsbuild-mode
+   deft
    swift-mode
    indicators
    company
@@ -32,7 +34,11 @@
    rainbow-identifiers
    typed-clojure-mode
    restclient
+   company-restclient
+   web-mode
    floobits
+   org-trello
+   sunshine
 ))
 
 ;; Whoami
@@ -42,3 +48,4 @@
 (setq calendar-latitude 26.017)
 (setq calendar-longitude -80.34110799999999)
 (setq calendar-location-name "Pembroke Pines, FL")
+(setq sunshine-location calendar-location-name)
