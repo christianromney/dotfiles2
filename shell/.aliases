@@ -19,6 +19,7 @@ alias em='/usr/local/Cellar/emacs/24.4/bin/emacsclient -t'
 alias ek='/usr/local/Cellar/emacs/24.4/bin/emacsclient -e "(kill-emacs)"'
 alias edc="es && em"
 alias bzr="nocorrect bzr"
+alias cljsbuild="lein trampoline cljsbuild $@"
 
 # Misc
 alias cheat="nocorrect cheat"
