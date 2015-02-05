@@ -55,6 +55,9 @@
   (guru-mode -1))
 
 (add-hook 'prelude-prog-mode-hook 'disable-guru-mode t)
+(setq
+ echo-keystrokes 0.1 ;use-dialog-box nil
+ )
 
 ;; Don't be annoying
 (setq initial-scratch-message nil)
@@ -62,6 +65,16 @@
 ;; File handling
 (setq backup-directory-alist
       '(("." . "~/.emacs.backups")))
+(setq make-backup-files nil)
+
+;; Spelling
+(setq flyspell-issue-welcome-flag nil)
+(setq-default ispell-program-name "/usr/local/bin/aspell")
+(setq-default ispell-list-command "list")
+
+;; Window management (ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+
 
 ;; General File Associations
 (setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist))
