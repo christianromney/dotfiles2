@@ -19,11 +19,6 @@
 (setq org-todo-keywords '((type "TODO" "IN-PROGRESS" "|" "DONE"))
       org-todo-keyword-faces '(("INPROGRESS" . (:foreground "blue" :weight bold))))
 
-;;
-(require 'org-trello)
-(custom-set-variables '(org-trello-files '("~/Dropbox/org/trello-scorbot.org")))
-(add-hook 'org-mode-hook 'org-trello-mode)
-
 ;; Agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
 

@@ -36,9 +36,8 @@
    restclient
    company-restclient
    web-mode
-   floobits
-   org-trello
    sunshine
+   ack
 ))
 
 ;; Whoami
