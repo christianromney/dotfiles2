@@ -1,8 +1,9 @@
 (require 'clojure-snippets)
 
 ;; Clojure Programming
-(setq auto-mode-alist (cons '("\\.edn$"  . clojure-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.clj(x|s)?$" . clojure-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
 
 (setq cider-repl-use-pretty-printing t)
 
