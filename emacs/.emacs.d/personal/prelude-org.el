@@ -38,6 +38,10 @@
           (lambda ()
             (writegood-mode)))
 
+(add-hook 'org-mode-hook
+          (lambda ()
+            (auto-fill-mode)))
+
 ;; Babel
 
 (require 'ob)
@@ -62,3 +66,37 @@
 
 (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
 (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
+
+;; Credentials are encrypted in ~/.authinfo.gpg
+;; and Emacs can *just read them* if GPG agent is running
+(require 'org2blog-autoloads)
+(require 'netrc)
+
+;; 't will use shortcodes / plugins, nil will use Emacs native
+(setq org2blog/wp-use-sourcecode-shortcode 't)
+
+;; Nothing to add...
+(setq org2blog/wp-sourcecode-default-params nil)
+
+;; Syntax highlighting to support
+(setq org2blog/wp-sourcecode-langs
+      '("bash" "clojure" "css"
+        "erlang" "fsharp" "diff" "groovy" "javascript" "java"
+        "objc" "php" "text" "python" "ruby" "sql"
+        "xml" "sh" "emacs-lisp" "lisp"))
+
+(let* ((creds (netrc-parse "~/.authinfo.gpg"))
+       (blog (netrc-machine creds "blog.pointslope.com")))
+
+  (setq org2blog/wp-blog-alist
+        '(("pointslope"
+           :url "https://www.pointslope.com/blog/xmlrpc.php"
+           :username (netrc-get blog "login")
+           :password (netrc-get blog "password")
+           :default-title "Draft"
+           :default-categories ("technology" "clojure")
+           :tags-as-categories nil)
+          )))
+
+(provide 'prelude-org)
+;;; prelude-org.el ends here

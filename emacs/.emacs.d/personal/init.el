@@ -38,6 +38,8 @@
    web-mode
    sunshine
    ack
+   org2blog
+   htmlize
 ))
 
 ;; Whoami
