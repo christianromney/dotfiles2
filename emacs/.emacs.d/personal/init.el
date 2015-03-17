@@ -1,51 +1,71 @@
 (prelude-require-packages
- '(git-gutter-fringe+
+ '(;; General
+   git-gutter-fringe+
    smart-mode-line
-   puppet-mode
    writegood-mode
    dired+
-   javadoc-lookup
    ace-jump-buffer
    ace-window
-   geiser
    ctags
    ctags-update
-   less-css-mode
+   indicators
+   company
+   multi-term
    erc-tweet
+   sunshine
+   ack
+
+   ;; Clojure
+   javadoc-lookup
    4clojure
    clojure-cheatsheet
    clojure-snippets
    datomic-snippets
-   arduino-mode
-   align-cljlet
-   emmet-mode
    cljsbuild-mode
-   deft
-   swift-mode
-   indicators
-   company
-   terraform-mode
-   flatland-theme
-   display-theme
-   nginx-mode
-   multi-term
-   adoc-mode
+   align-cljlet
    clj-refactor
-   rainbow-identifiers
    typed-clojure-mode
-   restclient
-   company-restclient
-   web-mode
-   sunshine
-   ack
+   rainbow-identifiers
+
+   ;; Racket / Scheme
+   geiser
+
+   ;; Misc Modes
+   arduino-mode
+   swift-mode
+   terraform-mode
+   nginx-mode
+   puppet-mode
+   adoc-mode
+   
+   ;; Themes
+   display-theme
+   flatland-theme
+   
+   ;; Org
+   deft
    org2blog
+   
+   ;; Web 
+   company-restclient
+   restclient
+   less-css-mode
+   emmet-mode
+   web-mode
    htmlize
+
+   ;; Ruby / Rails
+   projectile-rails
+   flymake-ruby
+   rbenv
+   rspec-mode
 ))
 
-;; Whoami
+;; Who am I
 (setq user-email-address "cromney@pointslope.com")
 (setq user-full-name "Christian Romney")
-;; Whereami
+
+;; Where am I
 (setq calendar-latitude 26.017)
 (setq calendar-longitude -80.34110799999999)
 (setq calendar-location-name "Pembroke Pines, FL")

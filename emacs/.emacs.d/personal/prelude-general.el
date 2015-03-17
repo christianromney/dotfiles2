@@ -56,8 +56,7 @@
 
 (add-hook 'prelude-prog-mode-hook 'disable-guru-mode t)
 (setq
- echo-keystrokes 0.1 ;use-dialog-box nil
- )
+ echo-keystrokes 0.1)
 
 ;; Don't be annoying
 (setq initial-scratch-message nil)
@@ -75,6 +74,11 @@
 ;; Window management (ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
+;; OS X
+;; (setq dired-use-ls-dired nil)
 
 ;; General File Associations
 (setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist))
+
+(provide 'prelude-general)
+;;; prelude-general.el ends here

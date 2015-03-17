@@ -1,4 +1,4 @@
-;;q Fix keybindings under iTerm2
+;; Fix keybindings under iTerm2
 (global-set-key "\e[1;9A" [M-up])
 (global-set-key "\e[1;9B" [M-down])
 (global-set-key "\e[1;9C" [M-right])
@@ -50,9 +50,9 @@
 (global-set-key (kbd "C-c m h") 'mc/mark-all-like-this-dwim)     ;; mnemonic 'h' for html
 (global-set-key (kbd "C-c m t") 'mc/mark-sgml-tag-pair)          ;; mnemonic 't' for tag
 
-
-;; REST client
-(global-set-key (kbd "C-c C-r") 'restclient-mode)
+;; Fix Helm to work the way I want
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "C-j") 'helm-select-action) ;; switch them around?
 
 ;; Window Management
 (global-set-key (kbd "C-c w s") 'swap-windows)
