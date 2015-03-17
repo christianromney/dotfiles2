@@ -75,7 +75,7 @@
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
 ;; OS X
-;; (setq dired-use-ls-dired nil)
+(setq dired-use-ls-dired nil)
 
 ;; General File Associations
 (setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist))
