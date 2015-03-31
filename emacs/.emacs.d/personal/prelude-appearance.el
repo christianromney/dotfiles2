@@ -31,7 +31,6 @@
   (disable-theme 'zenburn)
   (disable-theme 'solarized)
   (menu-bar-mode -1)
-  (scroll-bar-mode -1)
   (line-number-mode t)
   (column-number-mode t)
   (whitespace-mode t)
