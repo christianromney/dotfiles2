@@ -11,7 +11,8 @@
 
 (use-package robe
   :defer t
-  :init
+  :bind ("C-c M-RET" . company-robe)
+  :init  
   (progn (add-hook 'ruby-mode-hook 'robe-mode)
          (push 'company-robe company-backends)))
 
