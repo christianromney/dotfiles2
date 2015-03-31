@@ -5,7 +5,13 @@
 ;;; 
 ;;; Code:
 ;;;
-(use-package rinari :defer t)
+(use-package rinari
+  :defer t
+  :config
+  (progn
+    (diminish 'robe-mode " R°")
+    (diminish 'ruby-tools-mode)
+    (diminish 'projectile-rails-mode " ‡")))
 
 (use-package bundler :defer t)
 
@@ -18,7 +24,9 @@
 
 (use-package flymake-ruby
   :config
-  (add-hook 'ruby-mode-hook 'flymake-ruby-load))
+  (progn
+    (diminish 'flymake-mode " FMak")
+    (add-hook 'ruby-mode-hook 'flymake-ruby-load)))
 
 (use-package rbenv
   :config
