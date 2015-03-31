@@ -1,24 +1,27 @@
-;; Geiser settings
-(setq geiser-active-implementations '(guile racket))
-(setq geiser-repl-startup-time 10000)
-(setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
-(setq geiser-repl-query-on-kill-p nil)
-(setq geiser-implementations-alist
-      '(((regexp "\\.scm$") guile)
-        ((regexp "\\.ss$") guile)
-        ((regexp "\\.rkt$") racket)))
+;;; personal/prelude-scheme --- Scheme Configuration
+;;;
+;;; Commentary:
+;;; Geiser mode provides Scheme / Racket integration
+;;;
+;;; Code:
+(use-package geiser-mode
+  :bind ("C-c M-g" . run-geiser)
+  :config
+  (setq geiser-active-implementations '(guile racket)
+        geiser-mode-smart-tab-p t
+        geiser-repl-startup-time 10000
+        geiser-repl-history-filename "~/.emacs.d/geiser-history"
+        geiser-repl-query-on-kill-p nil
+        geiser-implementations-alist
+        '(((regexp "\\.scm$") guile)
+          ((regexp "\\.ss$") guile)
+          ((regexp "\\.rkt$") racket)))
+  (add-hook 'scheme-mode-hook
+            (lambda ()
+              (push '("=/=" . ?≢) prettify-symbols-alist)
+              (push '("==" . ?≡) prettify-symbols-alist)
+              (push '("<=" . ?≤) prettify-symbols-alist)
+              (push '(">=" . ?≥) prettify-symbols-alist))))
 
-(setq geiser-mode-smart-tab-p t)
-
-;; Easy way to launch geiser
-(global-set-key (kbd "C-c M-g") 'run-geiser)
-
-;; Make fn look nice
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (push '("=/=" . ?≢) prettify-symbols-alist)
-            (push '("==" . ?≡) prettify-symbols-alist)
-            (push '("<=" . ?≤) prettify-symbols-alist)
-            (push '(">=" . ?≥) prettify-symbols-alist)
-            
-            ))
+(provide 'personal/prelude-scheme)
+;;; prelude-scheme.el ends here

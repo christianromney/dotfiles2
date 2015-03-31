@@ -1,7 +1,7 @@
-;;; prelude-erc --- Summary
-
+;;; personal/prelude-erc --- Summary
+;;;
 ;;; Commentary:
-
+;;;
 ;; For this to work, you must have GPG Suite for Mac installed
 ;; (or be running Linux where gpg-agent just works)
 ;; then, from Emacs, create a $HOME/.authinfo.gpg file
@@ -14,36 +14,41 @@
 ;; enter it correctly, it will decrypt the file and show it to you.
 
 ;;; Code:
-(require 'erc-services nil t)
-(erc-services-mode 1)
+(use-package erc-services
+  :config
+  (erc-services-mode 1))
 
-;; Set to nil to use $HOME/.authinfo.gpg encrypted credentials
-(setq erc-prompt-for-password nil)
-(setq whitespace-global-modes '(not erc-mode))
-(setq erc-autojoin-channels-alist
-      '(("freenode.net" "#clojure")
-        ("freenode.net" "#racket")
-        ("freenode.net" "#minikanren")
-        ("freenode.net" "#hoplon")))
-
-(require 'erc-match)
-(setq erc-keywords '("cromney" "pointslope" "romney"))
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
-(setq erc-interpret-mirc-color t)
-
-(erc-match-mode)
-
-(require 'erc-tweet)
-(add-to-list 'erc-modules 'tweet)
-(erc-update-modules)
-
-;; F9 - Connect to freenode irc directly
-(global-set-key (kbd "<f9>")
-  (lambda ()
+;; Set erc-prompt-for-password to nil to use
+;; $HOME/.authinfo.gpg encrypted credentials
+(use-package erc-mode
+  :init
+  (setq whitespace-global-modes '(not erc-mode))
+  (setq erc-prompt-for-password nil) 
+  (setq erc-autojoin-channels-alist
+        '(("freenode.net" "#clojure")
+          ("freenode.net" "#racket")
+          ("freenode.net" "#minikanren")
+          ("freenode.net" "#hoplon")))
+  (defun personal/connect-to-freenode ()
     (interactive)
     (erc :server "irc.freenode.net"
          :nick "cromney"
-         :full-name "Christian Romney")))
+         :full-name "Christian Romney"))
+  :bind ("<f9>" . personal/connect-to-freenode))
 
-(provide 'personal-prelude-erc)
+(use-package erc-match
+  :init
+  (setq erc-keywords '("cromney" "pointslope" "romney")
+        erc-hide-list '("JOIN" "PART" "QUIT")
+        erc-interpret-mirc-color t)
+  :config
+  (erc-match-mode 1))
+
+(use-package erc-tweet
+  :init
+  (add-to-list 'erc-modules 'tweet)
+  :config
+  (erc-update-modules))
+
+(provide 'personal/prelude-erc)
 ;;; prelude-erc.el ends here

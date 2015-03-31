@@ -1,6 +1,12 @@
-;; handle tmux's xterm-keys
-;; put the following line in your ~/.tmux.conf:
-;;   setw -g xterm-keys on
+;;; personal/prelude-tmux --- Key Translations for running under Tmux
+;;;
+;;; Commentary:
+;;;
+;;; To handle tmux's xterm-keys, put the following line in your ~/.tmux.conf:
+;;;   setw -g xterm-keys on
+;;;
+;;; Code:
+;;;
 (if (getenv "TMUX")
     (progn
       (let ((x 2) (tkey ""))
@@ -84,8 +90,8 @@
           (define-key key-translation-map (kbd (format "M-[ 33 ; %d ~" x)) (kbd (format "%s<f19>" tkey)))
           ;; f20
           (define-key key-translation-map (kbd (format "M-[ 34 ; %d ~" x)) (kbd (format "%s<f20>" tkey)))
-
           (setq x (+ x 1))
-          ))
-      )
-  )
+          ))))
+
+(provide 'personal/prelude-tmux)
+;;; prelude-tmux.el ends here
