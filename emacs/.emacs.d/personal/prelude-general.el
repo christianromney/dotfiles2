@@ -39,30 +39,30 @@
       make-backup-files nil)
 
 ;; enable cua-mode for rectangular selections
-(use-package cua-mode
-  :init
-  (progn
-    (defun live-copy-from-osx ()
-      (shell-command-to-string "pbpaste"))
+(require 'cua-mode)
+(require 'cua-base)
+(require 'cua-gmrk)
+(require 'cua-rect)
 
-    (defun live-paste-to-osx (text &optional push)
-      (let ((process-connection-type nil))
-        (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-          (process-send-string proc text)
-          (process-send-eof proc)))))
-  
-  :config
-  (progn
-    (require 'cua-base)
-    (require 'cua-gmrk)
-    (require 'cua-rect)
-    (cua-mode 1)
-    (setq cua-enable-cua-keys nil
-          default-input-method "MacOSX"
-          system-name (car (split-string system-name "\\.")))   
-    (when (not window-system)
-      (setq interprogram-cut-function 'live-paste-to-osx)
-      (setq interprogram-paste-function 'live-copy-from-osx))))
+(cua-mode 1)
+
+(defun live-copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun live-paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+(setq cua-enable-cua-keys nil
+      default-input-method "MacOSX"
+      system-name (car (split-string system-name "\\.")))   
+
+(when (not window-system)
+  (setq interprogram-cut-function 'live-paste-to-osx)
+  (setq interprogram-paste-function 'live-copy-from-osx))
+
 
 ;; Spelling
 (use-package flyspell-mode
