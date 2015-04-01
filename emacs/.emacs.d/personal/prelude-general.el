@@ -39,7 +39,6 @@
       make-backup-files nil)
 
 ;; enable cua-mode for rectangular selections
-(require 'cua-mode)
 (require 'cua-base)
 (require 'cua-gmrk)
 (require 'cua-rect)
