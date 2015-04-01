@@ -19,6 +19,7 @@
    sunshine
    ack
    eww-lnum
+   unbound
    
    ;; Clojure
    javadoc-lookup
