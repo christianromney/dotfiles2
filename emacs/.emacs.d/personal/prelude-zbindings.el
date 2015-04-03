@@ -56,8 +56,7 @@
 (use-package helm-mode
   :config
   (progn
-    (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-    (define-key helm-map (kbd "tab") 'helm-execute-persistent-action)))
+    (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)))
 
 ;; Window Management
 (global-set-key (kbd "C-c w s") 'swap-windows)
