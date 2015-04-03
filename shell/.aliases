@@ -7,6 +7,7 @@ alias lll="ll | less"
 
 # Docker (if you can't beat 'em, join 'em)
 alias dicker="nocorrect docker"
+alias dco="nocorrect docker-compose"
 
 # Standard tool aliases
 alias df="df -h"
