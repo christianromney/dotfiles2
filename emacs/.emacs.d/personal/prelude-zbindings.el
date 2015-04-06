@@ -9,10 +9,17 @@
 ;;;
 ;;; iTerm2 / Emacs compatibility
 
-(global-set-key "\e[1;9A" [M-up])
-(global-set-key "\e[1;9B" [M-down])
-(global-set-key "\e[1;9C" [M-right])
-(global-set-key "\e[1;9D" [M-left])
+(global-set-key "\e[OA" [M-up])
+(global-set-key "\e[OB" [M-down])
+(global-set-key "\e[OC" [M-right])
+(global-set-key "\e[OD" [M-left])
+
+(global-set-key "\e[1;9A" [M-S-up])
+(global-set-key "\e[1;9B" [M-S-down])
+(global-set-key "\e[1;9C" [M-S-right])
+(global-set-key "\e[1;9D" [M-S-left])
+
+
 
 ;;; Window Movement
 (global-set-key (kbd "C-c <C-left>") 'windmove-left)

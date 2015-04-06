@@ -14,7 +14,8 @@
   ;; File handling
   (setq org-directory "~/Dropbox/org")
   (setq org-default-notes-file (concat org-directory "/default.org"))
-  (setq org-log-done t)
+  (setq org-log-done t
+        org-startup-indented t)
 
   ;; Agenda  
   (setq org-agenda-show-log t
