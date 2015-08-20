@@ -60,7 +60,8 @@ custom-configuration.el
 /.emacs.desktop
 /.emacs.desktop.lock
 /classes/
-/targets/
+target/classes
+target/stale
 TAGS
 .ctags
 \#*\#
@@ -81,3 +82,5 @@ personal/snippets
 sonar-project.properties
 jmeter.log
 .vagrant
+.lein-failures
+.nrepl-port
