@@ -19,8 +19,6 @@
 (global-set-key "\e[1;9C" [M-S-right])
 (global-set-key "\e[1;9D" [M-S-left])
 
-
-
 ;;; Window Movement
 (global-set-key (kbd "C-c <C-left>") 'windmove-left)
 (global-set-key (kbd "C-c <C-right>") 'windmove-right)

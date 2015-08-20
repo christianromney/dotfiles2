@@ -20,15 +20,15 @@
           (if (looking-at "->") t nil)))))
 
   (defun do-yas-expand ()
-    (let ((yas/fallback-behavior 'return-nil))
-      (yas/expand)))
+    (let ((yas-fallback-behavior 'return-nil))
+      (yas-expand)))
 
   ;; bind to TAB in keybindings file 
   (defun tab-indent-or-complete ()
     (interactive)
     (if (minibufferp)
         (minibuffer-complete)
-      (if (or (not yas/minor-mode)
+      (if (or (not yas-minor-mode)
               (null (do-yas-expand)))
           (if (check-expansion)
               (company-complete-common)
@@ -37,10 +37,10 @@
   (("TAB" . tab-indent-or-complete)
    ("<tab>" . tab-indent-or-complete))
 
-  :config
+  :config  
   (add-to-list 'yas-snippet-dirs
                (expand-file-name "snippets" prelude-personal-dir))
-  (yas/global-mode 1))
+  (yas-global-mode 1))
 
 ;; Exuberant ctags 
 (use-package ctags

@@ -27,7 +27,7 @@
 ;;; Themes and Global Minor Modes
 (use-package flatland-theme
   :init
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro-18"))
+  (add-to-list 'default-frame-alist '(font . "Input Mono-18"))
   (disable-theme 'zenburn)
   (disable-theme 'solarized)
   (menu-bar-mode -1)

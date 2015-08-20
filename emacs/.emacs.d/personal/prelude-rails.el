@@ -23,6 +23,7 @@
          (push 'company-robe company-backends)))
 
 (use-package flymake-ruby
+  :defer t
   :config
   (progn
     (diminish 'flymake-mode " FMak")

@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+# name: sdefn
+# key: sdefn
+# --
+(s/defn ^:always-validate $1 :- $2$>
+"$3"$>
+[$4]$>
+  $5)$>
+$0

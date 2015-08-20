@@ -32,7 +32,7 @@
 
   :bind
   ("C-c a" . org-agenda)
-
+  ("C-c c" . org-capture)
   :config
   (add-hook 'org-mode-hook
             (lambda ()

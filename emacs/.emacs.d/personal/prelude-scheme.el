@@ -5,6 +5,7 @@
 ;;;
 ;;; Code:
 (use-package geiser-mode
+  :defer t
   :bind ("C-c M-g" . run-geiser)
   :config
   (setq geiser-active-implementations '(guile racket)

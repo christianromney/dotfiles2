@@ -15,12 +15,14 @@
 
 ;;; Code:
 (use-package erc-services
+  :defer t
   :config
   (erc-services-mode 1))
 
 ;; Set erc-prompt-for-password to nil to use
 ;; $HOME/.authinfo.gpg encrypted credentials
 (use-package erc-mode
+  :defer t
   :init
   (setq whitespace-global-modes '(not erc-mode))
   (setq erc-prompt-for-password nil) 
@@ -37,6 +39,7 @@
   :bind ("<f9>" . personal/connect-to-freenode))
 
 (use-package erc-match
+  :defer t
   :init
   (setq erc-keywords '("cromney" "pointslope" "romney")
         erc-hide-list '("JOIN" "PART" "QUIT")
@@ -45,6 +48,7 @@
   (erc-match-mode 1))
 
 (use-package erc-tweet
+  :defer t
   :init
   (add-to-list 'erc-modules 'tweet)
   :config

@@ -16,16 +16,19 @@
                 (push '("fn" . ?𝑓) prettify-symbols-alist)
                 (push '("!=" . ?≢) prettify-symbols-alist)
                 (push '("==" . ?≡) prettify-symbols-alist)
-                (push '("->" . ?⇝) prettify-symbols-alist)
-                (push '("->>" . ?↠) prettify-symbols-alist)
-                (push '(">!" . ?⥅) prettify-symbols-alist)
-                (push '(">!!" . ?↬) prettify-symbols-alist)
-                (push '("<!" . ?⥆) prettify-symbols-alist)
-                (push '("<!!" . ?↫) prettify-symbols-alist)
+
+                (push '("->" . ?⥴) prettify-symbols-alist)
+                (push '("->>" . ?⥵) prettify-symbols-alist)
+                
+                (push '(">!" . ?⇥) prettify-symbols-alist)                
+                (push '("<!" . ?↤) prettify-symbols-alist)
+                
+                (push '(">!!" . ?⇻) prettify-symbols-alist)
+                (push '("<!!" . ?⇺) prettify-symbols-alist)
+                
                 (push '("<=" . ?≤) prettify-symbols-alist)
                 (push '(">=" . ?≥) prettify-symbols-alist)
-                (push '("not=" . ?≠) prettify-symbols-alist)
-                ))
+                (push '("not=" . ?≠) prettify-symbols-alist) ))
     (define-clojure-indent
       (defroutes 'defun)
       (s/defn 'defun)
@@ -36,6 +39,14 @@
       (HEAD 2)
       (ANY 2)
       (context 2))))
+
+;;; requires ~/.lein/profiles.clj to have refactor-nrepl
+(use-package clj-refactor
+  :config
+  (add-hook 'clojure-mode-hook
+            (lambda ()
+              (clj-refactor-mode 1)
+              (cljr-add-keybindings-with-prefix "C-c C-a"))))
 
 (use-package cider-mode
   :init
@@ -51,14 +62,6 @@
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode))
 
 (use-package clojure-snippets)
-
-;;; requires ~/.lein/profiles.clj to have refactor-nrepl
-(use-package clj-refactor
-  :config
-  (add-hook 'clojure-mode-hook
-            (lambda ()
-              (clj-refactor-mode 1)
-              (cljr-add-keybindings-with-prefix "C-c C-a"))))
 
 (provide 'personal/prelude-clojure)
 ;;; prelude-clojure.el ends here
