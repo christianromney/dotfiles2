@@ -28,6 +28,5 @@
 	default = simple
 [merge]
 	tool = opendiff
-	ff = false
 [clean]
 	requireForce = false
