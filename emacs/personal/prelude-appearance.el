@@ -7,7 +7,7 @@
 (setq-default sgml-basic-offset 2)
 (setq-default indent-tabs-mode nil)
 
-;; (setq prelude-whitespace nil)
+(setq prelude-whitespace nil)
 (setq sentence-end-double-space nil)
 (setq prelude-flyspell nil)
 (setq prelude-guru nil)
@@ -18,7 +18,7 @@
 (setq load-prefer-newer t)
 (setq diff-switches "-u")
 
-;; (add-to-list 'default-frame-alist '(font . "Input Mono-20"))
+(add-to-list 'default-frame-alist '(font . "Input Mono-20"))
 
 ;;; Themes and Global Minor Modes
 (use-package smyx-theme

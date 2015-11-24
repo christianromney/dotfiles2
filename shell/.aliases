@@ -15,10 +15,13 @@ alias grep="egrep"
 alias rf="rm -rf"
 alias new="nocorrect emacs -nw"
 alias anew="nocorrect open /usr/local/Cellar/emacs/24.4/Emacs.app"
-alias es='/usr/local/Cellar/emacs/24.4//bin/emacs -nw --daemon'
-alias em='/usr/local/Cellar/emacs/24.4/bin/emacsclient -t'
-alias ek='/usr/local/Cellar/emacs/24.4/bin/emacsclient -e "(kill-emacs)"'
-alias edc="es && em"
+
+# Emacs aliases
+alias es='/usr/local/bin/emacs -nw --daemon'
+alias em='/usr/local/bin/emacsclient -t'
+alias ek='/usr/local/bin/emacsclient -e "(kill-emacs)"'
+alias edc="ek && es && em"
+
 alias bzr="nocorrect bzr"
 alias cljsbuild="lein trampoline cljsbuild $@"
 

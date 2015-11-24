@@ -5,7 +5,6 @@
 (global-set-key (kbd "C-c <C-down>") 'windmove-down)
 
 ;;; Commenting and Killing
-(global-set-key (kbd "C-c M-/") 'comment-region)
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 
 ;; Utilities
@@ -18,13 +17,19 @@
 ;; Buffer shortcuts
 (global-set-key (kbd "C-x p") 'print-buffer)
 (global-set-key (kbd "C-c y") 'bury-buffer)
-(global-set-key (kbd "C-c r") 'revert-buffer)
+
+;; Otherwise Helm is unusable
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
 ;; Misc
-(global-set-key (kbd "M-y") 'browse-kill-ring)
 (global-set-key (kbd "M-p") 'fill-paragraph)
+(define-key prelude-mode-map (kbd "M-o") 'other-window)
 
-(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+;; aligning
+(global-set-key (kbd "C-x a c") 'align-current)
+(global-set-key (kbd "C-x a j") 'align-cljlet)
 
 (defun personal-delete-horizontal-space ()
   (interactive)

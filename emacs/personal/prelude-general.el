@@ -51,18 +51,25 @@
   (setq interprogram-cut-function 'live-paste-to-osx)
   (setq interprogram-paste-function 'live-copy-from-osx))
 
-(use-package company-quickhelp
-  :ensure t
-  :config
-  (company-quickhelp-mode 1))
-
-
 (use-package recentf
   :config
   (recentf-mode 1)
   (setq recentf-max-menu-items 25)
   :bind
   ("C-x C-r" . recentf-open-files))
+
+
+(use-package helm-mode
+  :config
+  (helm-autoresize-mode t)
+  (setq helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match    t
+        helm-M-x-fuzzy-match t
+        helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f")
+  :bind
+  ("M-y" . helm-show-kill-ring)
+  ("M-i" . helm-imenu))
 
 ;; Spelling
 (use-package flyspell-mode
