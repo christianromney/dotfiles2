@@ -1,7 +1,0 @@
-# -*- coding: utf-8 -*-
-# name: redef
-# key: redef
-# --
-(with-redefs [$1 $2]$>
-  $3)$>
-$0

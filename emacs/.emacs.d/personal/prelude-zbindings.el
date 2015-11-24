@@ -1,24 +1,3 @@
-;;; personal/prelude-zbindings --- Keybindings the way I like them
-;;;
-;;; Commentary:
-;;;
-;;; Some package-specific keybindings are grouped under their
-;;; use-package configuration in other configuration files
-;;;
-;;; Code:
-;;;
-;;; iTerm2 / Emacs compatibility
-
-(global-set-key "\e[OA" [M-up])
-(global-set-key "\e[OB" [M-down])
-(global-set-key "\e[OC" [M-right])
-(global-set-key "\e[OD" [M-left])
-
-(global-set-key "\e[1;9A" [M-S-up])
-(global-set-key "\e[1;9B" [M-S-down])
-(global-set-key "\e[1;9C" [M-S-right])
-(global-set-key "\e[1;9D" [M-S-left])
-
 ;;; Window Movement
 (global-set-key (kbd "C-c <C-left>") 'windmove-left)
 (global-set-key (kbd "C-c <C-right>") 'windmove-right)
@@ -26,16 +5,11 @@
 (global-set-key (kbd "C-c <C-down>") 'windmove-down)
 
 ;;; Commenting and Killing
-(global-set-key (kbd "C-c M-/") 'comment-region)
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 
 ;; Utilities
 (global-set-key (kbd "C-c =") 'prelude-increment-integer-at-point)
 (global-set-key (kbd "C-c _") 'prelude-decrement-integer-at-point)
-
-;; Replace prelude visit term with multi-term
-(define-key prelude-mode-map (kbd "C-c t") 'multi-term)
-(define-key prelude-mode-map (kbd "C-c o") nil)
 
 ;; Ctrl-x r i Useful rectangle binding
 (global-set-key (kbd "C-x r i") 'string-insert-rectangle)
@@ -43,70 +17,70 @@
 ;; Buffer shortcuts
 (global-set-key (kbd "C-x p") 'print-buffer)
 (global-set-key (kbd "C-c y") 'bury-buffer)
-(global-set-key (kbd "C-c r") 'revert-buffer)
 
+;; Otherwise Helm is unusable
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+(global-set-key (kbd "C-c h g") 'helm-google-suggest)
+
+;; Misc
+(global-set-key (kbd "M-p") 'fill-paragraph)
+(define-key prelude-mode-map (kbd "M-o") 'other-window)
+
+;; aligning
+(global-set-key (kbd "C-x a c") 'align-current)
+(global-set-key (kbd "C-x a j") 'align-cljlet)
+
+(defun personal-delete-horizontal-space ()
+  (interactive)
+  (just-one-space -1)
+  (sp-backward-delete-char))
+
+(defun personal-just-one-space ()
+  (interactive)
+  (just-one-space -1))
+
+(defun personal-sp-web-mode-is-code-context (id action context)
+  (and (eq action 'insert)
+       (not (or (get-text-property (point) 'part-side)
+                (get-text-property (point) 'block-side)))))
+
+(define-key smartparens-mode-map
+  (kbd "M-\\") 'personal-delete-horizontal-space)
+
+(define-key smartparens-mode-map
+  (kbd "M-SPC") 'personal-just-one-space)
+
+;; mnemonic 'l' for lines
+;; mnemonic 'a' for beginning (emacs style)
+;; mnemonic 'e' for end (emacs style)
+;; mnemonic 'h' for html
+;; mnemonic 't' for tag
 (use-package multiple-cursors
+  :ensure t
   :bind
-  (("C-c m l" . mc/edit-lines)                  ;; mnemonic 'l' for lines
-   ("C-c m a" . mc/edit-beginnings-of-lines)    ;; mnemonic 'a' for beginning (emacs style)
-   ("C-c m e" . mc/edit-ends-of-lines)          ;; mnemonic 'e' for end (emacs style)
-   ("C-c m h" . mc/mark-all-like-this-dwim)     ;; mnemonic 'h' for html
-   ("C-c m t" . mc/mark-sgml-tag-pair)          ;; mnemonic 't' for tag
-   ))
+  (("C-c m l" . mc/edit-lines)
+   ("C-c m a" . mc/edit-beginnings-of-lines)
+   ("C-c m e" . mc/edit-ends-of-lines)
+   ("C-c m h" . mc/mark-all-like-this-dwim)
+   ("C-c m t" . mc/mark-sgml-tag-pair)))
 
 (use-package expand-region
+  :ensure t
   :bind ("C-=" . er/expand-region))
 
-;; Fix Helm to work the way I want
-(use-package helm-mode
-  :config
-  (progn
-    (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)))
-
-;; Window Management
-(global-set-key (kbd "C-c w s") 'swap-windows)
-(global-set-key (kbd "C-c w r") 'rotate-windows)
-(global-set-key (kbd "C-c w p") 'buf-move-up)
-(global-set-key (kbd "C-c w n") 'buf-move-down)
-(global-set-key (kbd "C-c w b") 'buf-move-left)
-(global-set-key (kbd "C-c w f") 'buf-move-right)
-(global-set-key (kbd "C-c w .") 'shrink-window-horizontally)
-(global-set-key (kbd "C-c w ,") 'enlarge-window-horizontally)
-
-(global-set-key (kbd "M-y") 'browse-kill-ring)
-(global-set-key (kbd "M-p") 'fill-paragraph)
-
-
 (use-package smartparens
-  :init
-  (progn
-    (defun personal/delete-horizontal-space ()
-      (interactive)
-      (just-one-space -1)
-      (sp-backward-delete-char))
-
-    (defun personal/just-one-space ()
-      (interactive)
-      (just-one-space -1))
-    
-    (diminish 'smartparens-mode " (Sm)"))
-
-  :bind
-  (("M-\\" . personal/delete-horizontal-space)
-   ("M-SPC" . personal/just-one-space))
-  
+  :diminish (smartparens-mode . " (Sm)"))
   :config
   (progn
     (require 'smartparens-config)
     (smartparens-global-mode t)
     (show-smartparens-global-mode t)
-
     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-    (sp-local-pair 'web-mode "<" nil :when '(personal/sp-web-mode-is-code-context))
-
+    (sp-local-pair 'web-mode "<" nil :when '(personal-sp-web-mode-is-code-context))
     (sp-with-modes '(html-mode sgml-mode web-mode)
       (sp-local-pair "<" ">"))
-    
+
     (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
     (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
     (define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
@@ -144,8 +118,6 @@
     (define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
     (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
     (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
-    
-    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)))
+    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp))
 
 (provide 'personal/prelude-zbindings)
-;;; prelude-zbindings.el ends here

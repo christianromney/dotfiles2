@@ -1,9 +1,3 @@
-;;; personal/prelude-scheme --- Scheme Configuration
-;;;
-;;; Commentary:
-;;; Geiser mode provides Scheme / Racket integration
-;;;
-;;; Code:
 (use-package geiser-mode
   :defer t
   :bind ("C-c M-g" . run-geiser)
@@ -25,4 +19,3 @@
               (push '(">=" . ?≥) prettify-symbols-alist))))
 
 (provide 'personal/prelude-scheme)
-;;; prelude-scheme.el ends here

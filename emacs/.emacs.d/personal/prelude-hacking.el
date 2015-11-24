@@ -1,16 +1,7 @@
-;;; personal/prelude-hacking --- Programming Language Configuration
-;;;
-;;; Commentary:
-;;; General programming and language settings not
-;;; deserving of their own files
-;;;
-;;; Code:
-
-(add-hook 'after-init-hook 'global-company-mode)
-
 (use-package yasnippet
+  :ensure t
   :diminish (yas-minor-mode . " Ŷ")
-  :init
+  :config
   (defun check-expansion ()
     (save-excursion
       (if (looking-at "\\_>") t
@@ -18,12 +9,10 @@
         (if (looking-at "\\.") t
           (backward-char 1)
           (if (looking-at "->") t nil)))))
-
   (defun do-yas-expand ()
     (let ((yas-fallback-behavior 'return-nil))
       (yas-expand)))
-
-  ;; bind to TAB in keybindings file 
+  ;; bind to TAB in keybindings file
   (defun tab-indent-or-complete ()
     (interactive)
     (if (minibufferp)
@@ -33,18 +22,16 @@
           (if (check-expansion)
               (company-complete-common)
             (indent-for-tab-command)))))
-  :bind
-  (("TAB" . tab-indent-or-complete)
-   ("<tab>" . tab-indent-or-complete))
-
-  :config  
   (add-to-list 'yas-snippet-dirs
                (expand-file-name "snippets" prelude-personal-dir))
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  :bind
+  (("TAB" . tab-indent-or-complete)
+   ("<tab>" . tab-indent-or-complete)))
 
-;; Exuberant ctags 
 (use-package ctags
-  :init 
+  :ensure t
+  :config
   (setq path-to-ctags "/usr/local/bin/ctags"
         projectile-tags-command "/usr/local/bin/ctags -Re %s %s"
         tags-revert-without-query t)
@@ -52,22 +39,21 @@
   (("<f7>" . ctags-create-or-update-tags-table)
    ("M-." . ctags-search)))
 
-;; Projectile
 (use-package projectile
   :config
   (progn
     (setq projectile-enable-caching t)
-    (projectile-global-mode t)
-    (diminish 'projectile-mode " ℗")
-    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+    (projectile-global-mode t)))
 
-(use-package js-mode
+(use-package js2-mode
+  :ensure t
   :config
-  (setq auto-mode-alist (cons '("\\.template$" . js-mode) auto-mode-alist)))
+  (setq auto-mode-alist (cons '("\\.template$" . js2-mode) auto-mode-alist)))
 
 ;; Zen Coding
 (use-package web-mode
-  :init
+  :ensure t
+  :config
   (progn
     (defun personal/disable-smartparens ()
       (smartparens-mode 0))
@@ -84,30 +70,21 @@
             web-mode-code-indent-offset 2
             web-mode-enable-auto-pairing t)
       (add-to-list 'sp-ignore-modes-list 'web-mode)))
-  
-  :config
   (setq auto-mode-alist (cons '("\\.php$" . web-mode) auto-mode-alist))
   (add-hook 'web-mode-hook  'personal/web-mode-hook)
   (add-hook 'web-mode-hook 'personal/disable-smartparens))
 
 (use-package emmet-mode
+  :ensure t
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'web-mode-hook 'emmet-mode))
 
 ;; TAGS management
-(use-package ctags-auto-update-mode
-  :diminish ctags-auto-update-mode
-  :commands ctags-update
-  :config
-  (add-hook 'c-mode-common-hook  'turn-on-ctags-auto-update-mode)
-  (add-hook 'emacs-lisp-mode-hook  'turn-on-ctags-auto-update-mode)
-  
-  ;; (autoload 'enable-ctags-auto-update-mode
-  ;;   "ctags-update" "turn on ctags-auto-update-mode." t)
-
-  ;; (autoload 'ctags-update "ctags-update" "update TAGS using ctags" t)
-  )
-
-(provide 'personal/prelude-hacking)
-;;; prelude-hacking.el ends here
+(use-package ctags-update
+ :ensure t
+ :diminish ctags-auto-update-mode
+ :commands ctags-update
+ :config
+ (add-hook 'c-mode-common-hook  'turn-on-ctags-auto-update-mode)
+ (add-hook 'emacs-lisp-mode-hook  'turn-on-ctags-auto-update-mode))
