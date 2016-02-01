@@ -4,3 +4,4 @@ lein/.lein/repl-history
 *.pyc
 google-cloud-sdk
 *.elc
+emacs/.emacs.d/personal/preload/credentials.el
