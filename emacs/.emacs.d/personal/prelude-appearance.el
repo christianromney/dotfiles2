@@ -54,4 +54,10 @@
   :config
   (ansi-color-for-comint-mode-on))
 
+;; Colors for dired
+(use-package diredful
+  :ensure t
+  :config
+  (diredful-mode 1))
+
 (provide 'prelude-appearance)

@@ -21,6 +21,10 @@
 ;; Otherwise Helm is unusable
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+
+(define-key prelude-mode-map (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-p") 'fill-paragraph)
+
 (global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
 ;; Misc
@@ -95,7 +99,6 @@
     (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
     (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
     (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-    (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
     (define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
     (define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
     (define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)

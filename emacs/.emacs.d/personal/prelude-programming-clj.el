@@ -1,28 +1,37 @@
+(defvar personal/clojure-prettify-alist '())
+
+(defun personal/find-tag-without-ns (next-p)
+  (interactive "P")
+  (find-tag (first (last (split-string (symbol-name (symbol-at-point)) "/")))
+            next-p))
+
 (use-package clojure-mode
   :config
-  (progn
-    (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-    (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
-    (add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
-    (bind-key "C-c C-m a l" 'align-cljlet clojure-mode-map)
-    (add-hook 'clojure-mode-hook
-              (lambda ()
-                (push '("fn" . ?𝝺) prettify-symbols-alist)
-                (push '("!=" . ?≢) prettify-symbols-alist)
-                (push '("==" . ?≡) prettify-symbols-alist)
-                (push '("<=" . ?≤) prettify-symbols-alist)
-                (push '(">=" . ?≥) prettify-symbols-alist)
-                (push '("not=" . ?≠) prettify-symbols-alist) ))
-    (define-clojure-indent
-      (defroutes 'defun)
-      (s/defn 'defun)
-      (GET 2)
-      (POST 2)
-      (PUT 2)
-      (DELETE 2)
-      (HEAD 2)
-      (ANY 2)
-      (context 2))))
+  (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
+
+  (define-clojure-indent
+    (defroutes 'defun)
+    (s/defn 'defun)
+    (GET 2)
+    (POST 2)
+    (PUT 2)
+    (DELETE 2)
+    (HEAD 2)
+    (ANY 2)
+    (context 2))
+
+  (eval-after-load 'clojure-mode
+    '(setq clojure--prettify-symbols-alist
+           (append personal/clojure-prettify-alist
+                   clojure--prettify-symbols-alist)))
+  (eval-after-load 'lisp-mode
+    '(setq lisp--prettify-symbols-alist
+           (append personal/clojure-prettify-alist
+                   lisp--prettify-symbols-alist)))
+  :bind
+  ("M-." . personal/find-tag-without-ns))
 
 ;;; requires ~/.lein/profiles.clj to have refactor-nrepl
 (use-package clj-refactor

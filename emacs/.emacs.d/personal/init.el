@@ -19,7 +19,8 @@
    company-quickhelp
    display-theme
    flatland-theme
-   material-theme))
+   material-theme
+   ample-theme))
 
 (eval-when-compile
   (require 'use-package))
@@ -32,3 +33,4 @@
 (setq calendar-longitude -80.34110799999999)
 (setq calendar-location-name "Pembroke Pines, FL")
 (setq sunshine-location calendar-location-name)
+

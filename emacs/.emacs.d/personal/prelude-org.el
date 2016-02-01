@@ -7,7 +7,8 @@
   (setq org-html-validation-link nil)
   (setq org-export-html-postamble nil)
   (setq org-export-backends '(ascii html icalendar latex md))
-
+  (setq org-use-sub-superscripts "{}")
+  
   ;; File handling
   (setq org-directory "~/Dropbox/org")
   (setq org-default-notes-file (concat org-directory "/default.org"))
@@ -53,6 +54,11 @@
   :bind
   ("C-c a" . org-agenda)
   ("C-c c" . org-capture))
+
+(use-package ox-reveal
+  :ensure t
+  :config
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
 
 (use-package deft
   :ensure t

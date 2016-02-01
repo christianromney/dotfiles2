@@ -29,15 +29,6 @@
   (("TAB" . tab-indent-or-complete)
    ("<tab>" . tab-indent-or-complete)))
 
-(use-package ctags
-  :ensure t
-  :config
-  (setq path-to-ctags "/usr/local/bin/ctags"
-        projectile-tags-command "/usr/local/bin/ctags -Re %s %s"
-        tags-revert-without-query t)
-  :bind
-  (("<f7>" . ctags-create-or-update-tags-table)
-   ("M-." . ctags-search)))
 
 (use-package projectile
   :config
@@ -81,6 +72,17 @@
   (add-hook 'web-mode-hook 'emmet-mode))
 
 ;; TAGS management
+
+(use-package ctags
+  :ensure t
+  :config
+  (setq path-to-ctags "/usr/local/bin/ctags"
+        projectile-tags-command "/usr/local/bin/ctags -Re %s %s"
+        tags-revert-without-query t)
+  :bind
+  (("<f7>" . ctags-create-or-update-tags-table)
+   ("M-." . ctags-search)))
+
 (use-package ctags-update
  :ensure t
  :diminish ctags-auto-update-mode

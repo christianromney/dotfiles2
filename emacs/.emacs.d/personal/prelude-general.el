@@ -51,6 +51,11 @@
   (setq interprogram-cut-function 'live-paste-to-osx)
   (setq interprogram-paste-function 'live-copy-from-osx))
 
+(use-package synosaurus
+  :ensure t
+  :bind
+  ("C-x t" . synosaurus-choose-and-replace))
+
 (use-package recentf
   :config
   (recentf-mode 1)
@@ -70,6 +75,11 @@
   :bind
   ("M-y" . helm-show-kill-ring)
   ("M-i" . helm-imenu))
+
+(use-package paradox
+  :ensure t
+  :bind
+  ("<f5>" . paradox-list-packages))
 
 ;; Spelling
 (use-package flyspell-mode
