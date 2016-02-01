@@ -13,8 +13,8 @@ alias dco="nocorrect docker-compose"
 alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
-alias new="nocorrect emacs -nw"
-alias anew="nocorrect open /usr/local/Cellar/emacs/24.4/Emacs.app"
+alias new="nocorrect   emacs -nw"
+alias anew="nocorrect /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs"
 
 # Emacs aliases
 alias es='/usr/local/bin/emacs -nw --daemon'
@@ -34,10 +34,10 @@ alias fortune="nocorrect fortune"
 # Programming
 alias gst="nocorrect git st -s"
 alias njs="rlwrap node-repl"
-alias iol="rlwrap io"
-alias cljr="rlwrap clj"
 alias lein="nocorrect lein"
-alias olein="lein with-profile offline"
+
+alias vu="vagrant up"
+alias vd="vagrant suspend"
 alias vg="nocorrect valgrind"
 
 
