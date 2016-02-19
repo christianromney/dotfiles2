@@ -119,3 +119,8 @@
   :defer t
   :config
   (setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist)))
+
+(use-package hackernews
+  :ensure t
+  :defer t
+  :bind (("C-c h n" . hackernews)))
