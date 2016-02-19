@@ -15,6 +15,7 @@ alias grep="egrep"
 alias rf="rm -rf"
 alias new="nocorrect   emacs -nw"
 alias anew="nocorrect /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs"
+alias rmerge="find . -iname '*.orig' -delete"
 
 # Emacs aliases
 alias es='/usr/local/bin/emacs -nw --daemon'
