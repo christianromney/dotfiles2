@@ -20,7 +20,8 @@
     (DELETE 2)
     (HEAD 2)
     (ANY 2)
-    (context 2))
+    (context 2)
+    (with-mock))
 
   (eval-after-load 'clojure-mode
     '(setq clojure--prettify-symbols-alist
@@ -46,11 +47,13 @@
   :config
   (setq nrepl-log-messages t
         nrepl-hide-special-buffers t
+        
         cider-prefer-local-resources t
         cider-repl-use-pretty-printing t
         cider-repl-wrap-history t
         cider-repl-history-size 1000
         cider-repl-history-file "~/.emacs.d/cider-repl.history")
+
   (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode))
 

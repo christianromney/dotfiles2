@@ -63,7 +63,6 @@
   :bind
   ("C-x C-r" . recentf-open-files))
 
-
 (use-package helm-mode
   :config
   (helm-autoresize-mode t)
@@ -113,6 +112,7 @@
   :bind
   (("M-z" . ace-jump-zap-up-to-char-dwim)
    ("M-Z" . ace-jump-zap-to-char-dwim)))
+
 
 (use-package adoc-mode
   :ensure t

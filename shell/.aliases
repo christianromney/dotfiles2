@@ -1,9 +1,5 @@
 # List direcory contents
-alias la='ls -A'
-alias ll="ls -GAhlp"
-alias kk="ll"
-alias sl='ls'
-alias lll="ll | less"
+ll="ls -lahG"
 
 # Docker (if you can't beat 'em, join 'em)
 alias dicker="nocorrect docker"

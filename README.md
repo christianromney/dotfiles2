@@ -3,15 +3,15 @@ Structure
 
 This project contains my personal dotfiles collection. My primary machine is Mac OS X, but most of this stuff should work equally well under Linux (with a few alias exceptions). 
 
-I use GNU stow to manage the symlinks in this repository, and the `homesync` script depends on it. (It's available through Homebrew).
+I use [GNU stow](https://www.gnu.org/software/stow/) to manage the symlinks in this repository, and the `homesync` script depends on it. To install it, 
+
+     brew install stow
+     
+I run [iTerm2](https://www.iterm2.com/), [ZSH](http://www.zsh.org/), and [prezto](https://github.com/sorin-ionescu/prezto). iTerm2 is configured to use the [Source Code Pro for Powerline](https://github.com/powerline/fonts/tree/master/SourceCodePro) font which allows me to use the [paradox](https://github.com/paradox460/prezto/blob/paradox/modules/prompt/functions/prompt_paradox_setup) prezto theme. My terminal color palette is set to [Smyck](http://color.smyck.org/). 
+
+[!https://dl.dropboxusercontent.com/u/2865929/terminal.png]
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
-
-TODO
-====
-
-The concept of drink is cool, but needs the ability to show the list of casks and brews as well as remove stuff.
-
 
 License
 =======
