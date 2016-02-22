@@ -9,7 +9,7 @@ I use [GNU stow](https://www.gnu.org/software/stow/) to manage the symlinks in t
      
 I run [iTerm2](https://www.iterm2.com/), [ZSH](http://www.zsh.org/), and [prezto](https://github.com/sorin-ionescu/prezto). iTerm2 is configured to use the [Source Code Pro for Powerline](https://github.com/powerline/fonts/tree/master/SourceCodePro) font which allows me to use the [paradox](https://github.com/paradox460/prezto/blob/paradox/modules/prompt/functions/prompt_paradox_setup) prezto theme. My terminal color palette is set to [Smyck](http://color.smyck.org/). 
 
-[!https://dl.dropboxusercontent.com/u/2865929/terminal.png]
+![My terminal](https://dl.dropboxusercontent.com/u/2865929/terminal.png)
 
 [![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
 
