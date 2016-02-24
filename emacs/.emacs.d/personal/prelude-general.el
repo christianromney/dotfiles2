@@ -105,9 +105,10 @@
   :diminish (flyspell-mode . " FSp")
   :config
   (progn
-    (setq flyspell-issue-welcome-flag nil)
-    (setq-default ispell-program-name "/usr/local/bin/aspell")
-    (setq-default ispell-list-command "list")))
+    (setq flyspell-issue-welcome-flag nil
+          ispell-program-name "/usr/local/bin/aspell"
+          ispell-extra-args '("--sug-mode=ultra")
+          ispell-list-command "list")))
 
 (use-package ace-jump-buffer
   :ensure t
@@ -132,7 +133,6 @@
   :bind
   (("M-z" . ace-jump-zap-up-to-char-dwim)
    ("M-Z" . ace-jump-zap-to-char-dwim)))
-
 
 (use-package adoc-mode
   :ensure t
