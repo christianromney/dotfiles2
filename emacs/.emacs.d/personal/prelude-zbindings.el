@@ -22,18 +22,22 @@
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
 
-(define-key prelude-mode-map (kbd "M-o") 'other-window)
-(global-set-key (kbd "M-p") 'fill-paragraph)
-
 (global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
 ;; Misc
 (global-set-key (kbd "M-p") 'fill-paragraph)
+
 (define-key prelude-mode-map (kbd "M-o") 'other-window)
+(define-key prelude-mode-map (kbd "s-o") 'other-frame)
+
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "s-o") 'other-frame)
+
+(global-set-key (kbd "<f8>") 'pivotal)
 
 ;; aligning
-(global-set-key (kbd "C-x a c") 'align-current)
-(global-set-key (kbd "C-x a j") 'align-cljlet)
+(define-key clojure-mode-map (kbd "C-x a c") 'align-current)
+(define-key clojure-mode-map (kbd "C-x a j") 'align-cljlet)
 
 (defun personal-delete-horizontal-space ()
   (interactive)
@@ -112,6 +116,7 @@
     (define-key sp-keymap (kbd "C-M-]") 'sp-select-next-thing)
     (define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
     (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
+    
     (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
     (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
     (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)

@@ -1,8 +1,12 @@
+(use-package ob-restclient
+  :ensure t)
+
 (use-package org
   :ensure t
   :config
   ;; Export
   (require 'ob-clojure)
+  (require 'ob-restclient)
   (require 'cider)
   (setq org-html-validation-link nil)
   (setq org-export-html-postamble nil)
@@ -69,6 +73,5 @@
   (setq deft-extension "org")
   (setq deft-text-mode 'org-mode)
   :bind ("<f8>" . deft))
-
 
 (provide 'personal/prelude-org)

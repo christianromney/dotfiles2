@@ -10,6 +10,7 @@
 ;; General Emacs Settings
 (setq initial-major-mode 'lisp-interaction-mode
       redisplay-dont-pause t
+      load-prefer-newer t
       column-number-mode t
       inhibit-startup-message t
       transient-mark-mode t
@@ -26,8 +27,27 @@
       echo-keystrokes 0.1
       initial-scratch-message nil
       dired-use-ls-dired nil
-      make-backup-files nil)
+      make-backup-files nil
+      indent-tabs-mode nil
+      tab-always-indent 'complete
+      gc-cons-threshold 50000000
+      large-file-warning-threshold 100000000
+      scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
 
+(add-hook 'newsticker-mode-hook 'imenu-add-menubar-index)
+(setq newsticker-url-list
+      '(("emacs-fu" "http://emacs-fu.blogspot.com/feeds/posts/default" nil nil nil)
+        ("xkcd" "https://www.xkcd.com/rss.xml" nil nil nil)
+        ("emacs rocks" "http://emacsrocks.com/atom.xml" nil nil nil)
+        ("endlessparentheses" "http://endlessparentheses.com/atom.xml" nil nil nil)
+        ("Daring Fireball" "https://daringfireball.net/feeds/main" nil nil nil)
+        ("BBC News" "http://feeds.bbci.co.uk/news/world/rss.xml" nil nil nil)
+        ("CNN News" "http://rss.cnn.com/rss/cnn_topstories.rss" nil nil nil)
+        ("NCAAB News" "http://sports.espn.go.com/espn/rss/ncb/news" nil nil nil)))
+
+;; global modes
 (require 'cua-base)
 (require 'cua-gmrk)
 (require 'cua-rect)
@@ -124,3 +144,10 @@
   :ensure t
   :defer t
   :bind (("C-c h n" . hackernews)))
+
+(use-package emms
+  :ensure t
+  :config
+  (require 'emms-setup)
+  (emms-standard)
+  (emms-default-players))

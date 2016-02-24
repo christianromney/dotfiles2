@@ -24,11 +24,8 @@
             (indent-for-tab-command)))))
   (add-to-list 'yas-snippet-dirs
                (expand-file-name "snippets" prelude-personal-dir))
-  (yas-global-mode 1)
-  :bind
-  (("TAB" . tab-indent-or-complete)
-   ("<tab>" . tab-indent-or-complete)))
-
+  (define-key yas-minor-mode-map (kbd "TAB") 'tab-indent-or-complete)
+  (define-key yas-minor-mode-map (kbd "<tab>") 'tab-indent-or-complete))
 
 (use-package projectile
   :config
@@ -39,7 +36,8 @@
 (use-package js2-mode
   :ensure t
   :config
-  (setq auto-mode-alist (cons '("\\.template$" . js2-mode) auto-mode-alist)))
+  (setq auto-mode-alist (cons '("\\.template$" . js2-mode) auto-mode-alist))
+  (add-hook 'js2-mode-hook 'yas-minor-mode-on))
 
 ;; Zen Coding
 (use-package web-mode
@@ -69,7 +67,8 @@
   :ensure t
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode)
-  (add-hook 'web-mode-hook 'emmet-mode))
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (add-hook 'emmet-mode-hook 'yas-minor-mode-on))
 
 ;; TAGS management
 

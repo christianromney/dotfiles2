@@ -1,5 +1,4 @@
 ;;; Uncomment the modules you'd like to use and restart Prelude afterwards
-
 ;; Emacs IRC client
 (require 'prelude-erc)
 (require 'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
@@ -22,7 +21,7 @@
 ;; (require 'prelude-go)
 ;; (require 'prelude-haskell)
 (require 'prelude-js)
-;; (require 'prelude-latex)
+(require 'prelude-latex)
 (require 'prelude-lisp)
 ;; (require 'prelude-ocaml)
 (require 'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more

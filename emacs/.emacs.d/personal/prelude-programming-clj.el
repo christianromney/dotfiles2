@@ -21,7 +21,12 @@
     (HEAD 2)
     (ANY 2)
     (context 2)
-    (with-mock))
+    (with-mock 2)
+    (for-all 2)
+    (clone-for 2)
+    (alter-when 2)
+    (keep-when 2)
+    (remove-when 2))
 
   (eval-after-load 'clojure-mode
     '(setq clojure--prettify-symbols-alist
@@ -58,6 +63,8 @@
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode))
 
 (use-package clojure-snippets
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
 
 (provide 'personal/prelude-clojure)

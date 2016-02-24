@@ -1,7 +1,17 @@
-(require 's)
-(require 'request)
-(require 'seq)
-(require 'jabber)
+(use-package seq
+  :ensure t)
+
+(use-package request
+  :ensure t)
+
+
+(use-package jabber
+  :ensure t
+  :config
+  (require 's)
+  (require 'request)
+  (require 'seq)
+  (require 'jabber))
 
 (defvar hipchat--user-info-for-completion nil)
 

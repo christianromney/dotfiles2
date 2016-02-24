@@ -17,6 +17,9 @@
    company-restclient
    company-web
    company-quickhelp
+   pivotal-tracker
+   emms
+   helm-emms
    display-theme
    flatland-theme
    material-theme
