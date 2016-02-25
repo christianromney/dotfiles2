@@ -52,6 +52,10 @@ Emacs is the world's most powerful editor. I use it to...
 
 [[./img/manpage.png]]
 
+- manage my Git commits
+
+[[./img/git.png]]
+
 - and, of course, develop software
 
 [[./img/repl-tests.png]]
