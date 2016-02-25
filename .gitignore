@@ -5,3 +5,4 @@ lein/.lein/repl-history
 google-cloud-sdk
 *.elc
 emacs/.emacs.d/personal/preload/credentials.el
+git/.gitconfig.secrets

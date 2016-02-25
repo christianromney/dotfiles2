@@ -3,11 +3,11 @@
 	email = cromney@pointslope.com
 [core]
 	autocrlf = input
-	excludesfile = /Users/christian/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = emacs
 	pager = less
 [commit]
-	template = /Users/christian/.git-commit-template
+	template = ~/.git-commit-template
 [help]
 	autocorrect = 1
 [alias]
@@ -30,3 +30,6 @@
 	tool = opendiff
 [clean]
 	requireForce = false
+[include]
+	path = ~/.gitconfig.secrets
+
