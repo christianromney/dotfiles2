@@ -1,15 +1,27 @@
-;;; Window Movement
+;; Text Scaling
+(global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "s-=") 'text-scale-increase)
+
+;; Utilities
+(global-set-key (kbd "C-c =") 'prelude-increment-integer-at-point)
+(global-set-key (kbd "C-c -") 'prelude-decrement-integer-at-point)
+
+;; Available!
+;; C-c C--
+;; C-c C-= 
+
+;;; Window / Frame Movement
 (global-set-key (kbd "C-c <C-left>") 'windmove-left)
 (global-set-key (kbd "C-c <C-right>") 'windmove-right)
 (global-set-key (kbd "C-c <C-up>") 'windmove-up)
 (global-set-key (kbd "C-c <C-down>") 'windmove-down)
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "s-o") 'other-frame)
+(define-key prelude-mode-map (kbd "M-o") 'other-window)
+(define-key prelude-mode-map (kbd "s-o") 'other-frame)
 
 ;;; Commenting and Killing
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
-
-;; Utilities
-(global-set-key (kbd "C-c =") 'prelude-increment-integer-at-point)
-(global-set-key (kbd "C-c _") 'prelude-decrement-integer-at-point)
 
 ;; Ctrl-x r i Useful rectangle binding
 (global-set-key (kbd "C-x r i") 'string-insert-rectangle)
@@ -22,18 +34,21 @@
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
 
-(global-set-key (kbd "C-c h g") 'helm-google-suggest)
-
 ;; Misc
 (global-set-key (kbd "M-p") 'fill-paragraph)
+(global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
-(define-key prelude-mode-map (kbd "M-o") 'other-window)
-(define-key prelude-mode-map (kbd "s-o") 'other-frame)
-
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "s-o") 'other-frame)
-
-(global-set-key (kbd "<f8>") 'pivotal)
+;; Function Key mappings
+;; <f1> help
+;; <f2> packages
+;; <f3> macrorecord start
+;; <f4> macrorecord end
+;; <f5> pivotal 
+;; <f6> hackernews
+(global-set-key (kbd "<f7>") 'newsticker-show-news)
+;;(global-set-key (kbd "<f8>" 'available))
+;;(global-set-key (kbd "<f9>" 'available))
+;; <f10> menubar
 
 ;; aligning
 (define-key clojure-mode-map (kbd "C-x a c") 'align-current)
@@ -78,7 +93,7 @@
   :bind ("C-=" . er/expand-region))
 
 (use-package smartparens
-  :diminish (smartparens-mode . " (Sm)"))
+  :diminish (smartparens-mode . " (Sm)")
   :config
   (progn
     (require 'smartparens-config)
@@ -89,43 +104,51 @@
     (sp-with-modes '(html-mode sgml-mode web-mode)
       (sp-local-pair "<" ">"))
 
-    (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-    (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-    (define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
-    (define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
-    (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
-    (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
-    (define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
-    (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
-    (define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
-    (define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
-    (define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
-    (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
-    (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
-    (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-    (define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
-    (define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
-    (define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
-    (define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
-    (define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
-    (define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
-    (define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
-    (define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
-    (define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
-    (define-key sp-keymap (kbd "C-<left_bracket>") 'sp-select-previous-thing)
-    (define-key sp-keymap (kbd "C-M-]") 'sp-select-next-thing)
-    (define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
-    (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
+    (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
     
-    (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
-    (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
-    (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
-    (define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
-    (define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
-    (define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
-    (define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
-    (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
-    (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
-    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp))
+    (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
+    
+    (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-e") 'sp-up-sexp)
+    
+    (define-key smartparens-mode-map (kbd "s-a") 'sp-beginning-of-sexp)
+    (define-key smartparens-mode-map (kbd "s-e") 'sp-end-of-sexp)
+    
+    (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
+
+    (define-key smartparens-mode-map (kbd "C-M-n") 'sp-next-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-p") 'sp-previous-sexp)
+
+    (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
+    
+    (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-slurp-sexp)
+    (define-key smartparens-mode-map (kbd "C-<left>") 'sp-forward-barf-sexp)
+
+    (define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-backward-barf-sexp)
+
+    ;; note the uppercase "D", also bound to M-s
+    (define-key smartparens-mode-map (kbd "M-D") 'sp-splice-sexp)
+
+    ;; this "<delete>" is the one near the "home" button on larger keyboards (104 vs 88)
+    (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-unwrap-sexp)
+    (define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
+
+    ;; Mac "<backspace>" is labeled delete
+    (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
+    (define-key smartparens-mode-map (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
+    ;; end
+    
+    ;; to work these backwards, prefix with C-- and C-M--
+    (define-key smartparens-mode-map (kbd "C-]") 'sp-select-next-thing-exchange)
+    (define-key smartparens-mode-map (kbd "C-M-]") 'sp-select-next-thing)
+    
+    (define-key smartparens-mode-map (kbd "M-F") 'sp-forward-symbol)
+    (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
+    
+    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)))
 
 (provide 'personal/prelude-zbindings)

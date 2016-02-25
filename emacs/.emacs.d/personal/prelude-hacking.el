@@ -79,8 +79,7 @@
         projectile-tags-command "/usr/local/bin/ctags -Re %s %s"
         tags-revert-without-query t)
   :bind
-  (("<f7>" . ctags-create-or-update-tags-table)
-   ("M-." . ctags-search)))
+  (("M-." . ctags-search)))
 
 (use-package ctags-update
  :ensure t

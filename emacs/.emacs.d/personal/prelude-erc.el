@@ -16,4 +16,4 @@
     (erc :server "irc.freenode.net"
          :nick "cromney"
          :full-name "Christian Romney"))
-  :bind ("<f9>" . personal/connect-to-freenode))
+  :bind ("<f12>" . personal/connect-to-freenode))

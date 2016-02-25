@@ -98,7 +98,7 @@
 (use-package paradox
   :ensure t
   :bind
-  ("<f5>" . paradox-list-packages))
+  ("<f2>" . paradox-list-packages))
 
 ;; Spelling
 (use-package flyspell-mode
@@ -143,7 +143,7 @@
 (use-package hackernews
   :ensure t
   :defer t
-  :bind (("C-c h n" . hackernews)))
+  :bind (("<f6>" . hackernews)))
 
 (use-package emms
   :ensure t

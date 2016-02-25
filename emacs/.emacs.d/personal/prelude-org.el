@@ -71,7 +71,6 @@
   (setq deft-directory "~/Dropbox/org")
   (setq deft-use-filename-as-title t)
   (setq deft-extension "org")
-  (setq deft-text-mode 'org-mode)
-  :bind ("<f8>" . deft))
+  (setq deft-text-mode 'org-mode))
 
 (provide 'personal/prelude-org)
