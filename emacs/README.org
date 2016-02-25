@@ -20,3 +20,39 @@ My customizations include:
 - smartparens, clojure-mode, cider, clj-refactor
 - geiser-mode (scheme/racket)
 - and more...
+
+* Who Cares?
+Emacs is the world's most powerful editor. I use it to...
+
+- play music
+
+[[./img/bongo.png]]
+
+- connect to Internet Relay Chat (IRC)
+
+[[./img/erc.png]]
+
+- write outlines and documents that can exported to HTML or PDF
+
+[[./img/export.png]]
+
+- read PDF documents
+
+[[./img/pdf.png]]
+
+- catch up on HackerNews
+
+[[./img/hackernews.png]]
+
+- and RSS/Atom feeds
+
+[[./img/rssfeeds.png]]
+
+- RTFM
+
+[[./img/manpage.png]]
+
+- and, of course, develop software
+
+[[./img/repl-tests.png]]
+
