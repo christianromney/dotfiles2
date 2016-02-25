@@ -1,0 +1,22 @@
+* Emacs configuration
+My personalized emacs configuration depends on [[https://github.com/bbatsov/prelude][Emacs Prelude]].
+My customizations include:
+
+- Paradox (package manager)
+- Pivotal Tracker
+- Hacker News
+- Newsticker
+- Bongo (music player)
+- ERC (IRC client)
+- Smyx theme / Source Code Pro font
+- linum
+- powerline
+- aggressive-indent
+- helm (everywhere)
+- ace-{jump-mode, jump-zap, jump-buffer, window, isearch}
+- emmet-mode
+- restclient-mode
+- org-mode
+- smartparens, clojure-mode, cider, clj-refactor
+- geiser-mode (scheme/racket)
+- and more...
