@@ -145,9 +145,3 @@
   :defer t
   :bind (("<f6>" . hackernews)))
 
-(use-package emms
-  :ensure t
-  :config
-  (require 'emms-setup)
-  (emms-standard)
-  (emms-default-players))

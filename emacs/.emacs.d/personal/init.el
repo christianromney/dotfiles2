@@ -1,29 +1,27 @@
 (prelude-require-packages
  '(use-package
-   dired+
-   ack
-   git-gutter-fringe+
-   eww-lnum
-   unbound
-   javadoc-lookup
-   datomic-snippets
-   cljsbuild-mode
-   align-cljlet
-   rainbow-identifiers
-   terraform-mode
-   restclient
-   less-css-mode
-   htmlize
-   company-restclient
-   company-web
-   company-quickhelp
-   pivotal-tracker
-   emms
-   helm-emms
-   display-theme
-   flatland-theme
-   material-theme
-   ample-theme))
+    dired+
+    ack
+    git-gutter-fringe+
+    eww-lnum
+    unbound
+    javadoc-lookup
+    datomic-snippets
+    cljsbuild-mode
+    align-cljlet
+    rainbow-identifiers
+    terraform-mode
+    restclient
+    less-css-mode
+    htmlize
+    company-restclient
+    company-web
+    company-quickhelp
+    pivotal-tracker
+    display-theme
+    flatland-theme
+    material-theme
+    ample-theme))
 
 (eval-when-compile
   (require 'use-package))
