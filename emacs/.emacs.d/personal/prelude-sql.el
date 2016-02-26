@@ -11,5 +11,4 @@
 
 (global-set-key (kbd "<f10>") 'personal/mysql-connect)
 
-
 (provide 'personal/prelude-sql)

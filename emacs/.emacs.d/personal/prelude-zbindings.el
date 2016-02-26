@@ -24,15 +24,11 @@
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 
 ;; Ctrl-x r i Useful rectangle binding
-(global-set-key (kbd "C-x r i") 'string-insert-rectangle)
+(global-set-key (kbd "C-x r I") 'string-insert-rectangle)
 
 ;; Buffer shortcuts
 (global-set-key (kbd "C-x p") 'print-buffer)
 (global-set-key (kbd "C-c y") 'bury-buffer)
-
-;; Otherwise Helm is unusable
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
 
 ;; Misc
 (global-set-key (kbd "M-p") 'fill-paragraph)
@@ -48,7 +44,7 @@
 (global-set-key (kbd "<f7>") 'newsticker-show-news)
 ;;(global-set-key (kbd "<f8>" 'available))
 ;;(global-set-key (kbd "<f9>" 'available))
-;; <f10> menubar
+;; <f10> connect to mysql
 
 ;; aligning
 (define-key clojure-mode-map (kbd "C-x a c") 'align-current)
