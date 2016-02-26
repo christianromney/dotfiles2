@@ -30,8 +30,8 @@
   (column-number-mode t)
   (whitespace-mode t)
   (global-prettify-symbols-mode t)
-  (global-auto-revert-mode t)
-  (global-hl-line-mode +1)
+  (global-auto-revert-mode)
+  (global-hl-line-mode -1)
   (global-flycheck-mode -1)
   (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
 
