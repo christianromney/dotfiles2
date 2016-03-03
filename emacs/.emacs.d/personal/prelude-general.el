@@ -93,7 +93,8 @@
         helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f")
   :bind
   ("M-y" . helm-show-kill-ring)
-  ("M-i" . helm-imenu))
+  ("M-i" . helm-imenu)
+  ("C-x w" . helm-multi-swoop))
 
 (use-package paradox
   :ensure t

@@ -1,0 +1,4 @@
+#name: testing
+# --
+(testing ${1:scenario}
+  $0)
