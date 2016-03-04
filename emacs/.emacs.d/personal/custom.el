@@ -11,6 +11,11 @@
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(paradox-automatically-star t)
+ '(safe-local-variable-values
+   (quote
+    ((projectile-project-type . lein-test)
+     (projectile-project-type quote lein-test)
+     (projectile-project-type . "lein-test"))))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    (quote
