@@ -34,7 +34,6 @@
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode)
-              (writegood-mode)
               (auto-fill-mode)))
 
   (setq org-babel-clojure-backend 'cider

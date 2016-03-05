@@ -13,7 +13,8 @@
  '(paradox-automatically-star t)
  '(safe-local-variable-values
    (quote
-    ((projectile-project-type . lein-test)
+    ((cider-cljs-lein-repl . "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+     (projectile-project-type . lein-test)
      (projectile-project-type quote lein-test)
      (projectile-project-type . "lein-test"))))
  '(vc-annotate-background "#2B2B2B")
