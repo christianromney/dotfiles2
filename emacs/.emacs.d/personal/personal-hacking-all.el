@@ -11,10 +11,10 @@
   :config
   (setq projectile-enable-caching t))
 
-;; (use-package projectile-direnv
-;;   :ensure t
-;;   :config
-;;   (add-hook 'projectile-mode-hook 'projectile-direnv-export-variables))
+(use-package projectile-direnv
+  :ensure t
+  :config
+  (add-hook 'projectile-mode-hook 'projectile-direnv-export-variables))
 
 ;; TAGS management
 (use-package ctags

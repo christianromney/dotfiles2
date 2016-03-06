@@ -10,6 +10,7 @@
 
 (use-package clojure-mode
   :ensure t
+  :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
@@ -46,6 +47,7 @@
 ;;; requires ~/.lein/profiles.clj to have refactor-nrepl
 (use-package clj-refactor
   :ensure t
+  :defer t
   :config
   (add-hook 'clojure-mode-hook
             (lambda ()
@@ -71,11 +73,14 @@
 
 (use-package clojure-snippets
   :ensure t
+  :defer t
   :config
   (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
 
 (use-package datomic-snippets
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package cljsbuild-mode
-  :ensure t)
+  :ensure t
+  :defer t)
