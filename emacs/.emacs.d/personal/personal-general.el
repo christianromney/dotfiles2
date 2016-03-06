@@ -58,7 +58,7 @@
 (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
 (helm-autoresize-mode t)
-(setq helm-split-window-in-side-p           t ; open helm inside current window
+(setq helm-split-window-in-side-p           t 
       helm-M-x-fuzzy-match                  t
       helm-buffers-fuzzy-matching           t
       helm-recentf-fuzzy-match              t
@@ -68,8 +68,8 @@
       helm-apropos-fuzzy-match              t
       helm-move-to-line-cycle-in-source     t
       helm-lisp-fuzzy-completion            t
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-search-library-in-sexp        t 
+      helm-scroll-amount                    8 
       helm-ff-file-name-history-use-recentf t
       helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
       helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f")
@@ -105,15 +105,31 @@
 
 ;; Adobe Source Code Pro font
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-20"))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; modeline appearance
+(use-package nyan-mode
+  :ensure t
+  :config
+  (nyan-mode +1))
+
+(use-package powerline
+  :ensure t
+  :config
+  (require 'powerline))
 
 ;;; Theme settings and built-in global minor modes
-(use-package smyx-theme
+(use-package moe-theme
   :ensure t
-  :diminish (projectile-mode . " Prj") (company-mode . " Cmp") (flycheck-mode . " ✓") prelude-mode
+  :diminish projectile-mode company-mode (flycheck-mode . " ✓") prelude-mode helm-mode
   :config
+  (require 'moe-theme)
   (disable-theme 'zenburn)
   (disable-theme 'solarized)
-  (load-theme 'smyx)
+  (load-theme 'moe-dark)
+  (moe-theme-set-color 'red)
+  (powerline-moe-theme)
+  (setq moe-theme-highlight-buffer-id t)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (line-number-mode t)
@@ -136,6 +152,12 @@
   (setq linum-format " %d ")
   (global-linum-mode t))
 
+(use-package hlinum
+  :ensure t
+  :config
+  (hlinum-activate))
+
+
 ;; dired enhancements
 (use-package dired+
   :ensure t)
@@ -149,23 +171,6 @@
 ;; info mode
 (use-package info+
   :ensure t)
-
-;; modeline appearance
-(use-package nyan-mode
-  :ensure t
-  :config
-  (nyan-mode +1))
-
-(use-package spaceline
-  :ensure t
-  :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme +1)
-  (spaceline-helm-mode +1)
-  (spaceline-info-mode +1)
-  (setq powerline-default-separator 'utf-8
-        spaceline-window-numbers-unicode t
-        spaceline-workspace-numbers-unicode t))
 
 (use-package git-gutter-fringe+
   :ensure t)
