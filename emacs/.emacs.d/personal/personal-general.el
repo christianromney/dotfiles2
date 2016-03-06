@@ -79,6 +79,10 @@
 (define-key helm-map (kbd "C-z")  'helm-select-action)
 
 ;; documentation popup alonside company completion candidates
+
+(use-package pos-tip
+  :ensure t)
+
 (use-package company-quickhelp
   :ensure t
   :config
@@ -247,3 +251,13 @@
   :defer t
   :config
   (setq auto-mode-alist (cons '("\\.adoc$"  . adoc-mode) auto-mode-alist)))
+
+(defun personal/byte-compile-prelude-dir ()
+  "Byte-compile all your Prelude personal dotfiles"
+  (interactive)
+  (byte-recompile-directory prelude-personal-dir 0))
+
+(defun personal/byte-compile-user-dir ()
+  "Byte-compile all your Prelude personal dotfiles"
+  (interactive)
+  (byte-recompile-directory user-emacs-directory 0))
