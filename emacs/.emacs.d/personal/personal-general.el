@@ -113,6 +113,7 @@
   (disable-theme 'solarized)
   (load-theme 'smyx)
   (menu-bar-mode -1)
+  (scroll-bar-mode -1)
   (line-number-mode t)
   (column-number-mode t)
   (whitespace-mode t)
