@@ -45,7 +45,30 @@
 
 ;; use helm everywhere possible
 (use-package helm
-  :ensure t)
+  :ensure t
+  :config
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+  (helm-autoresize-mode t)
+  (setq helm-split-window-in-side-p           t ; open helm inside current window
+        helm-M-x-fuzzy-match                  t
+        helm-buffers-fuzzy-matching           t
+        helm-recentf-fuzzy-match              t
+        helm-semantic-fuzzy-match             t
+        helm-imenu-fuzzy-match                t
+        helm-locate-fuzzy-match               t
+        helm-apropos-fuzzy-match              t
+        helm-move-to-line-cycle-in-source     t
+        helm-lisp-fuzzy-completion            t
+        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-file-name-history-use-recentf t
+        helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f"))
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z")  'helm-select-action)
 
 (use-package helm-projectile
   :ensure t)
@@ -59,8 +82,8 @@
   :config
   (company-quickhelp-mode 1))
 
-;;; APPEARANCE, INDENTATION, THEMEING, 
-;; 
+;;; APPEARANCE, INDENTATION, THEMEING,
+;;
 ;; Whitespace, Indentation
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)

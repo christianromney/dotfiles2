@@ -52,6 +52,9 @@
               (clj-refactor-mode 1)
               (cljr-add-keybindings-with-prefix "C-c C-a"))))
 
+(use-package cljr-helm
+  :ensure t)
+
 (use-package cider
   :ensure t
   :config
