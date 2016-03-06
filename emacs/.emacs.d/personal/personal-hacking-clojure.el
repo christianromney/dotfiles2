@@ -1,4 +1,7 @@
-(defvar personal/clojure-prettify-alist '())
+(require 'prelude-clojure)
+
+(defvar personal/clojure-prettify-alist '()
+  "Pretty symbols for Clojure")
 
 (defun personal/find-tag-without-ns (next-p)
   (interactive "P")
@@ -6,6 +9,7 @@
             next-p))
 
 (use-package clojure-mode
+  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
@@ -48,17 +52,16 @@
               (clj-refactor-mode 1)
               (cljr-add-keybindings-with-prefix "C-c C-a"))))
 
-(use-package cider-mode
+(use-package cider
+  :ensure t
   :config
   (setq nrepl-log-messages t
         nrepl-hide-special-buffers t
-        
         cider-prefer-local-resources t
         cider-repl-use-pretty-printing t
         cider-repl-wrap-history t
         cider-repl-history-size 1000
         cider-repl-history-file "~/.emacs.d/cider-repl.history")
-
   (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode))
@@ -68,4 +71,8 @@
   :config
   (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
 
-(provide 'personal/prelude-clojure)
+(use-package datomic-snippets
+  :ensure t)
+
+(use-package cljsbuild-mode
+  :ensure t)

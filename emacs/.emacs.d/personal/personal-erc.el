@@ -2,6 +2,7 @@
 ;; $HOME/.authinfo.gpg encrypted credentials
 (use-package erc
   :ensure t
+  :defer t
   :config
   (setq whitespace-global-modes '(not erc-mode))
   (setq erc-prompt-for-password nil)

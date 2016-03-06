@@ -18,5 +18,3 @@
               (push '("<=" . ?≤) prettify-symbols-alist)
               (push '(">=" . ?≥) prettify-symbols-alist)))
   (add-hook 'scheme-mode-hook 'yas-minor-mode-on))
-
-(provide 'personal/prelude-scheme)

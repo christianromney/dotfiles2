@@ -1,12 +1,8 @@
-(use-package ob-restclient
-  :ensure t)
-
 (use-package org
   :ensure t
   :config
   ;; Export
   (require 'ob-clojure)
-  (require 'ob-restclient)
   (require 'cider)
   (setq org-html-validation-link nil)
   (setq org-export-html-postamble nil)
@@ -63,13 +59,7 @@
   :config
   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
 
-(use-package deft
-  :ensure t
-  :defer t
-  :config
-  (setq deft-directory "~/Dropbox/org")
-  (setq deft-use-filename-as-title t)
-  (setq deft-extension "org")
-  (setq deft-text-mode 'org-mode))
+(use-package htmlize
+  :ensure t)
 
-(provide 'personal/prelude-org)
+(require 'prelude-latex)
