@@ -8,9 +8,9 @@
 (prefer-coding-system 'utf-8)
 
 ;; General Emacs Settings
-(setq initial-major-mode 'lisp-interaction-mode
+(setq load-prefer-newer t
+      initial-major-mode 'lisp-interaction-mode
       redisplay-dont-pause t
-      load-prefer-newer t
       column-number-mode t
       inhibit-startup-message t
       transient-mark-mode t
