@@ -64,7 +64,9 @@
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         helm-ff-file-name-history-use-recentf t
         helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
-        helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f"))
+        helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f")
+  :bind
+  ("C-c M-i" . helm-multi-swoop))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
