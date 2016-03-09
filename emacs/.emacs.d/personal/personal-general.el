@@ -8,36 +8,47 @@
 (prefer-coding-system 'utf-8)
 
 ;; General Emacs Settings
-(setq load-prefer-newer t
-      initial-major-mode 'lisp-interaction-mode
-      redisplay-dont-pause t
-      column-number-mode t
-      inhibit-startup-message t
-      transient-mark-mode t
-      shift-select-mode nil
-      require-final-newline t
-      truncate-partial-width-windows nil
-      delete-by-moving-to-trash nil
-      confirm-nonexistent-file-or-buffer nil
-      query-replace-highlight t
-      next-error-highlight t
-      next-error-highlight-no-select t
-      vc-follow-symlinks t
-      emerge-diff-options "--ignore-all-space"
-      echo-keystrokes 0.1
-      initial-scratch-message nil
-      dired-use-ls-dired nil
-      make-backup-files nil
-      indent-tabs-mode nil
-      tab-always-indent 'complete
-      gc-cons-threshold 50000000
-      large-file-warning-threshold 100000000
-      scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1
-      cua-enable-cua-keys nil
-      default-input-method "MacOSX"
-      system-name (car (split-string system-name "\\.")))
+(setq
+ column-number-mode t
+ confirm-nonexistent-file-or-buffer nil
+ cua-enable-cua-keys nil
+ default-input-method "MacOSX"
+ delete-by-moving-to-trash nil
+ dired-use-ls-dired nil
+ echo-keystrokes 0.1
+ emerge-diff-options "--ignore-all-space"
+ gc-cons-threshold 50000000
+ indent-tabs-mode nil
+ inhibit-startup-message t
+ initial-major-mode 'lisp-interaction-mode
+ initial-scratch-message nil
+ large-file-warning-threshold 100000000
+ load-prefer-newer t
+ make-backup-files nil
+ next-error-highlight t
+ next-error-highlight-no-select t
+ query-replace-highlight t
+ redisplay-dont-pause t
+ require-final-newline t
+ scroll-conservatively 100000
+ scroll-margin 0
+ scroll-preserve-screen-position 1
+ sentence-end-double-space nil
+ shift-select-mode nil
+ system-name (car (split-string system-name "\\."))
+ tab-always-indent 'complete
+ transient-mark-mode t
+ truncate-partial-width-windows nil
+ vc-follow-symlinks t)
+
+;; Byte compilation refreshing
+(use-package auto-compile
+  :ensure t
+  :config
+  (setq auto-compile-display-buffer nil)
+  (setq auto-compile-mode-line-counter t)
+  (auto-compile-on-save-mode)
+  (auto-compile-on-load-mode))
 
 ;; search with ack (including from helm)
 (use-package ack
@@ -131,7 +142,7 @@
   (disable-theme 'zenburn)
   (disable-theme 'solarized)
   (load-theme 'moe-dark)
-  (moe-theme-set-color 'red)
+  (moe-theme-set-color 'orange)
   (powerline-moe-theme)
   (setq moe-theme-highlight-buffer-id t)
   (menu-bar-mode -1)
