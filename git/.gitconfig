@@ -22,6 +22,7 @@
 	up = pull
 	ff = pull --ff-only
 	rl = reflog
+	staged = diff --cached
 [color]
 	ui = auto
 [push]

@@ -27,6 +27,8 @@
 ;; Misc
 (global-set-key (kbd "M-p") 'fill-paragraph)
 (global-set-key (kbd "C-c h g") 'helm-google-suggest)
+(global-set-key (kbd "C-c M-t") 'transpose-sentences)
+(global-set-key (kbd "C-x M-t") 'transpose-paragraphs)
 
 ;; Function Key mappings
 ;; <f1> help

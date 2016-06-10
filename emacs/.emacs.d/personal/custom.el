@@ -10,6 +10,9 @@
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(org-agenda-files
+   (quote
+    ("~/Google Drive/Point Slope/Clients-Partners-Contractors/BSRI/tech-kickoff-checklist.org" "~/Dropbox/org/agenda.org" "~/Dropbox/org/notes.org" "~/Dropbox/org/pointslope/business.org")))
  '(paradox-automatically-star t)
  '(safe-local-variable-values
    (quote

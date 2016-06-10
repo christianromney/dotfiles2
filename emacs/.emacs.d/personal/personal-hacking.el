@@ -135,14 +135,14 @@
 (use-package cider
   :ensure t
   :config
-  (setq nrepl-log-messages t
-        nrepl-hide-special-buffers t
-        cider-prefer-local-resources t
+  (setq cider-prefer-local-resources t
+        cider-repl-display-help-banner nil
+        cider-repl-history-file "~/.emacs.d/cider-repl.history"
+        cider-repl-history-size 1000
         cider-repl-use-pretty-printing t
         cider-repl-wrap-history t
-        cider-repl-history-size 1000
-        cider-repl-history-file "~/.emacs.d/cider-repl.history")
-  (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+        nrepl-hide-special-buffers t
+        nrepl-log-messages t)
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode))
 
