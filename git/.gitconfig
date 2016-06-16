@@ -24,7 +24,7 @@
 	rl = reflog
 	staged = diff --cached
 [color]
-	ui = always
+	ui = auto
 [color "diff"]
 	meta = cyan bold
 	commit = green bold
