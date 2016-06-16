@@ -5,7 +5,7 @@
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
 	editor = emacs
-	pager = less
+	pager = diff-so-fancy | less --tabs=2 -RFX
 [commit]
 	template = ~/.git-commit-template
 [help]
@@ -24,7 +24,22 @@
 	rl = reflog
 	staged = diff --cached
 [color]
-	ui = auto
+	ui = always
+[color "diff"]
+	meta = cyan bold
+	commit = green bold
+	frag = yellow bold
+	old = red
+	new = green
+	whitespace = red reverse
+[color "branch"]
+	current = cyan bold
+	local = cyan 
+	remote = yellow
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
 [push]
 	default = simple
 [merge]
