@@ -1,62 +1,15 @@
 * Emacs configuration
-My personalized emacs configuration depends on [[https://github.com/bbatsov/prelude][Emacs Prelude]].
-My customizations include:
+My personalized emacs configuration.
+Snippets are cobbled together from Prelude, bbatsov's emacs config, Sacha Chua,
+and other random goodies from around the web.
 
-- Paradox (package manager)
-- Pivotal Tracker
-- Hacker News
-- Newsticker
-- Bongo (music player)
-- ERC (IRC client)
-- Smyx theme / Source Code Pro font
-- linum
+- Moe theme
 - powerline
 - aggressive-indent
 - helm (everywhere)
-- ace-{jump-mode, jump-zap, jump-buffer, window, isearch}
-- emmet-mode
-- restclient-mode
-- org-mode
-- smartparens, clojure-mode, cider, clj-refactor
-- geiser-mode (scheme/racket)
-- and more...
-
-* Who Cares?
-Emacs is the world's most powerful editor. I use it to...
-
-- play music
-
-[[./img/bongo.png]]
-
-- connect to Internet Relay Chat (IRC)
-
-[[./img/erc.png]]
-
-- write outlines and documents that can exported to HTML or PDF
-
-[[./img/export.png]]
-
-- read PDF documents
-
-[[./img/pdf.png]]
-
-- catch up on HackerNews
-
-[[./img/hackernews.png]]
-
-- and RSS/Atom feeds
-
-[[./img/rssfeeds.png]]
-
-- RTFM
-
-[[./img/manpage.png]]
-
-- manage my Git commits
-
-[[./img/git.png]]
-
-- and, of course, develop software
-
-[[./img/repl-tests.png]]
-
+- avy
+- Web programming: web-mode, scss, emmet
+- Notes: org-mode, markdown
+- Clojure: smartparens, clojure-mode, cider, clj-refactor
+- Ruby: Ruby Tools, YARI
+- Elixir: Alchemist
