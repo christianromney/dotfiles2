@@ -1,17 +1,9 @@
 # List direcory contents
 ll="ls -lahG"
 
-# Docker (if you can't beat 'em, join 'em)
-alias dicker="nocorrect docker"
-alias dco="nocorrect docker-compose"
-
 # Standard tool aliases
-alias df="df -h"
 alias grep="egrep"
 alias rf="rm -rf"
-alias new="nocorrect   emacs -nw"
-alias anew="nocorrect /usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs"
-alias rmerge="find . -iname '*.orig' -delete"
 
 # Emacs aliases
 alias es='/usr/local/bin/emacs -nw --daemon'
@@ -19,18 +11,12 @@ alias em='/usr/local/bin/emacsclient -t'
 alias ek='/usr/local/bin/emacsclient -e "(kill-emacs)"'
 alias edc="ek && es && em"
 
-alias bzr="nocorrect bzr"
-alias cljsbuild="lein trampoline cljsbuild $@"
-
 # Misc
-alias cheat="nocorrect cheat"
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
-alias fortune="nocorrect fortune"
 
 # Programming
 alias gst="nocorrect git st -s"
-alias njs="rlwrap node-repl"
 alias lein="nocorrect lein"
 
 alias vu="vagrant up"
