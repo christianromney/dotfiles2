@@ -213,7 +213,7 @@
   :config
   (require 'powerline)
   (moe-dark)
-  (moe-theme-set-color 'green)
+  (moe-theme-set-color 'w/b)
   (powerline-moe-theme)
   (blink-cursor-mode -1)
   (whitespace-mode t)
@@ -450,6 +450,8 @@ CONTEXT - ignored"
   :ensure t
   :diminish helm-mode
   :config
+  (require 'helm)
+  (require 'helm-config) 
   (setq helm-split-window-in-side-p           t
         helm-M-x-fuzzy-match                  t
         helm-buffers-fuzzy-matching           t
@@ -463,11 +465,16 @@ CONTEXT - ignored"
         helm-ff-search-library-in-sexp        t
         helm-scroll-amount                    8
         helm-ff-file-name-history-use-recentf t
+        helm-autoresize-max-height            100
+        helm-autoresize-min-height            20
         helm-grep-default-command "pt -e --nogroup --nocolor %e %p %f"
         helm-grep-default-recurse-command "pt -H --nogroup --nocolor %e %p %f")
+  
   (substitute-key-definition 'find-tag 'helm-etags-select global-map)
-  (helm-autoresize-mode t)
-  (helm-mode 1)
+  (helm-autoresize-mode t)  
+  (helm-mode +1)
+  (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "C-c h")   'helm-command-prefix)  
   (global-set-key (kbd "M-x")     'helm-M-x)
   (global-set-key (kbd "C-x C-m") 'helm-M-x)
   (global-set-key (kbd "M-y")     'helm-show-kill-ring)
@@ -477,11 +484,10 @@ CONTEXT - ignored"
   (global-set-key (kbd "C-h f")   'helm-apropos)
   (global-set-key (kbd "C-h r")   'helm-info-emacs)
   (global-set-key (kbd "C-h C-l") 'helm-locate-library)
-  :bind
-  (("C-c M-i" . helm-multi-swoop)
-   ("<tab>" . helm-execute-persistent-action)
-   ("C-i"   . helm-execute-persistent-action)
-   ("C-z"   . helm-select-action)))
+  
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z") 'helm-select-action))
 
 (use-package helm-descbinds
   :ensure t
