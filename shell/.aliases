@@ -10,7 +10,7 @@ alias es='/usr/local/bin/emacs -nw --daemon'
 alias em='/usr/local/bin/emacsclient -t'
 alias ek='/usr/local/bin/emacsclient -e "(kill-emacs)"'
 alias edc="ek && es && em"
-
+alias emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 # Misc
 alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
@@ -24,3 +24,4 @@ alias vd="vagrant suspend"
 alias vg="nocorrect valgrind"
 
 
+alias lbi='lein with-profile test cljsbuild auto integration integration-sponsor'
