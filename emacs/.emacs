@@ -33,11 +33,31 @@
 (add-to-list 'default-frame-alist '(font . "Sauce Code Powerline-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+
+;; --- save directories ---
+
 (defconst personal-savefile-dir
   (expand-file-name "savefile" user-emacs-directory))
 
 (unless (file-exists-p personal-savefile-dir)
   (make-directory personal-savefile-dir))
+
+(defconst personal-backup-dir
+  (expand-file-name "backups" personal-savefile-dir))
+
+(defconst personal-autosave-dir
+  (expand-file-name "autosave" personal-savefile-dir))
+
+(unless (file-exists-p personal-backup-dir)
+  (make-directory personal-backup-dir))
+
+(unless (file-exists-p personal-autosave-dir)
+  (make-directory personal-autosave-dir))
+
+(setq backup-directory-alist
+      `((".*" . ,personal-backup-dir))
+      auto-save-file-name-transforms
+      `((".*" ,personal-autosave-dir t)))
 
 ;; --- package configuration ---
 
@@ -70,7 +90,14 @@
 (when (eq system-type 'darwin)
   (setq ns-function-modifier 'hyper)
   (autoload 'vkill "vkill" nil t)
-  (global-set-key (kbd "C-x p") 'vkill))
+  (global-set-key (kbd "C-x p") 'vkill)
+
+  ;; prevent emacs error due to macos' ls not supporting long args...
+  ;; ls does not support --dired; see ‘dired-use-ls-dired’
+  ;; requires "brew install coreutils"
+  (let ((ls-program "/usr/local/bin/gls"))
+    (when (file-exists-p ls-program)
+      (setq insert-directory-program ls-program))))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq load-prefer-newer t                    ;; load latest bytecode
@@ -95,8 +122,30 @@
       sh-learn-basic-offset t                ;; try to figure out offset for shell mode
       system-name
       (car (split-string system-name "\\.")) ;; don't use <sys>.local (just <sys>)
-      locale-coding-system 'utf-8            ;; utf-8 character encoding
+      locale-coding-system 'utf-8            ;; utf-8 character encoding 
       )
+
+;;; --- keep current search result in the center of the screen --- 
+
+(add-hook 'isearch-mode-end-hook 'recenter-top-bottom)
+
+(defadvice
+    isearch-forward
+    (after isearch-forward-recenter activate)
+    (recenter))
+(ad-activate 'isearch-forward)
+
+(defadvice
+    isearch-repeat-forward
+    (after isearch-repeat-forward-recenter activate)
+    (recenter))
+(ad-activate 'isearch-repeat-forward)
+
+(defadvice
+    isearch-repeat-backward
+    (after isearch-repeat-backward-recenter activate)
+    (recenter))
+(ad-activate 'isearch-repeat-backward)
 
 ;;; --- character encoding ---
 
@@ -284,6 +333,9 @@ CONTEXT - ignored"
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
+(use-package projectile-direnv
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :diminish (projectile-mode . " Pj ")
@@ -292,7 +344,11 @@ CONTEXT - ignored"
   :config
   (require 'projectile)
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
-  (projectile-mode t))
+  (projectile-mode t)
+  (add-hook 'projectile-mode-hook 'projectile-direnv-export-variables))
+
+(use-package projectile-direnv
+  :ensure t)
 
 (use-package pt ;; platinum searcher (think "ack" but faster; written in Go)
   :ensure t)
@@ -467,8 +523,8 @@ CONTEXT - ignored"
         helm-ff-file-name-history-use-recentf t
         helm-autoresize-max-height            100
         helm-autoresize-min-height            20
-        helm-grep-default-command "pt -e --nogroup --nocolor %e %p %f"
-        helm-grep-default-recurse-command "pt -H --nogroup --nocolor %e %p %f")
+        helm-grep-ag-command "ag --ignore=.git --line-numbers -S --hidden --color --color-match '31;43' --nogroup %s %s %s"
+        helm-grep-ag-pipe-cmd-switches '("--color-match '31;43'"))
   
   (substitute-key-definition 'find-tag 'helm-etags-select global-map)
   (helm-autoresize-mode t)  
@@ -477,6 +533,7 @@ CONTEXT - ignored"
   (global-set-key (kbd "C-c h")   'helm-command-prefix)  
   (global-set-key (kbd "M-x")     'helm-M-x)
   (global-set-key (kbd "C-x C-m") 'helm-M-x)
+  (global-set-key (kbd "M-i")     'helm-imenu)
   (global-set-key (kbd "M-y")     'helm-show-kill-ring)
   (global-set-key (kbd "C-x b")   'helm-mini)
   (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
@@ -494,8 +551,13 @@ CONTEXT - ignored"
   :config
   (helm-descbinds-mode))
 
-(use-package helm-pt
-  :ensure t)
+(use-package helm-ag
+  :ensure t
+  :config
+  (custom-set-variables
+   '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
+   '(helm-follow-mode-persistent t)
+   '(helm-ag-fuzzy-match t)))
 
 (use-package helm-projectile
   :ensure t
@@ -508,11 +570,6 @@ CONTEXT - ignored"
   :diminish super-save-mode
   :config
   (super-save-mode +1))
-
-(use-package aggressive-indent ;; auto-indent when editing
-  :ensure t
-  :config
-  (global-aggressive-indent-mode +1))
 
 (use-package crux ;; misc useful utils from Prelude
   :ensure t
@@ -835,38 +892,23 @@ CONTEXT - ignored"
   :ensure t)
 
 (use-package cider
-  :ensure t
+  :ensure t 
   :config
   (setq cider-prefer-local-resources t
         cider-repl-display-help-banner nil
         cider-repl-history-file (expand-file-name "cider-repl.history" user-emacs-directory)
         cider-repl-history-size 1000
         cider-repl-use-pretty-printing t
-        cider-repl-wrap-history t
+        cider-prompt-for-symbol nil
+        cider-repl-wrap-history t 
         nrepl-hide-special-buffers t
-        nrepl-log-messages t)
+        nrepl-log-messages t) 
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
-
-(use-package elixir-mode
-  :ensure t
-  :config
-  (sp-with-modes '(elixir-mode)
-    (sp-local-pair "fn" "end"
-                   :when '(("SPC" "RET"))
-                   :actions '(insert navigate))
-    (sp-local-pair "do" "end"
-                   :when '(("SPC" "RET"))
-                   :post-handlers '(sp-ruby-def-post-handler)
-                   :actions '(insert navigate))))
-
-(use-package alchemist
-  :ensure t
-  :config
-  (setq alchemist-mix-command "/usr/local/bin/mix"))
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+  (advice-add 'cider-find-var :after #'recenter-top-bottom))
 
 ;;; --- misc keybindings ---
 
@@ -1008,13 +1050,24 @@ CONTEXT - ignored"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cider-pprint-fn (quote puget))
  '(custom-safe-themes
    (quote
     ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
  '(cycle-themes-mode t)
+ '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
+ '(helm-ag-fuzzy-match t)
+ '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package))))
+    (helm-ag projectile-direnv flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api)
+                                      (figwheel-sidecar.repl-api/start-figwheel!)
+                                      (figwheel-sidecar.repl-api/cljs-repl))")
+     (cider-inject-dependencies-at-jack-in)
+     (projectile-project-type . lein-test)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

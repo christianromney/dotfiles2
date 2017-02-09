@@ -1,15 +1,13 @@
 * Emacs configuration
-My personalized emacs configuration.
-Snippets are cobbled together from Prelude, bbatsov's emacs config, Sacha Chua,
-and other random goodies from around the web.
+My personalized emacs configuration. Snippets are cobbled together from [[https://github.com/bbatsov/prelude][Prelude]],
+[[https://github.com/bbatsov/emacs.d][bbatsov's emacs config]], [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]], and other random goodies from around the web.
 
 - Moe theme
 - powerline
-- aggressive-indent
-- helm (everywhere)
+- [[https://github.com/christianromney/projectile-direnv][projectile-direnv]]
+- company, helm (everywhere)
 - avy
 - Web programming: web-mode, scss, emmet
 - Notes: org-mode, markdown
 - Clojure: smartparens, clojure-mode, cider, clj-refactor
 - Ruby: Ruby Tools, YARI
-- Elixir: Alchemist
