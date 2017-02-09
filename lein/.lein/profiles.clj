@@ -1,5 +1,6 @@
 ;; ~/.lein/profiles.clj
-{:user {:plugins [;; pretty print output
+{:user {:plugins [[com.jakemccrary/lein-test-refresh "0.16.0"]
+                  ;; pretty print output
                   [lein-pprint "1.1.2"]
                   ;; Quick test runs
                   [quickie "0.4.1"]
@@ -21,7 +22,11 @@
                   [lein-vanity "0.2.0"]
                   ;; parses, prints TODOs
                   [lein-annotations "0.1.0"]]
-        :dependencies [[org.clojure/tools.nrepl "0.2.12"]]
+        :dependencies [[pjstadig/humane-test-output "0.8.0"]
+                       [org.clojure/tools.nrepl "0.2.12"]                       
+                       [table "0.5.0"]]
+        :injections [(require 'pjstadig.humane-test-output)
+                     (pjstadig.humane-test-output/activate!)]
         :test-refresh {:quiet true}}
  :repl {:plugins [ ;; refactoring support
                   [cider/cider-nrepl "0.12.0"]
