@@ -29,5 +29,5 @@
                      (pjstadig.humane-test-output/activate!)]
         :test-refresh {:quiet true}}
  :repl {:plugins [ ;; refactoring support
-                  [cider/cider-nrepl "0.12.0"]
+                  [cider/cider-nrepl "0.14.0"]
                   [refactor-nrepl "2.2.0"]]}}
