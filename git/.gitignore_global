@@ -84,3 +84,5 @@ jmeter.log
 .vagrant
 .lein-failures
 .nrepl-port
+salk-run-tests-cleanly.sh
+salk-test.log

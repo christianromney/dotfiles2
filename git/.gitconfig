@@ -1,6 +1,7 @@
 [user]
 	name = Christian Romney
 	email = cromney@pointslope.com
+	signingkey = 195F184E
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
@@ -8,11 +9,12 @@
 	pager = diff-so-fancy | less --tabs=2 -RFX
 [commit]
 	template = ~/.git-commit-template
+	gpgsign = true
 [help]
 	autocorrect = 1
 [alias]
 	br = branch
-	ci = commit -s
+	ci = commit -Ss
 	co = checkout
 	cp = cherry-pick
 	dc = diff --cached
