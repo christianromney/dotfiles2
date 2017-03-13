@@ -1,6 +1,6 @@
 ;;; .emacs --- Summary
 ;;; My emacs configuration
-;;; 
+;;;
 ;;; Commentary:
 ;;; I've cherry-picked much of this configuration
 ;;; from various people around the web including,
@@ -36,11 +36,13 @@
 
 ;; --- save directories ---
 
+(defun personal/ensure-dir (dir)
+  "Create a directory (given as DIR) if it doesn't already exist."
+  (unless (file-exists-p dir)
+  (make-directory dir)))
+
 (defconst personal-savefile-dir
   (expand-file-name "savefile" user-emacs-directory))
-
-(unless (file-exists-p personal-savefile-dir)
-  (make-directory personal-savefile-dir))
 
 (defconst personal-backup-dir
   (expand-file-name "backups" personal-savefile-dir))
@@ -48,16 +50,29 @@
 (defconst personal-autosave-dir
   (expand-file-name "autosave" personal-savefile-dir))
 
-(unless (file-exists-p personal-backup-dir)
-  (make-directory personal-backup-dir))
+(defconst personal-desktop-dir
+  (expand-file-name "desktop" personal-savefile-dir))
 
-(unless (file-exists-p personal-autosave-dir)
-  (make-directory personal-autosave-dir))
+(personal/ensure-dir personal-savefile-dir)
+(personal/ensure-dir personal-backup-dir)
+(personal/ensure-dir personal-autosave-dir)
+(personal/ensure-dir personal-desktop-dir)
 
+(require 'desktop)
 (setq backup-directory-alist
       `((".*" . ,personal-backup-dir))
+
       auto-save-file-name-transforms
-      `((".*" ,personal-autosave-dir t)))
+      `((".*" ,personal-autosave-dir t))
+
+      desktop-path (list personal-desktop-dir)
+
+      desktop-load-locked-desktop t
+
+      desktop-base-lock-name
+      (convert-standard-filename (format ".emacs.desktop.lock-%d" (emacs-pid))))
+
+(desktop-read)
 
 ;; --- package configuration ---
 
@@ -68,9 +83,13 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+(add-to-list 'package-archives
+             '("billpiel" . "http://billpiel.com/emacs-packages/") t)
+
 (setq package-pinned-packages
       '(;;(clojure-mode        . "melpa-stable")
         (cider               . "melpa-stable")
+        (clj-refactor        . "melpa-stable")
         (company             . "melpa-stable")
         (helm                . "melpa-stable")
         (helm-ag             . "melpa-stable")
@@ -134,15 +153,15 @@
       shift-select-mode nil                  ;; don't mess with the mark
       transient-mark-mode t                  ;; regions are temporary like most apps
       truncate-partial-width-windows nil     ;; respect value of 'truncate-lines' variable
-      vc-follow-symlinks t                   ;; symlinks aren't second-class citizens 
+      vc-follow-symlinks t                   ;; symlinks aren't second-class citizens
       max-specpdl-size 2400                  ;; limit on number of variable bindings
       sh-learn-basic-offset t                ;; try to figure out offset for shell mode
       system-name
       (car (split-string system-name "\\.")) ;; don't use <sys>.local (just <sys>)
-      locale-coding-system 'utf-8            ;; utf-8 character encoding 
+      locale-coding-system 'utf-8            ;; utf-8 character encoding
       )
 
-;;; --- keep current search result in the center of the screen --- 
+;;; --- keep current search result in the center of the screen ---
 
 (add-hook 'isearch-mode-end-hook 'recenter-top-bottom)
 
@@ -350,8 +369,10 @@ CONTEXT - ignored"
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-(use-package projectile-direnv
-  :ensure t)
+(use-package direnv
+  :ensure t
+  :config
+  (setq direnv--installed "/usr/local/bin/direnv"))
 
 (use-package projectile
   :ensure t
@@ -361,11 +382,7 @@ CONTEXT - ignored"
   :config
   (require 'projectile)
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
-  (projectile-mode t)
-  (add-hook 'projectile-mode-hook 'projectile-direnv-export-variables))
-
-(use-package projectile-direnv
-  :ensure t)
+  (projectile-mode t))
 
 (use-package pt ;; platinum searcher (think "ack" but faster; written in Go)
   :ensure t)
@@ -524,7 +541,7 @@ CONTEXT - ignored"
   :diminish helm-mode
   :config
   (require 'helm)
-  (require 'helm-config) 
+  (require 'helm-config)
   (setq helm-split-window-in-side-p           t
         helm-M-x-fuzzy-match                  t
         helm-buffers-fuzzy-matching           t
@@ -542,12 +559,12 @@ CONTEXT - ignored"
         helm-autoresize-min-height            20
         helm-grep-ag-command "ag --ignore=.git --line-numbers -S --hidden --color --color-match '31;43' --nogroup %s %s %s"
         helm-grep-ag-pipe-cmd-switches '("--color-match '31;43'"))
-  
+
   (substitute-key-definition 'find-tag 'helm-etags-select global-map)
-  (helm-autoresize-mode t)  
+  (helm-autoresize-mode t)
   (helm-mode +1)
   (global-unset-key (kbd "C-x c"))
-  (global-set-key (kbd "C-c h")   'helm-command-prefix)  
+  (global-set-key (kbd "C-c h")   'helm-command-prefix)
   (global-set-key (kbd "M-x")     'helm-M-x)
   (global-set-key (kbd "C-x C-m") 'helm-M-x)
   (global-set-key (kbd "M-i")     'helm-imenu)
@@ -558,7 +575,7 @@ CONTEXT - ignored"
   (global-set-key (kbd "C-h f")   'helm-apropos)
   (global-set-key (kbd "C-h r")   'helm-info-emacs)
   (global-set-key (kbd "C-h C-l") 'helm-locate-library)
-  
+
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-z") 'helm-select-action))
@@ -580,13 +597,15 @@ CONTEXT - ignored"
   :ensure t
   :config
   (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
+  (helm-projectile-on)
+  (global-set-key (kbd "C-c p f") 'helm-projectile-find-file))
 
 (use-package super-save ;; save buffers on lost focus
   :ensure t
   :diminish super-save-mode
   :config
-  (super-save-mode +1))
+  (super-save-mode +1)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
 
 (use-package crux ;; misc useful utils from Prelude
   :ensure t
@@ -705,16 +724,16 @@ CONTEXT - ignored"
 
   (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
   (define-key smartparens-mode-map (kbd "C-M-b") 'sp-backward-sexp)
-  
+
   (define-key smartparens-mode-map (kbd "C-M-d") 'sp-down-sexp)
   (define-key smartparens-mode-map (kbd "C-M-u") 'sp-backward-up-sexp)
-  
+
   (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
   (define-key smartparens-mode-map (kbd "C-M-e") 'sp-up-sexp)
-  
+
   (define-key smartparens-mode-map (kbd "s-a") 'sp-beginning-of-sexp)
   (define-key smartparens-mode-map (kbd "s-e") 'sp-end-of-sexp)
-  
+
   (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
 
   (define-key smartparens-mode-map (kbd "C-M-n") 'sp-next-sexp)
@@ -722,7 +741,7 @@ CONTEXT - ignored"
 
   (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
   (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
-  
+
   (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-slurp-sexp)
   (define-key smartparens-mode-map (kbd "C-<left>") 'sp-forward-barf-sexp)
 
@@ -740,14 +759,14 @@ CONTEXT - ignored"
   (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
   (define-key smartparens-mode-map (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
   ;; end
-  
+
   ;; to work these backwards, prefix with C-- and C-M--
   (define-key smartparens-mode-map (kbd "C-]") 'sp-select-next-thing-exchange)
   (define-key smartparens-mode-map (kbd "C-M-]") 'sp-select-next-thing)
-  
+
   (define-key smartparens-mode-map (kbd "M-F") 'sp-forward-symbol)
   (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
-  
+
   (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp))
 
 (use-package web-mode
@@ -909,7 +928,7 @@ CONTEXT - ignored"
   :ensure t)
 
 (use-package cider
-  :ensure t 
+  :ensure t
   :config
   (setq cider-prefer-local-resources t
         cider-repl-display-help-banner nil
@@ -917,15 +936,18 @@ CONTEXT - ignored"
         cider-repl-history-size 1000
         cider-repl-use-pretty-printing t
         cider-prompt-for-symbol nil
-        cider-repl-wrap-history t 
+        cider-repl-wrap-history t
         nrepl-hide-special-buffers t
-        nrepl-log-messages t) 
+        nrepl-log-messages t)
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
   (advice-add 'cider-find-var :after #'recenter-top-bottom))
+
+(use-package sayid
+  :ensure t)
 
 ;;; --- misc keybindings ---
 
@@ -992,10 +1014,10 @@ CONTEXT - ignored"
 
           ("d" "Deadline" entry (file+headline "~/Dropbox/org/pointslope/business.org" "Todos")
            "* TODO %^{Task} :business:\nDEADLINE: %^t\n")
-          
+
           ("e" "Emergency" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
            "* STARTED %^{Task}" :clock-in :clock-resume)))
-  
+
   (setq org-tag-alist '(("business" . "?b")
                         ("personal" . "?p")
                         ("pointslope" . "?o")
@@ -1033,7 +1055,7 @@ CONTEXT - ignored"
      (js         . t)
      (ruby       . t)
      (python     . t)))
-  
+
   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
   (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
   (add-to-list 'auto-mode-alist '("\\.org\\’" . org-mode))
@@ -1072,15 +1094,20 @@ CONTEXT - ignored"
    (quote
     ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
  '(cycle-themes-mode t)
+ '(desktop-save-mode t)
+ '(direnv-always-show-summary t)
+ '(direnv-mode t)
+ '(direnv-show-paths-in-summary nil)
  '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
  '(helm-ag-fuzzy-match t)
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (helm-ag projectile-direnv flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (kibit-mode ox-reveal org helm-ag flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
-    ((cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api)
+    ((cider-inject-dependencies-at-jack-in . t)
+     (cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api)
                                       (figwheel-sidecar.repl-api/start-figwheel!)
                                       (figwheel-sidecar.repl-api/cljs-repl))")
      (cider-inject-dependencies-at-jack-in)
