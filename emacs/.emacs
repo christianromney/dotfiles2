@@ -948,7 +948,17 @@ CONTEXT - ignored"
   :ensure t
   :config
   (eval-after-load 'clojure-mode
-   '(sayid-setup-package)))
+    '(sayid-setup-package))
+
+  (defadvice sayid-get-workspace
+      (after sayid-get-workspace activate)
+    (other-window 1))
+  (ad-activate 'sayid-get-workspace)
+
+  (defadvice sayid-show-traced
+      (after sayid-show-traced activate)
+    (other-window 1))
+  (ad-activate 'sayid-show-traced))
 
 (use-package company-go
   :ensure t)

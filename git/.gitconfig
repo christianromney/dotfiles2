@@ -25,6 +25,8 @@
 	ff = pull --ff-only
 	rl = reflog
 	staged = diff --cached
+	file-rm = clean
+	dir-rm = clean
 [color]
 	ui = auto
 [color "diff"]
