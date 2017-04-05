@@ -86,3 +86,4 @@ jmeter.log
 .nrepl-port
 salk-run-tests-cleanly.sh
 salk-test.log
+.ackrc

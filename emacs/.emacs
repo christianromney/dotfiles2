@@ -58,21 +58,21 @@
 (personal/ensure-dir personal-autosave-dir)
 (personal/ensure-dir personal-desktop-dir)
 
-(require 'desktop)
-(setq backup-directory-alist
-      `((".*" . ,personal-backup-dir))
+;; (require 'desktop)
+;; (setq backup-directory-alist
+;;       `((".*" . ,personal-backup-dir))
 
-      auto-save-file-name-transforms
-      `((".*" ,personal-autosave-dir t))
+;;       auto-save-file-name-transforms
+;;       `((".*" ,personal-autosave-dir t))
 
-      desktop-path (list personal-desktop-dir)
+;;       desktop-path (list personal-desktop-dir)
 
-      desktop-load-locked-desktop t
+;;       desktop-load-locked-desktop t
 
-      desktop-base-lock-name
-      (convert-standard-filename (format ".emacs.desktop.lock-%d" (emacs-pid))))
+;;       desktop-base-lock-name
+;;       (convert-standard-filename (format ".emacs.desktop.lock-%d" (emacs-pid))))
 
-(desktop-read)
+;; (desktop-read)
 
 ;; --- package configuration ---
 
@@ -87,7 +87,7 @@
              '("billpiel" . "http://billpiel.com/emacs-packages/") t)
 
 (setq package-pinned-packages
-      '(;;(clojure-mode        . "melpa-stable")
+      '((clojure-mode        . "melpa-stable")
         (cider               . "melpa-stable")
         (clj-refactor        . "melpa-stable")
         (company             . "melpa-stable")
@@ -98,8 +98,7 @@
         (projectile          . "melpa-stable")
         (projectile-ruby     . "melpa-stable")
         (rainbow-delimiters  . "melpa-stable")
-        (ggtags              . "melpa-stable")
-        (aggressive-indent   . "melpa-stable")))
+        (ggtags              . "melpa-stable")))
 
 (setq package-user-dir
       (expand-file-name "elpa" user-emacs-directory))
@@ -329,6 +328,9 @@ CONTEXT - ignored"
 
 ;;; --- additional packages ---
 
+(use-package bookmark+
+  :ensure t)
+
 (use-package ov ;; easy overlays
   :ensure t
   :config
@@ -557,48 +559,46 @@ CONTEXT - ignored"
         helm-ff-file-name-history-use-recentf t
         helm-autoresize-max-height            100
         helm-autoresize-min-height            20
-        helm-grep-ag-command "ag --ignore=.git --line-numbers -S --hidden --color --color-match '31;43' --nogroup %s %s %s"
-        helm-grep-ag-pipe-cmd-switches '("--color-match '31;43'"))
+        helm-follow-mode-persistent           t
+        helm-grep-default-command             "ack -Hn -i --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command     "ack -H -i --no-group --no-color %e %p %f")
 
   (substitute-key-definition 'find-tag 'helm-etags-select global-map)
   (helm-autoresize-mode t)
   (helm-mode +1)
-  (global-unset-key (kbd "C-x c"))
-  (global-set-key (kbd "C-c h")   'helm-command-prefix)
-  (global-set-key (kbd "M-x")     'helm-M-x)
-  (global-set-key (kbd "C-x C-m") 'helm-M-x)
-  (global-set-key (kbd "M-i")     'helm-imenu)
-  (global-set-key (kbd "M-y")     'helm-show-kill-ring)
-  (global-set-key (kbd "C-x b")   'helm-mini)
-  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-h f")   'helm-apropos)
-  (global-set-key (kbd "C-h r")   'helm-info-emacs)
-  (global-set-key (kbd "C-h C-l") 'helm-locate-library)
 
+  (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "C-c h")      'helm-command-prefix)
+  (global-set-key (kbd "C-c h o")    'helm-occur)
+  (global-set-key (kbd "M-x")        'helm-M-x)
+  (global-set-key (kbd "C-x C-m")    'helm-M-x)
+  (global-set-key (kbd "M-i")        'helm-imenu)
+  (global-set-key (kbd "M-y")        'helm-show-kill-ring)
+  (global-set-key (kbd "C-x b")      'helm-mini)
+  (global-set-key (kbd "C-x C-b")    'helm-buffers-list)
+  (global-set-key (kbd "C-x C-f")    'helm-find-files)
+  (global-set-key (kbd "C-h f")      'helm-apropos)
+  (global-set-key (kbd "C-h r")      'helm-info-emacs)
+  (global-set-key (kbd "C-h C-l")    'helm-locate-library)
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z") 'helm-select-action))
+  (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z")   'helm-select-action))
+
+(use-package helm-ag
+  :ensure t)
 
 (use-package helm-descbinds
   :ensure t
   :config
   (helm-descbinds-mode))
 
-(use-package helm-ag
-  :ensure t
-  :config
-  (custom-set-variables
-   '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
-   '(helm-follow-mode-persistent t)
-   '(helm-ag-fuzzy-match t)))
-
 (use-package helm-projectile
   :ensure t
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
-  (global-set-key (kbd "C-c p f") 'helm-projectile-find-file))
+  (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
+  (global-set-key (kbd "C-c p s a") 'helm-projectile-ack))
 
 (use-package super-save ;; save buffers on lost focus
   :ensure t
@@ -613,32 +613,32 @@ CONTEXT - ignored"
   (require 'rect)
   (crux-with-region-or-line kill-region)
   :bind
-  (("C-c o" . crux-open-with)
-   ("M-o" . crux-smart-open-line)
-   ("C-c n" . crux-cleanup-buffer-or-region)
-   ("C-c f" . crux-recentf-ido-find-file)
-   ("C-M-z" . crux-indent-defun)
-   ("C-c u" . crux-view-url)
-   ("C-c e" . crux-eval-and-replace)
-   ("C-c w" . crux-swap-windows)
-   ("C-c D" . crux-delete-file-and-buffer)
-   ("C-c r" . crux-rename-buffer-and-file)
-   ("C-c t" . crux-visit-term-buffer)
-   ("C-c k" . crux-kill-other-buffers)
-   ("C-c TAB" . crux-indent-rigidly-and-copy-to-clipboard)
-   ("C-c I" . crux-find-user-init-file)
-   ("C-c S" . crux-find-shell-init-file)
-   ("s-r" . crux-recentf-ido-find-file)
-   ("s-j" . crux-top-join-line)
-   ("C-^" . crux-top-join-line)
-   ("s-k" . crux-kill-whole-line)
-   ("C-<backspace>" . crux-kill-line-backwards)
-   ("s-o" . crux-smart-open-line-above)
+  (("C-c o"                        . crux-open-with)
+   ("M-o"                          . crux-smart-open-line)
+   ("C-c n"                        . crux-cleanup-buffer-or-region)
+   ("C-c f"                        . crux-recentf-ido-find-file)
+   ("C-M-z"                        . crux-indent-defun)
+   ("C-c u"                        . crux-view-url)
+   ("C-c e"                        . crux-eval-and-replace)
+   ("C-c w"                        . crux-swap-windows)
+   ("C-c D"                        . crux-delete-file-and-buffer)
+   ("C-c r"                        . crux-rename-buffer-and-file)
+   ("C-c t"                        . crux-visit-term-buffer)
+   ("C-c k"                        . crux-kill-other-buffers)
+   ("C-c TAB"                      . crux-indent-rigidly-and-copy-to-clipboard)
+   ("C-c I"                        . crux-find-user-init-file)
+   ("C-c S"                        . crux-find-shell-init-file)
+   ("C-c s"                        . crux-ispell-word-then-abbrev)
+   ("s-r"                          . crux-recentf-ido-find-file)
+   ("s-j"                          . crux-top-join-line)
+   ("C-^"                          . crux-top-join-line)
+   ("s-k"                          . crux-kill-whole-line)
+   ("C-<backspace>"                . crux-kill-line-backwards)
+   ("s-o"                          . crux-smart-open-line-above)
    ([remap move-beginning-of-line] . crux-move-beginning-of-line)
-   ([(shift return)] . crux-smart-open-line)
-   ([(control shift return)] . crux-smart-open-line-above)
-   ([remap kill-whole-line] . crux-kill-whole-line)
-   ("C-c s" . crux-ispell-word-then-abbrev)))
+   ([(shift return)]               . crux-smart-open-line)
+   ([(control shift return)]       . crux-smart-open-line-above)
+   ([remap kill-whole-line]        . crux-kill-whole-line)))
 
 (use-package undo-tree ;; better undo / redo
   :ensure t
@@ -717,8 +717,7 @@ CONTEXT - ignored"
   (smartparens-global-strict-mode t)
   (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
   (sp-local-pair 'web-mode "<" nil :when '(personal-sp-web-mode-is-code-context))
-  (sp-with-modes '(html-mode sgml-mode web-mode)
-    (sp-local-pair "<" ">"))
+  (sp-with-modes '(html-mode sgml-mode web-mode) (sp-local-pair "<" ">"))
   (define-key smartparens-mode-map (kbd "M-\\") 'personal-delete-horizontal-space)
   (define-key smartparens-mode-map (kbd "M-SPC") 'personal-just-one-space)
 
@@ -875,7 +874,6 @@ CONTEXT - ignored"
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
-
   (define-clojure-indent
     (defroutes 'defun)
     (s/defn 'defun)
@@ -909,12 +907,12 @@ CONTEXT - ignored"
 
 (use-package clj-refactor
   :ensure t
-  :defer t
   :config
-  (add-hook 'clojure-mode-hook
-            (lambda ()
-              (clj-refactor-mode 1)
-              (cljr-add-keybindings-with-prefix "C-c C-a"))))
+  (add-hook
+   'clojure-mode-hook
+   (lambda ()
+     (clj-refactor-mode 1)
+     (cljr-add-keybindings-with-prefix "C-c C-a"))))
 
 (use-package cljr-helm
   :ensure t)
@@ -947,7 +945,30 @@ CONTEXT - ignored"
   (advice-add 'cider-find-var :after #'recenter-top-bottom))
 
 (use-package sayid
+  :ensure t
+  :config
+  (eval-after-load 'clojure-mode
+   '(sayid-setup-package)))
+
+(use-package company-go
   :ensure t)
+
+(use-package go-eldoc
+  :ensure t)
+
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'gofmt-before-save)
+              (set (make-local-variable 'company-backends) '(company-go))
+              (if (not (string-match "go" compile-command))
+                  (set (make-local-variable 'compile-command)
+                       "go build -v && go vet"))))
+  :bind
+  (("M-." . godef-jump)
+   ("M-*" . pop-tag-mark)))
 
 ;;; --- misc keybindings ---
 
@@ -1074,10 +1095,10 @@ CONTEXT - ignored"
         '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦"
           "◯" "⚪" "⚫" "⚬" "￮" "⊙" "⊚" "∙" "∘")))
 
-(use-package ox-reveal
-  :ensure t
-  :config
-  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
+;; (use-package ox-reveal
+;;   :ensure t
+;;   :config
+;;   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
 
 (use-package htmlize
   :ensure t)
@@ -1089,24 +1110,27 @@ CONTEXT - ignored"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(bmkp-last-as-first-bookmark-file "/Users/cr/.emacs.d/savefile/bookmarks")
  '(cider-pprint-fn (quote puget))
  '(custom-safe-themes
    (quote
     ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
  '(cycle-themes-mode t)
- '(desktop-save-mode t)
+ '(desktop-save-mode nil)
  '(direnv-always-show-summary t)
  '(direnv-mode t)
  '(direnv-show-paths-in-summary nil)
  '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
  '(helm-ag-fuzzy-match t)
+ '(helm-ag-use-agignore t)
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (kibit-mode ox-reveal org helm-ag flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
-    ((cider-inject-dependencies-at-jack-in . t)
+    ((setq cider-boot-parameters "dev")
+     (cider-inject-dependencies-at-jack-in . t)
      (cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api)
                                       (figwheel-sidecar.repl-api/start-figwheel!)
                                       (figwheel-sidecar.repl-api/cljs-repl))")

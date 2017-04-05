@@ -7,7 +7,7 @@
                   [lein-hiera "0.9.5"]
                   [lein-vanity "0.2.0"]
                   [lein-kibit "0.1.3"]
-                  [lein-annotations "0.1.0"]]}
- :repl {:plugins [[cider/cider-nrepl "0.14.0"]
-                  [com.billpiel/sayid "0.0.11"]
-                  [refactor-nrepl "2.2.0"]]}}
+                  [lein-annotations "0.1.0"]
+                  [com.billpiel/sayid "0.0.14"]]}
+ :repl {:plugins [[refactor-nrepl "2.2.0"]
+                  [cider/cider-nrepl "0.14.0"]]}}
