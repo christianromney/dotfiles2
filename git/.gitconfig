@@ -1,7 +1,7 @@
 [user]
 	name = Christian Romney
 	email = cromney@pointslope.com
-	signingkey = 195F184E
+	signingKey = 195F184E
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
@@ -9,7 +9,7 @@
 	pager = diff-so-fancy | less --tabs=2 -RFX
 [commit]
 	template = ~/.git-commit-template
-	gpgsign = true
+	gpgSign = true
 [help]
 	autocorrect = 1
 [alias]
@@ -46,10 +46,18 @@
 	untracked = red
 [push]
 	default = simple
+	followTags = true
 [merge]
 	tool = opendiff
 [clean]
 	requireForce = false
 [include]
-	path = ~/.gitconfig.secrets
+path = ~/.gitconfig.secrets
 
+[diff]
+	tool = icdiff
+[difftool]
+	prompt = false
+
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
