@@ -480,6 +480,10 @@ CONTEXT - ignored"
   :ensure t
   :diminish rainbow-delimiters-mode)
 
+(use-package rainbow-identifiers
+  :ensure t
+  :diminish rainbow-identifiers-mode)
+
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t
   :diminish rainbow-mode
@@ -871,6 +875,7 @@ CONTEXT - ignored"
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-identifiers-mode)
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
@@ -942,7 +947,11 @@ CONTEXT - ignored"
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
-  (advice-add 'cider-find-var :after #'recenter-top-bottom))
+  (advice-add 'cider-find-var :after #'recenter-top-bottom)
+  (defadvice cider-pprint-eval-last-sexp
+    (after cider-pprint-eval-last-sexp)
+    (other-window 1))
+  (ad-activate 'cider-pprint-eval-last-sexp))
 
 (use-package sayid
   :ensure t
@@ -953,12 +962,18 @@ CONTEXT - ignored"
   (defadvice sayid-get-workspace
       (after sayid-get-workspace activate)
     (other-window 1))
+
   (ad-activate 'sayid-get-workspace)
 
   (defadvice sayid-show-traced
       (after sayid-show-traced activate)
     (other-window 1))
+
   (ad-activate 'sayid-show-traced))
+
+(use-package mips-mode
+  :ensure t
+  :defer t)
 
 (use-package company-go
   :ensure t)
@@ -980,6 +995,19 @@ CONTEXT - ignored"
   (("M-." . godef-jump)
    ("M-*" . pop-tag-mark)))
 
+;; https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
+(defun duplicate-current-line ()
+  "Duplicate the current line."
+  (interactive)
+  (beginning-of-line nil)
+  (let ((b (point)))
+    (end-of-line nil)
+    (copy-region-as-kill b (point)))
+  (beginning-of-line 2)
+  (open-line 1)
+  (yank)
+  (back-to-indentation))
+
 ;;; --- misc keybindings ---
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
@@ -993,6 +1021,8 @@ CONTEXT - ignored"
 
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "s-o") 'other-frame)
+
+(global-set-key (kbd "C-c d") 'duplicate-current-line)
 
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-x r I") 'string-insert-rectangle)
@@ -1105,10 +1135,22 @@ CONTEXT - ignored"
         '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦"
           "◯" "⚪" "⚫" "⚬" "￮" "⊙" "⊚" "∙" "∘")))
 
-;; (use-package ox-reveal
-;;   :ensure t
-;;   :config
-;;   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"))
+(use-package ox-reveal
+  :ensure t
+  :config
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
+
+(use-package org-beautify-theme
+  :ensure t)
+
+(use-package org-tree-slide
+  :ensure t)
+
+(use-package epresent
+  :ensure t)
+
+(use-package zpresent
+  :ensure t)
 
 (use-package htmlize
   :ensure t)
@@ -1136,7 +1178,7 @@ CONTEXT - ignored"
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
