@@ -1,13 +1,15 @@
 ;; ~/.lein/profiles.clj
-{:user {:plugins [[venantius/ultra "0.5.1"]
-                  [com.jakemccrary/lein-test-refresh "0.16.0"]
+{:user {:figwheel {:nrepl-middleware ["cider.nrepl/cider-middleware"
+                                      "cemerick.piggieback/wrap-cljs-repl"]}
+        :dependencies [[figwheel-sidecar "0.5.10"]
+                       [org.clojure/tools.nrepl "0.2.13"]]
+        :plugins [[com.jakemccrary/lein-test-refresh "0.20.0"]
                   [lein-pprint "1.1.2"]
+                  [lein-ancient "0.6.10"]
                   [lein-try "0.4.3"]
-                  [lein-ancient "0.6.8" :exclusions [org.clojure/clojure]]
-                  [lein-hiera "0.9.5"]
-                  [lein-vanity "0.2.0"]
-                  [lein-kibit "0.1.3"]
-                  [lein-annotations "0.1.0"]
-                  [com.billpiel/sayid "0.0.14"]]}
- :repl {:plugins [[refactor-nrepl "2.2.0"]
-                  [cider/cider-nrepl "0.14.0"]]}}
+                  [lein-kibit "0.1.6-beta1" :exclusions [org.clojure/clojure]]
+                  [refactor-nrepl "2.3.1" :exclusions [org.clojure/tools.nrepl]]
+                  [cider/cider-nrepl "0.15.0" :exclusions [org.clojure/tools.nrepl]]
+
+                  ;;[com.billpiel/sayid "0.0.15" :exclusions [org.clojure/clojure]]
+                  ]}}
