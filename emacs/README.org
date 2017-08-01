@@ -2,12 +2,15 @@
 My personalized emacs configuration. Snippets are cobbled together from [[https://github.com/bbatsov/prelude][Prelude]],
 [[https://github.com/bbatsov/emacs.d][bbatsov's emacs config]], [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]], and other random goodies from around the web.
 
-- Moe theme
-- powerline
+- Dracula theme, powerline, spaceline,
+- all-the-icons
 - [[https://github.com/christianromney/projectile-direnv][projectile-direnv]]
-- company, helm (everywhere)
-- avy
+- ido, company, helm (everywhere)
+- avy, anzu
 - Web programming: web-mode, scss, emmet
 - Notes: org-mode, markdown
 - Clojure: smartparens, clojure-mode, cider, clj-refactor
-- Ruby: Ruby Tools, YARI
+
+* Screenshot
+
+[[https://dl.dropboxusercontent.com/content_link/YKJjZcfauSjRqaSBhzsDFRfg5g6gJL8qi1yaTGJ1ZTCFz2d5fLsmaOXjhumRi3TS/file]]
