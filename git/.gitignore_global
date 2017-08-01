@@ -87,3 +87,5 @@ jmeter.log
 salk-run-tests-cleanly.sh
 salk-test.log
 .ackrc
+.projectile
+bengal.log

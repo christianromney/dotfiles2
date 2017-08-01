@@ -61,3 +61,5 @@ path = ~/.gitconfig.secrets
 
 [difftool "icdiff"]
   cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+[rerere]
+	enabled = 1
