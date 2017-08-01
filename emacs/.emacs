@@ -289,16 +289,6 @@
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default sgml-basic-offset 2)
 
-;; (use-package moe-theme
-;;   :ensure t
-;;   :config
-;;   (require 'powerline)
-;;   (moe-dark)
-;;   (moe-theme-set-color 'w/b)
-;;   (powerline-moe-theme))
-
-;; lighten/darken based on active
-
 (use-package solaire-mode
   :ensure t
   :defer t
@@ -353,9 +343,10 @@
   (spaceline-all-the-icons--setup-git-ahead)
   (spaceline-all-the-icons--setup-anzu))
 
-(use-package doom-themes
+(use-package dracula-theme
+  :ensure t
   :defer t
-  :init (load-theme 'doom-one t))
+  :init (load-theme 'dracula t))
 
 (blink-cursor-mode -1)
 (global-prettify-symbols-mode t)
@@ -1238,7 +1229,7 @@ CONTEXT - ignored"
  '(cider-repl-wrap-history t)
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6f11ad991da959fa8de046f7f8271b22d3a97ee7b6eca62c81d5a917790a45d9" "611e38c2deae6dcda8c5ac9dd903a356c5de5b62477469133c89b2785eb7a14d" "365d9553de0e0d658af60cff7b8f891ca185a2d7ba3fc6d29aadba69f5194c7f" "b81bfd85aed18e4341dbf4d461ed42d75ec78820a60ce86730fc17fc949389b2" "19f68ed86c05e6810925c2985f873f7ad728079ade01f5844d7d61e82dcbae4a" "8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
+    ("95f80c9b1ae8afcc2c8d66750252b4d6ae19aef46c2d458c5fe5911e6f09d0ce" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6f11ad991da959fa8de046f7f8271b22d3a97ee7b6eca62c81d5a917790a45d9" "611e38c2deae6dcda8c5ac9dd903a356c5de5b62477469133c89b2785eb7a14d" "365d9553de0e0d658af60cff7b8f891ca185a2d7ba3fc6d29aadba69f5194c7f" "b81bfd85aed18e4341dbf4d461ed42d75ec78820a60ce86730fc17fc949389b2" "19f68ed86c05e6810925c2985f873f7ad728079ade01f5844d7d61e82dcbae4a" "8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
  '(cycle-themes-mode t)
  '(desktop-save-mode nil)
  '(direnv-always-show-summary t)
@@ -1250,7 +1241,7 @@ CONTEXT - ignored"
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
