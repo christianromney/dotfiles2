@@ -13,4 +13,4 @@ My personalized emacs configuration. Snippets are cobbled together from [[https:
 
 * Screenshot
 
-[[https://dl.dropboxusercontent.com/content_link/YKJjZcfauSjRqaSBhzsDFRfg5g6gJL8qi1yaTGJ1ZTCFz2d5fLsmaOXjhumRi3TS/file]]
+[[https://www.dropbox.com/s/fpqcosy2v4kk0sr/emacs-theme.png?raw=1]]
