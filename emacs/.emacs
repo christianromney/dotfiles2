@@ -289,20 +289,77 @@
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default sgml-basic-offset 2)
 
+;; (use-package moe-theme
+;;   :ensure t
+;;   :config
+;;   (require 'powerline)
+;;   (moe-dark)
+;;   (moe-theme-set-color 'w/b)
+;;   (powerline-moe-theme))
+
+;; lighten/darken based on active
+
+(use-package solaire-mode
+  :ensure t
+  :defer t
+  :init
+  (require 'solaire-mode)
+
+  ;; brighten buffers (that represent real files)
+  (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
+
+  ;; ...if you use auto-revert-mode:
+  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+
+  ;; You can do similar with the minibuffer when it is activated:
+  (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
+
+  ;; To enable solaire-mode unconditionally for certain modes:
+  (add-hook 'ediff-prepare-buffer-hook #'solaire-mode))
+
+(use-package all-the-icons
+  :ensure t)
+
 (use-package powerline
   :ensure t)
 
-(use-package moe-theme
+(use-package spaceline
   :ensure t
-  :config
+  :init
   (require 'powerline)
-  (moe-dark)
-  (moe-theme-set-color 'w/b)
-  (powerline-moe-theme)
-  (blink-cursor-mode -1)
-  (whitespace-mode t)
-  (global-prettify-symbols-mode t)
-  (global-hl-line-mode +1))
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode)
+  (spaceline-toggle-anzu-on)
+  (spaceline-toggle-auto-compile-off)
+  (spaceline-toggle-battery-off)
+  (spaceline-toggle-column-off)
+  (spaceline-toggle-buffer-encoding-abbrev-on)
+  (spaceline-toggle-buffer-modified-on)
+  (spaceline-toggle-buffer-position-on)
+  (spaceline-toggle-buffer-id-on)
+  (spaceline-toggle-buffer-size-on)
+  (spaceline-toggle-flycheck-info-off)
+  (spaceline-toggle-helm-buffer-id-on)
+  (spaceline-toggle-helm-help-on)
+  (spaceline-toggle-line-column-on)
+  (spaceline-toggle-hud-on)
+  (spaceline-toggle-projectile-root-on))
+
+(use-package spaceline-all-the-icons
+  :after spaceline
+  :config
+  (spaceline-all-the-icons-theme)
+  (spaceline-all-the-icons--setup-git-ahead)
+  (spaceline-all-the-icons--setup-anzu))
+
+(use-package doom-themes
+  :defer t
+  :init (load-theme 'doom-one t))
+
+(blink-cursor-mode -1)
+(global-prettify-symbols-mode t)
+(global-hl-line-mode +1)
 
 ;;; --- custom functions ---
 
@@ -346,7 +403,6 @@ CONTEXT - ignored"
   :ensure t
   :config
   (hlinum-activate))
-
 
 (use-package avy ;; avy is a better ace-jump-mode
   :ensure t
@@ -442,13 +498,18 @@ CONTEXT - ignored"
   (setq dired-dwim-target t)
   (require 'dired-x))
 
+(use-package all-the-icons-dired
+  :ensure t
+  :config
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
 (use-package anzu ;; search & replace match info e.g. 1 of N
   :ensure t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
-  (global-anzu-mode))
+  (global-anzu-mode)
+  (setq anzu-cons-mode-line-p nil))
 
 (use-package easy-kill ;; copy with shortcuts
   :ensure t
@@ -499,13 +560,13 @@ CONTEXT - ignored"
         ido-use-filename-at-point 'guess
         ido-use-faces nil
         ido-max-prospects 10
-        ido-save-directory-list-file
-        (expand-file-name "ido.hist" personal-savefile-dir)
+        ido-save-directory-list-file (expand-file-name "ido.hist" personal-savefile-dir)
         ido-default-file-method 'selected-window
         ido-auto-merge-work-directories-length -1)
-  (ido-mode +1))
+  (ido-mode +1)
+  (ido-everywhere +1))
 
-(use-package ido-ubiquitous
+(use-package ido-completing-read+
   :ensure t
   :config
   (ido-ubiquitous-mode +1))
@@ -618,7 +679,7 @@ CONTEXT - ignored"
   (crux-with-region-or-line kill-region)
   :bind
   (("C-c o"                        . crux-open-with)
-   ("M-o"                          . crux-smart-open-line)
+   ("M-O"                          . crux-smart-open-line)
    ("C-c n"                        . crux-cleanup-buffer-or-region)
    ("C-c f"                        . crux-recentf-ido-find-file)
    ("C-M-z"                        . crux-indent-defun)
@@ -809,48 +870,48 @@ CONTEXT - ignored"
   (add-hook 'yaml-mode-hook 'whitespace-mode)
   (add-hook 'yaml-mode-hook 'subword-mode))
 
-(use-package inf-ruby
-  :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Capfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.thor\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.rabl\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Thorfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Podfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.podspec\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Puppetfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Berksfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Appraisals\\'" . ruby-mode))
-  ;; We never want to edit Rubinius bytecode
-  (add-to-list 'completion-ignored-extensions ".rbc")
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+;; (use-package inf-ruby
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Capfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.thor\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.rabl\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Thorfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Podfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.podspec\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Puppetfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Berksfile\\'" . ruby-mode))
+;;   (add-to-list 'auto-mode-alist '("Appraisals\\'" . ruby-mode))
+;;   ;; We never want to edit Rubinius bytecode
+;;   (add-to-list 'completion-ignored-extensions ".rbc")
+;;   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
-(use-package ruby-tools
-  :ensure t)
+;; (use-package ruby-tools
+;;   :ensure t)
 
-(use-package yari
-  :ensure t)
+;; (use-package yari
+;;   :ensure t)
 
-(use-package ruby-mode
-  :ensure t
-  :config
-  (add-hook 'ruby-mode-hook #'subword-mode)
-  (eval-after-load 'ruby-mode
-    '(progn
-       (defun personal-ruby-mode-hook ()
-         (inf-ruby-minor-mode +1)
-         (ruby-tools-mode +1)
-         (subword-mode +1))
-       (add-hook 'ruby-mode-hook 'personal-ruby-mode-hook))))
+;; (use-package ruby-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'ruby-mode-hook #'subword-mode)
+;;   (eval-after-load 'ruby-mode
+;;     '(progn
+;;        (defun personal-ruby-mode-hook ()
+;;          (inf-ruby-minor-mode +1)
+;;          (ruby-tools-mode +1)
+;;          (subword-mode +1))
+;;        (add-hook 'ruby-mode-hook 'personal-ruby-mode-hook))))
 
 (defvar personal/clojure-prettify-alist '()
   "Pretty symbols for Clojure.")
@@ -945,8 +1006,8 @@ CONTEXT - ignored"
   (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+
   (advice-add 'cider-find-var :after #'recenter-top-bottom)
   (defadvice cider-pprint-eval-last-sexp
     (after cider-pprint-eval-last-sexp)
@@ -971,29 +1032,29 @@ CONTEXT - ignored"
 
   (ad-activate 'sayid-show-traced))
 
-(use-package mips-mode
-  :ensure t
-  :defer t)
+;; (use-package mips-mode
+;;   :ensure t
+;;   :defer t)
 
-(use-package company-go
-  :ensure t)
+;; (use-package company-go
+;;   :ensure t)
 
-(use-package go-eldoc
-  :ensure t)
+;; (use-package go-eldoc
+;;   :ensure t)
 
-(use-package go-mode
-  :ensure t
-  :config
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook 'gofmt-before-save)
-              (set (make-local-variable 'company-backends) '(company-go))
-              (if (not (string-match "go" compile-command))
-                  (set (make-local-variable 'compile-command)
-                       "go build -v && go vet"))))
-  :bind
-  (("M-." . godef-jump)
-   ("M-*" . pop-tag-mark)))
+;; (use-package go-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'go-mode-hook
+;;             (lambda ()
+;;               (add-hook 'before-save-hook 'gofmt-before-save)
+;;               (set (make-local-variable 'company-backends) '(company-go))
+;;               (if (not (string-match "go" compile-command))
+;;                   (set (make-local-variable 'compile-command)
+;;                        "go build -v && go vet"))))
+;;   :bind
+;;   (("M-." . godef-jump)
+;;    ("M-*" . pop-tag-mark)))
 
 ;; https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
 (defun duplicate-current-line ()
@@ -1021,6 +1082,7 @@ CONTEXT - ignored"
 
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "s-o") 'other-frame)
+(global-set-key (kbd "s-l") 'avy-goto-line)
 
 (global-set-key (kbd "C-c d") 'duplicate-current-line)
 
@@ -1162,11 +1224,21 @@ CONTEXT - ignored"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "/Users/cr/.emacs.d/savefile/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/savefile/bookmarks")
+ '(cider-cljs-lein-repl
+   "(do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/start-figwheel!) (figwheel-sidecar.repl-api/cljs-repl))")
+ '(cider-inject-dependencies-at-jack-in nil)
  '(cider-pprint-fn (quote puget))
+ '(cider-prefer-local-resources t)
+ '(cider-prompt-for-symbol nil)
+ '(cider-repl-display-help-banner nil)
+ '(cider-repl-history-file "/Users/cr/.emacs.d/cider-repl.history")
+ '(cider-repl-history-size 1000)
+ '(cider-repl-use-pretty-printing t)
+ '(cider-repl-wrap-history t)
  '(custom-safe-themes
    (quote
-    ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6f11ad991da959fa8de046f7f8271b22d3a97ee7b6eca62c81d5a917790a45d9" "611e38c2deae6dcda8c5ac9dd903a356c5de5b62477469133c89b2785eb7a14d" "365d9553de0e0d658af60cff7b8f891ca185a2d7ba3fc6d29aadba69f5194c7f" "b81bfd85aed18e4341dbf4d461ed42d75ec78820a60ce86730fc17fc949389b2" "19f68ed86c05e6810925c2985f873f7ad728079ade01f5844d7d61e82dcbae4a" "8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "6145e62774a589c074a31a05dfa5efdf8789cf869104e905956f0cbd7eda9d0e" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "85d609b07346d3220e7da1e0b87f66d11b2eeddad945cac775e80d2c1adb0066" "34ed3e2fa4a1cb2ce7400c7f1a6c8f12931d8021435bad841fdc1192bd1cc7da" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" default)))
  '(cycle-themes-mode t)
  '(desktop-save-mode nil)
  '(direnv-always-show-summary t)
@@ -1178,7 +1250,7 @@ CONTEXT - ignored"
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
