@@ -10,6 +10,13 @@
 ;;; Code:
 ;;; --- personal info ---
 
+(eval-when-compile
+  (defvar user-email-address)
+  (defvar calendar-latitude)
+  (defvar calendar-longitude)
+  (defvar calendar-location-name)
+  (defvar sh-learn-basic-offset))
+
 (setq user-email-address "cromney@pointslope.com"
       user-full-name "Christian Romney"
       calendar-latitude 26.017
@@ -556,6 +563,22 @@ CONTEXT - ignored"
 (use-package pos-tip
   :ensure t)
 
+;; avoid flycheck warnings
+(eval-when-compile
+  (defvar helm-split-window-in-side-p)
+  (defvar helm-M-x-fuzzy-match)
+  (defvar helm-buffers-fuzzy-matching)
+  (defvar helm-recentf-fuzzy-match)
+  (defvar helm-semantic-fuzzy-match)
+  (defvar helm-imenu-fuzzy-match)
+  (defvar helm-locate-fuzzy-match)
+  (defvar helm-apropos-fuzzy-match)
+  (defvar helm-lisp-fuzzy-completion)
+  (defvar helm-ff-search-library-in-sexp)
+  (defvar helm-ff-file-name-history-use-recentf)
+  (defvar helm-grep-default-command)
+  (defvar helm-grep-default-recurse-command))
+
 (use-package helm
   :ensure t
   :diminish helm-mode
@@ -875,7 +898,8 @@ CONTEXT - ignored"
   "Pretty symbols for Clojure.")
 
 (defun personal/find-tag-without-ns (next-p)
-  "Try to find functions without their namespace."
+  "This function will try to find function definitions without their namespace.
+Accepts a parameter (as NEXT-P), which is unused."
   (interactive "P")
   (xref-find-definitions
    (car (last (split-string (symbol-name (symbol-at-point)) "/")))))
@@ -1031,6 +1055,20 @@ CONTEXT - ignored"
 
 ;;; --- org mode ---
 
+(eval-when-compile
+  (defvar org-startup-indented)
+  (defvar org-html-validation-link)
+  (defvar org-export-html-postamble)
+  (defvar org-use-sub-superscripts)
+  (defvar org-agenda-show-log)
+  (defvar org-agenda-todo-ignore-scheduled)
+  (defvar org-agenda-todo-ignore-deadlines)
+  (defvar org-agenda-skip-deadline-if-done)
+  (defvar org-agenda-skip-scheduled-if-done)
+  (defvar org-agenda-include-diary)
+  (defvar org-capture-templates)
+  (defvar org-babel-clojure-backend))
+
 (use-package org
   :ensure t
   :config
@@ -1056,11 +1094,11 @@ CONTEXT - ignored"
                            "~/Dropbox/org/pointslope/business.org"))
   (setq org-todo-keywords '((type "TODO" "STARTED" "FINISHED" "DELIVERED" "|" "DONE"))
         org-todo-keyword-faces
-        '(("TODO"      . (:background "salmon" :foreground "red" :weight bold))
-          ("STARTED"   . (:background "light yellow" :foreground "brown" :weight bold))
-          ("FINISHED"  . (:background "light blue" :foreground "dark blue" :weight bold))
-          ("DELIVERED" . (:background "orange" :foreground "black" :weight bold))
-          ("DONE"      . (:background "light green" :foreground "dark green" :weight bold))))
+        '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))
+          ("STARTED"   . (:background "light yellow" :foreground "brown"      :weight bold))
+          ("FINISHED"  . (:background "light blue"   :foreground "dark blue"  :weight bold))
+          ("DELIVERED" . (:background "orange"       :foreground "black"      :weight bold))
+          ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold))))
 
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
@@ -1192,6 +1230,6 @@ CONTEXT - ignored"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
+;;;
 ;;; (provide '.emacs)
 ;;; .emacs ends here
