@@ -1,14 +1,10 @@
 ;;; .emacs --- Summary
 ;;; My emacs configuration
 ;;;
-;;; Commentary:
-;;; I've cherry-picked much of this configuration
-;;; from various people around the web including,
-;;; Bozhidar Batsov and Sascha Chua.
-;;; Some of the code is inspired by Prelude, but
-;;; this configuration is much slimmer and loads
-;;; faster than Prelude and some of my previous
-;;; configurations.
+;;; Commentary: I've cherry-picked much of this configuration from various
+;;; people around the web including, Bozhidar Batsov and Sascha Chua. Some of
+;;; the code is inspired by Prelude, but this configuration is much slimmer and
+;;; loads faster than Prelude and some of my previous configurations.
 ;;;
 ;;; Code:
 ;;;
@@ -21,18 +17,17 @@
       calendar-location-name "Pembroke Pines, FL")
 
 ;;; --- startup settings ---
-(setq inhibit-startup-message t       ;; no initial message in scratch buffer
+(setq inhibit-startup-message t              ;; no initial message in scratch buffer
       scroll-margin 0                        ;; scroll settings
       scroll-conservatively 100000
-      scroll-preserv-screen-position 1
-      package-enable-at-startup nil)  ;; don't enable packages unless I tell you
+      scroll-preserve-screen-position 1
+      package-enable-at-startup nil)         ;; don't enable packages unless I tell you
 
 (setq-default initial-major-mode (quote emacs-lisp-mode))
 (setq-default initial-scratch-message nil)
 
 (add-to-list 'default-frame-alist '(font . "Sauce Code Powerline-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 
 ;; --- save directories ---
 
@@ -57,22 +52,6 @@
 (personal/ensure-dir personal-backup-dir)
 (personal/ensure-dir personal-autosave-dir)
 (personal/ensure-dir personal-desktop-dir)
-
-;; (require 'desktop)
-;; (setq backup-directory-alist
-;;       `((".*" . ,personal-backup-dir))
-
-;;       auto-save-file-name-transforms
-;;       `((".*" ,personal-autosave-dir t))
-
-;;       desktop-path (list personal-desktop-dir)
-
-;;       desktop-load-locked-desktop t
-
-;;       desktop-base-lock-name
-;;       (convert-standard-filename (format ".emacs.desktop.lock-%d" (emacs-pid))))
-
-;; (desktop-read)
 
 ;; --- package configuration ---
 
@@ -155,8 +134,6 @@
       vc-follow-symlinks t                   ;; symlinks aren't second-class citizens
       max-specpdl-size 2400                  ;; limit on number of variable bindings
       sh-learn-basic-offset t                ;; try to figure out offset for shell mode
-      system-name
-      (car (split-string system-name "\\.")) ;; don't use <sys>.local (just <sys>)
       locale-coding-system 'utf-8            ;; utf-8 character encoding
       )
 
@@ -184,11 +161,11 @@
 
 ;;; --- character encoding ---
 
-(prefer-coding-system 'utf-8)
-(set-language-environment 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system        'utf-8)
+(set-language-environment    'utf-8)
+(set-default-coding-systems  'utf-8)
+(set-terminal-coding-system  'utf-8)
+(set-keyboard-coding-system  'utf-8)
 (set-selection-coding-system 'utf-8)
 
 ;;; --- built-in features ---
@@ -201,7 +178,7 @@
 
 (require 'misc)
 (global-set-key (kbd "M-Z")     'zap-up-to-char)
-(global-set-key (kbd "C-x f")   'find-file)       ;; typo elimination
+(global-set-key (kbd "C-x f")   'find-file)         ;; typo elimination
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x \\")  #'align-regexp)
 
@@ -217,7 +194,8 @@
 
 (require 'midnight) ;; clean up obsolete buffers automatically
 
-(require 're-builder) ;; saner regexp syntax
+;; saner regexp syntax
+(require 're-builder)
 (setq reb-re-syntax 'string)
 
 (require 'compile)
@@ -228,11 +206,11 @@
 ;;; --- enable various 'off by default' features ---
 
 (put 'narrow-to-region 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
-(put 'narrow-to-defun 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
+(put 'narrow-to-page   'disabled nil)
+(put 'narrow-to-defun  'disabled nil)
+(put 'upcase-region    'disabled nil)
+(put 'downcase-region  'disabled nil)
+(put 'erase-buffer     'disabled nil)
 
 ;;; --- expansions ---
 
@@ -262,7 +240,7 @@
 (column-number-mode)                   ;; enable column numbers
 (line-number-mode)                     ;; enable line numbers
 (size-indication-mode)                 ;; enable file sizes
-(delete-selection-mode)               ;; delete selections with a keypress
+(delete-selection-mode)                ;; delete selections with a keypress
 (global-auto-revert-mode)              ;; revert buffers when files changed externally
 
 (if (fboundp 'tool-bar-mode)
@@ -289,29 +267,12 @@
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default sgml-basic-offset 2)
 
-(use-package solaire-mode
-  :ensure t
-  :defer t
-  :init
-  (require 'solaire-mode)
-
-  ;; brighten buffers (that represent real files)
-  (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
-
-  ;; ...if you use auto-revert-mode:
-  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
-
-  ;; You can do similar with the minibuffer when it is activated:
-  (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
-
-  ;; To enable solaire-mode unconditionally for certain modes:
-  (add-hook 'ediff-prepare-buffer-hook #'solaire-mode))
-
 (use-package all-the-icons
   :ensure t)
 
 (use-package powerline
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package spaceline
   :ensure t
@@ -320,28 +281,26 @@
   (require 'spaceline-config)
   (spaceline-emacs-theme)
   (spaceline-helm-mode)
-  (spaceline-toggle-anzu-on)
+  ;; -- disabled --
   (spaceline-toggle-auto-compile-off)
   (spaceline-toggle-battery-off)
   (spaceline-toggle-column-off)
-  (spaceline-toggle-buffer-encoding-abbrev-on)
+  (spaceline-toggle-minor-modes-off)
+  ;; -- enabled --
+  (spaceline-toggle-anzu-on)
   (spaceline-toggle-buffer-modified-on)
   (spaceline-toggle-buffer-position-on)
   (spaceline-toggle-buffer-id-on)
   (spaceline-toggle-buffer-size-on)
-  (spaceline-toggle-flycheck-info-off)
+  (spaceline-toggle-flycheck-error-on)
+  (spaceline-toggle-flycheck-info-on)
+  (spaceline-toggle-flycheck-warning-on)
   (spaceline-toggle-helm-buffer-id-on)
   (spaceline-toggle-helm-help-on)
-  (spaceline-toggle-line-column-on)
   (spaceline-toggle-hud-on)
-  (spaceline-toggle-projectile-root-on))
-
-(use-package spaceline-all-the-icons
-  :after spaceline
-  :config
-  (spaceline-all-the-icons-theme)
-  (spaceline-all-the-icons--setup-git-ahead)
-  (spaceline-all-the-icons--setup-anzu))
+  (spaceline-toggle-line-column-on)
+  (spaceline-toggle-projectile-root-on)
+  (spaceline-toggle-selection-info-on))
 
 (use-package dracula-theme
   :ensure t
@@ -349,7 +308,7 @@
   :init (load-theme 'dracula t))
 
 (blink-cursor-mode -1)
-(global-prettify-symbols-mode t)
+(global-prettify-symbols-mode +1)
 (global-hl-line-mode +1)
 
 ;;; --- custom functions ---
@@ -377,7 +336,8 @@ CONTEXT - ignored"
 ;;; --- additional packages ---
 
 (use-package bookmark+
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package ov ;; easy overlays
   :ensure t
@@ -409,7 +369,8 @@ CONTEXT - ignored"
   :bind (("C-x g" . magit-status)))
 
 (use-package gist
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package diff-hl
   :ensure t
@@ -425,7 +386,7 @@ CONTEXT - ignored"
 
 (use-package projectile
   :ensure t
-  :diminish (projectile-mode . " Pj ")
+  :diminish projectile-mode
   :bind (("s-p" . projectile-command-map)
          ("C-c p" . projectile-command-map))
   :config
@@ -433,15 +394,15 @@ CONTEXT - ignored"
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
   (projectile-mode t))
 
-(use-package pt ;; platinum searcher (think "ack" but faster; written in Go)
-  :ensure t)
+;; (use-package pt ;; platinum searcher (think "ack" but faster; written in Go)
+;;   :ensure t)
 
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package abbrev
-  :diminish (abbrev-mode . " abbr ")
+  :diminish abbrev-mode
   :config
   (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t)
@@ -496,11 +457,11 @@ CONTEXT - ignored"
 
 (use-package anzu ;; search & replace match info e.g. 1 of N
   :ensure t
-  :bind (("M-%" . anzu-query-replace)
-         ("C-M-%" . anzu-query-replace-regexp))
+  :bind
+  (("M-%" . anzu-query-replace)
+   ("C-M-%" . anzu-query-replace-regexp))
   :config
-  (global-anzu-mode)
-  (setq anzu-cons-mode-line-p nil))
+  (global-anzu-mode))
 
 (use-package easy-kill ;; copy with shortcuts
   :ensure t
@@ -532,7 +493,7 @@ CONTEXT - ignored"
   :ensure t
   :diminish rainbow-delimiters-mode)
 
-(use-package rainbow-identifiers
+(use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
   :ensure t
   :diminish rainbow-identifiers-mode)
 
@@ -557,6 +518,7 @@ CONTEXT - ignored"
   (ido-mode +1)
   (ido-everywhere +1))
 
+;; formerly known as ido-ubiquitous-mode
 (use-package ido-completing-read+
   :ensure t
   :config
@@ -619,23 +581,24 @@ CONTEXT - ignored"
         helm-grep-default-command             "ack -Hn -i --no-group --no-color %e %p %f"
         helm-grep-default-recurse-command     "ack -H -i --no-group --no-color %e %p %f")
 
-  (substitute-key-definition 'find-tag 'helm-etags-select global-map)
+  ;; (substitute-key-definition 'find-tag 'helm-etags-select global-map)
+  (substitute-key-definition 'xref-find-definitions 'helm-etags-select global-map)
   (helm-autoresize-mode t)
   (helm-mode +1)
 
   (global-unset-key (kbd "C-x c"))
-  (global-set-key (kbd "C-c h")      'helm-command-prefix)
-  (global-set-key (kbd "C-c h o")    'helm-occur)
-  (global-set-key (kbd "M-x")        'helm-M-x)
-  (global-set-key (kbd "C-x C-m")    'helm-M-x)
-  (global-set-key (kbd "M-i")        'helm-imenu)
-  (global-set-key (kbd "M-y")        'helm-show-kill-ring)
-  (global-set-key (kbd "C-x b")      'helm-mini)
-  (global-set-key (kbd "C-x C-b")    'helm-buffers-list)
-  (global-set-key (kbd "C-x C-f")    'helm-find-files)
-  (global-set-key (kbd "C-h f")      'helm-apropos)
-  (global-set-key (kbd "C-h r")      'helm-info-emacs)
-  (global-set-key (kbd "C-h C-l")    'helm-locate-library)
+  (global-set-key   (kbd "C-c h")      'helm-command-prefix)
+  (global-set-key   (kbd "C-c h o")    'helm-occur)
+  (global-set-key   (kbd "M-x")        'helm-M-x)
+  (global-set-key   (kbd "C-x C-m")    'helm-M-x)
+  (global-set-key   (kbd "M-i")        'helm-imenu)
+  (global-set-key   (kbd "M-y")        'helm-show-kill-ring)
+  (global-set-key   (kbd "C-x b")      'helm-mini)
+  (global-set-key   (kbd "C-x C-b")    'helm-buffers-list)
+  (global-set-key   (kbd "C-x C-f")    'helm-find-files)
+  (global-set-key   (kbd "C-h f")      'helm-apropos)
+  (global-set-key   (kbd "C-h r")      'helm-info-emacs)
+  (global-set-key   (kbd "C-h C-l")    'helm-locate-library)
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-z")   'helm-select-action))
@@ -710,6 +673,7 @@ CONTEXT - ignored"
 
 (use-package flycheck
   :ensure t
+  :diminish flycheck-mode
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
@@ -755,14 +719,13 @@ CONTEXT - ignored"
   '(progn
      (defun personal-css-mode-hook ()
        (rainbow-mode +1))
-     (add-hook 'css-mode-hook (lambda ()
-                                (run-hooks 'personal-css-mode-hook)))))
+     (add-hook 'css-mode-hook (lambda () (run-hooks 'personal-css-mode-hook)))))
 
 ;; -- programming modes --
 
 (use-package smartparens
   :ensure t
-  :diminish (smartparens-mode . " (Sm)")
+  :diminish smartparens-mode
   :config
   (require 'smartparens-config)
   (setq sp-base-key-bindings 'paredit)
@@ -861,48 +824,52 @@ CONTEXT - ignored"
   (add-hook 'yaml-mode-hook 'whitespace-mode)
   (add-hook 'yaml-mode-hook 'subword-mode))
 
-;; (use-package inf-ruby
-;;   :ensure t
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Capfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.thor\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.rabl\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Thorfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Podfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.podspec\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Puppetfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Berksfile\\'" . ruby-mode))
-;;   (add-to-list 'auto-mode-alist '("Appraisals\\'" . ruby-mode))
-;;   ;; We never want to edit Rubinius bytecode
-;;   (add-to-list 'completion-ignored-extensions ".rbc")
-;;   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+(use-package inf-ruby
+  :ensure t
+  :defer t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Capfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.thor\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rabl\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Thorfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Podfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.podspec\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Puppetfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Berksfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Appraisals\\'" . ruby-mode))
+  ;; We never want to edit Rubinius bytecode
+  (add-to-list 'completion-ignored-extensions ".rbc")
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
-;; (use-package ruby-tools
-;;   :ensure t)
+(use-package ruby-tools
+  :ensure t
+  :defer t)
 
-;; (use-package yari
-;;   :ensure t)
+(use-package yari
+  :ensure t
+  :defer t)
 
-;; (use-package ruby-mode
-;;   :ensure t
-;;   :config
-;;   (add-hook 'ruby-mode-hook #'subword-mode)
-;;   (eval-after-load 'ruby-mode
-;;     '(progn
-;;        (defun personal-ruby-mode-hook ()
-;;          (inf-ruby-minor-mode +1)
-;;          (ruby-tools-mode +1)
-;;          (subword-mode +1))
-;;        (add-hook 'ruby-mode-hook 'personal-ruby-mode-hook))))
+(use-package ruby-mode
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'ruby-mode-hook #'subword-mode)
+  (eval-after-load 'ruby-mode
+    '(progn
+       (defun personal-ruby-mode-hook ()
+         (inf-ruby-minor-mode +1)
+         (ruby-tools-mode +1)
+         (subword-mode +1))
+       (add-hook 'ruby-mode-hook 'personal-ruby-mode-hook))))
 
 (defvar personal/clojure-prettify-alist '()
   "Pretty symbols for Clojure.")
@@ -910,14 +877,12 @@ CONTEXT - ignored"
 (defun personal/find-tag-without-ns (next-p)
   "Try to find functions without their namespace."
   (interactive "P")
-  (find-tag
-   (car
-    (last
-     (split-string (symbol-name (symbol-at-point)) "/")))
-   next-p))
+  (xref-find-definitions
+   (car (last (split-string (symbol-name (symbol-at-point)) "/")))))
 
 (use-package scss-mode
   :ensure t
+  :defer t
   :config
   (setq scss-compile-at-save nil))
 
@@ -980,7 +945,8 @@ CONTEXT - ignored"
   (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
 
 (use-package datomic-snippets
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package cider
   :ensure t
@@ -1007,6 +973,7 @@ CONTEXT - ignored"
 
 (use-package sayid
   :ensure t
+  :defer t
   :config
   (eval-after-load 'clojure-mode
     '(sayid-setup-package))
@@ -1022,30 +989,6 @@ CONTEXT - ignored"
     (other-window 1))
 
   (ad-activate 'sayid-show-traced))
-
-;; (use-package mips-mode
-;;   :ensure t
-;;   :defer t)
-
-;; (use-package company-go
-;;   :ensure t)
-
-;; (use-package go-eldoc
-;;   :ensure t)
-
-;; (use-package go-mode
-;;   :ensure t
-;;   :config
-;;   (add-hook 'go-mode-hook
-;;             (lambda ()
-;;               (add-hook 'before-save-hook 'gofmt-before-save)
-;;               (set (make-local-variable 'company-backends) '(company-go))
-;;               (if (not (string-match "go" compile-command))
-;;                   (set (make-local-variable 'compile-command)
-;;                        "go build -v && go vet"))))
-;;   :bind
-;;   (("M-." . godef-jump)
-;;    ("M-*" . pop-tag-mark)))
 
 ;; https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
 (defun duplicate-current-line ()
@@ -1196,15 +1139,6 @@ CONTEXT - ignored"
 (use-package org-beautify-theme
   :ensure t)
 
-(use-package org-tree-slide
-  :ensure t)
-
-(use-package epresent
-  :ensure t)
-
-(use-package zpresent
-  :ensure t)
-
 (use-package htmlize
   :ensure t)
 
@@ -1241,7 +1175,7 @@ CONTEXT - ignored"
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
