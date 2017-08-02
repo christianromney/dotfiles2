@@ -4,7 +4,7 @@ My personalized emacs configuration. Snippets are cobbled together from [[https:
 
 - Dracula theme, powerline, spaceline,
 - all-the-icons
-- [[https://github.com/christianromney/projectile-direnv][projectile-direnv]]
+- direnv-mode
 - ido, company, helm (everywhere)
 - avy, anzu
 - Web programming: web-mode, scss, emmet
