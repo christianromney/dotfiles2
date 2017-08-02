@@ -1,13 +1,13 @@
 ;;; .emacs --- Summary
 ;;; My emacs configuration
 ;;;
-;;; Commentary: I've cherry-picked much of this configuration from various
+;;; Commentary:
+;;; I've cherry-picked much of this configuration from various
 ;;; people around the web including, Bozhidar Batsov and Sascha Chua. Some of
 ;;; the code is inspired by Prelude, but this configuration is much slimmer and
 ;;; loads faster than Prelude and some of my previous configurations.
 ;;;
 ;;; Code:
-;;;
 ;;; --- personal info ---
 
 (setq user-email-address "cromney@pointslope.com"
