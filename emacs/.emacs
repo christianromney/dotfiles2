@@ -642,6 +642,11 @@ CONTEXT - ignored"
   (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
   (global-set-key (kbd "C-c p s a") 'helm-projectile-ack))
 
+(use-package helm-clojuredocs
+  :ensure t
+  :bind
+  (("C-c h d" . helm-clojuredocs-at-point)))
+
 (use-package super-save ;; save buffers on lost focus
   :ensure t
   :diminish super-save-mode
@@ -957,6 +962,9 @@ Accepts a parameter (as NEXT-P), which is unused."
   :bind
   (("M-." . personal/find-tag-without-ns)))
 
+(use-package clojure-mode-extra-font-locking
+  :ensure t)
+
 (use-package cl-lib
   :ensure t)
 
@@ -1222,7 +1230,7 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (flycheck-joker inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
