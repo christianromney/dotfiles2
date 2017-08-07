@@ -858,7 +858,6 @@ CONTEXT - ignored"
 (use-package yaml-mode
   :ensure t
   :config
-  (add-hook 'yaml-mode-hook 'whitespace-mode)
   (add-hook 'yaml-mode-hook 'subword-mode))
 
 (use-package inf-ruby
@@ -1070,6 +1069,20 @@ Accepts a parameter (as NEXT-P), which is unused."
 (global-set-key (kbd "C-c M-t") 'transpose-sentences)
 (global-set-key (kbd "C-x M-t") 'transpose-paragraphs)
 
+;;; --- docker ----
+
+(use-package docker
+  :ensure t
+  :defer t)
+
+(use-package dockerfile-mode
+  :ensure t
+  :defer t)
+
+(use-package docker-compose-mode
+  :ensure t
+  :defer t)
+
 ;;; --- org mode ---
 
 (eval-when-compile
@@ -1230,7 +1243,7 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (docker docker-compose-mode helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
