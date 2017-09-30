@@ -33,7 +33,7 @@
 (setq-default initial-major-mode (quote emacs-lisp-mode))
 (setq-default initial-scratch-message nil)
 
-(add-to-list 'default-frame-alist '(font . "Sauce Code Powerline-20"))
+(add-to-list 'default-frame-alist '(font . "Hack-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; --- save directories ---
@@ -375,6 +375,11 @@ CONTEXT - ignored"
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+(use-package magithub
+  :ensure t
+  :config
+  (magithub-feature-autoinject t))
+
 (use-package gist
   :ensure t
   :defer t)
@@ -699,6 +704,17 @@ CONTEXT - ignored"
   :config
   (which-key-mode +1))
 
+(use-package restclient
+  :ensure t)
+
+(use-package restclient-helm
+  :ensure t)
+
+(use-package company-restclient
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-restclient))
+
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
@@ -917,6 +933,13 @@ Accepts a parameter (as NEXT-P), which is unused."
   (xref-find-definitions
    (car (last (split-string (symbol-name (symbol-at-point)) "/")))))
 
+(use-package dart-mode
+  :ensure t
+  :defer t
+  :config
+  (setq dart-enable-analysis-server t)
+  (add-hook 'dart-mode-hook 'flycheck-mode))
+
 (use-package scss-mode
   :ensure t
   :defer t
@@ -948,7 +971,8 @@ Accepts a parameter (as NEXT-P), which is unused."
     (clone-for 2)
     (alter-when 2)
     (keep-when 2)
-    (remove-when 2))
+    (remove-when 2)
+    (reg-sub 1))
 
   (eval-after-load 'clojure-mode
     '(setq clojure--prettify-symbols-alist
@@ -1010,6 +1034,9 @@ Accepts a parameter (as NEXT-P), which is unused."
     (after cider-pprint-eval-last-sexp)
     (other-window 1))
   (ad-activate 'cider-pprint-eval-last-sexp))
+
+(use-package cider-eval-sexp-fu
+  :ensure t)
 
 (use-package sayid
   :ensure t
@@ -1243,7 +1270,7 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (docker docker-compose-mode helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (dart-mode magithub htmlize org-bullets docker-compose-mode docker sayid datomic-snippets clojure-snippets cljr-helm clj-refactor yaml-mode markdown-mode smartparens flycheck-joker flycheck which-key undo-tree crux super-save helm-projectile helm-descbinds company-quickhelp smex flx-ido ido-completing-read+ rainbow-mode rainbow-delimiters move-text exec-path-from-shell easy-kill anzu expand-region projectile direnv diff-hl avy hlinum company-restclient restclient-helm restclient helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
