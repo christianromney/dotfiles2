@@ -275,7 +275,8 @@
 (setq-default sgml-basic-offset 2)
 
 (use-package all-the-icons
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package powerline
   :ensure t
@@ -311,7 +312,6 @@
 
 (use-package dracula-theme
   :ensure t
-  :defer t
   :init (load-theme 'dracula t))
 
 (blink-cursor-mode -1)
@@ -377,6 +377,7 @@ CONTEXT - ignored"
 
 (use-package magithub
   :ensure t
+  :defer t
   :config
   (magithub-feature-autoinject t))
 
@@ -464,6 +465,7 @@ CONTEXT - ignored"
 
 (use-package all-the-icons-dired
   :ensure t
+  :defer t
   :config
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
@@ -566,7 +568,8 @@ CONTEXT - ignored"
   (company-quickhelp-mode 1))
 
 (use-package pos-tip
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; avoid flycheck warnings
 (eval-when-compile
@@ -701,14 +704,17 @@ CONTEXT - ignored"
 
 (use-package which-key ;; help remember keybindings
   :ensure t
+  :defer t
   :config
   (which-key-mode +1))
 
 (use-package restclient
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package restclient-helm
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package company-restclient
   :ensure t
@@ -725,7 +731,8 @@ CONTEXT - ignored"
   :ensure t)
 
 (use-package flyspell-correct-helm
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package flyspell
   :ensure t
@@ -840,8 +847,14 @@ CONTEXT - ignored"
 
   (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp))
 
+(use-package eshell
+  :ensure t
+  :config
+  (add-hook 'eshell-mode-hook #'smartparens-mode))
+
 (use-package web-mode
   :ensure t
+  :defer t
   :diminish web-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -869,10 +882,12 @@ CONTEXT - ignored"
     (sp-local-tag "#" "<%# " " %>")))
 
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package yaml-mode
   :ensure t
+  :defer t
   :config
   (add-hook 'yaml-mode-hook 'subword-mode))
 
@@ -935,10 +950,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package dart-mode
   :ensure t
-  :defer t
-  :config
-  (setq dart-enable-analysis-server t)
-  (add-hook 'dart-mode-hook 'flycheck-mode))
+  :defer t)
 
 (use-package scss-mode
   :ensure t
@@ -972,7 +984,8 @@ Accepts a parameter (as NEXT-P), which is unused."
     (alter-when 2)
     (keep-when 2)
     (remove-when 2)
-    (reg-sub 1))
+    (reg-sub 1)
+    (s/fdef 1))
 
   (eval-after-load 'clojure-mode
     '(setq clojure--prettify-symbols-alist
@@ -1036,7 +1049,8 @@ Accepts a parameter (as NEXT-P), which is unused."
   (ad-activate 'cider-pprint-eval-last-sexp))
 
 (use-package cider-eval-sexp-fu
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package sayid
   :ensure t
@@ -1057,7 +1071,14 @@ Accepts a parameter (as NEXT-P), which is unused."
 
   (ad-activate 'sayid-show-traced))
 
-;; https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
+(use-package geiser
+  :ensure t
+  :defer t
+  :config
+  (setq geiser-active-implementations '(racket)))
+
+
+;; Https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
 (defun duplicate-current-line ()
   "Duplicate the current line."
   (interactive)
@@ -1073,6 +1094,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 ;;; --- misc keybindings ---
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
+(global-set-key (kbd "C-c |") 'eshell)
 
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -1196,13 +1218,16 @@ Accepts a parameter (as NEXT-P), which is unused."
         org-fontify-done-headline t
         org-src-fontify-natively t
         org-confirm-babel-evaluate nil
-        org-src-window-setup 'current-window)
+        org-src-window-setup 'current-window
+        org-src-tab-acts-natively t)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (dot        . t)
      (sh         . t)
      (clojure    . t)
+     (scheme     . t)
      (java       . t)
      (js         . t)
      (ruby       . t)
@@ -1232,10 +1257,12 @@ Accepts a parameter (as NEXT-P), which is unused."
   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
 
 (use-package org-beautify-theme
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package htmlize
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;;; --- custom ---
 
@@ -1264,13 +1291,43 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(direnv-always-show-summary t)
  '(direnv-mode t)
  '(direnv-show-paths-in-summary nil)
+ '(geiser-chez-binary "chez")
+ '(geiser-default-implementation (quote racket))
+ '(geiser-implementations-alist
+   (quote
+    (((regexp "\\.scm$")
+      chez)
+     ((regexp "\\.ss$")
+      racket)
+     ((regexp "\\.rkt$")
+      racket)
+     ((regexp "\\.scm$")
+      chicken)
+     ((regexp "\\.release-info$")
+      chicken)
+     ((regexp "\\.meta$")
+      chicken)
+     ((regexp "\\.setup$")
+      chicken)
+     ((regexp "\\.ss$")
+      chez)
+     ((regexp "\\.def$")
+      chez)
+     ((regexp "\\.scm$")
+      mit)
+     ((regexp "\\.pkg$")
+      mit)
+     ((regexp "\\.scm$")
+      chibi)
+     ((regexp "\\.sld$")
+      chibi))))
  '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case --ignore=.git")
  '(helm-ag-fuzzy-match t)
  '(helm-ag-use-agignore t)
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (dart-mode magithub htmlize org-bullets docker-compose-mode docker sayid datomic-snippets clojure-snippets cljr-helm clj-refactor yaml-mode markdown-mode smartparens flycheck-joker flycheck which-key undo-tree crux super-save helm-projectile helm-descbinds company-quickhelp smex flx-ido ido-completing-read+ rainbow-mode rainbow-delimiters move-text exec-path-from-shell easy-kill anzu expand-region projectile direnv diff-hl avy hlinum company-restclient restclient-helm restclient helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (free-keys geiser dart-mode magithub htmlize org-bullets docker-compose-mode docker sayid datomic-snippets clojure-snippets cljr-helm clj-refactor yaml-mode markdown-mode smartparens flycheck-joker flycheck which-key undo-tree crux super-save helm-projectile helm-descbinds company-quickhelp smex flx-ido ido-completing-read+ rainbow-mode rainbow-delimiters move-text exec-path-from-shell easy-kill anzu expand-region projectile direnv diff-hl avy hlinum company-restclient restclient-helm restclient helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
