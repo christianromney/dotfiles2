@@ -15,7 +15,6 @@
       scroll-margin                      0                         ;; scroll settings
       scroll-conservatively              100000
       scroll-preserve-screen-position    1
-      use-package-verbose                t
       load-prefer-newer                  t                         ;; load latest bytecode
       gc-cons-threshold                  50000000                  ;; wait till 50MB to GC
       large-file-warning-threshold       100000000                 ;; warn if file exceeds 100MB
@@ -37,11 +36,7 @@
       max-specpdl-size                   2400                      ;; limit on number of variable bindings
       sh-learn-basic-offset              t                         ;; try to figure out offset for shell mode
       locale-coding-system               'utf-8                    ;; utf-8 character encoding
-      package-user-dir                   (expand-file-name "elpa" user-emacs-directory)
-      package-enable-at-startup          nil     ;; don't enable packages unless I tell you
-      package-archives                   '(("melpa"        . "http://melpa.org/packages/")
-             ("melpa-stable" . "http://stable.melpa.org/packages/")
-             ("billpiel"     . "http://billpiel.com/emacs-packages/")))
+      )
 
 (setq-default initial-major-mode (quote emacs-lisp-mode))
 (setq-default initial-scratch-message nil)
@@ -91,7 +86,32 @@
 
 ;;; --- package configuration ---
 
+(require 'package)
+
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("billpiel" . "http://billpiel.com/emacs-packages/") t)
+
+(setq package-pinned-packages
+      '((clojure-mode        . "melpa-stable")
+        (cider               . "melpa-stable")
+        (clj-refactor        . "melpa-stable")
+        (company             . "melpa-stable")
+        (helm                . "melpa-stable")
+        (helm-ag             . "melpa-stable")
+        (helm-core           . "melpa-stable")
+        (helm-descbinds      . "melpa-stable")
+        (projectile          . "melpa-stable")
+        (rainbow-delimiters  . "melpa-stable")
+        (ggtags              . "melpa-stable"))
+      package-enable-at-startup          nil
+      package-user-dir
+      (expand-file-name "elpa" user-emacs-directory))
+
 (package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -99,10 +119,15 @@
 (unless (package-installed-p 'diminish)
   (package-install 'diminish))
 
+(unless (package-installed-p 'bind-key)
+  (package-install 'bind-key))
+
 (eval-when-compile
   (require 'use-package)
-  (require 'diminish)
-  (require 'bind-key))
+    (require 'diminish)
+    (require 'bind-key))
+
+(setq use-package-verbose t)
 
 ;;; --- search behavior ---
 
@@ -327,16 +352,17 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
+(use-package ggtags
+  :ensure t
+  :defer t)
+
 (use-package projectile
   :ensure t
-  :pin melpa-stable
+  :defer 5
   :diminish projectile-mode
-  :after (helm)
-  :bind (("s-p" . projectile-command-map)
-         ("C-c p" . projectile-command-map))
   :config
-  (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
   (require 'projectile)
+  (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
   (projectile-mode t))
 
 (use-package abbrev
@@ -477,7 +503,6 @@
 
 (use-package company ;; COMPlete ANYthing
   :ensure t
-  :pin melpa-stable
   :diminish company-mode
   :config
   (setq company-idle-delay 0.5
@@ -497,7 +522,6 @@
 
 (use-package helm
   :ensure t
-  :pin melpa-stable
   :diminish helm-mode
   :defines (helm-split-window-in-side-p
             helm-M-x-fuzzy-match
@@ -559,12 +583,10 @@
 
 (use-package helm-ag
   :ensure t
-  :pin melpa-stable
   :after helm)
 
 (use-package helm-descbinds
   :ensure t
-  :pin melpa-stable
   :after helm
   :config
   (helm-descbinds-mode))
@@ -575,9 +597,8 @@
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
-  :bind
-  (("C-c p f"   . helm-projectile-find-file)
-   ("C-c p s a" . helm-projectile-ack)))
+  (global-set-key (kbd "C-c p f") 'helm-projectile)
+  (global-set-key (kbd "C-c p s a") 'helm-projectile-ack))
 
 (use-package helm-clojuredocs
   :ensure t
@@ -969,28 +990,25 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider-eval-sexp-fu
   :ensure t
-  :defer t
-  :after (cider-mode))
+  :after cider)
 
-(use-package sayid
-  :ensure t
-  :defer t
-  :after (clojure-mode cider-mode)
-  :config
-  (eval-after-load 'clojure-mode
-    '(sayid-setup-package))
+;; (use-package sayid
+;;   :after (clojure-mode)
+;;   :config
+;;   (eval-after-load 'clojure-mode
+;;     '(sayid-setup-package))
 
-  (defadvice sayid-get-workspace
-      (after sayid-get-workspace activate)
-    (other-window 1))
+;;   (defadvice sayid-get-workspace
+;;       (after sayid-get-workspace activate)
+;;     (other-window 1))
 
-  (ad-activate 'sayid-get-workspace)
+;;   (ad-activate 'sayid-get-workspace)
 
-  (defadvice sayid-show-traced
-      (after sayid-show-traced activate)
-    (other-window 1))
+;;   (defadvice sayid-show-traced
+;;       (after sayid-show-traced activate)
+;;     (other-window 1))
 
-  (ad-activate 'sayid-show-traced))
+;;   (ad-activate 'sayid-show-traced))
 
 (use-package geiser
   :ensure t
@@ -1266,7 +1284,7 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (free-keys geiser dart-mode magithub htmlize org-bullets docker-compose-mode docker sayid datomic-snippets clojure-snippets cljr-helm clj-refactor yaml-mode markdown-mode smartparens flycheck-joker flycheck which-key undo-tree crux super-save helm-projectile helm-descbinds company-quickhelp smex flx-ido ido-completing-read+ rainbow-mode rainbow-delimiters move-text exec-path-from-shell easy-kill anzu expand-region projectile direnv diff-hl avy hlinum company-restclient restclient-helm restclient helm-cider helm-clojuredocs magit-gh-pulls clojure-mode-extra-font-locking clojure-mode-extra inf-ruby darkokai-theme darktooth-theme noctilux-theme smyx-theme helm-themes ujelly-theme dracula-theme spaceline-all-the-icons spacemacs-theme spaceline all-the-icons-dired solaire-mode dockerfile-mode cider-eval-sexp-fu mips-mode rainbow-identifiers php-mode org-tree-slide org-slide-tree org-beautify-theme zpresent epresent company-go go-eldoc go-mode helm-ag bookmark+ kibit-mode ox-reveal org flyspell-correct-helm flyspell-mode easy-mark yari ruby-tools scss-mode ov gist 4clojure alchemist elixir-mode web-mode moe-theme base16-theme alect-themes use-package)))
+    (htmlize org-beautify-theme ox-reveal org-bullets docker-compose-mode dockerfile-mode docker geiser sayid cider-eval-sexp-fu datomic-snippets clojure-snippets cljr-helm clj-refactor clojure-mode-extra-font-locking clojure-mode scss-mode dart-mode yari ruby-tools inf-ruby yaml-mode web-mode smartparens flyspell-correct-helm flycheck-joker flycheck company-restclient restclient-helm restclient which-key undo-tree crux super-save helm-clojuredocs helm-projectile helm-descbinds helm-ag helm company-quickhelp company smex flx-ido ido-completing-read+ rainbow-mode rainbow-identifiers rainbow-delimiters move-text exec-path-from-shell easy-kill anzu projectile expand-region bookmark+ direnv gist magithub magit avy hlinum ov dracula-theme spaceline powerline diminish use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
