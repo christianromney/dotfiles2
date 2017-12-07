@@ -551,6 +551,7 @@
 
 (use-package helm-projectile
   :ensure t
+  :hook projectile-mode
   :after (helm projectile)
   :config
   (setq projectile-completion-system 'helm)
