@@ -1,34 +1,47 @@
-;;; .emacs --- Summary
-;;; My emacs configuration
-;;;
+;;; package --- Summary
 ;;; Commentary:
-;;; I've cherry-picked much of this configuration from various
-;;; people around the web including, Bozhidar Batsov and Sascha Chua. Some of
-;;; the code is inspired by Prelude, but this configuration is much slimmer and
-;;; loads faster than Prelude and some of my previous configurations.
+;;; Slimmed-down Emacs configuration with use-package
 ;;;
 ;;; Code:
-;;; --- personal info ---
-
-(eval-when-compile
-  (defvar user-email-address)
-  (defvar calendar-latitude)
-  (defvar calendar-longitude)
-  (defvar calendar-location-name)
-  (defvar sh-learn-basic-offset))
-
-(setq user-email-address "cromney@pointslope.com"
-      user-full-name "Christian Romney"
-      calendar-latitude 26.017
-      calendar-longitude -80.34110799999999
-      calendar-location-name "Pembroke Pines, FL")
-
+;;;
 ;;; --- startup settings ---
-(setq inhibit-startup-message t              ;; no initial message in scratch buffer
-      scroll-margin 0                        ;; scroll settings
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1
-      package-enable-at-startup nil)         ;; don't enable packages unless I tell you
+
+(setq user-full-name                     "Christian Romney"
+      user-email-address                 "cromney@pointslope.com"
+      calendar-location-name             "Pembroke Pines, FL"
+      calendar-longitude                 -80.34110799999999
+      calendar-latitude                  26.017
+      inhibit-startup-message            t                         ;; no initial message in scratch buffer
+      scroll-margin                      0                         ;; scroll settings
+      scroll-conservatively              100000
+      scroll-preserve-screen-position    1
+      use-package-verbose                t
+      load-prefer-newer                  t                         ;; load latest bytecode
+      gc-cons-threshold                  50000000                  ;; wait till 50MB to GC
+      large-file-warning-threshold       100000000                 ;; warn if file exceeds 100MB
+      tab-always-indent                  'complete                 ;; tab completes
+      indent-tabs-mode                   nil                       ;; don't use tabs
+      require-final-newline              t                         ;; file ends in newline
+      default-input-method               "MacOSX"                  ;; macOS comfort
+      confirm-nonexistent-file-or-buffer nil                       ;; don't annoy me with questions
+      echo-keystrokes                    0.001                     ;; hints show up in echo area faster
+      make-backup-files                  nil                       ;; don't pollute the filesystem
+      next-error-highlight               t                         ;; highlight until next command/location
+      next-error-highlight-no-select     t                         ;; highlight indefinitely until replaced
+      query-replace-highlight            t                         ;; highlight matches during query replace
+      sentence-end-double-space          nil                       ;; this was always stupid
+      shift-select-mode                  nil                       ;; don't mess with the mark
+      transient-mark-mode                t                         ;; regions are temporary like most apps
+      truncate-partial-width-windows     nil                       ;; respect value of 'truncate-lines' variable
+      vc-follow-symlinks                 t                         ;; symlinks aren't second-class citizens
+      max-specpdl-size                   2400                      ;; limit on number of variable bindings
+      sh-learn-basic-offset              t                         ;; try to figure out offset for shell mode
+      locale-coding-system               'utf-8                    ;; utf-8 character encoding
+      package-user-dir                   (expand-file-name "elpa" user-emacs-directory)
+      package-enable-at-startup          nil     ;; don't enable packages unless I tell you
+      package-archives                   '(("melpa"        . "http://melpa.org/packages/")
+             ("melpa-stable" . "http://stable.melpa.org/packages/")
+             ("billpiel"     . "http://billpiel.com/emacs-packages/")))
 
 (setq-default initial-major-mode (quote emacs-lisp-mode))
 (setq-default initial-scratch-message nil)
@@ -36,7 +49,7 @@
 (add-to-list 'default-frame-alist '(font . "Hack-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; --- save directories ---
+;;; --- save directories ---
 
 (defun personal/ensure-dir (dir)
   "Create a directory (given as DIR) if it doesn't already exist."
@@ -60,94 +73,24 @@
 (personal/ensure-dir personal-autosave-dir)
 (personal/ensure-dir personal-desktop-dir)
 
-;; --- package configuration ---
-
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
-(add-to-list 'package-archives
-             '("billpiel" . "http://billpiel.com/emacs-packages/") t)
-
-(setq package-pinned-packages
-      '((clojure-mode        . "melpa-stable")
-        (cider               . "melpa-stable")
-        (clj-refactor        . "melpa-stable")
-        (company             . "melpa-stable")
-        (helm                . "melpa-stable")
-        (helm-ag             . "melpa-stable")
-        (helm-core           . "melpa-stable")
-        (helm-descbinds      . "melpa-stable")
-        (projectile          . "melpa-stable")
-        (projectile-ruby     . "melpa-stable")
-        (rainbow-delimiters  . "melpa-stable")
-        (ggtags              . "melpa-stable")))
-
-(setq package-user-dir
-      (expand-file-name "elpa" user-emacs-directory))
+;;; --- package configuration ---
 
 (package-initialize)
-
-(unless package-archive-contents
-  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(require 'use-package)
-(require 'diminish)
-(require 'bind-key)
-
-(setq use-package-verbose t)
+(unless (package-installed-p 'diminish)
+  (package-install 'diminish))
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (require 'diminish)
+  (require 'bind-key))
 
-;; -- general settings --
-
-(when (eq system-type 'darwin)
-  (setq ns-function-modifier 'hyper)
-  (autoload 'vkill "vkill" nil t)
-  (global-set-key (kbd "C-x p") 'vkill)
-
-  ;; prevent emacs error due to macos' ls not supporting long args...
-  ;; ls does not support --dired; see ‘dired-use-ls-dired’
-  ;; requires "brew install coreutils"
-  (let ((ls-program "/usr/local/bin/gls"))
-    (when (file-exists-p ls-program)
-      (setq insert-directory-program ls-program))))
-
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq load-prefer-newer t                    ;; load latest bytecode
-      gc-cons-threshold 50000000             ;; wait till 50MB to GC
-      large-file-warning-threshold 100000000 ;; warn if file exceeds 100MB
-      tab-always-indent 'complete            ;; tab completes
-      indent-tabs-mode nil                   ;; don't use tabs
-      require-final-newline t                ;; file ends in newline
-      default-input-method "MacOSX"          ;; macOS comfort
-      confirm-nonexistent-file-or-buffer nil ;; don't annoy me with questions
-      echo-keystrokes 0.001                  ;; hints show up in echo area faster
-      make-backup-files nil                  ;; don't pollute the filesystem
-      next-error-highlight t                 ;; highlight until next command/location
-      next-error-highlight-no-select t       ;; highlight indefinitely until replaced
-      query-replace-highlight t              ;; highlight matches during query replace
-      sentence-end-double-space nil          ;; this was always stupid
-      shift-select-mode nil                  ;; don't mess with the mark
-      transient-mark-mode t                  ;; regions are temporary like most apps
-      truncate-partial-width-windows nil     ;; respect value of 'truncate-lines' variable
-      vc-follow-symlinks t                   ;; symlinks aren't second-class citizens
-      max-specpdl-size 2400                  ;; limit on number of variable bindings
-      sh-learn-basic-offset t                ;; try to figure out offset for shell mode
-      locale-coding-system 'utf-8            ;; utf-8 character encoding
-      )
-
-;;; --- keep current search result in the center of the screen ---
+;;; --- search behavior ---
 
 (add-hook 'isearch-mode-end-hook 'recenter-top-bottom)
-
 (defadvice
     isearch-forward
     (after isearch-forward-recenter activate)
@@ -190,25 +133,26 @@
 (global-set-key (kbd "C-x \\")  #'align-regexp)
 
 (require 'tramp)
-(setq tramp-default-method "ssh") ;; keep in mind known issues with zsh - see emacs wiki
+(setq tramp-default-method "ssh")                   ;; keep in mind known issues with zsh - see emacs wiki
 
 (require 'which-func)
-(which-function-mode 1) ;; shows applicable key bindings
+(which-function-mode 1)                             ;; shows applicable key bindings
 
 (require 'bookmark)
-(setq bookmark-default-file (expand-file-name "bookmarks" personal-savefile-dir)
-      bookmark-save-flag 1)
+(setq bookmark-save-flag 1
+      bookmark-default-file
+      (expand-file-name "bookmarks" personal-savefile-dir))
 
-(require 'midnight) ;; clean up obsolete buffers automatically
+(require 'midnight)                                 ;; clean up obsolete buffers automatically
 
-;; saner regexp syntax
+;;; --- saner regexp syntax ---
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
 (require 'compile)
-(setq compilation-ask-about-save nil          ;; Just save before compiling
-      compilation-always-kill t               ;; Just kill old compile processes before
-      compilation-scroll-output 'first-error) ;; Automatically scroll to first error
+(setq compilation-ask-about-save nil                ;; Just save before compiling
+      compilation-always-kill t                     ;; Just kill old compile processes before
+      compilation-scroll-output 'first-error)       ;; Automatically scroll to first error
 
 ;;; --- enable various 'off by default' features ---
 
@@ -233,9 +177,6 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-(global-set-key (kbd "M-/") #'hippie-expand)
-(global-set-key (kbd "s-/") #'hippie-expand)
-
 ;;; --- appearance ---
 
 (setq frame-title-format
@@ -244,11 +185,14 @@
                  "%b"))))
 
 (winner-mode)
-(column-number-mode)                   ;; enable column numbers
-(line-number-mode)                     ;; enable line numbers
-(size-indication-mode)                 ;; enable file sizes
-(delete-selection-mode)                ;; delete selections with a keypress
-(global-auto-revert-mode)              ;; revert buffers when files changed externally
+(column-number-mode)                                ;; enable column numbers
+(line-number-mode)                                  ;; enable line numbers
+(size-indication-mode)                              ;; enable file sizes
+(delete-selection-mode)                             ;; delete selections with a keypress
+(global-auto-revert-mode)                           ;; revert buffers when files changed externally
+(blink-cursor-mode -1)
+(global-prettify-symbols-mode +1)
+(global-hl-line-mode +1)
 
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
@@ -262,10 +206,10 @@
 (if (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
-(setq-default fill-column 80)                  ;; fill column at 80 chars
-(setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
-(setq-default tab-width 2)                     ;; don't waste real estate needlessly
-(setq-default c-basic-offset 2)                ;; everything should indent w/ 2 spaces
+(setq-default fill-column 80)                       ;; fill column at 80 chars
+(setq-default indent-tabs-mode nil)                 ;; don't use tabs to indent
+(setq-default tab-width 2)                          ;; don't waste real estate needlessly
+(setq-default c-basic-offset 2)                     ;; everything should indent w/ 2 spaces
 (setq-default sh-basic-offset 2)
 (setq-default elixir-basic-offset 2)
 (setq-default js2-basic-offset 2)
@@ -274,9 +218,7 @@
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default sgml-basic-offset 2)
 
-(use-package all-the-icons
-  :ensure t
-  :defer t)
+;;; --- custom package configuration ---
 
 (use-package powerline
   :ensure t
@@ -287,6 +229,7 @@
   :init
   (require 'powerline)
   (require 'spaceline-config)
+  :config
   (spaceline-emacs-theme)
   (spaceline-helm-mode)
   ;; -- disabled --
@@ -312,39 +255,8 @@
 
 (use-package dracula-theme
   :ensure t
-  :init (load-theme 'dracula t))
-
-(blink-cursor-mode -1)
-(global-prettify-symbols-mode +1)
-(global-hl-line-mode +1)
-
-;;; --- custom functions ---
-
-(defun personal-delete-horizontal-space ()
-  "Command to delete all whitespace."
-  (interactive)
-  (just-one-space -1)
-  (sp-backward-delete-char))
-
-(defun personal-just-one-space ()
-  "Command to delete all but one whitespace character."
-  (interactive)
-  (just-one-space -1))
-
-(defun personal-sp-web-mode-is-code-context (id action context)
-  "Determines whether we're in a code context for Smartparens.
-ID - ignored
-ACTION - the smartparens action
-CONTEXT - ignored"
-  (and (eq action 'insert)
-       (not (or (get-text-property (point) 'part-side)
-                (get-text-property (point) 'block-side)))))
-
-;;; --- additional packages ---
-
-(use-package bookmark+
-  :ensure t
-  :defer t)
+  :init
+  (load-theme 'dracula t))
 
 (use-package ov ;; easy overlays
   :ensure t
@@ -364,12 +276,13 @@ CONTEXT - ignored"
 
 (use-package avy ;; avy is a better ace-jump-mode
   :ensure t
-  :bind (("s-." . avy-goto-word-or-subword-1)
-         ("C-:" . avy-goto-char))
   :config
   (setq avy-background t
         avy-style 'at-full)
-  (avy-setup-default))
+  (avy-setup-default)
+  :bind (("s-." . avy-goto-word-or-subword-1)
+         ("C-:" . avy-goto-char)))
+
 
 (use-package magit
   :ensure t
@@ -377,7 +290,7 @@ CONTEXT - ignored"
 
 (use-package magithub
   :ensure t
-  :defer t
+  :after magit
   :config
   (magithub-feature-autoinject t))
 
@@ -385,20 +298,22 @@ CONTEXT - ignored"
   :ensure t
   :defer t)
 
-(use-package diff-hl
-  :ensure t
-  :config
-  (global-diff-hl-mode +1)
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-
 (use-package direnv
   :ensure t
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
 
+(use-package bookmark+
+  :ensure t
+  :defer t)
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
 (use-package projectile
   :ensure t
+  :pin melpa-stable
   :diminish projectile-mode
   :bind (("s-p" . projectile-command-map)
          ("C-c p" . projectile-command-map))
@@ -407,33 +322,26 @@ CONTEXT - ignored"
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
   (projectile-mode t))
 
-;; (use-package pt ;; platinum searcher (think "ack" but faster; written in Go)
-;;   :ensure t)
-
-(use-package expand-region
-  :ensure t
-  :bind ("C-=" . er/expand-region))
-
 (use-package abbrev
   :diminish abbrev-mode
+  :hook text-mode
   :config
   (setq save-abbrevs 'silently)
-  (setq-default abbrev-mode t)
-  (add-hook 'text-mode-hook 'abbrev-mode))
+  (setq-default abbrev-mode t))
 
 (use-package paren ;; show matching parens
   :config
   (show-paren-mode +1))
 
-(require 'saveplace) ;; remember location when saving files
-(use-package saveplace
+(use-package saveplace ;; remember location when saving files
+  :init
+  (require 'saveplace)
   :config
   (setq save-place-file
         (expand-file-name "saveplace" personal-savefile-dir))
   (setq-default save-place t))
 
-;; > Autosave Work <
-(use-package savehist
+(use-package savehist ;; autosave work
   :config
   (setq savehist-additional-variables
         '(search-ring regexp-search-ring)
@@ -447,13 +355,13 @@ CONTEXT - ignored"
   (setq recentf-save-file
         (expand-file-name "recentf" personal-savefile-dir)
         recentf-max-saved-items 500
-        recentf-max-menu-items 15
+        recentf-max-menu-items  20
         recentf-auto-cleanup 'never)
   (recentf-mode +1))
 
-(use-package windmove
+(use-package windmove ;; use shift + arrow keys to nav windows
   :config
-  (windmove-default-keybindings)) ;; use shift + arrow keys to nav windows
+  (windmove-default-keybindings))
 
 (use-package dired
   :config
@@ -462,12 +370,6 @@ CONTEXT - ignored"
   (setq dired-recursive-copies 'always)
   (setq dired-dwim-target t)
   (require 'dired-x))
-
-(use-package all-the-icons-dired
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
 (use-package anzu ;; search & replace match info e.g. 1 of N
   :ensure t
@@ -483,10 +385,10 @@ CONTEXT - ignored"
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
 (use-package exec-path-from-shell ;; find programs on shell $PATH
+  :if (memq window-system '(mac ns))
   :ensure t
   :config
-  (when (memq window-system '(mac ns))
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 
 (use-package move-text ;; move text blocks around
   :ensure t
@@ -505,17 +407,19 @@ CONTEXT - ignored"
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
+  :hook (clojure-mode cider-repl-mode)
+  :pin melpa-stable
   :diminish rainbow-delimiters-mode)
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
   :ensure t
+  :hook (clojure-mode)
   :diminish rainbow-identifiers-mode)
 
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t
   :diminish rainbow-mode
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-mode))
+  :hook (css-mode prog-mode))
 
 (use-package ido
   :ensure t
@@ -554,6 +458,7 @@ CONTEXT - ignored"
 
 (use-package company ;; COMPlete ANYthing
   :ensure t
+  :pin melpa-stable
   :diminish company-mode
   :config
   (setq company-idle-delay 0.5
@@ -571,25 +476,23 @@ CONTEXT - ignored"
   :ensure t
   :defer t)
 
-;; avoid flycheck warnings
-(eval-when-compile
-  (defvar helm-split-window-in-side-p)
-  (defvar helm-M-x-fuzzy-match)
-  (defvar helm-buffers-fuzzy-matching)
-  (defvar helm-recentf-fuzzy-match)
-  (defvar helm-semantic-fuzzy-match)
-  (defvar helm-imenu-fuzzy-match)
-  (defvar helm-locate-fuzzy-match)
-  (defvar helm-apropos-fuzzy-match)
-  (defvar helm-lisp-fuzzy-completion)
-  (defvar helm-ff-search-library-in-sexp)
-  (defvar helm-ff-file-name-history-use-recentf)
-  (defvar helm-grep-default-command)
-  (defvar helm-grep-default-recurse-command))
-
 (use-package helm
   :ensure t
+  :pin melpa-stable
   :diminish helm-mode
+  :defines (helm-split-window-in-side-p
+            helm-M-x-fuzzy-match
+            helm-buffers-fuzzy-matching
+            helm-recentf-fuzzy-match
+            helm-semantic-fuzzy-match
+            helm-imenu-fuzzy-match
+            helm-locate-fuzzy-match
+            helm-apropos-fuzzy-match
+            helm-lisp-fuzzy-completion
+            helm-ff-search-library-in-sexp
+            helm-ff-file-name-history-use-recentf
+            helm-grep-default-command
+            helm-grep-default-recurse-command)
   :config
   (require 'helm)
   (require 'helm-config)
@@ -611,49 +514,58 @@ CONTEXT - ignored"
         helm-follow-mode-persistent           t
         helm-grep-default-command             "ack -Hn -i --no-group --no-color %e %p %f"
         helm-grep-default-recurse-command     "ack -H -i --no-group --no-color %e %p %f")
-
-  ;; (substitute-key-definition 'find-tag 'helm-etags-select global-map)
   (substitute-key-definition 'xref-find-definitions 'helm-etags-select global-map)
   (helm-autoresize-mode t)
   (helm-mode +1)
-
   (global-unset-key (kbd "C-x c"))
-  (global-set-key   (kbd "C-c h")      'helm-command-prefix)
-  (global-set-key   (kbd "C-c h o")    'helm-occur)
-  (global-set-key   (kbd "M-x")        'helm-M-x)
-  (global-set-key   (kbd "C-x C-m")    'helm-M-x)
-  (global-set-key   (kbd "M-i")        'helm-imenu)
-  (global-set-key   (kbd "M-y")        'helm-show-kill-ring)
-  (global-set-key   (kbd "C-x b")      'helm-mini)
-  (global-set-key   (kbd "C-x C-b")    'helm-buffers-list)
-  (global-set-key   (kbd "C-x C-f")    'helm-find-files)
-  (global-set-key   (kbd "C-h f")      'helm-apropos)
-  (global-set-key   (kbd "C-h r")      'helm-info-emacs)
-  (global-set-key   (kbd "C-h C-l")    'helm-locate-library)
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z")   'helm-select-action))
+  (global-set-key (kbd "C-c h o") 'helm-occur)
+  :bind
+  (("M-x"      . helm-M-x)
+   ("C-x C-m"  . helm-M-x)
+   ("M-i"      . helm-semantic-or-imenu)
+   ("M-y"      . helm-show-kill-ring)
+   ("C-x b"    . helm-mini)
+   ("C-x C-b"  . helm-buffers-list)
+   ("C-x C-f"  . helm-find-files)
+   ("C-h f"    . helm-apropos)
+   ("C-h r"    . helm-info-emacs)
+   ("C-h C-l"  . helm-locate-library)
+   ("C-c h"    . helm-command-prefix)
+
+   :map helm-map
+   ("<tab>"     . helm-execute-persistent-action)
+   ("C-i"       . helm-execute-persistent-action)
+   ("C-z"       . helm-select-action)))
 
 (use-package helm-ag
-  :ensure t)
+  :ensure t
+  :pin melpa-stable
+  :after helm)
 
 (use-package helm-descbinds
   :ensure t
+  :pin melpa-stable
+  :after helm
   :config
   (helm-descbinds-mode))
 
 (use-package helm-projectile
   :ensure t
+  :after (helm projectile)
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
-  (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
-  (global-set-key (kbd "C-c p s a") 'helm-projectile-ack))
+  :bind
+  (:map projectile-command-map
+   ("C-c p f"   . helm-projectile-find-file)
+   ("C-c p s a" . helm-projectile-ack)))
 
 (use-package helm-clojuredocs
   :ensure t
+  :after (helm clojure)
   :bind
-  (("C-c h d" . helm-clojuredocs-at-point)))
+  (:map helm-command-map
+   ("C-c h d" . helm-clojuredocs-at-point)))
 
 (use-package super-save ;; save buffers on lost focus
   :ensure t
@@ -728,62 +640,45 @@ CONTEXT - ignored"
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package flycheck-joker
-  :ensure t)
-
-(use-package flyspell-correct-helm
   :ensure t
-  :defer t)
+  :after (flycheck clojure))
 
 (use-package flyspell
   :ensure t
-  :config
-  (require 'flyspell-correct-helm)
   :bind
   (("C-;" . flyspell-correct-previous-word-generic)))
 
-;;; --- built-in programming modes ---
+(use-package flyspell-correct-helm
+  :ensure t
+  :after (flyspell helm)
+  :config (require 'flyspell-correct-helm))
 
-;; shell
-(require 'sh-script)
-(defvar prelude-prezto-files
-  '("zlogin" "zlogin" "zlogout" "zpreztorc" "zprofile" "zshenv" "zshrc"))
+(defun personal-delete-horizontal-space ()
+  "Command to delete all whitespace."
+  (interactive)
+  (just-one-space -1)
+  (sp-backward-delete-char))
 
-(mapc (lambda (file)
-        (add-to-list 'auto-mode-alist `(,(format "\\%s\\'" file) . sh-mode)))
-      prelude-prezto-files)
+(defun personal-just-one-space ()
+  "Command to delete all but one whitespace character."
+  (interactive)
+  (just-one-space -1))
 
-(add-hook 'sh-mode-hook
-          (lambda ()
-            (if (and buffer-file-name
-                     (member (file-name-nondirectory buffer-file-name) prelude-prezto-files))
-                (sh-set-shell "zsh"))))
-
-;; xml
-(require 'nxml-mode)
-(push '("<\\?xml" . nxml-mode) magic-mode-alist)
-(add-to-list 'auto-mode-alist '("\\.pom$" . nxml-mode))
-(setq nxml-child-indent 2)
-(setq nxml-attribute-indent 2)
-(setq nxml-auto-insert-xml-declaration-flag nil)
-(setq nxml-bind-meta-tab-to-complete-flag t)
-(setq nxml-slash-auto-complete-flag t)
-
-;; css
-(eval-after-load 'css-mode
-  '(progn
-     (defun personal-css-mode-hook ()
-       (rainbow-mode +1))
-     (add-hook 'css-mode-hook (lambda () (run-hooks 'personal-css-mode-hook)))))
-
-;; -- programming modes --
-
-(eval-when-compile
-  (defvar smartparens-global-mode)
-  (defvar smartparens-global-strict-mode))
+(defun personal-sp-web-mode-is-code-context (id action context)
+  "Determines whether we're in a code context for Smartparens.
+ID - ignored
+ACTION - the smartparens action
+CONTEXT - ignored"
+  (and (eq action 'insert)
+       (not (or (get-text-property (point) 'part-side)
+                (get-text-property (point) 'block-side)))))
 
 (use-package smartparens
   :ensure t
+  :hook ((eshell-mode clojure-mode cider-repl-mode emacs-lisp-mode cider-mode) . smartparens-strict-mode)
   :diminish smartparens-mode
+  :defines (smartparens-global-mode
+            smartparens-global-strict-mode)
   :config
   (require 'smartparens-config)
   (setq sp-base-key-bindings 'paredit)
@@ -797,7 +692,7 @@ CONTEXT - ignored"
   (sp-local-pair '(html-mode sgml-mode web-mode) "<" ">")
   (sp-local-pair '(html-mode sgml-mode web-mode) "<" nil :when '(personal-sp-web-mode-is-code-context))
 
-  (define-key smartparens-mode-map (kbd "M-\\") 'personal-delete-horizontal-space)
+  (define-key smartparens-mode-map (kbd "M-\\")  'personal-delete-horizontal-space)
   (define-key smartparens-mode-map (kbd "M-SPC") 'personal-just-one-space)
 
   (define-key smartparens-mode-map (kbd "C-M-f") 'sp-forward-sexp)
@@ -809,8 +704,8 @@ CONTEXT - ignored"
   (define-key smartparens-mode-map (kbd "C-M-a") 'sp-backward-down-sexp)
   (define-key smartparens-mode-map (kbd "C-M-e") 'sp-up-sexp)
 
-  (define-key smartparens-mode-map (kbd "s-a") 'sp-beginning-of-sexp)
-  (define-key smartparens-mode-map (kbd "s-e") 'sp-end-of-sexp)
+  (define-key smartparens-mode-map (kbd "s-a")   'sp-beginning-of-sexp)
+  (define-key smartparens-mode-map (kbd "s-e")   'sp-end-of-sexp)
 
   (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
 
@@ -819,9 +714,6 @@ CONTEXT - ignored"
 
   (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
   (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
-
-  (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-slurp-sexp)
-  (define-key smartparens-mode-map (kbd "C-<left>") 'sp-forward-barf-sexp)
 
   (define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
   (define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-backward-barf-sexp)
@@ -845,12 +737,16 @@ CONTEXT - ignored"
   (define-key smartparens-mode-map (kbd "M-F") 'sp-forward-symbol)
   (define-key smartparens-mode-map (kbd "M-B") 'sp-backward-symbol)
 
-  (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp))
+  (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
+
+  (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-slurp-sexp)
+  (define-key smartparens-mode-map (kbd "C-<left>") 'sp-forward-barf-sexp))
 
 (use-package eshell
   :ensure t
-  :config
-  (add-hook 'eshell-mode-hook #'smartparens-mode))
+  :defer t
+  :bind
+  (("C-c |" . eshell)))
 
 (use-package web-mode
   :ensure t
@@ -894,28 +790,28 @@ CONTEXT - ignored"
 (use-package inf-ruby
   :ensure t
   :defer t
+  :hook ruby-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Capfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.thor\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.rabl\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Thorfile\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rake\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Rakefile\\'"    . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec\\'"  . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.ru\\'"       . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Gemfile\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Guardfile\\'"   . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Capfile\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.cap\\'"      . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.thor\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.rabl\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Thorfile\\'"    . ruby-mode))
   (add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Podfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.podspec\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Puppetfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Berksfile\\'" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Appraisals\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Podfile\\'"     . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.podspec\\'"  . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Puppetfile\\'"  . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Berksfile\\'"   . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Appraisals\\'"  . ruby-mode))
   ;; We never want to edit Rubinius bytecode
-  (add-to-list 'completion-ignored-extensions ".rbc")
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+  (add-to-list 'completion-ignored-extensions ".rbc"))
 
 (use-package ruby-tools
   :ensure t
@@ -961,10 +857,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 (use-package clojure-mode
   :ensure t
   :config
-  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-identifiers-mode)
   (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
   (add-to-list 'auto-mode-alist '("\\.clj(x|s)?$" . clojure-mode))
@@ -999,25 +892,27 @@ Accepts a parameter (as NEXT-P), which is unused."
   (("M-." . personal/find-tag-without-ns)))
 
 (use-package clojure-mode-extra-font-locking
-  :ensure t)
+  :ensure t
+  :after (clojure-mode))
 
 (use-package cl-lib
   :ensure t)
 
 (use-package clj-refactor
   :ensure t
+  :after (clojure-mode)
+  :hook clojure-mode
   :config
-  (add-hook
-   'clojure-mode-hook
-   (lambda ()
-     (clj-refactor-mode 1)
-     (cljr-add-keybindings-with-prefix "C-c C-a"))))
+  (clj-refactor-mode 1)
+  (cljr-add-keybindings-with-prefix "C-c C-a"))
 
 (use-package cljr-helm
-  :ensure t)
+  :ensure t
+  :after (clj-refactor helm))
 
 (use-package clojure-snippets
   :ensure t
+  :after clojure-mode
   :config
   (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
 
@@ -1037,11 +932,8 @@ Accepts a parameter (as NEXT-P), which is unused."
         cider-repl-wrap-history t
         nrepl-hide-special-buffers t
         nrepl-log-messages t)
-  (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
-
   (advice-add 'cider-find-var :after #'recenter-top-bottom)
   (defadvice cider-pprint-eval-last-sexp
     (after cider-pprint-eval-last-sexp)
@@ -1050,11 +942,13 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider-eval-sexp-fu
   :ensure t
+  :after (cider-mode)
   :defer t)
 
 (use-package sayid
   :ensure t
   :defer t
+  :after (clojure-mode cider-mode)
   :config
   (eval-after-load 'clojure-mode
     '(sayid-setup-package))
@@ -1073,10 +967,10 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package geiser
   :ensure t
+  :defines (geiser-active-implementations)
   :defer t
   :config
   (setq geiser-active-implementations '(racket)))
-
 
 ;; Https://curiousprogrammer.wordpress.com/2009/02/11/simple-emacs-shortcut/
 (defun duplicate-current-line ()
@@ -1091,10 +985,12 @@ Accepts a parameter (as NEXT-P), which is unused."
   (yank)
   (back-to-indentation))
 
-;;; --- misc keybindings ---
+;;; --- global keybindings ---
+
+(global-set-key (kbd "M-/") #'hippie-expand)
+(global-set-key (kbd "s-/") #'hippie-expand)
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
-(global-set-key (kbd "C-c |") 'eshell)
 
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -1134,22 +1030,22 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 ;;; --- org mode ---
 
-(eval-when-compile
-  (defvar org-startup-indented)
-  (defvar org-html-validation-link)
-  (defvar org-export-html-postamble)
-  (defvar org-use-sub-superscripts)
-  (defvar org-agenda-show-log)
-  (defvar org-agenda-todo-ignore-scheduled)
-  (defvar org-agenda-todo-ignore-deadlines)
-  (defvar org-agenda-skip-deadline-if-done)
-  (defvar org-agenda-skip-scheduled-if-done)
-  (defvar org-agenda-include-diary)
-  (defvar org-capture-templates)
-  (defvar org-babel-clojure-backend))
-
 (use-package org
   :ensure t
+  :defer t
+  :defines
+  (org-startup-indented
+   org-html-validation-link
+   org-export-html-postamble
+   org-use-sub-superscripts
+   org-agenda-show-log
+   org-agenda-todo-ignore-scheduled
+   org-agenda-todo-ignore-deadlines
+   org-agenda-skip-deadline-if-done
+   org-agenda-skip-scheduled-if-done
+   org-agenda-include-diary
+   org-capture-templates
+   org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
   (require 'cider)
@@ -1244,8 +1140,9 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package org-bullets
   :ensure t
+  :after org-mode
+  :hook org-mode
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (setq org-hide-emphasis-markers t)
   (setq org-bullets-bullet-list
         '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦"
@@ -1253,16 +1150,31 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package ox-reveal
   :ensure t
+  :after org-mode
   :config
   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
 
 (use-package org-beautify-theme
   :ensure t
+  :after org-mode
   :defer t)
 
 (use-package htmlize
   :ensure t
   :defer t)
+
+;;; --- byte compilation ---
+
+(defun remove-elc-on-save ()
+  "If you're saving an elisp file, likely the .elc is no longer valid."
+  (add-hook 'after-save-hook
+            (lambda ()
+              (if (file-exists-p (concat buffer-file-name "c"))
+                  (delete-file (concat buffer-file-name "c"))))
+            nil
+            t))
+(add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+
 
 ;;; --- custom ---
 
@@ -1344,6 +1256,6 @@ Accepts a parameter (as NEXT-P), which is unused."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;;;
-;;; (provide '.emacs)
+
+(provide '.emacs)
 ;;; .emacs ends here
