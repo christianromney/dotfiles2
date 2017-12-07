@@ -980,6 +980,9 @@ Accepts a parameter (as NEXT-P), which is unused."
         cider-repl-wrap-history t
         nrepl-hide-special-buffers t
         nrepl-log-messages t)
+  (defun disable-cider-mode ()
+    (cider-mode -1))
+  (add-hook 'text-mode-hook #'disable-cider-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (advice-add 'cider-find-var :after #'recenter-top-bottom)
