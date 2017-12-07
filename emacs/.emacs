@@ -49,6 +49,22 @@
 (add-to-list 'default-frame-alist '(font . "Hack-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; --- general settings ---
+
+(when (eq system-type 'darwin)
+  (setq ns-function-modifier 'hyper)
+  (autoload 'vkill "vkill" nil t)
+  (global-set-key (kbd "C-x p") 'vkill)
+
+  ;; prevent emacs error due to macos' ls not supporting long args...
+  ;; ls does not support --dired; see ‘dired-use-ls-dired’
+  ;; requires "brew install coreutils"
+  (let ((ls-program "/usr/local/bin/gls"))
+    (when (file-exists-p ls-program)
+      (setq insert-directory-program ls-program))))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;;; --- save directories ---
 
 (defun personal/ensure-dir (dir)
@@ -226,6 +242,7 @@
 
 (use-package spaceline
   :ensure t
+  :after (helm)
   :init
   (require 'powerline)
   (require 'spaceline-config)
@@ -315,11 +332,12 @@
   :ensure t
   :pin melpa-stable
   :diminish projectile-mode
+  :after (helm)
   :bind (("s-p" . projectile-command-map)
          ("C-c p" . projectile-command-map))
   :config
-  (require 'projectile)
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
+  (require 'projectile)
   (projectile-mode t))
 
 (use-package abbrev
@@ -407,7 +425,7 @@
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
-  :hook (clojure-mode cider-repl-mode)
+  :hook ((clojure-mode cider-repl-mode) . rainbow-delimiters-mode)
   :pin melpa-stable
   :diminish rainbow-delimiters-mode)
 
@@ -491,6 +509,7 @@
             helm-lisp-fuzzy-completion
             helm-ff-search-library-in-sexp
             helm-ff-file-name-history-use-recentf
+            helm-command-map
             helm-grep-default-command
             helm-grep-default-recurse-command)
   :config
@@ -527,11 +546,11 @@
    ("C-x b"    . helm-mini)
    ("C-x C-b"  . helm-buffers-list)
    ("C-x C-f"  . helm-find-files)
+   ("C-x r b"  . helm-filtered-bookmarks)
    ("C-h f"    . helm-apropos)
    ("C-h r"    . helm-info-emacs)
    ("C-h C-l"  . helm-locate-library)
    ("C-c h"    . helm-command-prefix)
-
    :map helm-map
    ("<tab>"     . helm-execute-persistent-action)
    ("C-i"       . helm-execute-persistent-action)
@@ -551,14 +570,12 @@
 
 (use-package helm-projectile
   :ensure t
-  :hook projectile-mode
   :after (helm projectile)
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
   :bind
-  (:map projectile-command-map
-   ("C-c p f"   . helm-projectile-find-file)
+  (("C-c p f"   . helm-projectile-find-file)
    ("C-c p s a" . helm-projectile-ack)))
 
 (use-package helm-clojuredocs
