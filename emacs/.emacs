@@ -399,6 +399,7 @@
 
 (use-package easy-kill ;; copy with shortcuts
   :ensure t
+  :defer t
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
@@ -425,19 +426,20 @@
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
-  :hook ((clojure-mode cider-repl-mode) . rainbow-delimiters-mode)
-  :pin melpa-stable
-  :diminish rainbow-delimiters-mode)
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
   :ensure t
-  :hook (clojure-mode)
-  :diminish rainbow-identifiers-mode)
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t
-  :diminish rainbow-mode
-  :hook (css-mode prog-mode))
+  :defer t
+  :hook (css-mode web-mode prog-mode))
 
 (use-package ido
   :ensure t
@@ -693,10 +695,15 @@ CONTEXT - ignored"
 
 (use-package smartparens
   :ensure t
-  :hook ((eshell-mode clojure-mode cider-repl-mode emacs-lisp-mode cider-mode) . smartparens-strict-mode)
   :diminish smartparens-mode
   :defines (smartparens-global-mode
             smartparens-global-strict-mode)
+  :init
+  (add-hook 'eshell-mode #'smartparens-strict-mode)
+  (add-hook 'emacs-lisp-mode #'smartparens-strict-mode)
+  (add-hook 'clojure-mode #'smartparens-strict-mode)
+  (add-hook 'cider-mode #'smartparens-strict-mode)
+  (add-hook 'cider-repl-mode #'smartparens-strict-mode)
   :config
   (require 'smartparens-config)
   (setq sp-base-key-bindings 'paredit)
@@ -919,7 +926,8 @@ Accepts a parameter (as NEXT-P), which is unused."
 (use-package clj-refactor
   :ensure t
   :after (clojure-mode)
-  :hook clojure-mode
+  :init
+  (add-hook 'clojure-mode #'clj-refactor-mode)
   :config
   (clj-refactor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-a"))
