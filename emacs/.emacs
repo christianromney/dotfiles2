@@ -912,6 +912,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package clojure-snippets
   :ensure t
+  :defer t
   :after clojure-mode
   :config
   (add-hook 'clojure-mode-hook 'yas-minor-mode-on))
