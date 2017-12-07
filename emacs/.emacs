@@ -300,10 +300,9 @@
   :bind (("s-." . avy-goto-word-or-subword-1)
          ("C-:" . avy-goto-char)))
 
-
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status)))
+  :bind ("C-x g" . magit-status))
 
 (use-package magithub
   :ensure t
@@ -949,6 +948,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider
   :ensure t
+  :defer t
   :config
   (setq cider-prefer-local-resources t
         cider-repl-display-help-banner nil
@@ -969,8 +969,8 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider-eval-sexp-fu
   :ensure t
-  :after (cider-mode)
-  :defer t)
+  :defer t
+  :after (cider-mode))
 
 (use-package sayid
   :ensure t
