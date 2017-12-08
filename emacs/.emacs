@@ -128,6 +128,7 @@
     (require 'bind-key))
 
 (setq use-package-verbose t)
+(global-set-key (kbd "M-<f2>") #'package-list-packages)
 
 ;;; --- search behavior ---
 
@@ -969,7 +970,6 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider
   :ensure t
-  :defer t
   :config
   (setq cider-prefer-local-resources t
         cider-repl-display-help-banner nil
@@ -983,35 +983,37 @@ Accepts a parameter (as NEXT-P), which is unused."
   (defun disable-cider-mode ()
     (cider-mode -1))
   (add-hook 'text-mode-hook #'disable-cider-mode)
+  (add-hook 'emacs-lisp-mode-hook  #'disable-cider-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (advice-add 'cider-find-var :after #'recenter-top-bottom)
   (defadvice cider-pprint-eval-last-sexp
     (after cider-pprint-eval-last-sexp)
     (other-window 1))
-  (ad-activate 'cider-pprint-eval-last-sexp))
+  (ad-activate 'cider-pprint-eval-last-sexp)
+  :bind
+  (:map clojure-mode-map
+   ("<f5>" . cider-jack-in)
+   ("M-<f5>" . cider-jack-in-clojurescript)))
 
-(use-package cider-eval-sexp-fu
+(use-package sayid
   :ensure t
-  :after cider)
+  :after (clojure-mode)
+  :config
+  (eval-after-load 'clojure-mode
+    '(sayid-setup-package))
 
-;; (use-package sayid
-;;   :after (clojure-mode)
-;;   :config
-;;   (eval-after-load 'clojure-mode
-;;     '(sayid-setup-package))
+  (defadvice sayid-get-workspace
+      (after sayid-get-workspace activate)
+    (other-window 1))
 
-;;   (defadvice sayid-get-workspace
-;;       (after sayid-get-workspace activate)
-;;     (other-window 1))
+  (ad-activate 'sayid-get-workspace)
 
-;;   (ad-activate 'sayid-get-workspace)
+  (defadvice sayid-show-traced
+      (after sayid-show-traced activate)
+    (other-window 1))
 
-;;   (defadvice sayid-show-traced
-;;       (after sayid-show-traced activate)
-;;     (other-window 1))
-
-;;   (ad-activate 'sayid-show-traced))
+  (ad-activate 'sayid-show-traced))
 
 (use-package geiser
   :ensure t
@@ -1287,7 +1289,7 @@ Accepts a parameter (as NEXT-P), which is unused."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (htmlize org-beautify-theme ox-reveal org-bullets docker-compose-mode dockerfile-mode docker geiser sayid cider-eval-sexp-fu datomic-snippets clojure-snippets cljr-helm clj-refactor clojure-mode-extra-font-locking clojure-mode scss-mode dart-mode yari ruby-tools inf-ruby yaml-mode web-mode smartparens flyspell-correct-helm flycheck-joker flycheck company-restclient restclient-helm restclient which-key undo-tree crux super-save helm-clojuredocs helm-projectile helm-descbinds helm-ag helm company-quickhelp company smex flx-ido ido-completing-read+ rainbow-mode rainbow-identifiers rainbow-delimiters move-text exec-path-from-shell easy-kill anzu projectile expand-region bookmark+ direnv gist magithub magit avy hlinum ov dracula-theme spaceline powerline diminish use-package)))
+    (htmlize org-beautify-theme ox-reveal org-bullets docker-compose-mode dockerfile-mode docker geiser sayid datomic-snippets clojure-snippets cljr-helm clj-refactor clojure-mode-extra-font-locking clojure-mode scss-mode dart-mode yari ruby-tools inf-ruby yaml-mode web-mode smartparens flyspell-correct-helm flycheck-joker flycheck company-restclient restclient-helm restclient which-key undo-tree crux super-save helm-clojuredocs helm-projectile helm-descbinds helm-ag helm company-quickhelp company smex flx-ido ido-completing-read+ rainbow-mode rainbow-identifiers rainbow-delimiters move-text exec-path-from-shell easy-kill anzu projectile expand-region bookmark+ direnv gist magithub magit avy hlinum ov dracula-theme spaceline powerline diminish use-package)))
  '(safe-local-variable-values
    (quote
     ((setq cider-boot-parameters "dev")
