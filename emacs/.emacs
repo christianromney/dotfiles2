@@ -103,7 +103,8 @@
         (helm-descbinds      . "melpa-stable")
         (projectile          . "melpa-stable")
         (rainbow-delimiters  . "melpa-stable")
-        (ggtags              . "melpa-stable"))
+        (ggtags              . "melpa-stable")
+        (org                 . "melpa-stable"))
       package-enable-at-startup          nil
       package-user-dir
       (expand-file-name "elpa" user-emacs-directory))
@@ -368,8 +369,8 @@
 
 (use-package abbrev
   :diminish abbrev-mode
-  :hook text-mode
   :config
+  (add-hook 'text-mode-hook #'abbrev-mode)
   (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t))
 
