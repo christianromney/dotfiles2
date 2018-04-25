@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+if [[ $1 = "dev" ]]; then
+  echo "Using dev environment"
+  sed -i '' -e 's/\$DB_TST/$DB_DEV/' .envrc
+elif [[ $1 = "test" ]]; then
+  echo "Using test environment"
+  sed -i '' -e 's/\$DB_DEV/$DB_TST/' .envrc
+else
+  echo "Unknown environment"
+fi

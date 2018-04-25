@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+jarfile=$(dirname $0)/csvfix-0.1.0-SNAPSHOT-standalone.jar 
+filebase=$(basename $1 | cut -d'.' -f1)
+directory=$(dirname $1)
+suffix="-processed.csv"
+output="$directory/$filebase$suffix"
+
+printf "Processing $1..."
+java -jar $jarfile $1 $output
+printf "Done.\n"
+echo "File output to $output."

@@ -89,3 +89,5 @@ salk-test.log
 .ackrc
 .projectile
 bengal.log
+bengal-run-tests.sh
+.cpcache

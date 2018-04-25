@@ -16,12 +16,5 @@ alias realias="source ~/.aliases"
 alias flushdns="dscacheutil -flushcache"
 
 # Programming
-alias gst="nocorrect git st -s"
 alias lein="nocorrect lein"
-alias bota="boot -d seancorfield/boot-new new -t"
-alias vu="vagrant up"
-alias vd="vagrant suspend"
-alias vg="nocorrect valgrind"
 
-
-alias lbi='lein with-profile test cljsbuild auto integration integration-sponsor'

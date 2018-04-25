@@ -1,0 +1,309 @@
+;;; romney-coding.el --- General purpose packages
+;;; Commentary:
+;;
+;;; Code:
+(use-package expand-region
+  :ensure t
+  :defer nil
+  :bind ("C-=" . er/expand-region))
+
+(use-package ggtags
+  :ensure t
+  :defer t)
+
+(use-package abbrev
+  :diminish abbrev-mode
+  :ensure nil
+  :defer t
+  :config
+  (add-hook 'text-mode-hook #'abbrev-mode)
+  (setq save-abbrevs 'silently)
+  (setq-default abbrev-mode t))
+
+(use-package paren ;; show matching parens
+  :ensure nil
+  :config
+  (show-paren-mode +1))
+
+(use-package saveplace ;; remember location when saving files
+  :defer 10
+  :init
+  (require 'saveplace)
+  :config
+  (setq save-place-file
+        (expand-file-name "saveplace" personal-savefile-dir))
+  (setq-default save-place t))
+
+(use-package savehist ;; autosave work
+  :defer 5
+  :config
+  (setq savehist-additional-variables
+        '(search-ring regexp-search-ring)
+        savehist-autosave-interval 60
+        savehist-file
+        (expand-file-name "savehist" personal-savefile-dir))
+  (savehist-mode +1))
+
+(use-package recentf
+  :defer 3
+  :config
+  (setq recentf-save-file
+        (expand-file-name "recentf" personal-savefile-dir)
+        recentf-max-saved-items 500
+        recentf-max-menu-items  20
+        recentf-auto-cleanup 'never)
+  (recentf-mode +1))
+
+(use-package windmove ;; use shift + arrow keys to nav windows
+  :defer 3
+  :config
+  (windmove-default-keybindings))
+
+(use-package anzu ;; search & replace match info e.g. 1 of N
+  :ensure t
+  :defer t
+  :bind
+  (("M-%" . anzu-query-replace)
+   ("C-M-%" . anzu-query-replace-regexp))
+  :config
+  (global-anzu-mode))
+
+(use-package easy-kill ;; copy with shortcuts
+  :ensure t
+  :defer t
+  :config
+  (global-set-key [remap kill-ring-save] 'easy-kill))
+
+(use-package exec-path-from-shell ;; find programs on shell $PATH
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(use-package move-text ;; move text blocks around
+  :ensure t
+  :bind
+  (([(meta shift up)] . move-text-up)
+   ([(meta shift down)] . move-text-down)))
+
+(use-package ido
+  :ensure t
+  :config
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point 'guess
+        ido-use-faces nil
+        ido-max-prospects 10
+        ido-save-directory-list-file (expand-file-name "ido.hist" personal-savefile-dir)
+        ido-default-file-method 'selected-window
+        ido-auto-merge-work-directories-length -1)
+  (ido-mode +1)
+  (ido-everywhere +1))
+
+;; formerly known as ido-ubiquitous-mode
+(use-package ido-completing-read+
+  :ensure t
+  :config
+  (ido-ubiquitous-mode +1))
+
+(use-package flx-ido
+  :ensure t
+  :config
+  (flx-ido-mode +1))
+
+(use-package smex ;; smarter M-x
+  :ensure t
+  :defer t
+  :config
+  (setq smex-save-file (expand-file-name ".smex-items" personal-savefile-dir))
+  (smex-initialize)
+  :bind
+  (("M-x" . smex)
+   ("M-X" . smex-major-mode-commands)))
+
+(use-package company ;; COMPlete ANYthing
+  :ensure t
+  :diminish company-mode
+  :config
+  (setq company-idle-delay 0.5
+        company-tooltip-limit 10
+        company-minimum-prefix-length 2
+        company-tooltip-flip-when-above t)
+  (global-company-mode 1))
+
+(use-package company-quickhelp
+  :ensure t
+  :config
+  (company-quickhelp-mode 1))
+
+(use-package pos-tip
+  :ensure t
+  :defer t)
+
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :defines (helm-split-window-in-side-p
+            helm-M-x-fuzzy-match
+            helm-buffers-fuzzy-matching
+            helm-recentf-fuzzy-match
+            helm-semantic-fuzzy-match
+            helm-imenu-fuzzy-match
+            helm-locate-fuzzy-match
+            helm-apropos-fuzzy-match
+            helm-lisp-fuzzy-completion
+            helm-ff-search-library-in-sexp
+            helm-ff-file-name-history-use-recentf
+            helm-command-map
+            helm-grep-default-command
+            helm-grep-default-recurse-command)
+  :bind
+  (("M-x"      . helm-M-x)
+   ("C-x C-m"  . helm-M-x)
+   ("M-i"      . helm-semantic-or-imenu)
+   ("M-y"      . helm-show-kill-ring)
+   ("C-x b"    . helm-mini)
+   ("C-x C-b"  . helm-buffers-list)
+   ("C-x C-f"  . helm-find-files)
+   ("C-x r b"  . helm-filtered-bookmarks)
+   ("C-h f"    . helm-apropos)
+   ("C-h r"    . helm-info-emacs)
+   ("C-h C-l"  . helm-locate-library)
+   ("C-c h"    . helm-command-prefix)
+   :map helm-map
+   ("<tab>"     . helm-execute-persistent-action)
+   ("C-i"       . helm-execute-persistent-action)
+   ("C-z"       . helm-select-action))
+  :config
+  (require 'helm)
+  (require 'helm-config)
+  (setq helm-split-window-in-side-p           t
+        helm-M-x-fuzzy-match                  t
+        helm-buffers-fuzzy-matching           t
+        helm-recentf-fuzzy-match              t
+        helm-semantic-fuzzy-match             t
+        helm-imenu-fuzzy-match                t
+        helm-locate-fuzzy-match               t
+        helm-apropos-fuzzy-match              t
+        helm-move-to-line-cycle-in-source     t
+        helm-lisp-fuzzy-completion            t
+        helm-ff-search-library-in-sexp        t
+        helm-scroll-amount                    8
+        helm-ff-file-name-history-use-recentf t
+        helm-autoresize-max-height            50
+        helm-autoresize-min-height            20
+        helm-follow-mode-persistent           t
+        helm-grep-default-command             "ack -Hn -i --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command     "ack -H -i --no-group --no-color %e %p %f")
+  (substitute-key-definition 'xref-find-definitions 'helm-etags-select global-map)
+  (helm-autoresize-mode t)
+  (helm-mode +1)
+  (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "C-c h o") 'helm-occur))
+
+(use-package helm-ag
+  :ensure t
+  :after helm)
+
+(use-package helm-descbinds
+  :ensure t
+  :after helm
+  :config
+  (helm-descbinds-mode))
+
+;; (use-package helm-clojuredocs
+;;   :ensure t
+;;   :after (helm clojure)
+;;   :bind
+;;   (:map helm-command-map
+;;    ("C-c h d" . helm-clojuredocs-at-point)))
+
+(use-package super-save ;; save buffers on lost focus
+  :ensure t
+  :defer 5
+  :diminish super-save-mode
+  :config
+  (super-save-mode +1)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
+
+(use-package crux ;; misc useful utils from Prelude
+  :ensure t
+  :config
+  (require 'rect)
+  (crux-with-region-or-line kill-region)
+  :bind
+  (("C-c o"                        . crux-open-with)
+   ("M-O"                          . crux-smart-open-line)
+   ("C-c n"                        . crux-cleanup-buffer-or-region)
+   ("C-c f"                        . crux-recentf-ido-find-file)
+   ("C-M-z"                        . crux-indent-defun)
+   ("C-c u"                        . crux-view-url)
+   ("C-c e"                        . crux-eval-and-replace)
+   ("C-c w"                        . crux-swap-windows)
+   ("C-c D"                        . crux-delete-file-and-buffer)
+   ("C-c r"                        . crux-rename-buffer-and-file)
+   ("C-c t"                        . crux-visit-term-buffer)
+   ("C-c k"                        . crux-kill-other-buffers)
+   ("C-c TAB"                      . crux-indent-rigidly-and-copy-to-clipboard)
+   ("C-c I"                        . crux-find-user-init-file)
+   ("C-c S"                        . crux-find-shell-init-file)
+   ("C-c s"                        . crux-ispell-word-then-abbrev)
+   ("s-r"                          . crux-recentf-ido-find-file)
+   ("s-j"                          . crux-top-join-line)
+   ("C-^"                          . crux-top-join-line)
+   ("s-k"                          . crux-kill-whole-line)
+   ("C-<backspace>"                . crux-kill-line-backwards)
+   ("s-o"                          . crux-smart-open-line-above)
+   ([remap move-beginning-of-line] . crux-move-beginning-of-line)
+   ([(shift return)]               . crux-smart-open-line)
+   ([(control shift return)]       . crux-smart-open-line-above)
+   ([remap kill-whole-line]        . crux-kill-whole-line)))
+
+(use-package undo-tree ;; better undo / redo
+  :ensure t
+  :defer t
+  :config
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t))
+
+(use-package which-key ;; help remember keybindings
+  :ensure t
+  :defer t
+  :config
+  (which-key-mode +1))
+
+(use-package flyspell
+  :ensure t
+  :defer t
+  :bind
+  (("C-;" . flyspell-correct-previous-word-generic)))
+
+(use-package flyspell-correct-helm
+  :ensure t
+  :after (flyspell helm)
+  :config (require 'flyspell-correct-helm))
+
+(use-package lorem-ipsum
+  :ensure t
+  :defer t
+  :bind
+  (("C-c i l l" . lorem-ipsum-insert-list)
+   ("C-c i l p" . lorem-ipsum-insert-paragraphs)
+   ("C-c i l s" . lorem-ipsum-insert-sentences)))
+
+(defun duplicate-current-line ()
+  "Duplicate the current line."
+  (interactive)
+  (beginning-of-line nil)
+  (let ((b (point)))
+    (end-of-line nil)
+    (copy-region-as-kill b (point)))
+  (beginning-of-line 2)
+  (open-line 1)
+  (yank)
+  (back-to-indentation))
+
+(provide 'romney-general)
+;;; romney-general.el ends here

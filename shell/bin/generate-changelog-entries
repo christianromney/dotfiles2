@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+if [[ $# -lt 1 ]]; then
+  printf "USAGE:\n\t $(basename $0) <new-tag>\n\n"
+  printf "OPTIONS:\n"
+  printf "\t <new-tag>      - the Git tag of the new release we are generating\n"
+  exit 1
+else
+  new=$1
+  prev=$(git tag | sort -Vr | head -n1)
+  now=$(date +%Y-%m-%d)
+  printf "## $new / $now\n\n"
+  git log $prev..HEAD --merges --format="%b" | awk '/(FIXED|ADDED|CHANGED|DELETED|REMOVED)/ { print "  * " $0 }'
+fi
