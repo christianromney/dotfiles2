@@ -2,7 +2,8 @@
 ;;; Commentary:
 ;;
 ;;; Code:
-(setq-default c-basic-offset 2)                     ;; everything should indent w/ 2 spaces
+;; everything should indent w/ 2 spaces
+(setq-default c-basic-offset 2)
 (setq-default sh-basic-offset 2)
 (setq-default elixir-basic-offset 2)
 (setq-default js2-basic-offset 2)
@@ -49,28 +50,24 @@
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
-  :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
   :ensure t
-  :defer t
   :hook (prog-mode . rainbow-identifiers-mode))
 
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t
-  :defer t
   :hook (css-mode web-mode prog-mode))
 
 (use-package direnv
   :ensure t
-  :hook (projectile-mode . direnv-mode)
+  :hook ((clojure-mode . direnv-mode))
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
 
 (use-package flycheck
   :ensure t
-  :defer t
   :diminish flycheck-mode
   :hook (prog-mode . flycheck-mode))
 
@@ -85,7 +82,6 @@ CONTEXT - ignored"
 
 (use-package smartparens
   :ensure t
-  :defer t
   :diminish smartparens-mode
   :hook ((eshell-mode emacs-lisp-mode clojure-mode cider-mode cider-repl-mode)
          . smartparens-strict-mode)
