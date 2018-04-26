@@ -15,7 +15,7 @@
 ;; You may delete these explanatory comments.
 ;(package-initialize)
 
-(setq gc-cons-threshold (* 256 1024 1024)
+(setq gc-cons-threshold 100000000
       gc-cons-percentage 0.6)
 
 (add-to-list 'load-path "~/.emacs.d/config")

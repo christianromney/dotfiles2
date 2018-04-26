@@ -2,12 +2,11 @@
 My personalized emacs configuration. Snippets are cobbled together from [[https://github.com/bbatsov/prelude][Prelude]],
 [[https://github.com/bbatsov/emacs.d][bbatsov's emacs config]], [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]], and other random goodies from around the web.
 
-- Dracula theme, powerline, spaceline,
-- all-the-icons
+- Dracula theme, powerline, spaceline
 - direnv-mode
 - ido, company, helm (everywhere)
 - avy, anzu
-- Web programming: web-mode, scss, emmet
+- Web programming: web-mode, scss
 - Notes: org-mode, markdown
 - Clojure: smartparens, clojure-mode, cider, clj-refactor
 

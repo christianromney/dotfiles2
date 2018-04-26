@@ -15,9 +15,6 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x \\")  #'align-regexp)
 
-(require 'tramp)
-(setq tramp-default-method "ssh")                   ;; keep in mind known issues with zsh - see emacs wiki
-
 (require 'which-func)
 (which-function-mode 1)                             ;; shows applicable key bindings
 

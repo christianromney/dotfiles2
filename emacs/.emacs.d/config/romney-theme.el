@@ -1,12 +1,7 @@
 ;;; romney-theme.el --- User interface and themeing
-
 ;;; Commentary:
 ;;
-
 ;;; Code:
-
-;;; --- appearance ---
-
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
@@ -40,7 +35,7 @@
 (setq-default indent-tabs-mode nil)                 ;; don't use tabs to indent
 (setq-default tab-width 2)                          ;; don't waste real estate needlessly
 
-(use-package powerline  
+(use-package powerline
   :defer nil
   :ensure t)
 
@@ -51,26 +46,26 @@
   (require 'powerline)
   (require 'spaceline-config)
   (spaceline-emacs-theme)
-  ;; (spaceline-helm-mode)
+  (spaceline-helm-mode)
   ;; -- disabled --
   (spaceline-toggle-auto-compile-off)
   (spaceline-toggle-battery-off)
   (spaceline-toggle-column-off)
   (spaceline-toggle-minor-modes-off)
   ;; -- enabled --
-  ;;(spaceline-toggle-anzu-on)
+  (spaceline-toggle-anzu-on)
   (spaceline-toggle-buffer-modified-on)
   (spaceline-toggle-buffer-position-on)
   (spaceline-toggle-buffer-id-on)
   (spaceline-toggle-buffer-size-on)
-  ;;(spaceline-toggle-flycheck-error-on)
-  ;;(spaceline-toggle-flycheck-info-on)
-  ;;(spaceline-toggle-flycheck-warning-on)
-  ;;(spaceline-toggle-helm-buffer-id-on)
-  ;;(spaceline-toggle-helm-help-on)
+  (spaceline-toggle-flycheck-error-on)
+  (spaceline-toggle-flycheck-info-on)
+  (spaceline-toggle-flycheck-warning-on)
+  (spaceline-toggle-helm-buffer-id-on)
+  (spaceline-toggle-helm-help-on)
   (spaceline-toggle-hud-on)
   (spaceline-toggle-line-column-on)
-  ;;(spaceline-toggle-projectile-root-on)
+  (spaceline-toggle-projectile-root-on)
   (spaceline-toggle-selection-info-on))
 
 (use-package dracula-theme

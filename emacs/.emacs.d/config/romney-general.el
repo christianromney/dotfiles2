@@ -2,10 +2,16 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+(use-package tramp
+  :ensure nil
+  :defer t
+  :defines (tramp-default-method)
+  :config (setq tramp-default-method "ssh"))
+
 (use-package expand-region
   :ensure t
-  :defer nil
-  :bind ("C-=" . er/expand-region))
+  :defer t
+  :bind (("C-=" . er/expand-region)))
 
 (use-package ggtags
   :ensure t

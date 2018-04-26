@@ -63,7 +63,6 @@
 
 (use-package direnv
   :ensure t
-  :defer 1
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
 

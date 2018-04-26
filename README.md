@@ -1,24 +1,27 @@
 Structure
 =========
 
-This project contains my personal dotfiles collection. My primary machine is Mac OS X, but most of this stuff should work equally well under Linux (with a few alias exceptions). 
+This project contains my personal dotfiles collection. My primary machine is Mac
+OS X, but most of this stuff should work equally well under Linux with a few
+tweaks.
 
-I use [GNU stow](https://www.gnu.org/software/stow/) to manage the symlinks in this repository, and the `homesync` script depends on it. To install it, 
+I use [GNU stow](https://www.gnu.org/software/stow/) to manage the symlinks in
+this repository, and the `homesync` script depends on it. To install it,
 
      brew install stow
-     
-I run [iTerm2](https://www.iterm2.com/), [ZSH](http://www.zsh.org/), and [prezto](https://github.com/sorin-ionescu/prezto). iTerm2 is configured to use the [Source Code Pro for Powerline](https://github.com/powerline/fonts/tree/master/SourceCodePro) font which allows me to use the [paradox](https://github.com/paradox460/prezto/blob/paradox/modules/prompt/functions/prompt_paradox_setup) prezto theme. My terminal color palette is set to [Smyck](http://color.smyck.org/). 
 
-![My terminal](https://dl.dropboxusercontent.com/u/2865929/terminal.png)
-
-[![endorse](http://api.coderwall.com/xmlblog/endorsecount.png)](http://coderwall.com/xmlblog)
+I run [iTerm2](https://www.iterm2.com/), [ZSH](http://www.zsh.org/), and
+[prezto](https://github.com/sorin-ionescu/prezto). iTerm2 is configured to use
+the [Hack for Powerline](https://github.com/powerline/fonts/tree/master/Hack)
+font. My Emacs and terminal color theme is set to
+[Dracula](https://draculatheme.com/).
 
 License
 =======
 
 The MIT License
 
-Copyright (c) 2010-2016 Christian Romney <cromney@pointslope.com>
+Copyright (c) 2010-2018 Christian Romney <christian.a.romney@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
