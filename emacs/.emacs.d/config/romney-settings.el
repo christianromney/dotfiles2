@@ -9,7 +9,7 @@
       calendar-location-name              "Pembroke Pines, FL"
       calendar-longitude                  -80.34110799999999
       calendar-latitude                   26.017
-      custom-file                         "~/.emacs.d/custom.el"
+      custom-file                         "~/.emacs.d/config/romney-custom.el"
       delete-old-versions                 t
       inhibit-startup-message             t                         ;; no initial message in scratch buffer
       auto-window-vscroll                 nil
@@ -36,7 +36,7 @@
       vc-follow-symlinks                  t                         ;; symlinks aren't second-class citizens
       max-specpdl-size                    2400                      ;; limit on number of variable bindings
       ring-bell-function                  'ignore
-      sh-learn-basic-offset               t                         ;; try to figure out offset for shell mode      
+      sh-learn-basic-offset               t                         ;; try to figure out offset for shell mode
       locale-coding-system                'utf-8                    ;; utf-8 character encoding
 
       )

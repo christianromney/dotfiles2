@@ -95,6 +95,7 @@ Accepts a parameter (as NEXT-P), which is unused."
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  (add-hook 'cider-mode-hook #'cider-enlighten-mode)
   (advice-add 'cider-find-var :after #'recenter-top-bottom)
   (setq cider-prefer-local-resources t
         cider-repl-display-help-banner nil
