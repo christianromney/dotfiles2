@@ -38,7 +38,7 @@
 (defun romney-install-use-package ()
   "Installs use-package for package management."
   (unless (package-installed-p 'use-package)
-    (message "%s" "Refreshing package database...")
+    (message "Refreshing package database...")
     (package-refresh-contents)
     (message "done.")
     (package-install 'use-package)))

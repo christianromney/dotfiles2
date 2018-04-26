@@ -210,20 +210,13 @@
 
 (use-package helm-ag
   :ensure t
-  :after helm)
+  :defer t)
 
 (use-package helm-descbinds
   :ensure t
-  :after helm
+  :defer t
   :config
   (helm-descbinds-mode))
-
-;; (use-package helm-clojuredocs
-;;   :ensure t
-;;   :after (helm clojure)
-;;   :bind
-;;   (:map helm-command-map
-;;    ("C-c h d" . helm-clojuredocs-at-point)))
 
 (use-package super-save ;; save buffers on lost focus
   :ensure t

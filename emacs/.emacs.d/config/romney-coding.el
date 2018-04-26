@@ -13,6 +13,7 @@
 
 (use-package magit
   :ensure t
+  :defer t
   :bind
   (("C-x g" . magit-status))
   :init
@@ -30,7 +31,8 @@
 
 (use-package projectile
   :ensure t
-  :defer nil
+  :defer t
+  :defines (helm-completion-system)
   :diminish projectile-mode
   :config
   (require 'projectile)
@@ -39,12 +41,11 @@
 
 (use-package helm-projectile
   :ensure t
-  :after (helm projectile)
+  :hook (projectile-mode)
+  :bind (("C-c p f" . helm-projectile))
   :config
   (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  (global-set-key (kbd "C-c p f") 'helm-projectile)
-  (global-set-key (kbd "C-c p s a") 'helm-projectile-ack))
+  (helm-projectile-on))
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
@@ -63,6 +64,7 @@
 
 (use-package direnv
   :ensure t
+  :hook (projectile-mode . direnv-mode)
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
 
