@@ -91,3 +91,5 @@ salk-test.log
 bengal.log
 bengal-run-tests.sh
 .cpcache
+.dir-locals.el
+.rebel_readline_history

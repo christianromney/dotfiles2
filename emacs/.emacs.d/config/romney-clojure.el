@@ -62,6 +62,7 @@ Accepts a parameter (as NEXT-P), which is unused."
   :ensure t
   :hook (clojure-mode . clj-refactor-mode)
   :config
+  (setq cljr-suppress-middleware-warnings t)
   (cljr-add-keybindings-with-prefix "C-c C-a"))
 
 (use-package helm-clojuredocs
@@ -104,6 +105,9 @@ Accepts a parameter (as NEXT-P), which is unused."
         cider-repl-use-pretty-printing t
         cider-prompt-for-symbol nil
         cider-repl-wrap-history t
+        cider-jdk-src-paths '("~/src/open/java/clojure-1.9.0"
+                              "~/src/open/java/jdk1.8.0")
+        cider-default-cljs-repl 'figwheel
         nrepl-hide-special-buffers t
         nrepl-log-messages t)
   (defadvice cider-pprint-eval-last-sexp

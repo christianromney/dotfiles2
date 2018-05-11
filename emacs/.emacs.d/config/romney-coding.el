@@ -48,6 +48,47 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (progn
+    (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+          treemacs-file-event-delay           5000
+          treemacs-follow-after-init          t
+          treemacs-follow-recenter-distance   0.1
+          treemacs-goto-tag-strategy          'refetch-index
+          treemacs-indentation                2
+          treemacs-indentation-string         " "
+          treemacs-is-never-other-window      nil
+          treemacs-no-png-images              nil
+          treemacs-recenter-after-file-follow nil
+          treemacs-recenter-after-tag-follow  nil
+          treemacs-show-hidden-files          t
+          treemacs-silent-filewatch           nil
+          treemacs-silent-refresh             nil
+          treemacs-sorting                    'alphabetic-desc
+          treemacs-tag-follow-cleanup         t
+          treemacs-tag-follow-delay           1.5
+          treemacs-width                      25)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-git-mode 'extended)
+    (set-face-attribute 'hl-line nil :background "#333333"))
+  :bind
+  (:map global-map
+        ("M-0"        . treemacs-select-window)
+        ("C-c 1"      . treemacs-delete-other-windows)
+        ("M-n f t"    . treemacs)
+        ("M-n f B"    . treemacs-bookmark)
+        ("M-n f C-t"  . treemacs-find-file)
+        ("M-n f M-t"  . treemacs-find-tag)))
+
+(use-package treemacs-projectile
+  :after treemacs
+  :ensure t)
+
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))

@@ -1,22 +1,9 @@
-;; ~/.lein/profiles.clj
-{:user {:figwheel
-        {:nrepl-middleware ["cider.nrepl/cider-middleware"
-                            "cemerick.piggieback/wrap-cljs-repl"]}
-        :dependencies [#_[figwheel-sidecar "0.5.15"
-                        :exclusions [org.clojure/tools.reader
-                                     commons-codec
-                                     org.clojure/core.async
-                                     clj-stacktrace]]
-                       [org.clojure/tools.nrepl "0.2.13"]
-                       [vvvvalvalval/scope-capture "0.1.3"]
-                       [pjstadig/humane-test-output "0.8.3"]
-                       #_[datawalk "0.1.11"]]
-        :injections [(require 'pjstadig.humane-test-output)
-                     (pjstadig.humane-test-output/activate!)]
-        :plugins [[com.jakemccrary/lein-test-refresh "0.21.1"]
-                  [lein-pprint "1.1.2"]
-                  [lein-try "0.4.3"]
-                  [lein-ancient "0.6.14"]
-                  [refactor-nrepl "2.3.1" :exclusions [org.clojure/tools.nrepl]]
-                  [cider/cider-nrepl "0.16.0" :exclusions [org.clojure/tools.nrepl]]
-                  [com.billpiel/sayid "0.0.15" :exclusions [org.clojure/clojure org.clojure/tools.reader]]]}}
+{:salk {:plugins [[org.clojure/tools.nrepl "0.2.13"]
+                  [cider/cider-nrepl "0.17.0" :exclusions [org.clojure/tools.nrepl]]
+                  [refactor-nrepl "2.4.0-SNAPSHOT" :exclusions [org.clojure/tools.nrepl]]]
+        :dependencies [[figwheel-sidecar "0.5.16" :exclusions [commons-codec ring/ring-core]]
+                       [cider/piggieback "0.3.3"]]
+        :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}
+
+ :bengal {:plugins [[cider/cider-nrepl "0.17.0" :exclusions [org.clojure/tools.nrepl]]
+                    [refactor-nrepl "2.4.0-SNAPSHOT"]]} }

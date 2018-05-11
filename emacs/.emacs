@@ -16,7 +16,7 @@
 ;(package-initialize)
 
 (setq gc-cons-threshold 100000000
-      gc-cons-percentage 0.6)
+      gc-cons-percentage 0.75)
 
 (add-to-list 'load-path "~/.emacs.d/config")
 

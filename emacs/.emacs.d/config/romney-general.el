@@ -269,7 +269,6 @@
 
 (use-package which-key ;; help remember keybindings
   :ensure t
-  :defer t
   :config
   (which-key-mode +1))
 
