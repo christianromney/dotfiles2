@@ -7,4 +7,7 @@ elif [[ $1 = "test" ]]; then
   sed -i '' -e 's/\$DB_DEV/$DB_TST/' .envrc
 else
   echo "Unknown environment"
+  exit 1
 fi
+
+direnv allow

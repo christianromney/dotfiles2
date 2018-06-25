@@ -30,6 +30,10 @@
   :ensure t
   :defer t)
 
+(use-package git-timemachine
+  :ensure t
+  :bind ("C-c g" . git-timemachine-toggle))
+
 (use-package projectile
   :ensure t
   :defer t

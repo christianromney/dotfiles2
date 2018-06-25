@@ -18,6 +18,7 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "s-o") 'other-frame)
 (global-set-key (kbd "s-l") 'avy-goto-line)
+(global-set-key (kbd "C-:") 'avy-goto-char)
 
 (global-set-key (kbd "C-c d") 'duplicate-current-line)
 
