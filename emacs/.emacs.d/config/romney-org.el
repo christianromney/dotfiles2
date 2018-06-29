@@ -95,7 +95,7 @@
    'org-babel-load-languages
    '((emacs-lisp . t)
      (dot        . t)
-     (sh         . t)
+     (shell      . t)
      (clojure    . t)
      (scheme     . t)
      (java       . t)

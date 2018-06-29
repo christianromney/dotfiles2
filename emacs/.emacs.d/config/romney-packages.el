@@ -25,8 +25,7 @@
         (helm-core           . "melpa-stable")
         (helm-descbinds      . "melpa-stable")
         (rainbow-delimiters  . "melpa-stable")
-        (ggtags              . "melpa-stable")
-        )
+        (ggtags              . "melpa-stable"))
       package-enable-at-startup          nil
       package-user-dir                   (expand-file-name "elpa" user-emacs-directory))
 
