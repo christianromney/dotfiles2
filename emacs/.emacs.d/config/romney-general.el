@@ -233,6 +233,7 @@
   (crux-with-region-or-line kill-region)
   :bind
   (("C-c o"                        . crux-open-with)
+   ("C-c d"                        . crux-duplicate-current-line-or-region)
    ("M-O"                          . crux-smart-open-line)
    ("C-c n"                        . crux-cleanup-buffer-or-region)
    ("C-c f"                        . crux-recentf-ido-find-file)

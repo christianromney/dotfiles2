@@ -9,7 +9,8 @@
 
 (add-to-list 'default-frame-alist '(font . "Hack-20"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 (winner-mode)
 (column-number-mode)                                ;; enable column numbers
 (line-number-mode)                                  ;; enable line numbers

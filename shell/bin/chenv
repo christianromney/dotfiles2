@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 if [[ $1 = "dev" ]]; then
-  echo "Using dev environment"
+  echo -e "\033[1;32mUsing dev environment"
   sed -i '' -e 's/\$DB_TST/$DB_DEV/' .envrc
+  direnv allow
 elif [[ $1 = "test" ]]; then
-  echo "Using test environment"
+  echo -e "\033[1;33mUsing test environment"
   sed -i '' -e 's/\$DB_DEV/$DB_TST/' .envrc
+  direnv allow
 else
-  echo "Unknown environment"
-  exit 1
+  if [[ -z "$DATABASE_URL" ]]; then
+    echo -e "\033[1;31mEnvironment not set"
+  else
+    echo "$DATABASE_URL" | grep _dev > /dev/null
+    if [[ $? -eq 0 ]]; then
+      echo -e "\033[1;32mCurrent environment: development"
+    else
+      echo -e "\033[1;33mCurrent environment: test"
+    fi
+  fi
 fi
 
-direnv allow
+tput sgr0

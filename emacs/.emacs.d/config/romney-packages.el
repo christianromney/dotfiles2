@@ -19,6 +19,7 @@
         (clj-refactor        . "melpa-stable")
         (company             . "melpa-stable")
         (magit               . "melpa-stable")
+        (magit-todos         . "melpa-stable")
         (magithub            . "melpa-stable")
         (helm                . "melpa-stable")
         (helm-ag             . "melpa-stable")

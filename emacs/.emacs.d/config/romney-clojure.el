@@ -99,6 +99,7 @@ Accepts a parameter (as NEXT-P), which is unused."
         cider-repl-history-file (expand-file-name "cider-repl.history" user-emacs-directory)
         cider-repl-history-size 1000
         cider-repl-use-pretty-printing t
+        cider-pprint-fn 'puget
         cider-prompt-for-symbol nil
         cider-repl-wrap-history t
         cider-jdk-src-paths '("~/src/open/java/clojure-1.9.0"
