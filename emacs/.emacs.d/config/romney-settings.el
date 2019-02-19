@@ -5,7 +5,7 @@
 
 ;;; Code:
 (setq user-full-name                      "Christian Romney"
-      user-email-address                  "cromney@pointslope.com"
+      user-email-address                  "christian.a.romney@gmail.com"
       calendar-location-name              "Pembroke Pines, FL"
       calendar-longitude                  -80.34110799999999
       calendar-latitude                   26.017

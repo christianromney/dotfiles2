@@ -1,4 +1,4 @@
-;;; romney-coding.el --- General purpose packages
+;;; romney-general.el --- General purpose packages
 ;;; Commentary:
 ;;
 ;;; Code:
@@ -104,8 +104,7 @@
         ido-save-directory-list-file (expand-file-name "ido.hist" personal-savefile-dir)
         ido-default-file-method 'selected-window
         ido-auto-merge-work-directories-length -1)
-  (ido-mode +1)
-  (ido-everywhere +1))
+  (ido-mode +1))
 
 ;; formerly known as ido-ubiquitous-mode
 (use-package ido-completing-read+
@@ -208,9 +207,10 @@
   (global-unset-key (kbd "C-x c"))
   (global-set-key (kbd "C-c h o") 'helm-occur))
 
-(use-package helm-ag
-  :ensure t
-  :defer t)
+;; re-enable once the whole helm search config is ironed out
+;; (use-package helm-ag
+;;   :ensure t
+;;   :defer t)
 
 (use-package helm-descbinds
   :ensure t
@@ -277,20 +277,12 @@
   :ensure t
   :defer t
   :bind
-  (("C-;" . flyspell-correct-previous-word-generic)))
+  (("C-;" . flyspell-correct-previous)))
 
 (use-package flyspell-correct-helm
   :ensure t
   :after (flyspell helm)
   :config (require 'flyspell-correct-helm))
-
-(use-package lorem-ipsum
-  :ensure t
-  :defer t
-  :bind
-  (("C-c i l l" . lorem-ipsum-insert-list)
-   ("C-c i l p" . lorem-ipsum-insert-paragraphs)
-   ("C-c i l s" . lorem-ipsum-insert-sentences)))
 
 (defun duplicate-current-line ()
   "Duplicate the current line."

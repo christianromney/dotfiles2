@@ -18,21 +18,7 @@
   :bind
   (("C-x g" . magit-status))
   :init
-  (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
-  :config
-  (require 'magit-todos))
-
-(use-package magithub
-  :ensure t
-  :after magit
-  :config
-  (magithub-feature-autoinject t))
-
-;; TODO: ensure this is working
-(use-package magit-todos
-  :ensure t
-  :defer t
-  :hook (magit . magit-todos-mode))
+  (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")))
 
 (use-package gist
   :ensure t

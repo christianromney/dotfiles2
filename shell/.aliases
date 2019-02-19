@@ -1,5 +1,5 @@
 # List direcory contents
-ll="ls -lahG"
+alias ll="ls -lahG"
 
 # Standard tool aliases
 alias grep="egrep"
@@ -18,3 +18,5 @@ alias flushdns="dscacheutil -flushcache"
 alias lein="nocorrect lein"
 
 alias gst="nocorrect git status"
+
+alias show="/usr/local/bin/bat"

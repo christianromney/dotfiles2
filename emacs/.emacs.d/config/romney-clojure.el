@@ -17,13 +17,6 @@ Accepts a parameter (as NEXT-P), which is unused."
   :ensure t
   :defer t)
 
-(use-package clj-refactor
-  :ensure t
-  :hook (clojure-mode . clj-refactor-mode)
-  :config
-  (setq cljr-suppress-middleware-warnings t)
-  (cljr-add-keybindings-with-prefix "C-c C-a"))
-
 (use-package clojure-mode
   :ensure t
   :defer t
@@ -31,7 +24,7 @@ Accepts a parameter (as NEXT-P), which is unused."
   :bind
   (("M-." . personal/find-tag-without-ns))
   :config
-  (require 'clj-refactor)
+  ;;(require 'clj-refactor)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (define-clojure-indent
     (defroutes 'defun)
@@ -60,6 +53,13 @@ Accepts a parameter (as NEXT-P), which is unused."
   :ensure t
   :defer t
   :after (clojure-mode))
+
+(use-package clj-refactor
+  :ensure t
+  :hook (clojure-mode . clj-refactor-mode)
+  :config
+  (setq cljr-suppress-middleware-warnings t)
+  (cljr-add-keybindings-with-prefix "C-c C-a"))
 
 (use-package helm-clojuredocs
   :ensure t

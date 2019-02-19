@@ -63,21 +63,11 @@
           ("e" "Emergency" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
            "* STARTED %^{Task}" :clock-in :clock-resume)))
 
-  (setq org-tag-alist '(("business" . "?b")
-                        ("personal" . "?p")
-                        ("pointslope" . "?o")
-                        ("kip" . "?k")
-                        ("sales" . "?s")
-                        ("tech" . "?t")
-                        ("education" . "?e")
-                        ("basketball" . "?b")
-                        ("fishing" . "?f")
-                        ("buppy" . "?y")
-                        ("randi" . "?r")
-                        ("nikki" . "?n")
-                        ("mom" . "?m")
-                        ("dad" . "?d")
-                        ("wes" . "?w")))
+  (setq org-tag-alist '(("business"   . "?b")
+                        ("personal"   . "?p")
+                        ("tech"       . "?t")
+                        ("education"  . "?e")
+                        ("basketball" . "?b")))
 
   (add-hook 'org-mode-hook
             (lambda ()
@@ -124,12 +114,12 @@
         '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦"
           "◯" "⚪" "⚫" "⚬" "￮" "⊙" "⊚" "∙" "∘")))
 
-(use-package ox-reveal
-  :ensure t
-  :after org-mode
-  :defines (org-reveal-root)
-  :config
-  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
+;; (use-package ox-reveal
+;;   :ensure t
+;;   :after org-mode
+;;   :defines (org-reveal-root)
+;;   :config
+;;   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
 
 (use-package org-beautify-theme
   :ensure t
@@ -139,9 +129,6 @@
 (use-package org-autolist
   :ensure t
   :hook (org-mode . org-autolist-mode))
-
-(use-package org-chef
-  :ensure t)
 
 (use-package htmlize
   :ensure t
