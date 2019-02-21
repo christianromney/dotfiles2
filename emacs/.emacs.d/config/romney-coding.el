@@ -11,9 +11,11 @@
 (setq-default css-indent-offset 2)
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default sgml-basic-offset 2)
+(setq-default fish-indent-offset 2)
 
 (use-package magit
   :ensure t
+  :pin melpa-stable
   :defer t
   :bind
   (("C-x g" . magit-status))
@@ -34,16 +36,29 @@
   :defines (helm-completion-system)
   :diminish projectile-mode
   :config
-  (require 'projectile)
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
-  (projectile-mode t))
+  (projectile-mode +1))
 
 (use-package helm-projectile
   :ensure t
   :hook (projectile-mode)
-  :bind (("C-c p f" . helm-projectile))
+  :bind (("C-c p f" . helm-projectile-find-file-dwim)
+         ("C-c p p" . helm-projectile-switch-project)
+         ("C-c p h" . helm-projectile)
+         ("C-c p F" . helm-projectile-find-file-in-known-projects)
+         ("C-c p d" . helm-projectile-find-dir)
+         ("C-c p e" . helm-projectile-recentf)
+         ("C-c p a" . helm-projectile-find-other-file)
+         ("C-c p b" . helm-projectile-switch-to-buffer)
+         ;;("C-c p s g" . helm-projectile-grep)
+         ;;("C-c p s a" . helm-projectile-ack)
+         ;;("C-c p s s" . helm-projectile-ag)
+         )
   :config
-  (setq projectile-completion-system 'helm)
+  (setq projectile-completion-system 'helm
+        projectile-switch-project-action 'helm-projectile
+        )
+
   (helm-projectile-on))
 
 (use-package treemacs
@@ -89,6 +104,7 @@
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
+  :pin melpa-stable
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
@@ -104,6 +120,10 @@
   :hook ((clojure-mode . direnv-mode))
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
+
+(use-package fish-mode
+  :ensure t
+  :defer t)
 
 (use-package flycheck
   :ensure t

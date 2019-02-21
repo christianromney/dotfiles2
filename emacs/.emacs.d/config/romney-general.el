@@ -15,6 +15,7 @@
 
 (use-package ggtags
   :ensure t
+  :pin melpa-stable
   :defer t)
 
 (use-package abbrev
@@ -148,6 +149,7 @@
 
 (use-package helm
   :ensure t
+  :pin melpa-stable
   :diminish helm-mode
   :defines (helm-split-window-in-side-p
             helm-M-x-fuzzy-match
@@ -212,8 +214,14 @@
 ;;   :ensure t
 ;;   :defer t)
 
+(use-package helm-core
+  :ensure t
+  :pin melpa-stable
+  :defer t)
+
 (use-package helm-descbinds
   :ensure t
+  :pin melpa-stable
   :defer t
   :config
   (helm-descbinds-mode))

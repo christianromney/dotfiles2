@@ -7,29 +7,12 @@
   (require 'cl))
 (require 'package)
 
-(setq package-archives '(("melpa-stable" . "http://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("billpiel" . "http://billpiel.com/emacs-packages/")))
-
-(setq package-pinned-packages
-      '(
-        (clojure-mode        . "melpa-stable")
-        (cider               . "melpa-stable")
-        (clj-refactor        . "melpa-stable")
-        (company             . "melpa-stable")
-        (magit               . "melpa-stable")
-        (helm                . "melpa-stable")
-        (helm-core           . "melpa-stable")
-        (helm-descbinds      . "melpa-stable")
-        (rainbow-delimiters  . "melpa-stable")
-        (ggtags              . "melpa-stable")
-        (org                 . "org")
-        (sayid               . "billpiel")
-        )
-      package-enable-at-startup          nil
-      package-user-dir                   (expand-file-name "elpa" user-emacs-directory))
+(setq package-archives          '(("melpa-stable" . "http://stable.melpa.org/packages/")
+                                  ("melpa" . "https://melpa.org/packages/")
+                                  ("gnu" . "http://elpa.gnu.org/packages/")
+                                  ("org" . "http://orgmode.org/elpa/"))
+      package-enable-at-startup nil
+      package-user-dir          (expand-file-name "elpa" user-emacs-directory))
 
 (package-initialize)
 

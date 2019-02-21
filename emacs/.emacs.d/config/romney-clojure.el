@@ -19,6 +19,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package clojure-mode
   :ensure t
+  :pin melpa-stable
   :defer t
   :defines (clojure--prettify-symbols-alist)
   :bind
@@ -56,6 +57,7 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package clj-refactor
   :ensure t
+  :pin melpa-stable
   :hook (clojure-mode . clj-refactor-mode)
   :config
   (setq cljr-suppress-middleware-warnings t)
@@ -84,11 +86,12 @@ Accepts a parameter (as NEXT-P), which is unused."
 
 (use-package cider
   :ensure t
+  :pin melpa-stable
   :hook (clojure-mode . cider-mode)
   :bind
   (:map clojure-mode-map
-   ("<f5>"   . cider-jack-in)
-   ("M-<f5>" . cider-jack-in-clojurescript))
+   ("<f5>"     . cider-jack-in)
+   ("M-<f5>"   . cider-jack-in-clj&cljs))
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
@@ -112,24 +115,10 @@ Accepts a parameter (as NEXT-P), which is unused."
     (other-window 1))
   (ad-activate 'cider-pprint-eval-last-sexp))
 
-(use-package sayid
+(use-package cider-hydra
   :ensure t
-  :defer t
-  :config
-  (eval-after-load 'clojure-mode
-    '(sayid-setup-package))
-
-  (defadvice sayid-get-workspace
-      (after sayid-get-workspace activate)
-    (other-window 1))
-
-  (ad-activate 'sayid-get-workspace)
-
-  (defadvice sayid-show-traced
-      (after sayid-show-traced activate)
-    (other-window 1))
-
-  (ad-activate 'sayid-show-traced))
+  :pin melpa-stable
+  :hook (cider-mode . cider-hydra-mode))
 
 (provide 'romney-clojure)
 ;;; romney-clojure.el ends here

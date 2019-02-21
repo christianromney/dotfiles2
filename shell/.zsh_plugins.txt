@@ -3,7 +3,7 @@ zsh-users/zsh-autosuggestions
 mafredri/zsh-async
 desyncr/auto-ls
 leophys/zsh-plugin-fzf-finder
-
+Tarrasch/zsh-command-not-found
 sindresorhus/pure
-zsh-users/zsh-syntax-highlighting
+zdharma/fast-syntax-highlighting
 zsh-users/zsh-history-substring-search

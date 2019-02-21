@@ -1,9 +1,0 @@
-#!/bin/bash
-SHEET="$HOME/Dropbox/PointSlope/emacs-cheatsheet.org"
-
-if [ "x$1" = "x" ]; then
-  cat $SHEET | column -t -s'+' | less
-else
-  echo
-  cat $SHEET | column -t -s'+' | grep --color=never "$1"
-fi

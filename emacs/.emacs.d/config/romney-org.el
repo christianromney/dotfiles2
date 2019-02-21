@@ -4,6 +4,7 @@
 ;;; Code:
 (use-package org
   :ensure t
+  :pin org
   :defer t
   :defines
   (org-startup-indented

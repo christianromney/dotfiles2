@@ -1,6 +1,11 @@
 # List direcory contents
 alias ll="ls -lahG"
 
+# zsh navigation
+alias ...="../.."
+alias ....="../../.."
+alias .....="../../../.."
+
 # Standard tool aliases
 alias grep="egrep"
 alias rf="rm -rf"

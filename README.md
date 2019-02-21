@@ -10,18 +10,23 @@ this repository, and the `homesync` script depends on it. To install it,
 
      brew install stow
 
-I run [iTerm2](https://www.iterm2.com/), [ZSH](http://www.zsh.org/), and
-[prezto](https://github.com/sorin-ionescu/prezto). iTerm2 is configured to use
-the [Hack for Powerline](https://github.com/powerline/fonts/tree/master/Hack)
-font. My Emacs and terminal color theme is set to
-[Dracula](https://draculatheme.com/).
+I run [iTerm2](https://www.iterm2.com/), [Fish Shell](https://fishshell.com/)
+using [Fisher](https://github.com/jorgebucaran/fisher) to manage plugins. iTerm2
+is configured to use the [Hack for
+Powerline](https://github.com/powerline/fonts/tree/master/Hack) font. My
+terminal color theme is
+[materialshell-dark](https://github.com/carloscuesta/materialshell) and my
+prompt is [Metro](https://github.com/fishpkg/fish-prompt-metro).
+
+
+![Terminal](terminal.png)
 
 License
 =======
 
 The MIT License
 
-Copyright (c) 2010-2018 Christian Romney <christian.a.romney@gmail.com>
+Copyright (c) 2010-2019 Christian Romney <christian.a.romney@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
