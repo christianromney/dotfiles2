@@ -1,69 +1,69 @@
 [user]
-	name = Christian Romney
-	email = christian.a.romney@gmail.com
-	signingKey = 195F184E
+  name = Christian Romney
+  email = christian.a.romney@gmail.com
+  signingKey = A0FA17A0540AAC06
 [core]
-	autocrlf = input
-	excludesfile = ~/.gitignore_global
-	editor = emacs
-	pager = diff-so-fancy | less --tabs=2 -RFX
+  autocrlf = input
+  excludesfile = ~/.gitignore_global
+  editor = emacs
+  pager = diff-so-fancy | less --tabs=2 -RFX
 [commit]
-	template = ~/.git-commit-template
-	gpgSign = true
+  template = ~/.git-commit-template
+  gpgSign = true
 [help]
-	autocorrect = 1
+  autocorrect = 1
 [alias]
-	br = branch
-	ci = commit -Ss
-	co = checkout
-	cp = cherry-pick
-	dc = diff --cached
-	fp = format-patch
-	ls = log --oneline
-	st = status
-	up = pull
-	ff = pull --ff-only
-	rl = reflog
-	staged = diff --cached
-	file-rm = clean
-	dir-rm = clean
+  br = branch
+  ci = commit -Ss
+  co = checkout
+  cp = cherry-pick
+  dc = diff --cached
+  fp = format-patch
+  ls = log --oneline
+  st = status
+  up = pull
+  ff = pull --ff-only
+  rl = reflog
+  staged = diff --cached
+  file-rm = clean
+  dir-rm = clean
 [color]
-	ui = auto
+  ui = auto
 [color "diff"]
-	meta = cyan bold
-	commit = green bold
-	frag = yellow bold
-	old = red
-	new = green
-	whitespace = red reverse
+  meta = cyan bold
+  commit = green bold
+  frag = yellow bold
+  old = red
+  new = green
+  whitespace = red reverse
 [color "branch"]
-	current = cyan bold
-	local = cyan 
-	remote = yellow
+  current = cyan bold
+  local = cyan
+  remote = yellow
 [color "status"]
-	added = green
-	changed = yellow
-	untracked = red
+  added = green
+  changed = yellow
+  untracked = red
 [push]
-	default = simple
-	followTags = true
+  default = simple
+  followTags = true
 [merge]
-	tool = opendiff
+  tool = opendiff
 [clean]
-	requireForce = false
+  requireForce = false
 [include]
 path = ~/.gitconfig.secrets
 
 [diff]
-	tool = icdiff
+  tool = icdiff
 [difftool]
-	prompt = false
+  prompt = false
 
 [difftool "icdiff"]
   cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
 [rerere]
-	enabled = 1
+  enabled = 1
 [magit]
-	hideCampaign = true
+  hideCampaign = true
 [github]
-	user = christianromney
+  user = christianromney
