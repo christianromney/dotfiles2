@@ -11,8 +11,8 @@ My personalized emacs configuration. Snippets are cobbled together from [[https:
 - [[https://github.com/Fuco1/smartparens][smartparens]], [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]], [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]
 - and lots more...
 
-My configuration [autoloads](https://blog.d46.us/advanced-emacs-startup/) almost
-everything to keep startup time around 2 seconds.
+My configuration [[https://blog.d46.us/advanced-emacs-startup/][autoloads]] almost everything to keep startup time around 2
+seconds.
 
 
 * Screenshot
