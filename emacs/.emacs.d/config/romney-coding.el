@@ -15,12 +15,15 @@
 
 (use-package magit
   :ensure t
-  :pin melpa-stable
   :defer t
   :bind
   (("C-x g" . magit-status))
   :init
   (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")))
+
+(use-package forge
+  :ensure t
+  :defer t)
 
 (use-package gist
   :ensure t

@@ -304,5 +304,10 @@
   (yank)
   (back-to-indentation))
 
+(use-package epg
+  :ensure t
+  :config
+  (setenv "GPG_AGENT_INFO" nil))
+
 (provide 'romney-general)
 ;;; romney-general.el ends here

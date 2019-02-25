@@ -11,7 +11,7 @@
                                                         org.clojure/tools.nrepl]]]}
 
  ;; -- project-specific profiles --
- :salk {:dependencies [[figwheel-sidecar "0.5.16" :exclusions [commons-codec ring/ring-core]]
+ :salk {:dependencies [[figwheel-sidecar "0.5.18" :exclusions [commons-codec ring/ring-core]]
                        [cider/piggieback "0.4.0" :exclusions [org.clojure/tools.logging]]]
         :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}
 
