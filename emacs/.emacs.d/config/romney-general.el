@@ -168,6 +168,7 @@
   :bind
   (("M-x"      . helm-M-x)
    ("C-x C-m"  . helm-M-x)
+   ("C-c h"    . helm-command-prefix)
    ("M-i"      . helm-semantic-or-imenu)
    ("M-y"      . helm-show-kill-ring)
    ("C-x b"    . helm-mini)
@@ -177,7 +178,6 @@
    ("C-h f"    . helm-apropos)
    ("C-h r"    . helm-info-emacs)
    ("C-h C-l"  . helm-locate-library)
-   ("C-c h"    . helm-command-prefix)
    :map helm-map
    ("<tab>"     . helm-execute-persistent-action)
    ("C-i"       . helm-execute-persistent-action)
@@ -198,21 +198,28 @@
         helm-ff-search-library-in-sexp        t
         helm-scroll-amount                    8
         helm-ff-file-name-history-use-recentf t
+        helm-autoresize-mode t
         helm-autoresize-max-height            50
         helm-autoresize-min-height            20
         helm-follow-mode-persistent           t
+        helm-google-suggest-use-curl-p        t
         helm-grep-default-command             "ack -Hn -i --no-group --no-color %e %p %f"
         helm-grep-default-recurse-command     "ack -H -i --no-group --no-color %e %p %f")
   (substitute-key-definition 'xref-find-definitions 'helm-etags-select global-map)
-  (helm-autoresize-mode t)
   (helm-mode +1)
   (global-unset-key (kbd "C-x c"))
-  (global-set-key (kbd "C-c h o") 'helm-occur))
+  (global-set-key (kbd "C-c h o") 'helm-occur)
 
-;; re-enable once the whole helm search config is ironed out
-;; (use-package helm-ag
-;;   :ensure t
-;;   :defer t)
+  ;; focus the new man buffer when it opens
+  (defadvice helm-man-woman
+      (after helm-man-woman activate)
+    (other-window 1))
+
+  (when (executable-find "rg")
+    (setq helm-grep-ag-command
+          "rg --color=always --colors 'match:fg:black' --colors 'match:bg:magenta' --smart-case --no-heading --line-number %s %s %s"
+          helm-grep-ag-pipe-cmd-switches
+          '("--colors 'match:fg:black'" "--colors 'match:bg:magenta'"))))
 
 (use-package helm-core
   :ensure t
