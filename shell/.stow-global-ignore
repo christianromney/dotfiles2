@@ -1,0 +1,10 @@
+.*\.orig
+.*\.old
+.*\.rej
+.*\.bak
+.*\.png
+.*\.jpg
+.*\.gif
+tags
+TAGS
+README.*
