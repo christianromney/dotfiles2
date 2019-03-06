@@ -32,6 +32,7 @@ git
 git-extras
 glances
 glib
+global
 gmp
 gnutls
 go
@@ -40,6 +41,7 @@ graphite2
 graphviz
 gts
 harfbuzz
+icdiff
 icu4c
 ispell
 jasper
@@ -94,8 +96,10 @@ psgrep
 pstree
 pyenv
 python
+q
 rbenv
 readline
+ripgrep
 rlwrap
 rtmpdump
 rubberband
@@ -126,12 +130,3 @@ yarn
 youtube-dl
 zplug
 zsh
-zsh-autosuggestions
-zsh-completions
-zsh-git-prompt
-zsh-lovers
-zsh-navigation-tools
-zsh-syntax-highlighting
-icdiff
-ripgrep
-global
