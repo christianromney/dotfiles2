@@ -111,8 +111,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
-  :ensure t
-  :hook (prog-mode . rainbow-identifiers-mode))
+  :ensure t)
 
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t

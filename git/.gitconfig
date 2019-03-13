@@ -48,7 +48,11 @@
   default = simple
   followTags = true
 [merge]
-  tool = opendiff
+  tool = ediff
+  conflictStyle = diff3
+[mergetool]
+  prompt = false
+
 [clean]
   requireForce = false
 [include]
@@ -60,10 +64,12 @@ path = ~/.gitconfig.secrets
   prompt = false
 
 [difftool "icdiff"]
-  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+  cmd = /usr/local/bin/icdiff $LOCAL $REMOTE
 [rerere]
   enabled = 1
 [magit]
   hideCampaign = true
 [github]
   user = christianromney
+[icdiff]
+  options = --highlight --line-numbers

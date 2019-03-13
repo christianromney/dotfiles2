@@ -26,6 +26,7 @@
 (require 'romney-packages)
 (require 'romney-general)
 (require 'romney-coding)
+(require 'romney-prolog)
 (require 'romney-theme)
 (require 'romney-clojure)
 (require 'romney-web)
