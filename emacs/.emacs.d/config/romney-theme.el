@@ -20,7 +20,7 @@
 (set-face-attribute 'mode-line nil
                     :family "Iosevka"
                     :height 160
-                    :weight 'extralight)
+                    :weight 'thin)
 
 (set-face-attribute 'variable-pitch nil
                     :family "Big Caslon Medium")
