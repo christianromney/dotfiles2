@@ -117,10 +117,8 @@
 
 ;; Highlights 'TODO' and similar keywords in comments and strings.
 (use-package hl-todo
-  :defer t
   :ensure t
-  :init
-  (add-hook 'prog-mode-hook 'hl-todo-mode))
+  :hook (prog-mode . hl-todo-mode))
 
 (use-package beacon
   :ensure t
