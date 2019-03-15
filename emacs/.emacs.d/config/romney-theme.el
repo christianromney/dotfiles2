@@ -36,7 +36,7 @@
 (line-number-mode)                                  ;; enable line numbers
 (size-indication-mode)                              ;; enable file sizes
 (global-auto-revert-mode)                           ;; revert buffers when files changed externally
-(blink-cursor-mode -1)
+(blink-cursor-mode +1)
 (global-prettify-symbols-mode +1)
 (global-hl-line-mode +1)
 
@@ -52,6 +52,7 @@
 (if (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
+(setq cursor-type 'bar)
 (setq-default fill-column 80)                       ;; fill column at 80 chars
 (setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
 (setq-default tab-width 2)                          ;; don't waste real estate needlessly
@@ -70,11 +71,11 @@
   (spaceline-helm-mode)
   ;; -- disabled --
   (spaceline-toggle-auto-compile-off)
-  (spaceline-toggle-battery-off)
   (spaceline-toggle-column-off)
   (spaceline-toggle-minor-modes-off)
   ;; -- enabled --
   (spaceline-toggle-anzu-on)
+  (spaceline-toggle-battery-on)
   (spaceline-toggle-buffer-modified-on)
   (spaceline-toggle-buffer-position-on)
   (spaceline-toggle-buffer-id-on)
