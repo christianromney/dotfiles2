@@ -14,11 +14,6 @@
   :bind (("C-=" . er/expand-region)
          ("C--" . er/contract-region)))
 
-(use-package typo
-  :ensure t
-  :defer t
-  :hook (text-mode org-mode))
-
 (use-package ggtags
   :ensure t
   :pin melpa-stable

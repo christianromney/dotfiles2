@@ -6,4 +6,6 @@ for k in "$HOME/.ssh/id_"$keys
   ssh-add -K $k > /dev/null 2>&1
 end
 
+set PATH $PATH $HOME/.cargo/bin
+
 eval (direnv hook fish)

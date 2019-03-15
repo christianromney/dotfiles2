@@ -104,7 +104,8 @@ rlwrap
 rtmpdump
 rubberband
 ruby-build
-rust
+multimarkdown
+rustup-init
 sbcl
 sdl2
 snappy
@@ -130,4 +131,3 @@ yarn
 youtube-dl
 zplug
 zsh
-multimarkdown
