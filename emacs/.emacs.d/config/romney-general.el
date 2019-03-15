@@ -14,6 +14,24 @@
   :bind (("C-=" . er/expand-region)
          ("C--" . er/contract-region)))
 
+(use-package typo  ;; Automatically use typographic quotes
+  :ensure t
+  :hook ((org-mode      . typo-mode)
+         (markdown-mode . typo-mode)
+         (rst-mode      . typo-mode))
+  :init (setq-default typo-language "English"))
+
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :bind (("<f7>" . writeroom-mode)
+         :map writeroom-mode-map
+         ("C-M-<" . writeroom-decrease-width)
+         ("C-M->" . writeroom-increase-width)
+         ("C-M-=" . writeroom-adjust-width))
+  :config
+  (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust))
+
 (use-package ggtags
   :ensure t
   :pin melpa-stable
@@ -66,6 +84,11 @@
   :defer 3
   :config
   (windmove-default-keybindings))
+
+(use-package ace-window
+  :ensure t
+  :defer t
+  :bind (("C-x o" . ace-window)))
 
 (use-package anzu ;; search & replace match info e.g. 1 of N
   :ensure t
@@ -211,9 +234,29 @@
   (global-unset-key (kbd "C-x c"))
   (global-set-key (kbd "C-c h o") 'helm-occur)
 
-  ;; focus the new man buffer when it opens
+  ;; focus help buffers when they open
   (defadvice helm-man-woman
       (after helm-man-woman activate)
+    (other-window 1))
+
+  (defadvice describe-key
+      (after describe-key activate)
+    (other-window 1))
+
+  (defadvice describe-function
+      (after describe-function activate)
+    (other-window 1))
+
+  (defadvice describe-variable
+      (after describe-variable activate)
+    (other-window 1))
+
+  (defadvice describe-bindings
+      (after describe-bindings activate)
+    (other-window 1))
+
+  (defadvice describe-mode
+      (after describe-mode activate)
     (other-window 1))
 
   (when (executable-find "rg")

@@ -59,8 +59,7 @@
          )
   :config
   (setq projectile-completion-system 'helm
-        projectile-switch-project-action 'helm-projectile
-        )
+          projectile-switch-project-action 'helm-projectile)
 
   (helm-projectile-on))
 
@@ -104,6 +103,11 @@
 (use-package treemacs-projectile
   :after treemacs
   :ensure t)
+
+(use-package highlight-numbers
+  :ensure t
+  :defer t
+  :hook (prog-mode . highlight-numbers-mode))
 
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t

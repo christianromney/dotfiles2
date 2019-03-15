@@ -112,8 +112,7 @@
   :config
   (setq org-hide-emphasis-markers t)
   (setq org-bullets-bullet-list
-        '("○" "☉" "◎" "◉" "○" "◌" "◎" "●" "◦"
-          "◯" "⚪" "⚫" "⚬" "￮" "⊙" "⊚" "∙" "∘")))
+        '("◉" "○" "◌" "●")))
 
 ;; (use-package ox-reveal
 ;;   :ensure t
