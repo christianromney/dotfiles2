@@ -49,7 +49,7 @@
   followTags = true
 [merge]
   tool = ediff
-  conflictStyle = diff3
+	conflictStyle = diff3
 [mergetool]
   prompt = false
 
