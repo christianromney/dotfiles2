@@ -240,6 +240,12 @@
           helm-grep-ag-pipe-cmd-switches
           '("--colors 'match:fg:black'" "--colors 'match:bg:magenta'"))))
 
+(use-package helm-themes
+  :ensure t
+  :defer t
+  :bind (("C-c h p" . helm-top)
+         ("C-c h t" . helm-themes)))
+
 (defun romney/focus-other-window (&rest opts)
   "Focus the other window"
   (other-window 1))
