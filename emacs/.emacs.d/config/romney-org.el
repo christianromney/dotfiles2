@@ -106,13 +106,10 @@
 
 (use-package org-bullets
   :ensure t
-  :after org-mode
   :hook (org-mode . org-bullets-mode)
   :defines (org-bullets-bullet-list)
   :config
-  (setq org-hide-emphasis-markers t)
-  (setq org-bullets-bullet-list
-        '("◉" "○" "◌" "●")))
+  (setq org-bullets-bullet-list '("◉" "○" "◌" "●")))
 
 ;; (use-package ox-reveal
 ;;   :ensure t
