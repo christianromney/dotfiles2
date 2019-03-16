@@ -94,6 +94,10 @@
    ("C-c c" . org-capture)
    ("C-c l" . org-store-link)))
 
+(use-package ob-prolog
+  :ensure t
+  :defer t)
+
 (use-package org-bullets
   :ensure t
   :hook (org-mode . org-bullets-mode)

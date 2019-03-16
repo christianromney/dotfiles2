@@ -243,8 +243,7 @@
 (use-package helm-themes
   :ensure t
   :defer t
-  :bind (("C-c h p" . helm-top)
-         ("C-c h t" . helm-themes)))
+  :bind ("C-c C-t" . helm-themes))
 
 (defun romney/focus-other-window (&rest opts)
   "Focus the other window"
