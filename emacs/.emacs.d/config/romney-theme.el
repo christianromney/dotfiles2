@@ -52,6 +52,8 @@
 (if (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
+(set-cursor-color "#ffffff")
+(setq-default blink-cursor-blinks -1)
 (setq-default cursor-type '(bar . 1))
 (setq-default fill-column 80)                       ;; fill column at 80 chars
 (setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
