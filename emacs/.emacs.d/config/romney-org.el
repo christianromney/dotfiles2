@@ -53,22 +53,11 @@
            :empty-lines 1)
 
           ("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
-           "* TODO %^{Task} %^G")
-
-          ("b" "Business" entry (file+headline "~/Dropbox/org/pointslope/business.org" "Todos")
-           "* TODO %^{Task} :business:\nSCHEDULED: %^t\n")
-
-          ("d" "Deadline" entry (file+headline "~/Dropbox/org/pointslope/business.org" "Todos")
-           "* TODO %^{Task} :business:\nDEADLINE: %^t\n")
-
-          ("e" "Emergency" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
-           "* STARTED %^{Task}" :clock-in :clock-resume)))
+           "* TODO %^{Task} %^G")))
 
   (setq org-tag-alist '(("business"   . "?b")
                         ("personal"   . "?p")
-                        ("tech"       . "?t")
-                        ("education"  . "?e")
-                        ("basketball" . "?b")))
+                        ("education"  . "?e")))
 
   (add-hook 'org-mode-hook
             (lambda ()
@@ -90,6 +79,7 @@
      (clojure    . t)
      (scheme     . t)
      (java       . t)
+     (prolog     . t)
      (js         . t)
      (ruby       . t)
      (python     . t)))
@@ -111,12 +101,27 @@
   :config
   (setq org-bullets-bullet-list '("◉" "○" "◌" "●")))
 
-;; (use-package ox-reveal
-;;   :ensure t
-;;   :after org-mode
-;;   :defines (org-reveal-root)
-;;   :config
-;;   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.4.1/"))
+(use-package org-re-reveal
+  :ensure t
+  :hook org-mode
+  :config
+  (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.min.js"
+        org-re-reveal-title-slide "%t"
+        org-re-reveal-hlevel 2
+        org-re-reveal-default-frag-style 'appear
+        org-re-reveal-control t
+        org-re-reveal-progress t
+        org-re-reveal-history nil
+        org-re-reveal-center t
+        org-re-reveal-rolling-links nil
+        org-re-reveal-keyboard t
+        org-re-reveal-mousewheel nil
+        org-re-reveal-defaulttiming nil
+        org-re-reveal-fragmentinurl t
+        org-re-reveal-pdfseparatefragments nil
+        org-re-reveal-overview t
+        org-re-reveal-klipsify-src t
+        reveal_inter_presentation_links t))
 
 (use-package org-beautify-theme
   :ensure t
