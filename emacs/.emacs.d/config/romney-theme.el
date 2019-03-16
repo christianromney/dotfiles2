@@ -91,10 +91,15 @@
   (spaceline-toggle-selection-info-on))
 
 (use-package dracula-theme
-  :defer nil
+  :defer t
+  :ensure t)
+
+(use-package doom-themes
   :ensure t
+  :defer nil
   :config
-  (load-theme 'dracula t))
+  ;;(load-theme 'doom-dracula t)
+  (load-theme 'doom-tomorrow-night t))
 
 (use-package ov ;; easy overlays
   :defer t

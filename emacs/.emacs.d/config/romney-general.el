@@ -234,36 +234,30 @@
   (global-unset-key (kbd "C-x c"))
   (global-set-key (kbd "C-c h o") 'helm-occur)
 
-  ;; focus help buffers when they open
-  (defadvice helm-man-woman
-      (after helm-man-woman activate)
-    (other-window 1))
-
-  (defadvice describe-key
-      (after describe-key activate)
-    (other-window 1))
-
-  (defadvice describe-function
-      (after describe-function activate)
-    (other-window 1))
-
-  (defadvice describe-variable
-      (after describe-variable activate)
-    (other-window 1))
-
-  (defadvice describe-bindings
-      (after describe-bindings activate)
-    (other-window 1))
-
-  (defadvice describe-mode
-      (after describe-mode activate)
-    (other-window 1))
-
   (when (executable-find "rg")
     (setq helm-grep-ag-command
           "rg --color=always --colors 'match:fg:black' --colors 'match:bg:magenta' --smart-case --no-heading --line-number %s %s %s"
           helm-grep-ag-pipe-cmd-switches
           '("--colors 'match:fg:black'" "--colors 'match:bg:magenta'"))))
+
+(defun romney/focus-other-window (&rest opts)
+  "Focus the other window"
+  (other-window 1))
+
+(defun romney/focus-command-windows (commands)
+  "Focus the other window when any of the given commands are executed"
+  (let (_value)
+    (dolist (command commands _value)
+      (advice-add command :after #'romney/focus-other-window))))
+
+(romney/focus-command-windows
+ '(helm-man-woman
+   describe-key
+   describe-function
+   describe-package
+   describe-variable
+   describe-mode
+   describe-bindings))
 
 (use-package helm-core
   :ensure t

@@ -107,7 +107,7 @@
 (use-package org-bullets
   :ensure t
   :after org-mode
-  :hook org-mode
+  :hook (org-mode . org-bullets-mode)
   :defines (org-bullets-bullet-list)
   :config
   (setq org-hide-emphasis-markers t)

@@ -110,10 +110,7 @@ Accepts a parameter (as NEXT-P), which is unused."
         cider-default-cljs-repl 'figwheel
         nrepl-hide-special-buffers t
         nrepl-log-messages t)
-  (defadvice cider-pprint-eval-last-sexp
-    (after cider-pprint-eval-last-sexp)
-    (other-window 1))
-  (ad-activate 'cider-pprint-eval-last-sexp))
+  (advice-add 'cider-pprint-eval-last-sexp :after #'romney/focus-other-window))
 
 (use-package cider-hydra
   :ensure t
