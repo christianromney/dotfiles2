@@ -7,16 +7,36 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-(add-to-list 'default-frame-alist '(font . "Hack-20"))
+;; -- font handling --
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
+
+(set-face-attribute 'default nil
+                    :family "Iosevka"
+                    :height 180
+                    :weight 'regular)
+
+(set-face-attribute 'mode-line nil
+                    :family "Iosevka"
+                    :height 160
+                    :weight 'thin)
+
+(set-face-attribute 'variable-pitch nil
+                    :family "Big Caslon Medium")
+
+(copy-face 'default 'fixed-pitch)
+
+(add-hook 'text-mode-hook
+          (lambda ()
+            (variable-pitch-mode 1)))
+
 (winner-mode)
 (column-number-mode)                                ;; enable column numbers
 (line-number-mode)                                  ;; enable line numbers
 (size-indication-mode)                              ;; enable file sizes
 (global-auto-revert-mode)                           ;; revert buffers when files changed externally
-(blink-cursor-mode -1)
+(blink-cursor-mode +1)
 (global-prettify-symbols-mode +1)
 (global-hl-line-mode +1)
 
@@ -32,8 +52,9 @@
 (if (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
+(setq-default cursor-type '(bar . 1))
 (setq-default fill-column 80)                       ;; fill column at 80 chars
-(setq-default indent-tabs-mode nil)                 ;; don't use tabs to indent
+(setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
 (setq-default tab-width 2)                          ;; don't waste real estate needlessly
 
 (use-package powerline
@@ -50,11 +71,11 @@
   (spaceline-helm-mode)
   ;; -- disabled --
   (spaceline-toggle-auto-compile-off)
-  (spaceline-toggle-battery-off)
   (spaceline-toggle-column-off)
   (spaceline-toggle-minor-modes-off)
   ;; -- enabled --
   (spaceline-toggle-anzu-on)
+  (spaceline-toggle-battery-on)
   (spaceline-toggle-buffer-modified-on)
   (spaceline-toggle-buffer-position-on)
   (spaceline-toggle-buffer-id-on)
@@ -94,12 +115,17 @@
   :config
   (hlinum-activate))
 
-;; Highlights TODO and similar keywords in comments and strings.
+;; Highlights 'TODO' and similar keywords in comments and strings.
 (use-package hl-todo
-  :defer t
   :ensure t
-  :init
-  (add-hook 'prog-mode-hook 'hl-todo-mode))
+  :hook (prog-mode . hl-todo-mode))
+
+(use-package beacon
+  :ensure t
+  :diminish beacon-mode
+  :init (beacon-mode 1)
+  :config
+  (add-to-list 'beacon-dont-blink-major-modes 'eshell-mode))
 
 (provide 'romney-theme)
 ;;; romney-theme.el ends here

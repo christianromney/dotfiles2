@@ -14,6 +14,7 @@
 (global-set-key (kbd "C-x f")   'find-file)         ;; typo elimination
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x \\")  #'align-regexp)
+(setq echo-keystrokes 0.1)
 
 (require 'which-func)
 (which-function-mode 1)                             ;; shows applicable key bindings

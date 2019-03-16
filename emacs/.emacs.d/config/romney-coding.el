@@ -59,8 +59,7 @@
          )
   :config
   (setq projectile-completion-system 'helm
-        projectile-switch-project-action 'helm-projectile
-        )
+          projectile-switch-project-action 'helm-projectile)
 
   (helm-projectile-on))
 
@@ -105,14 +104,18 @@
   :after treemacs
   :ensure t)
 
+(use-package highlight-numbers
+  :ensure t
+  :defer t
+  :hook (prog-mode . highlight-numbers-mode))
+
 (use-package rainbow-delimiters ;; colorize (), {}, []
   :ensure t
   :pin melpa-stable
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-identifiers ;; programming identifiers get consistent colors (helps spot typos)
-  :ensure t
-  :hook (prog-mode . rainbow-identifiers-mode))
+  :ensure t)
 
 (use-package rainbow-mode ;; visualize color strings like 'blue'
   :ensure t
