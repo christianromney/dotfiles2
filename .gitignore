@@ -7,3 +7,4 @@ google-cloud-sdk
 emacs/.emacs.d/personal/preload/credentials.el
 git/.gitconfig.secrets
 emacs/.emacs.d/.emacs.desktop
+emacs/.emacs.d/config/romney-custom.el
