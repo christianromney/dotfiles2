@@ -36,9 +36,7 @@
 (line-number-mode)                                  ;; enable line numbers
 (size-indication-mode)                              ;; enable file sizes
 (global-auto-revert-mode)                           ;; revert buffers when files changed externally
-(blink-cursor-mode +1)
 (global-prettify-symbols-mode +1)
-(global-hl-line-mode +1)
 
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
@@ -52,9 +50,6 @@
 (if (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
-(set-cursor-color "#ffffff")
-(setq-default blink-cursor-blinks -1)
-(setq-default cursor-type '(bar . 1))
 (setq-default fill-column 80)                       ;; fill column at 80 chars
 (setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
 (setq-default tab-width 2)                          ;; don't waste real estate needlessly
@@ -100,8 +95,12 @@
   :ensure t
   :defer nil
   :config
-  ;;(load-theme 'doom-dracula t)
-  (load-theme 'doom-tomorrow-night t))
+  (load-theme 'doom-tomorrow-night t)
+  (global-hl-line-mode +1)
+  (set-cursor-color "#ffffff")
+  (blink-cursor-mode +1)
+  (setq-default blink-cursor-blinks -1)
+  (setq-default cursor-type '(bar . 1)))
 
 (use-package ov ;; easy overlays
   :defer t
