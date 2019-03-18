@@ -18,6 +18,9 @@
 (defconst personal-autosave-dir
   (expand-file-name "autosave" personal-savefile-dir))
 
+(defconst personal-config-dir
+  (expand-file-name ".emacs.d/config" (file-name-directory user-init-file)))
+
 (ensure-directory personal-savefile-dir)
 (ensure-directory personal-backup-dir)
 (ensure-directory personal-autosave-dir)

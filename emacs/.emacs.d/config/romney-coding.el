@@ -42,27 +42,6 @@
   (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
   (projectile-mode +1))
 
-(use-package helm-projectile
-  :ensure t
-  :hook (projectile-mode)
-  :bind (("C-c p f" . helm-projectile-find-file-dwim)
-         ("C-c p p" . helm-projectile-switch-project)
-         ("C-c p h" . helm-projectile)
-         ("C-c p F" . helm-projectile-find-file-in-known-projects)
-         ("C-c p d" . helm-projectile-find-dir)
-         ("C-c p e" . helm-projectile-recentf)
-         ("C-c p a" . helm-projectile-find-other-file)
-         ("C-c p b" . helm-projectile-switch-to-buffer)
-         ;;("C-c p s g" . helm-projectile-grep)
-         ;;("C-c p s a" . helm-projectile-ack)
-         ;;("C-c p s s" . helm-projectile-ag)
-         )
-  :config
-  (setq projectile-completion-system 'helm
-          projectile-switch-project-action 'helm-projectile)
-
-  (helm-projectile-on))
-
 (use-package treemacs
   :ensure t
   :defer t

@@ -6,12 +6,12 @@
 (defvar personal/clojure-prettify-alist '()
   "Pretty symbols for Clojure.")
 
-(defun personal/find-tag-without-ns (next-p)
-  "This function will try to find function definitions without their namespace.
-Accepts a parameter (as NEXT-P), which is unused."
-  (interactive "P")
-  (xref-find-definitions
-   (car (last (split-string (symbol-name (symbol-at-point)) "/")))))
+;; (defun personal/find-tag-without-ns (next-p)
+;;   "This function will try to find function definitions without their namespace.
+;; Accepts a parameter (as NEXT-P), which is unused."
+;;   (interactive "P")
+;;   (xref-find-definitions
+;;    (car (last (split-string (symbol-name (symbol-at-point)) "/")))))
 
 (use-package flycheck-joker
   :ensure t
@@ -22,8 +22,8 @@ Accepts a parameter (as NEXT-P), which is unused."
   :pin melpa-stable
   :defer t
   :defines (clojure--prettify-symbols-alist)
-  :bind
-  (("M-." . personal/find-tag-without-ns))
+  ;; :bind
+  ;; (("M-." . personal/find-tag-without-ns))
   :config
   ;;(require 'clj-refactor)
   (add-hook 'clojure-mode-hook #'subword-mode)
@@ -40,9 +40,6 @@ Accepts a parameter (as NEXT-P), which is unused."
     (with-mock 2)
     (for-all 2)
     (clone-for 2)
-    (alter-when 2)
-    (keep-when 2)
-    (remove-when 2)
     (reg-sub 1)
     (s/fdef 1))
   (eval-after-load 'clojure-mode
@@ -62,14 +59,6 @@ Accepts a parameter (as NEXT-P), which is unused."
   :config
   (setq cljr-suppress-middleware-warnings t)
   (cljr-add-keybindings-with-prefix "C-c C-a"))
-
-(use-package helm-clojuredocs
-  :ensure t
-  :defer t
-  :after (helm clojure-mode)
-  :bind
-  (:map helm-command-map
-        ("C-c h d" . helm-clojuredocs-at-point)))
 
 (use-package cl-lib
   :ensure t)
