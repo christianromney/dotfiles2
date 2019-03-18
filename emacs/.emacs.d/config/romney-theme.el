@@ -14,7 +14,7 @@
 
 (set-face-attribute 'default nil
                     :family "Iosevka"
-                    :height 180
+                    :height 200
                     :weight 'regular)
 
 (set-face-attribute 'mode-line nil
