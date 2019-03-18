@@ -9,6 +9,7 @@
 (use-package counsel ;; counsel (ivy + swiper are transitive deps)
   :ensure t
   :bind (("C-s" . swiper)
+         ("C-r" . swiper)
          ("M-x" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
          ("C-x C-f" . counsel-find-file)
