@@ -37,8 +37,7 @@
         org-agenda-skip-scheduled-if-done t
         org-agenda-include-diary t
         org-agenda-files '("~/Dropbox/org/agenda.org"
-                           "~/Dropbox/org/notes.org"
-                           "~/Dropbox/org/pointslope/business.org"))
+                           "~/Dropbox/org/notes.org"))
   (setq org-todo-keywords '((type "TODO" "STARTED" "FINISHED" "DELIVERED" "|" "DONE"))
         org-todo-keyword-faces
         '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))

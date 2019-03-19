@@ -87,10 +87,6 @@
   (spaceline-toggle-projectile-root-on)
   (spaceline-toggle-selection-info-on))
 
-(use-package dracula-theme
-  :defer t
-  :ensure t)
-
 (use-package doom-themes
   :ensure t
   :defer nil

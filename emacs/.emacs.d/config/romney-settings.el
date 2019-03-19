@@ -38,7 +38,6 @@
       ring-bell-function                  'ignore
       sh-learn-basic-offset               t                         ;; try to figure out offset for shell mode
       locale-coding-system                'utf-8                    ;; utf-8 character encoding
-
       )
 
 (setq-default initial-major-mode (quote emacs-lisp-mode))

@@ -56,6 +56,7 @@
   (setq save-place-file (expand-file-name "saveplace" personal-savefile-dir))
   (save-place-mode +1)
   ;; TODO: find an approach that works:
+  ;; (add-hook 'save-place-find-file-hook 'recenter)
   ;; (advice-add 'save-place-find-file-hook :after #'recenter-top-bottom)
   )
 
