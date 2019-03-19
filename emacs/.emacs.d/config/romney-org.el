@@ -64,7 +64,7 @@
 
           ("c" "Code Snippet" entry (file personal-org-file-snippets)
            ;; Prompt for tag and language
-           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")))
+           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC")))
 
   (add-to-list 'org-agenda-files personal-org-file-agenda)
   (add-to-list 'org-agenda-files personal-org-file-todo)
