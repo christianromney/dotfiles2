@@ -32,6 +32,7 @@
         org-export-backends '(ascii html icalendar latex md)
         org-use-sub-superscripts "{}"
         org-agenda-show-log t
+        org-agenda-window-setup 'current-window
         org-agenda-todo-ignore-scheduled t
         org-agenda-todo-ignore-deadlines t
         org-agenda-skip-deadline-if-done t
@@ -66,13 +67,16 @@
            ;; Prompt for tag and language
            "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC")))
 
-  (add-to-list 'org-agenda-files personal-org-file-agenda)
+  (add-to-list 'org-agenda-files personal-org-file-journal)
   (add-to-list 'org-agenda-files personal-org-file-todo)
 
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode)
               (auto-fill-mode)))
+
+  (add-hook 'after-init-hook
+            (lambda () (org-agenda t "n")))
 
   (setq org-babel-clojure-backend 'cider
         org-fontify-done-headline t
@@ -97,6 +101,7 @@
   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
   (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
   (add-to-list 'auto-mode-alist '("\\.org\\’" . org-mode))
+
 
   :bind
   (("C-c a" . org-agenda)
