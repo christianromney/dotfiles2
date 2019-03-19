@@ -141,8 +141,7 @@
 
 (use-package org-board
   :ensure t
-  :defer t
-  :bind (("C-c o" . org-board-keymap)))
+  :defer t)
 
 (provide 'romney-org)
 ;;; romney-org.el ends here
