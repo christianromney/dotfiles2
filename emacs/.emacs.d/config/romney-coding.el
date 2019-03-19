@@ -39,7 +39,7 @@
   :defines (helm-completion-system)
   :diminish projectile-mode
   :config
-  (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-savefile-dir))
+  (setq projectile-cache-file (expand-file-name  "projectile.cache" personal-data-dir))
   (projectile-mode +1))
 
 (use-package treemacs

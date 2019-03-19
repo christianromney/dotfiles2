@@ -23,6 +23,7 @@
 
 (global-set-key (kbd "C-c M-o") 'occur)
 (global-set-key (kbd "C-c o") org-board-keymap)
+(global-set-key (kbd "C-x m") 'browse-url-at-point)
 
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-x r I") 'string-insert-rectangle)

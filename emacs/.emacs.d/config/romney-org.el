@@ -4,6 +4,7 @@
 ;;; Code:
 (use-package org
   :ensure t
+  :mode ("\\.org\\'" . org-mode)
   :pin org
   :defer t
   :defines
@@ -141,7 +142,9 @@
 
 (use-package org-board
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (setq org-attach-directory personal-bookmarks-dir))
 
 (provide 'romney-org)
 ;;; romney-org.el ends here

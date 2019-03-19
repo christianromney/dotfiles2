@@ -53,12 +53,8 @@
 
 (use-package saveplace ;; remember location when saving files
   :config
-  (setq save-place-file (expand-file-name "saveplace" personal-savefile-dir))
-  (save-place-mode +1)
-  ;; TODO: find an approach that works:
-  ;; (add-hook 'save-place-find-file-hook 'recenter)
-  ;; (advice-add 'save-place-find-file-hook :after #'recenter-top-bottom)
-  )
+  (setq save-place-file (expand-file-name "saved-places" personal-data-dir))
+  (save-place-mode))
 
 (use-package savehist ;; autosave work
   :defer 5
@@ -66,15 +62,13 @@
   (setq savehist-additional-variables
         '(search-ring regexp-search-ring)
         savehist-autosave-interval 60
-        savehist-file
-        (expand-file-name "savehist" personal-savefile-dir))
+        savehist-file (expand-file-name "autosave-history" personal-data-dir))
   (savehist-mode +1))
 
 (use-package recentf
   :defer 3
   :config
-  (setq recentf-save-file
-        (expand-file-name "recentf" personal-savefile-dir)
+  (setq recentf-save-file (expand-file-name "recent-files" personal-data-dir)
         recentf-max-saved-items 100
         recentf-max-menu-items  20
         recentf-auto-cleanup 'never)
@@ -117,41 +111,16 @@
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
-;; (use-package ido
-;;   :ensure t
-;;   :config
-;;   (setq ido-enable-prefix nil
-;;         ido-enable-flex-matching t
-;;         ido-create-new-buffer 'always
-;;         ido-use-filename-at-point 'guess
-;;         ido-use-faces nil
-;;         ido-max-prospects 10
-;;         ido-save-directory-list-file (expand-file-name "ido.hist" personal-savefile-dir)
-;;         ido-default-file-method 'selected-window
-;;         ido-auto-merge-work-directories-length -1)
-;;   (ido-mode +1))
-
-;; ;; formerly known as ido-ubiquitous-mode
-;; (use-package ido-completing-read+
-;;   :ensure t
-;;   :config
-;;   (ido-ubiquitous-mode +1))
-
-;; (use-package flx-ido
-;;   :ensure t
-;;   :config
-;;   (flx-ido-mode +1))
-
 (use-package alert
   :ensure t
   :config
   (setq-default alert-default-style 'osx-notifier))
 
-(use-package smex ;; smarter M-x
+(use-package smex ;; smarter M-x : is this needed with counsel???
   :ensure t
   :defer t
   :config
-  (setq smex-save-file (expand-file-name ".smex-items" personal-savefile-dir))
+  (setq smex-save-file (expand-file-name "smex-items" personal-data-dir))
   (smex-initialize)
   :bind
   (("M-x" . smex)
@@ -162,7 +131,7 @@
   :diminish company-mode
   :config
   (setq company-idle-delay 0.5
-        company-tooltip-limit 10
+        company-tooltip-limit 20
         company-minimum-prefix-length 2
         company-show-numbers t
         company-tooltip-flip-when-above t)
@@ -236,23 +205,27 @@
   :defer t
   :bind ("C-c ?" . define-word-at-point))
 
-(defun duplicate-current-line ()
-  "Duplicate the current line."
-  (interactive)
-  (beginning-of-line nil)
-  (let ((b (point)))
-    (end-of-line nil)
-    (copy-region-as-kill b (point)))
-  (beginning-of-line 2)
-  (open-line 1)
-  (yank)
-  (back-to-indentation))
-
 (use-package epg
   :ensure t
   :config
   (setenv "GPG_AGENT_INFO" nil))
 
+;; string handling routines
+(use-package s :ensure t)
+(use-package eww
+  :defer t
+  :init
+  (add-hook 'eww-mode-hook #'toggle-word-wrap)
+  (add-hook 'eww-mode-hook #'visual-line-mode)
+  :bind
+  (:map eww-mode-map
+   ("j" . next-line)
+   ("k" . previous-line)
+   :map eww-link-keymap
+   ("o" . eww)
+   ("O" . eww-browse-with-external-browser)))
+
+;; --- functions ---
 (defun romney/dired-config ()
   "Open the config directory in dired."
   (interactive)

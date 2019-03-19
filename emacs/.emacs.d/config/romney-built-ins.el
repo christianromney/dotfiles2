@@ -22,7 +22,7 @@
 (require 'bookmark)
 (setq bookmark-save-flag 1
       bookmark-default-file
-      (expand-file-name "bookmarks" personal-savefile-dir))
+      (expand-file-name "buffer-bookmarks" personal-data-dir))
 
 (require 'midnight)                                 ;; clean up obsolete buffers automatically
 
