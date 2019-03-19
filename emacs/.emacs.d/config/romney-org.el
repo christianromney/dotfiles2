@@ -22,8 +22,8 @@
    org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
-  (setq org-directory (concat personal-data-dir "/org/")
-        org-default-notes-file (concat org-directory "notes.org")
+  (setq org-directory personal-org-dir
+        org-default-notes-file personal-org-file-default
         org-log-done nil
         org-return-follows-link t
         org-startup-indented t
@@ -53,18 +53,21 @@
           ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 
         org-capture-templates
-        '(("r" "Recipe" entry (file (lambda () (concat org-directory "cookbook.org")))
+        `(("r" "Recipe" entry (file personal-org-file-cookbook)
            "%(org-chef-get-recipe-from-url)" :empty-lines 1)
 
-          ("t" "Task" entry (file+headline (lambda () (concat org-directory "todos.org")) "Todos")
+          ("t" "Task" entry (file+headline personal-org-file-todo "Todos")
            "* TODO %^{Task} %^G")
 
-          ("c" "Code Snippet" entry (file (lambda () (concat org-directory "snippets.org")))
+          ("j" "Journal Entry" entry (file+datetree personal-org-file-journal)
+           (file ,personal-org-template-journal))
+
+          ("c" "Code Snippet" entry (file personal-org-file-snippets)
            ;; Prompt for tag and language
            "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")))
 
-  (add-to-list 'org-agenda-files (concat org-directory "agenda.org"))
-  (add-to-list 'org-agenda-files (concat org-directory "todos.org"))
+  (add-to-list 'org-agenda-files personal-org-file-agenda)
+  (add-to-list 'org-agenda-files personal-org-file-todo)
 
   (add-hook 'org-mode-hook
             (lambda ()
