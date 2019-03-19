@@ -1,0 +1,15 @@
+* Partition                                                         :clojure:
+#+BEGIN_SRC clojure
+  (defn rb-partition
+    [pred coll]
+    (let [[matched rejects]
+          (reduce
+           (fn [[pass fail] item]
+             (if (pred item)
+               [(conj! pass item) fail]
+               [pass (conj! fail item)]))
+           [(transient []) (transient [])]
+           coll)]
+      [(persistent! matched)
+       (persistent! rejects)]))
+#+END_SRC

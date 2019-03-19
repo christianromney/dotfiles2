@@ -22,9 +22,9 @@
    org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
-  (setq org-directory "~/Dropbox/org"
-        org-default-notes-file (concat org-directory "/notes.org")
-        org-log-done 'note
+  (setq org-directory (concat personal-data-dir "/org/")
+        org-default-notes-file (concat org-directory "notes.org")
+        org-log-done nil
         org-return-follows-link t
         org-startup-indented t
         org-html-validation-link nil
@@ -37,27 +37,34 @@
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
         org-agenda-include-diary t
-        org-agenda-files '("~/Dropbox/org/agenda.org"
-                           "~/Dropbox/org/notes.org"))
-  (setq org-todo-keywords '((type "TODO" "STARTED" "FINISHED" "DELIVERED" "|" "DONE"))
+
+        org-tag-alist '(("work"       . "?w")
+                        ("personal"   . "?p")
+                        ("clojure"    . "?c")
+                        ("scheme"     . "?s")
+                        ("rust"       . "?r"))
+
+        org-todo-keywords
+        '((type "TODO" "STARTED" "|" "DONE"))
+
         org-todo-keyword-faces
         '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))
-          ("STARTED"   . (:background "light yellow" :foreground "brown"      :weight bold))
-          ("FINISHED"  . (:background "light blue"   :foreground "dark blue"  :weight bold))
-          ("DELIVERED" . (:background "orange"       :foreground "black"      :weight bold))
-          ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold))))
+          ("STARTED"   . (:background "yellow"       :foreground "black"      :weight bold))
+          ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 
-  (setq org-capture-templates
-        '(("r" "Recipe" entry (file "~/Dropbox/org/cookbook.org")
-           "%(org-chef-get-recipe-from-url)"
-           :empty-lines 1)
+        org-capture-templates
+        '(("r" "Recipe" entry (file (lambda () (concat org-directory "cookbook.org")))
+           "%(org-chef-get-recipe-from-url)" :empty-lines 1)
 
-          ("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Todos")
-           "* TODO %^{Task} %^G")))
+          ("t" "Task" entry (file+headline (lambda () (concat org-directory "todos.org")) "Todos")
+           "* TODO %^{Task} %^G")
 
-  (setq org-tag-alist '(("business"   . "?b")
-                        ("personal"   . "?p")
-                        ("education"  . "?e")))
+          ("c" "Code Snippet" entry (file (lambda () (concat org-directory "snippets.org")))
+           ;; Prompt for tag and language
+           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")))
+
+  (add-to-list 'org-agenda-files (concat org-directory "agenda.org"))
+  (add-to-list 'org-agenda-files (concat org-directory "todos.org"))
 
   (add-hook 'org-mode-hook
             (lambda ()
@@ -100,14 +107,14 @@
 
 (use-package org-bullets
   :ensure t
-  :hook (org-mode . org-bullets-mode)
   :defines (org-bullets-bullet-list)
+  :init
+  (add-hook 'org-mode-hook #'org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("◉" "○" "◌" "●")))
 
 (use-package org-re-reveal
   :ensure t
-  :hook org-mode
   :config
   (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.min.js"
         org-re-reveal-title-slide "%t"
