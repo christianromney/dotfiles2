@@ -2,6 +2,12 @@
 ;;; Commentary:
 ;;
 ;;; Code:
+
+(defun romney/org-file (basename)
+  "Return the absolute path to the named 'org-mode' file.
+BASENAME - the basename of the file."
+  (expand-file-name basename personal-org-dir))
+
 (use-package org
   :ensure t
   :defer t
@@ -22,13 +28,8 @@
    org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
-  (add-to-list 'org-agenda-files personal-org-file-journal)
-  (add-to-list 'org-agenda-files (expand-file-name "math-for-programmers.org" personal-org-dir))
-  (add-to-list 'org-agenda-files (expand-file-name "little-typer.org" personal-org-dir))
-  (add-to-list 'org-agenda-files (expand-file-name "notes.org" personal-org-dir))
   (setq org-directory personal-org-dir
-        org-default-notes-file personal-org-file-default
-
+        org-default-notes-file personal-org-file-todo
         org-agenda-include-diary t
         org-agenda-show-all-dates t
         org-agenda-show-log t
@@ -58,6 +59,13 @@
         org-use-fast-todo-selection t
         org-use-sub-superscripts "{}"
 
+        org-agenda-files
+        `(,personal-org-file-todo
+          ,personal-org-file-journal
+          ,personal-org-file-notes
+          ,(romney/org-file "math-for-programmers.org")
+          ,(romney/org-file "little-typer.org"))
+
         org-refile-targets
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
@@ -77,22 +85,22 @@
           ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 
         org-capture-templates
-        `(("r" "Recipe" entry (file personal-org-file-cookbook)
+        `(("r" "Recipe" entry (file ,personal-org-file-cookbook)
            "%(org-chef-get-recipe-from-url)" :empty-lines 1)
 
-          ("t" "Task" entry (file+headline personal-org-file-todo "Todos")
+          ("t" "Task" entry (file+headline ,personal-org-file-todo "Todos")
            "* TODO %^{Task} %^G")
 
-          ("j" "Journal Entry" entry (file+datetree personal-org-file-journal)
+          ("j" "Journal Entry" entry (file+datetree ,personal-org-file-journal)
            (file ,personal-org-template-journal))
 
-          ("s" "Study Notes" entry (file+headline personal-org-file-notes "Notes")
+          ("s" "Study Notes" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-note))
 
-          ("q" "Study Quote" entry (file+headline personal-org-file-notes "Notes")
+          ("q" "Study Quote" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-quote))
 
-          ("c" "Code Snippet" entry (file personal-org-file-snippets)
+          ("c" "Code Snippet" entry (file ,personal-org-file-snippets)
            "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC"))
 
         org-agenda-custom-commands
@@ -132,6 +140,10 @@
    ("C-c l" . org-store-link)))
 
 (use-package ob-prolog
+  :ensure t
+  :defer t)
+
+(use-package org-chef
   :ensure t
   :defer t)
 

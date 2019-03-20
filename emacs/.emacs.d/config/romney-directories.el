@@ -21,9 +21,6 @@
 (defconst personal-org-dir
   (expand-file-name "org" personal-data-dir))
 
-(defconst personal-org-file-agenda
-  (expand-file-name "agenda.org" personal-org-dir))
-
 (defconst personal-org-file-todo
   (expand-file-name "todos.org" personal-org-dir))
 
@@ -38,9 +35,6 @@
 
 (defconst personal-org-file-snippets
   (expand-file-name "snippets.org" personal-org-dir))
-
-(defconst personal-org-file-default
-  personal-org-file-todo)
 
 (defconst personal-org-template-dir
   (expand-file-name "templates" personal-org-dir))
