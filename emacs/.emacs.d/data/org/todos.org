@@ -1,14 +1,18 @@
-* Todos
+* Tsodos
 ** Work
 *** Prod Team
 **** DONE Fix site trial list prod issue                           :reify:
 *** Globalization
-**** STARTED Review Jan's code                                      :work:
+**** DONE Review Jan's code                                         :work:
 SCHEDULED: <2019-03-20 Wed>
 **** DONE Review David's Code                                       :work:
 SCHEDULED: <2019-03-19 Tue>
-**** TODO Check in on Matt's progress                              :work:
+**** DONE Check in on Matt's progress                               :work:
 SCHEDULED: <2019-03-20 Wed>
+**** STARTED Validate AU will not have vendor or sponsor referrals  :work:
+SCHEDULED: <2019-03-20 Wed>
+**** TODO Review David's 3 PRs                                     :reify:
+SCHEDULED: <2019-03-21 Thu>
 ** Personal
 *** House
 *** Insurance
@@ -16,3 +20,4 @@ SCHEDULED: <2019-03-20 Wed>
 *** Cars
 *** DONE Workout                                                 :personal:
 *** DONE Make dinner                                             :personal:
+* Todos

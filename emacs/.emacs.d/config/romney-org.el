@@ -70,12 +70,12 @@ BASENAME - the basename of the file."
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
         org-tag-alist '(("work"       . ?w)
+                        ("noise"      . ?n)
                         ("personal"   . ?p)
                         ("study"      . ?s)
                         ("clojure"    . ?c)
                         ("racket"     . ?k)
                         ("rust"       . ?r))
-
 
         org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)"))
@@ -89,16 +89,16 @@ BASENAME - the basename of the file."
         `(("r" "Recipe" entry (file ,personal-org-file-cookbook)
            "%(org-chef-get-recipe-from-url)" :empty-lines 1)
 
-          ("t" "Task" entry (file+headline ,personal-org-file-todo "Todos")
+          ("t" "Todo" entry (file+headline ,personal-org-file-todo "Todos")
            "* TODO %^{Task} %^G")
 
           ("j" "Journal Entry" entry (file+datetree ,personal-org-file-journal)
            (file ,personal-org-template-journal))
 
-          ("s" "Study Notes" entry (file+headline ,personal-org-file-notes "Notes")
+          ("n" "Note" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-note))
 
-          ("q" "Study Quote" entry (file+headline ,personal-org-file-notes "Notes")
+          ("q" "Quotation/Citation" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-quote))
 
           ("c" "Code Snippet" entry (file ,personal-org-file-snippets)
