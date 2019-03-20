@@ -4,9 +4,9 @@
 ;;; Code:
 (use-package org
   :ensure t
-  :mode ("\\.org\\'" . org-mode)
-  :pin org
   :defer t
+  :pin org
+  :mode ("\\.org\\’" . org-mode)
   :defines
   (org-startup-indented
    org-html-validation-link
@@ -38,16 +38,22 @@
         org-agenda-todo-ignore-deadlines t
         org-agenda-todo-ignore-scheduled t
         org-agenda-window-setup 'current-window
+        org-babel-clojure-backend 'cider
+        org-confirm-babel-evaluate nil
         org-ellipsis "⤵"
         org-export-backends '(ascii html icalendar latex md)
         org-export-html-postamble nil
+        org-fontify-done-headline t
         org-html-validation-link nil
         org-log-done nil
         org-outline-path-complete-in-steps nil
         org-refile-use-cache t
         org-refile-use-outline-path t
         org-return-follows-link t
+        org-src-fontify-natively t
         org-src-tab-acts-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window
         org-startup-indented t
         org-use-fast-todo-selection t
         org-use-sub-superscripts "{}"
@@ -83,11 +89,10 @@
           ("s" "Study Notes" entry (file+headline personal-org-file-notes "Notes")
            (file ,personal-org-template-note))
 
-          ("q" "Quote / Reference" entry (file+headline personal-org-file-notes "Notes")
+          ("q" "Study Quote" entry (file+headline personal-org-file-notes "Notes")
            (file ,personal-org-template-quote))
 
           ("c" "Code Snippet" entry (file personal-org-file-snippets)
-           ;; Prompt for tag and language
            "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC"))
 
         org-agenda-custom-commands
@@ -104,13 +109,6 @@
   (add-hook 'after-init-hook
             (lambda () (org-agenda t "d")))
 
-  (setq org-babel-clojure-backend 'cider
-        org-fontify-done-headline t
-        org-src-fontify-natively t
-        org-confirm-babel-evaluate nil
-        org-src-window-setup 'current-window
-        org-src-tab-acts-natively t)
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -126,7 +124,6 @@
 
   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
   (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
-  (add-to-list 'auto-mode-alist '("\\.org\\’" . org-mode))
 
   :bind
   (("C-c a" . org-agenda)

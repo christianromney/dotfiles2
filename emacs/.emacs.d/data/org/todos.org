@@ -14,5 +14,5 @@ SCHEDULED: <2019-03-20 Wed>
 *** Insurance
 *** Taxes
 *** Cars
-*** TODO Workout                                                 :personal:
+*** DONE Workout                                                 :personal:
 *** DONE Make dinner                                             :personal:
