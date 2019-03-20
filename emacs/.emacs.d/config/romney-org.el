@@ -76,8 +76,9 @@ BASENAME - the basename of the file."
                         ("racket"     . ?k)
                         ("rust"       . ?r))
 
+
         org-todo-keywords
-        '((type "TODO" "STARTED" "|" "DONE"))
+        '((sequence "TODO" "STARTED" "|" "DONE"))
 
         org-todo-keyword-faces
         '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))
