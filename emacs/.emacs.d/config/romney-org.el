@@ -82,7 +82,7 @@ BASENAME - the basename of the file."
 
         org-todo-keyword-faces
         '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))
-          ("STARTED"   . (:background "yellow"       :foreground "black"      :weight bold))
+          ("STARTED"   . (:background "gold1"        :foreground "black"      :weight bold))
           ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 
         org-capture-templates
