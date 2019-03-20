@@ -22,28 +22,45 @@
    org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
+  (add-to-list 'org-agenda-files personal-org-file-journal)
+  (add-to-list 'org-agenda-files (expand-file-name "math-for-programmers.org" personal-org-dir))
+  (add-to-list 'org-agenda-files (expand-file-name "little-typer.org" personal-org-dir))
+  (add-to-list 'org-agenda-files (expand-file-name "notes.org" personal-org-dir))
   (setq org-directory personal-org-dir
         org-default-notes-file personal-org-file-default
-        org-log-done nil
-        org-return-follows-link t
-        org-startup-indented t
-        org-html-validation-link nil
-        org-export-html-postamble nil
-        org-export-backends '(ascii html icalendar latex md)
-        org-use-sub-superscripts "{}"
+
+        org-agenda-include-diary t
+        org-agenda-show-all-dates t
         org-agenda-show-log t
-        org-agenda-window-setup 'current-window
-        org-agenda-todo-ignore-scheduled t
-        org-agenda-todo-ignore-deadlines t
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
-        org-agenda-include-diary t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-todo-ignore-deadlines t
+        org-agenda-todo-ignore-scheduled t
+        org-agenda-window-setup 'current-window
+        org-ellipsis "⤵"
+        org-export-backends '(ascii html icalendar latex md)
+        org-export-html-postamble nil
+        org-html-validation-link nil
+        org-log-done nil
+        org-outline-path-complete-in-steps nil
+        org-refile-use-cache t
+        org-refile-use-outline-path t
+        org-return-follows-link t
+        org-src-tab-acts-natively t
+        org-startup-indented t
+        org-use-fast-todo-selection t
+        org-use-sub-superscripts "{}"
 
-        org-tag-alist '(("work"       . "?w")
-                        ("personal"   . "?p")
-                        ("clojure"    . "?c")
-                        ("scheme"     . "?s")
-                        ("rust"       . "?r"))
+        org-refile-targets
+        '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
+
+        org-tag-alist '(("work"       . ?w)
+                        ("personal"   . ?p)
+                        ("study"      . ?s)
+                        ("clojure"    . ?c)
+                        ("racket"     . ?k)
+                        ("rust"       . ?r))
 
         org-todo-keywords
         '((type "TODO" "STARTED" "|" "DONE"))
@@ -63,12 +80,21 @@
           ("j" "Journal Entry" entry (file+datetree personal-org-file-journal)
            (file ,personal-org-template-journal))
 
+          ("s" "Study Notes" entry (file+headline personal-org-file-notes "Notes")
+           (file ,personal-org-template-note))
+
+          ("q" "Quote / Reference" entry (file+headline personal-org-file-notes "Notes")
+           (file ,personal-org-template-quote))
+
           ("c" "Code Snippet" entry (file personal-org-file-snippets)
            ;; Prompt for tag and language
-           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC")))
+           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC"))
 
-  (add-to-list 'org-agenda-files personal-org-file-journal)
-  (add-to-list 'org-agenda-files personal-org-file-todo)
+        org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 7)))
+            (tags-todo "work")
+            (tags-todo "personal")))))
 
   (add-hook 'org-mode-hook
             (lambda ()
@@ -76,7 +102,7 @@
               (auto-fill-mode)))
 
   (add-hook 'after-init-hook
-            (lambda () (org-agenda t "n")))
+            (lambda () (org-agenda t "d")))
 
   (setq org-babel-clojure-backend 'cider
         org-fontify-done-headline t
@@ -102,10 +128,9 @@
   (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
   (add-to-list 'auto-mode-alist '("\\.org\\’" . org-mode))
 
-
   :bind
   (("C-c a" . org-agenda)
-   ("C-c b" . org-iswitchb)
+   ("C-c b" . org-switchb)
    ("C-c c" . org-capture)
    ("C-c l" . org-store-link)))
 

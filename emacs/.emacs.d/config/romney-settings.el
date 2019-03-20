@@ -9,6 +9,7 @@
       calendar-location-name              "Pembroke Pines, FL"
       calendar-longitude                  -80.34110799999999
       calendar-latitude                   26.017
+      calendar-week-start-day             1
       custom-file                         "~/.emacs.d/config/romney-custom.el"
       delete-old-versions                 t
       inhibit-startup-message             t                         ;; no initial message in scratch buffer

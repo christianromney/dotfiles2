@@ -34,7 +34,9 @@
         ivy-extra-directories nil
         magit-completing-read-function 'ivy-completing-read
         projectile-completion-system 'ivy
-        ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+        ivy-re-builders-alist
+        '((swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
   (ivy-mode 1))
 
 (use-package ivy-rich

@@ -1,0 +1,3 @@
+* Notes
+** Rules
+   - claims must appear before definitions

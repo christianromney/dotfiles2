@@ -1,4 +1,18 @@
 * Todos
-** DONE Fix site trial list prod issue                               :reify:
-** TODO Review Jan's code                                            :reify:
-** TODO Review David's Code                                          :reify:
+** Work
+*** Prod Team
+**** DONE Fix site trial list prod issue                           :reify:
+*** Globalization
+**** TODO Review Jan's code                                        :work:
+SCHEDULED: <2019-03-19 Tue>
+**** TODO Review David's Code                                      :work:
+SCHEDULED: <2019-03-19 Tue>
+**** TODO Check in on Matt's progress                              :work:
+SCHEDULED: <2019-03-20 Wed>
+** Personal
+*** House
+*** Insurance
+*** Taxes
+*** Cars
+*** TODO Workout                                                 :personal:
+*** DONE Make dinner                                             :personal:

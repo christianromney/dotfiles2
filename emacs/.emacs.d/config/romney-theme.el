@@ -70,9 +70,9 @@
   (spaceline-toggle-auto-compile-off)
   (spaceline-toggle-column-off)
   (spaceline-toggle-minor-modes-off)
+  (spaceline-toggle-battery-off)
   ;; -- enabled --
   (spaceline-toggle-anzu-on)
-  (spaceline-toggle-battery-on)
   (spaceline-toggle-buffer-modified-on)
   (spaceline-toggle-buffer-position-on)
   (spaceline-toggle-buffer-id-on)
@@ -95,6 +95,7 @@
   (global-hl-line-mode +1)
   (set-cursor-color "#ffffff")
   (blink-cursor-mode +1)
+  (setq x-stretch-cursor t)
   (setq-default blink-cursor-blinks -1)
   (setq-default cursor-type '(bar . 1)))
 

@@ -116,7 +116,7 @@
   :config
   (setq-default alert-default-style 'osx-notifier))
 
-(use-package smex ;; smarter M-x : is this needed with counsel???
+(use-package smex ;; smarter M-x
   :ensure t
   :defer t
   :config

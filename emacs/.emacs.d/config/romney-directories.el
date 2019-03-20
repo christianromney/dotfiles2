@@ -27,6 +27,9 @@
 (defconst personal-org-file-todo
   (expand-file-name "todos.org" personal-org-dir))
 
+(defconst personal-org-file-notes
+  (expand-file-name "notes.org" personal-org-dir))
+
 (defconst personal-org-file-journal
   (expand-file-name "journal.org" personal-org-dir))
 
@@ -45,6 +48,11 @@
 (defconst personal-org-template-journal
   (expand-file-name "journal.template" personal-org-template-dir))
 
+(defconst personal-org-template-note
+  (expand-file-name "note.template" personal-org-template-dir))
+
+(defconst personal-org-template-quote
+  (expand-file-name "quote.template" personal-org-template-dir))
 
 (provide 'romney-directories)
 ;;; romney-directories.el ends here
