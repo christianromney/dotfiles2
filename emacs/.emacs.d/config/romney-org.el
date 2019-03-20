@@ -78,10 +78,10 @@ BASENAME - the basename of the file."
 
 
         org-todo-keywords
-        '((sequence "TODO" "STARTED" "|" "DONE"))
+        '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)"))
 
         org-todo-keyword-faces
-        '(("TODO"      . (:background "salmon"       :foreground "red"        :weight bold))
+        '(("TODO"      . (:background "IndianRed1"   :foreground "red4"       :weight bold))
           ("STARTED"   . (:background "gold1"        :foreground "black"      :weight bold))
           ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 

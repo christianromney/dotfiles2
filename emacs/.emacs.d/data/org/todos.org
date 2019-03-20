@@ -3,8 +3,8 @@
 *** Prod Team
 **** DONE Fix site trial list prod issue                           :reify:
 *** Globalization
-**** TODO Review Jan's code                                         :work:
-SCHEDULED: <2019-03-19 Tue>
+**** STARTED Review Jan's code                                      :work:
+SCHEDULED: <2019-03-20 Wed>
 **** DONE Review David's Code                                       :work:
 SCHEDULED: <2019-03-19 Tue>
 **** TODO Check in on Matt's progress                              :work:
