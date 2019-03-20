@@ -22,13 +22,13 @@
   (expand-file-name "org" personal-data-dir))
 
 (defconst personal-org-file-todo
-  (expand-file-name "todos.org" personal-org-dir))
+  (expand-file-name "todos.org.gpg" personal-org-dir))
 
 (defconst personal-org-file-notes
-  (expand-file-name "notes.org" personal-org-dir))
+  (expand-file-name "notes.org.gpg" personal-org-dir))
 
 (defconst personal-org-file-journal
-  (expand-file-name "journal.org" personal-org-dir))
+  (expand-file-name "journal.org.gpg" personal-org-dir))
 
 (defconst personal-org-file-cookbook
   (expand-file-name "cookbook.org" personal-org-dir))
