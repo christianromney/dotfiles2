@@ -5,7 +5,6 @@
 ;;;
 ;;; Code:
 (use-package flx :ensure t)
-
 (use-package counsel ;; counsel (ivy + swiper are transitive deps)
   :ensure t
   :bind (("C-s" . swiper)
@@ -38,6 +37,10 @@
         '((swiper . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
   (ivy-mode 1))
+
+(use-package ivy-hydra
+  :ensure t
+  :defer t)
 
 (use-package ivy-rich
   :ensure t

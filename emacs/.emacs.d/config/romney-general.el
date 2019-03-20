@@ -51,10 +51,21 @@
   :config
   (show-paren-mode +1))
 
+(defun romney/save-place-reposition ()
+  "Force windows to recenter current line (with saved position)."
+  (run-with-timer 0 nil
+                  (lambda (buf)
+                    (when (buffer-live-p buf)
+                      (dolist (win (get-buffer-window-list buf nil t))
+                        (with-selected-window win (recenter)))))
+                  (current-buffer)))
+
 (use-package saveplace ;; remember location when saving files
+  :ensure nil
   :config
   (setq save-place-file (expand-file-name "saved-places" personal-data-dir))
-  (save-place-mode))
+  (save-place-mode)
+  (add-hook 'find-file-hook 'romney/save-place-reposition t))
 
 (use-package savehist ;; autosave work
   :defer 5

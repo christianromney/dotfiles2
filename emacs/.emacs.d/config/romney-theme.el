@@ -87,6 +87,10 @@
   (spaceline-toggle-projectile-root-on)
   (spaceline-toggle-selection-info-on))
 
+(defun fancy-startup-tail (&optional concise)
+  "Redefine to remove hard-coded text"
+  )
+
 (use-package doom-themes
   :ensure t
   :defer nil
@@ -95,7 +99,11 @@
   (global-hl-line-mode +1)
   (set-cursor-color "#ffffff")
   (blink-cursor-mode +1)
-  (setq x-stretch-cursor t)
+  (setq x-stretch-cursor t
+        fancy-splash-image (expand-file-name "martell.png" personal-config-dir)
+        fancy-about-text nil
+        fancy-startup-text nil
+        inhibit-splash-screen nil)
   (setq-default blink-cursor-blinks -1)
   (setq-default cursor-type '(bar . 1)))
 

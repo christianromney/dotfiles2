@@ -115,8 +115,7 @@ BASENAME - the basename of the file."
               (flyspell-mode)
               (auto-fill-mode)))
 
-  (add-hook 'after-init-hook
-            (lambda () (org-agenda t "d")))
+  ;;(add-hook 'after-init-hook (lambda () (org-agenda t "d")))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
