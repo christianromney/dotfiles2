@@ -115,6 +115,12 @@
   :diminish flycheck-mode
   :hook (prog-mode . flycheck-mode))
 
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :hook (after-init . yas-global-mode)
+  :config (use-package yasnippet-snippets))
+
 (defun personal-sp-web-mode-is-code-context (id action context)
   "Determines whether we're in a code context for Smartparens.
 ID - ignored
