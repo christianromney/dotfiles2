@@ -62,13 +62,13 @@
   (global-hl-line-mode +1)
   (set-cursor-color "#ffffff")
   (blink-cursor-mode +1)
+  (setq-default blink-cursor-blinks -1 )
+  (setq-default cursor-type '(hollow . 1)) ;; box, hollow, bar, hbar
   (setq x-stretch-cursor t
         fancy-splash-image nil ;; (expand-file-name "martell.png" personal-config-dir)
         fancy-about-text nil
         fancy-startup-text nil
-        inhibit-splash-screen t)
-  (setq-default blink-cursor-blinks -1 )
-  (setq-default cursor-type '(bar . 1)))
+        inhibit-splash-screen t))
 
 (use-package doom-modeline
   :ensure t
