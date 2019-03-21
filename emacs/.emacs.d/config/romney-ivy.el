@@ -51,6 +51,7 @@
 
 (use-package counsel-projectile
   :ensure t
+  :defer t
   :hook projectile-mode
   :bind (("C-c p" . projectile-command-map))
   :config

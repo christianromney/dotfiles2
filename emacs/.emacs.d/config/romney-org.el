@@ -115,7 +115,8 @@ BASENAME - the basename of the file."
   (add-hook 'org-mode-hook
             (lambda ()
               (flyspell-mode)
-              (auto-fill-mode)))
+              (auto-fill-mode)
+              (variable-pitch-mode)))
 
   ;;(add-hook 'after-init-hook (lambda () (org-agenda t "d")))
 
@@ -151,9 +152,11 @@ BASENAME - the basename of the file."
 
 (use-package org-bullets
   :ensure t
+  :defer t
+  :hook (org-mode . org-bullets-mode)
   :defines (org-bullets-bullet-list)
-  :init
-  (add-hook 'org-mode-hook #'org-bullets-mode)
+  ;; :init
+  ;; (add-hook 'org-mode-hook #'org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("◉" "○" "◌" "●")))
 
@@ -185,11 +188,13 @@ BASENAME - the basename of the file."
 
 (use-package org-alert
   :ensure t
+  :defer t
   :init
   (setq alert-default-style 'osx-notifier))
 
 (use-package org-autolist
   :ensure t
+  :defer t
   :hook (org-mode . org-autolist-mode))
 
 (use-package htmlize

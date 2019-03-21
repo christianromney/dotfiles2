@@ -13,11 +13,13 @@
 
 (use-package flycheck-rust
   :ensure t
+  :defer t
   :after rust-mode
   :hook (flycheck-mode . flycheck-rust-setup))
 
 (use-package racer
   :ensure t
+  :defer t
   :hook (rust-mode . racer-mode)
   :bind (:map racer-mode-map
               ("C-c m h" . racer-describe)
@@ -37,6 +39,7 @@
 
 (use-package cargo
   :ensure t
+  :defer t
   :hook (rust-mode . cargo-minor-mode)
   :bind (:map rust-mode-map
               ("<f6>" . cargo-process-build))

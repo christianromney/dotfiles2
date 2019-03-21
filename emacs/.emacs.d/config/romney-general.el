@@ -8,6 +8,23 @@
   :defines (tramp-default-method)
   :config (setq tramp-default-method "ssh"))
 
+;;; --- automatic encryption handling ---
+(use-package epg
+  :ensure nil
+  :defer t
+  :defines (epa-file-cache-passphrase-for-symmetric-encryption)
+  :init
+  (setenv "GPG_AGENT_INFO" nil)
+  :config
+  (require 'epa-file)
+  (require 'password-cache)
+  (setq epg-gpg-program "gpg2"
+        password-cache-expiry (* 4 60 60) ;; cache for 4 hours (defaults to 16 seconds)
+        epa-pinentry-mode 'loopback
+        epa-file-select-keys nil
+        epa-file-cache-passphrase-for-symmetric-encryption t)
+  (epa-file-enable))
+
 (use-package expand-region
   :ensure t
   :defer t
@@ -17,8 +34,7 @@
 (use-package typo  ;; Automatically use typographic quotes
   :ensure t
   :hook ((org-mode      . typo-mode)
-         (markdown-mode . typo-mode)
-         (rst-mode      . typo-mode))
+         (markdown-mode . typo-mode))
   :init (setq-default typo-language "English"))
 
 (use-package writeroom-mode
@@ -121,11 +137,6 @@
   :bind
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
-
-(use-package alert
-  :ensure t
-  :config
-  (setq-default alert-default-style 'osx-notifier))
 
 (use-package smex ;; smarter M-x
   :ensure t

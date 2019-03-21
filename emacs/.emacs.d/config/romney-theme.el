@@ -54,43 +54,6 @@
 (setq-default indent-tabs-mode nil)            ;; don't use tabs to indent
 (setq-default tab-width 2)                          ;; don't waste real estate needlessly
 
-(use-package powerline
-  :defer nil
-  :ensure t)
-
-(use-package spaceline
-  :defer nil
-  :ensure t
-  :config
-  (require 'powerline)
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
-  (spaceline-helm-mode)
-  ;; -- disabled --
-  (spaceline-toggle-auto-compile-off)
-  (spaceline-toggle-column-off)
-  (spaceline-toggle-minor-modes-off)
-  (spaceline-toggle-battery-off)
-  ;; -- enabled --
-  (spaceline-toggle-anzu-on)
-  (spaceline-toggle-buffer-modified-on)
-  (spaceline-toggle-buffer-position-on)
-  (spaceline-toggle-buffer-id-on)
-  (spaceline-toggle-buffer-size-on)
-  (spaceline-toggle-flycheck-error-on)
-  (spaceline-toggle-flycheck-info-on)
-  (spaceline-toggle-flycheck-warning-on)
-  (spaceline-toggle-helm-buffer-id-on)
-  (spaceline-toggle-helm-help-on)
-  (spaceline-toggle-hud-on)
-  (spaceline-toggle-line-column-on)
-  (spaceline-toggle-projectile-root-on)
-  (spaceline-toggle-selection-info-on))
-
-(defun fancy-startup-tail (&optional concise)
-  "Redefine to remove hard-coded text"
-  )
-
 (use-package doom-themes
   :ensure t
   :defer nil
@@ -100,12 +63,30 @@
   (set-cursor-color "#ffffff")
   (blink-cursor-mode +1)
   (setq x-stretch-cursor t
-        fancy-splash-image (expand-file-name "martell.png" personal-config-dir)
+        fancy-splash-image nil ;; (expand-file-name "martell.png" personal-config-dir)
         fancy-about-text nil
         fancy-startup-text nil
-        inhibit-splash-screen nil)
-  (setq-default blink-cursor-blinks -1)
+        inhibit-splash-screen t)
+  (setq-default blink-cursor-blinks -1 )
   (setq-default cursor-type '(bar . 1)))
+
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-height 25
+        doom-modeline-bar-width 3
+        doom-modeline-icon t
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-checker-simple-format t
+        doom-modeline-persp-name nil
+        doom-modeline-minor-modes nil
+        doom-modeline-enable-word-count nil
+        doom-modeline-env-version nil
+        doom-modeline-lsp nil
+        doom-modeline-github t
+        doom-modeline-github-interval (* 30 60)))
 
 (use-package ov ;; easy overlays
   :defer t

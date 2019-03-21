@@ -28,6 +28,7 @@
 
 (use-package markdown-mode
   :ensure t
+  :defer t
   :ensure-system-package multimarkdown
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
