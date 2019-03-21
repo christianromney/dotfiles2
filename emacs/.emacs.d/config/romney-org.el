@@ -38,6 +38,7 @@ BASENAME - the basename of the file."
         org-agenda-skip-timestamp-if-done t
         org-agenda-todo-ignore-deadlines t
         org-agenda-todo-ignore-scheduled t
+        org-agenda-use-tag-inheritance nil
         org-agenda-window-setup 'current-window
         org-babel-clojure-backend 'cider
         org-confirm-babel-evaluate nil
@@ -132,6 +133,16 @@ BASENAME - the basename of the file."
 
   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
   (add-to-list 'org-babel-tangle-lang-exts '("js"      . "js"))
+
+  ;; smartparens should already be loaded
+  (sp-with-modes '(org-mode)
+    (sp-local-pair "*" "*") ;; bold
+    (sp-local-pair "/" "/") ;; italic
+    (sp-local-pair "_" "_") ;; underline
+    (sp-local-pair "=" "=") ;; verbatim
+    (sp-local-pair "~" "~") ;; code
+    (sp-local-pair "+" "+") ;; strike-through
+    )
 
   :bind
   (("C-c a" . org-agenda)
