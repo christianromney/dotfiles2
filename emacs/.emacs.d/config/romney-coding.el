@@ -21,6 +21,11 @@
   :init
   (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")))
 
+(use-package magit-todos
+  :ensure t
+  :defer t
+  :hook (magit-mode . magit-todos-mode))
+
 (use-package forge
   :ensure t
   :defer t)
