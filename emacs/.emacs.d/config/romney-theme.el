@@ -86,7 +86,9 @@
         doom-modeline-env-version nil
         doom-modeline-lsp nil
         doom-modeline-github t
-        doom-modeline-github-interval (* 30 60)))
+        doom-modeline-github-interval (* 30 60))
+  (unless (file-exists-p "~/Library/Fonts/all-the-icons.ttf")
+    (all-the-icons-install-fonts)))
 
 (use-package ov ;; easy overlays
   :defer t
