@@ -87,14 +87,8 @@ BASENAME - the basename of the file."
           ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
 
         org-capture-templates
-        `(("r" "Recipe" entry (file ,personal-org-file-cookbook)
-           "%(org-chef-get-recipe-from-url)" :empty-lines 1)
-
-          ("t" "Todo" entry (file+headline ,personal-org-file-todo "Todos")
+        `(("t" "Todo" entry (file+headline ,personal-org-file-todo "Todos")
            "* TODO %^{Task} %^G")
-
-          ("j" "Journal Entry" entry (file+datetree ,personal-org-file-journal)
-           (file ,personal-org-template-journal))
 
           ("n" "Note" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-note))
@@ -102,8 +96,15 @@ BASENAME - the basename of the file."
           ("q" "Quotation/Citation" entry (file+headline ,personal-org-file-notes "Notes")
            (file ,personal-org-template-quote))
 
+          ("j" "Journal Entry" entry (file+datetree ,personal-org-file-journal)
+           (file ,personal-org-template-journal))
+
           ("c" "Code Snippet" entry (file ,personal-org-file-snippets)
-           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC"))
+           "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n%a\n\n#+END_SRC")
+
+          ("r" "Recipe" entry (file ,personal-org-file-cookbook)
+           "%(org-chef-get-recipe-from-url)" :empty-lines 1))
+
 
         org-agenda-custom-commands
         '(("d" "Dashboard"
