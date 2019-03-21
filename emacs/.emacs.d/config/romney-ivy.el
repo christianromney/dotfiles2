@@ -38,9 +38,10 @@
           (t . ivy--regex-fuzzy)))
   (ivy-mode 1))
 
-(use-package ivy-hydra
+(use-package ivy-xref
   :ensure t
-  :defer t)
+  :defer t
+  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (use-package ivy-rich
   :ensure t

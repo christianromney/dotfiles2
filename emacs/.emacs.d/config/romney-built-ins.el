@@ -48,6 +48,22 @@
       dired-recursive-copies 'always
       dired-dwim-target t)
 
+;;; --- automatic encryption handling ---
+(use-package epg
+  :ensure nil
+  :defines (epa-file-cache-passphrase-for-symmetric-encryption)
+  :init
+  (setenv "GPG_AGENT_INFO" nil)
+  :config
+  (require 'epa-file)
+  (require 'password-cache)
+  (setq epg-gpg-program "gpg2"
+        password-cache-expiry (* 4 60 60) ;; cache for 4 hours (defaults to 16 seconds)
+        epa-pinentry-mode 'loopback
+        epa-file-select-keys nil
+        epa-file-cache-passphrase-for-symmetric-encryption t)
+  (epa-file-enable))
+
 ;;; --- enable various 'off by default' features ---
 
 (put 'narrow-to-region 'disabled nil)

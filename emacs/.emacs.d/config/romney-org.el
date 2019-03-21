@@ -183,6 +183,11 @@ BASENAME - the basename of the file."
   :after org-mode
   :defer t)
 
+(use-package org-alert
+  :ensure t
+  :init
+  (setq alert-default-style 'osx-notifier))
+
 (use-package org-autolist
   :ensure t
   :hook (org-mode . org-autolist-mode))
