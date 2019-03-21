@@ -81,61 +81,6 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # Always display full control strip (ignoring App Controls)
 defaults write com.apple.touchbar.agent PresentationModeGlobal functionKeys
 
-###############################################################################
-# SSD-specific tweaks                                                         #
-###############################################################################
-
-# Disable local Time Machine snapshots
-#sudo tmutil disablelocal
-
-# TODO: research this
-#Disable hibernation (speeds up entering sleep mode)
-#
-# sudo pmset -a hibernatemode 0
-#
-# Remove the sleep image file to save disk space
-#
-#sudo rm /private/var/vm/sleepimage
-#
-# Create a zero-byte file instead…
-#
-#sudo touch /private/var/vm/sleepimage
-#
-# …and make sure it can’t be rewritten
-#
-#sudo chflags uchg /private/var/vm/sleepimage
-#
-###############################################################################
-# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
-###############################################################################
-
-# Trackpad: enable tap to click for this user and for the login screen
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-# defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-# defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-# Trackpad: map bottom right corner to right-click
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-# defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-# defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
-
-# Disable “natural” (Lion-style) scrolling
-# defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
-
-# Increase sound quality for Bluetooth headphones/headsets
-#defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
-
-# mute all sounds, incl volume change feedback
-# defaults write "com.apple.sound.beep.feedback" -int 0
-# defaults write com.apple.systemsound 'com.apple.sound.beep.volume' -float 0
-# defaults write "com.apple.systemsound" "com.apple.sound.uiaudio.enabled" -int 0
-#
-# Enable full keyboard access for all controls
-# (e.g. enable Tab in modal dialogs)
-#defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-
-
 # Automatically illuminate built-in MacBook keyboard in low light
 defaults write com.apple.BezelServices kDim -bool true
 # Turn off keyboard illumination when computer is not used for 5 minutes
