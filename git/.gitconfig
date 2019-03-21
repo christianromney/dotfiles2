@@ -8,7 +8,6 @@
   editor = emacs
   pager = diff-so-fancy | less --tabs=2 -RFX
 [commit]
-  template = ~/.git-commit-template
   gpgSign = true
 [help]
   autocorrect = 1
@@ -49,7 +48,7 @@
   followTags = true
 [merge]
   tool = ediff
-	conflictStyle = diff3
+  conflictStyle = diff3
 [mergetool]
   prompt = false
 
