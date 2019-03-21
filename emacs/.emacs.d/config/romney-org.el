@@ -49,11 +49,11 @@ BASENAME - the basename of the file."
         org-html-validation-link nil
         org-log-done nil
         org-outline-path-complete-in-steps nil
+        org-pretty-entities t
         org-refile-use-cache t
         org-refile-use-outline-path t
         org-return-follows-link t
         org-src-fontify-natively t
-        org-src-tab-acts-natively t
         org-src-tab-acts-natively t
         org-src-window-setup 'current-window
         org-startup-indented t

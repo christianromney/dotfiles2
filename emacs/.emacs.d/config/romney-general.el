@@ -127,9 +127,12 @@
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
 (use-package exec-path-from-shell ;; find programs on shell $PATH
-  :if (memq window-system '(mac ns))
   :ensure t
+  :if (memq window-system '(mac ns))
   :config
+  (setq exec-path-from-shell-check-startup-files nil
+        exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH")
+        exec-path-from-shell-arguments '("-l"))
   (exec-path-from-shell-initialize))
 
 (use-package move-text ;; move text blocks around
@@ -148,25 +151,95 @@
   (("M-x" . smex)
    ("M-X" . smex-major-mode-commands)))
 
-(use-package company ;; COMPlete ANYthing
+(use-package company
   :ensure t
   :diminish company-mode
+  :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  :commands company-abort
+  :bind (("M-/" . company-complete)
+         ("<backtab>" . company-yasnippet)
+         :map company-active-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("<backtab>" . my-company-yasnippet)
+         ;; ("C-c C-y" . my-company-yasnippet)
+         :map company-search-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next))
+  :hook (after-init . global-company-mode)
+  :init
+  (defun my-company-yasnippet ()
+    (interactive)
+    (company-abort)
+    (call-interactively 'company-yasnippet))
   :config
-  (setq company-idle-delay 0.5
-        company-tooltip-limit 20
+  (setq company-tooltip-align-annotations t ; aligns annotation to the right
+        company-tooltip-limit 20            ; bigger popup window
+        company-idle-delay .2               ; decrease delay before autocompletion popup shows
+        company-echo-delay 0                ; remove annoying blinking
         company-minimum-prefix-length 2
+        company-require-match nil
+        company-dabbrev-ignore-case nil
         company-show-numbers t
-        company-tooltip-flip-when-above t)
-  (global-company-mode 1))
+        company-dabbrev-downcase nil)
 
-(use-package company-quickhelp
-  :ensure t
-  :config
-  (company-quickhelp-mode 1))
+  ;; Icons and quickhelp
+  (use-package company-box
+    :ensure t
+    :diminish
+    :hook (company-mode . company-box-mode)
+    :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+    :config
+    (setq company-box-backends-colors nil
+          company-box-show-single-candidate t
+          company-box-max-candidates 50)
+
+    (defun company-box-icons--elisp (candidate)
+      (when (derived-mode-p 'emacs-lisp-mode)
+        (let ((sym (intern candidate)))
+          (cond ((fboundp sym) 'Function)
+                ((featurep sym) 'Module)
+                ((facep sym) 'Color)
+                ((boundp sym) 'Variable)
+                ((symbolp sym) 'Text)
+                (t . nil)))))
+
+    (with-eval-after-load 'all-the-icons
+      (declare-function all-the-icons-faicon 'all-the-icons)
+      (declare-function all-the-icons-material 'all-the-icons)
+      (setq company-box-icons-all-the-icons
+            `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.9 :v-adjust -0.15))
+              (Text . ,(all-the-icons-material "text_fields" :height 0.9 :v-adjust -0.15))
+              (Method . ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-purple))
+              (Function . ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-purple))
+              (Constructor . ,(all-the-icons-faicon "cube" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-purple))
+              (Field . ,(all-the-icons-material "straighten" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blue))
+              (Variable . ,(all-the-icons-material "straighten" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blue))
+              (Class . ,(all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Interface . ,(all-the-icons-material "share" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blue))
+              (Module . ,(all-the-icons-material "view_module" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blue))
+              (Property . ,(all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05))
+              (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.9 :v-adjust -0.15))
+              (Value . ,(all-the-icons-material "format_align_right" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blue))
+              (Enum . ,(all-the-icons-material "storage" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.9 :v-adjust -0.15))
+              (Snippet . ,(all-the-icons-material "format_align_center" :height 0.9 :v-adjust -0.15))
+              (Color . ,(all-the-icons-material "palette" :height 0.9 :v-adjust -0.15))
+              (File . ,(all-the-icons-faicon "file-o" :height 0.9 :v-adjust -0.05))
+              (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.9 :v-adjust -0.15))
+              (Folder . ,(all-the-icons-faicon "folder-open" :height 0.9 :v-adjust -0.05))
+              (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-blueb))
+              (Constant . ,(all-the-icons-faicon "square-o" :height 0.9 :v-adjust -0.05))
+              (Struct . ,(all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Event . ,(all-the-icons-faicon "bolt" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-orange))
+              (Operator . ,(all-the-icons-material "control_point" :height 0.9 :v-adjust -0.15))
+              (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.9 :v-adjust -0.05))
+              (Template . ,(all-the-icons-material "format_align_center" :height 0.9 :v-adjust -0.15)))))))
 
 (use-package pos-tip
-  :ensure t
-  :defer t)
+    :ensure t
+    :defer t)
 
 (use-package super-save ;; save buffers on lost focus
   :ensure t
