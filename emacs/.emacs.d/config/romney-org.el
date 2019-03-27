@@ -57,6 +57,7 @@ BASENAME - the basename of the file."
         org-src-tab-acts-natively t
         org-src-window-setup 'current-window
         org-startup-indented t
+        org-startup-folded nil
         org-use-fast-todo-selection t
         org-use-sub-superscripts "{}"
 
@@ -109,8 +110,13 @@ BASENAME - the basename of the file."
         org-agenda-custom-commands
         '(("d" "Dashboard"
            ((agenda "" ((org-agenda-span 7)))
+            (tags-todo "+PRIORITY=\"A\"")
             (tags-todo "work")
-            (tags-todo "personal")))))
+            (tags-todo "personal")))
+          ("p" . "Priorities")
+          ("pa" "A items" tags-todo "+PRIORITY=\"A\"")
+          ("pb" "B items" tags-todo "+PRIORITY=\"B\"")
+          ("pc" "C items" tags-todo "+PRIORITY=\"C\"")))
 
   (add-hook 'org-mode-hook
             (lambda ()

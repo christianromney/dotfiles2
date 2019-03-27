@@ -1,13 +1,13 @@
-;;; romney-scheme.el --- Scheme/Racket programming
+;;; romney-racket.el --- Racket programming
 ;;; Commentary:
 ;;
 ;;; Code:
-
-(use-package geiser
+(use-package racket-mode
   :ensure t
   :defer t
-  :config
-  (setq geiser-active-implementations '(racket)))
+  :mode ("\\.pie\\'" . racket-mode)
+  :bind (:map racket-mode-map
+         ("C-c r". racket-run)))
 
-(provide 'romney-scheme)
-;;; romney-scheme.el ends here
+(provide 'romney-racket)
+;;; romney-racket.el ends here

@@ -31,6 +31,7 @@
 (require 'romney-rust)
 (require 'romney-theme)
 (require 'romney-clojure)
+(require 'romney-racket)
 (require 'romney-web)
 (require 'romney-org)
 (require 'romney-keybindings)
