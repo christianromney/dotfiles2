@@ -26,7 +26,7 @@
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history))
   :config
-  (setq ivy-height 20
+  (setq ivy-height 10
         ivy-wrap t
         ivy-use-virtual-buffers t
         ivy-count-format "%d/%d "
