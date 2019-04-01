@@ -169,7 +169,7 @@ BASENAME - the basename of the file."
 (use-package org-re-reveal
   :ensure t
   :config
-  (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.min.js"
+  (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
         org-re-reveal-title-slide "%t"
         org-re-reveal-hlevel 2
         org-re-reveal-default-frag-style 'appear
