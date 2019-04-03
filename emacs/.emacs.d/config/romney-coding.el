@@ -207,7 +207,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package direnv
   :ensure t
-  :hook ((clojure-mode . direnv-mode))
+  :hook ((prog-mode . direnv-mode))
   :config
   (setq direnv--installed "/usr/local/bin/direnv"))
 
