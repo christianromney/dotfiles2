@@ -36,6 +36,8 @@ BASENAME - the basename of the file."
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
         org-agenda-skip-timestamp-if-done t
+        org-agenda-span 3
+        org-agenda-start-on-weekday 1
         org-agenda-todo-ignore-deadlines t
         org-agenda-todo-ignore-scheduled t
         org-agenda-use-tag-inheritance nil
@@ -110,7 +112,7 @@ BASENAME - the basename of the file."
 
         org-agenda-custom-commands
         '(("d" "Dashboard"
-           ((agenda "" ((org-agenda-span 7)))
+           ((agenda "" ((org-agenda-span 3)))
             (tags-todo "+PRIORITY=\"A\"")
             (tags-todo "work")
             (tags-todo "personal")))
