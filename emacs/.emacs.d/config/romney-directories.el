@@ -36,6 +36,9 @@
 (defconst personal-org-file-snippets
   (expand-file-name "snippets.org" personal-org-dir))
 
+(defconst personal-org-file-work-calendar
+  (expand-file-name "work-calendar.org" personal-org-dir))
+
 (defconst personal-org-template-dir
   (expand-file-name "templates" personal-org-dir))
 

@@ -20,6 +20,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/config")
 
+(require 'romney-functions)
 (require 'romney-directories)
 (require 'romney-settings)
 (require 'romney-built-ins)

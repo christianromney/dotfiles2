@@ -65,6 +65,7 @@ BASENAME - the basename of the file."
         `(,personal-org-file-todo
           ,personal-org-file-journal
           ,personal-org-file-notes
+          ,personal-org-file-work-calendar
           ,(romney/org-file "math-for-programmers.org")
           ,(romney/org-file "little-typer.org"))
 
@@ -124,8 +125,6 @@ BASENAME - the basename of the file."
               (auto-fill-mode)
               (variable-pitch-mode)))
 
-  ;;(add-hook 'after-init-hook (lambda () (org-agenda t "d")))
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -147,6 +146,18 @@ BASENAME - the basename of the file."
    ("C-c b" . org-switchb)
    ("C-c c" . org-capture)
    ("C-c l" . org-store-link)))
+
+(use-package org-gcal
+  :ensure t
+  :defer t
+  :config
+  (letrec ((credentials (auth-source-user-and-password "api.google.com"))
+           (client-id (car credentials))
+           (client-secret (cadr credentials)))
+    (setq org-gcal-client-id client-id
+          org-gcal-client-secret client-secret
+          org-gcal-file-alist `(("christian@reifyhealth.com" . ,personal-org-file-work-calendar))))
+  (add-hook 'org-agenda-mode-hook  (lambda () (org-gcal-sync))))
 
 (use-package ob-prolog
   :ensure t
