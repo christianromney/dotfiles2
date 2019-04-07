@@ -28,6 +28,8 @@ BASENAME - the basename of the file."
    org-babel-clojure-backend)
   :config
   (require 'ob-clojure)
+  (require 'ob-racket)
+  (setq org-babel-command:racket (executable-find "racket"))
   (setq org-directory personal-org-dir
         org-default-notes-file personal-org-file-todo
         org-agenda-include-diary t
@@ -138,6 +140,7 @@ BASENAME - the basename of the file."
      (prolog     . t)
      (js         . t)
      (ruby       . t)
+     (racket     . t)
      (python     . t)))
 
   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))

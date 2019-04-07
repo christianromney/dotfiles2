@@ -31,8 +31,11 @@
 (global-set-key (kbd "C-x P") 'print-buffer)
 (global-set-key (kbd "M-p") 'fill-paragraph)
 
+(global-set-key (kbd "C-x C-h") 'add-file-local-variable-prop-line)
+(global-set-key (kbd "C-x M-s") 'transpose-sexps)
 (global-set-key (kbd "C-c M-t") 'transpose-sentences)
 (global-set-key (kbd "C-x M-t") 'transpose-paragraphs)
+
 
 (global-set-key (kbd "C-c C-d") 'romney/dired-config)
 

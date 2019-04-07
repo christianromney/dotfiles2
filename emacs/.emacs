@@ -18,7 +18,9 @@
 (setq gc-cons-threshold 100000000
       gc-cons-percentage 0.75)
 
-(add-to-list 'load-path "~/.emacs.d/config")
+
+(add-to-list 'load-path
+             (expand-file-name "config" user-emacs-directory))
 
 (require 'romney-functions)
 (require 'romney-directories)
@@ -36,6 +38,7 @@
 (require 'romney-web)
 (require 'romney-org)
 (require 'romney-keybindings)
+
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs ready in %s with %d garbage collections."

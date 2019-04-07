@@ -1,3 +1,6 @@
 * Notes
 ** Rules
-   - claims must appear before definitions
+*** Chapter 5 Lists
+- =rec-List= is like =rec-Nat= but takes an extra argument
+- =nil= is a =(List E)= for any =E=
+- =::= is the constructor for a =List=
