@@ -77,12 +77,11 @@ BASENAME - the basename of the file."
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
         org-tag-alist '(("work"       . ?w)
-                        ("noise"      . ?n)
                         ("personal"   . ?p)
                         ("study"      . ?s)
-                        ("clojure"    . ?c)
-                        ("racket"     . ?k)
-                        ("rust"       . ?r))
+                        ("finance"    . ?f)
+                        ("medical"    . ?m)
+                        ("house"      . ?h))
 
         org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)"))
