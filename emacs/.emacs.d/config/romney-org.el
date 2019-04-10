@@ -29,6 +29,7 @@ BASENAME - the basename of the file."
   :config
   (require 'ob-clojure)
   (require 'ob-racket)
+  (require 'org-tempo)
   (setq org-babel-command:racket (executable-find "racket"))
   (setq org-directory personal-org-dir
         org-default-notes-file personal-org-file-todo
