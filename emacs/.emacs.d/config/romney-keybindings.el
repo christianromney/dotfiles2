@@ -39,6 +39,8 @@
 
 (global-set-key (kbd "C-c C-d") 'romney/dired-config)
 
+(global-unset-key (kbd "<f2> <f2>"))
+
 ;; terminal decoding
 ;; make sure iTerm2 is sending these escape sequences
 ;; (define-key input-decode-map "\e[A" [up])

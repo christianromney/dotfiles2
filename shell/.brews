@@ -135,3 +135,5 @@ wordnet
 mmix
 spim
 exercism
+docker-compose
+ossp-uuid

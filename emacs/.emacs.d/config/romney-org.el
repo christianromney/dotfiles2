@@ -71,8 +71,7 @@ BASENAME - the basename of the file."
           ,personal-org-file-journal
           ,personal-org-file-notes
           ,personal-org-file-work-calendar
-          ,(romney/org-file "math-for-programmers.org")
-          ,(romney/org-file "little-typer.org"))
+          ,(romney/org-file "math-for-programmers.org"))
 
         org-refile-targets
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
@@ -148,9 +147,16 @@ BASENAME - the basename of the file."
 
   :bind
   (("C-c a" . org-agenda)
-   ("C-c b" . org-switchb)
    ("C-c c" . org-capture)
    ("C-c l" . org-store-link)))
+
+(use-package ivy-omni-org
+  :if ivy-mode
+  :ensure t
+  :defer t
+  :bind (("C-c b" . ivy-omni-org))
+  :config
+  (setq ivy-omni-org-file-sources '(org-agenda-files)))
 
 (use-package org-gcal
   :ensure t
