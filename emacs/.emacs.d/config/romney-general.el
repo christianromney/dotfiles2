@@ -320,6 +320,10 @@
    ("o" . eww)
    ("O" . eww-browse-with-external-browser)))
 
+(use-package hydra
+  :ensure t
+  :defer t)
+
 ;; --- functions ---
 (defun romney/dired-config ()
   "Open the config directory in dired."
