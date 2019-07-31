@@ -1,0 +1,41 @@
+* Machine Learning and AI Foundations
+** Decision Trees
+Decision Tree Learning uses decision trees as a predictive model which maps
+observations about an item, represented in the branches, to conclusions in the
+item’s target value, represented in the leaves.
+- sample target : a passenger’s survival (or not) aboard the Titanic
+  - this is what we’re trying to predict
+** Why CHAID and C&RT
+- common, easy to understand
+- different from one another
+  - CHAID (stats)
+  - C&R Tree “CART” (ML)
+*** Performance vs. Stability
+Performance is how well the model does against the training data
+Stability is how little of a drop in performance we see with the test data
+** Algorithm for Building Trees
+*** Chi-squared Automatic Interaction Detection (CHAID)
+**** Bonferroni Adjustment
+The more tests you perform, the greater the risk of Type-1 error (you think you
+found something, but you haven’t) false-positives.
+- be careful turning it off, should generally be left on to avoid over-fitting
+- consider turning off if tree doesn’t grow with it on, but does with it off
+- if you turn it off, probably a good idea to demand a higher confidence e.g.
+  99% (0.01)
+**** Level of Measurement (aka Scale of Measure)
+- nominal (separate and distinct categories, but no meaning in rank)
+- ordinal (ordered set of categories)
+- scale (continuous)
+  - interval
+  - ratio
+***** CHAID Grouping/Splitting
+****** Nominal
+CHAID groups similar values (e.g. Q, S in Titanic data)
+****** Ordinal
+only consecutive values can be grouped
+****** Continuous
+first convert to deciles (can’t run chi-squared on continuous variables)
+*** Classification & Regression Trees (C&RT)
+**** Gini coefficient
+**** Purity and Balance
+**** C&RT always produces binary splits

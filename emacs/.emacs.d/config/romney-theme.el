@@ -61,6 +61,9 @@
   (load-theme 'doom-tomorrow-night t)
   (global-hl-line-mode +1)
   (set-cursor-color "#ffffff")
+  (set-face-attribute 'region nil
+                      :background "#fbf3ac"
+                      :foreground "#000000")
   (blink-cursor-mode +1)
   (setq-default blink-cursor-blinks -1 )
   (setq-default cursor-type '(hollow . 1)) ;; box, hollow, bar, hbar
@@ -86,9 +89,15 @@
         doom-modeline-env-version nil
         doom-modeline-lsp nil
         doom-modeline-github t
-        doom-modeline-github-interval (* 30 60))
+        doom-modeline-github-interval (* 30 60)
+        inhibit-compacting-font-caches t)
   (unless (file-exists-p "~/Library/Fonts/all-the-icons.ttf")
-    (all-the-icons-install-fonts)))
+    (all-the-icons-install-fonts))
+  (add-to-list 'all-the-icons-icon-alist
+             '("\\.p[ml]$"
+               all-the-icons-alltheicon "prolog"
+               :height 1.1
+               :face all-the-icons-lmaroon)))
 
 (use-package ov ;; easy overlays
   :defer t

@@ -220,6 +220,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :diminish flycheck-mode
   :hook (prog-mode . flycheck-mode))
 
+(use-package sql
+  :defer t
+  :bind (("C-c M-p" . sql-postgres)))
+
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode

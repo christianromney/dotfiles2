@@ -13,9 +13,12 @@ cairo
 chezscheme
 clojure
 coreutils
+datamash
 diff-so-fancy
 direnv
 docbook
+docker-compose
+exercism
 ffmpeg
 fish
 flac
@@ -74,6 +77,8 @@ little-cms2
 lorem
 lumo
 md5sha1sum
+mmix
+multimarkdown
 ncurses
 netcat
 netpbm
@@ -85,6 +90,7 @@ opencore-amr
 openjpeg
 openssl
 opus
+ossp-uuid
 p11-kit
 pcre
 pcre2
@@ -104,7 +110,6 @@ rlwrap
 rtmpdump
 rubberband
 ruby-build
-multimarkdown
 rustup-init
 sbcl
 sdl2
@@ -112,6 +117,7 @@ snappy
 sops
 source-highlight
 speex
+spim
 sqlite
 ssh-copy-id
 stow
@@ -123,6 +129,7 @@ unrar
 watch
 webp
 wget
+wordnet
 x264
 x265
 xvid
@@ -131,9 +138,3 @@ yarn
 youtube-dl
 zplug
 zsh
-wordnet
-mmix
-spim
-exercism
-docker-compose
-ossp-uuid

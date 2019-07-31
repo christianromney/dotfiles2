@@ -109,7 +109,8 @@
 (use-package ace-window
   :ensure t
   :defer t
-  :bind (("C-x o" . ace-window)))
+  :bind (("C-x o" . ace-window)
+         ("M-o" . ace-window)))
 
 (use-package anzu ;; search & replace match info e.g. 1 of N
   :ensure t

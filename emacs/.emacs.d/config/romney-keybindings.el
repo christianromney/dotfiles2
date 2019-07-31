@@ -15,7 +15,7 @@
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "s-=") 'text-scale-increase)
 
-(global-set-key (kbd "M-o") 'other-window)
+;; (global-set-key (kbd "M-o") 'ace-window)
 (global-set-key (kbd "s-o") 'other-frame)
 
 (global-set-key (kbd "C-'") 'avy-goto-line)
