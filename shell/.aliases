@@ -1,5 +1,6 @@
 # List direcory contents
-alias ll="ls -lahG"
+#alias ll="ls -lahG"
+alias ll="exa -lag"
 
 # zsh navigation
 alias ...="../.."
