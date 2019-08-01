@@ -1,3 +1,3 @@
 function ll
-  exa -lag $argv
+  exa -lag --header $argv
 end
