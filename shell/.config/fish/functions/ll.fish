@@ -1,3 +1,3 @@
 function ll
-  exa --long --all --git --header $argv
+  exa --long --all --git --group --header $argv
 end
