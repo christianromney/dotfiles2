@@ -91,7 +91,7 @@
         doom-modeline-github t
         doom-modeline-github-interval (* 30 60)
         inhibit-compacting-font-caches t)
-  (unless (file-exists-p "~/Library/Fonts/all-the-icons.ttf")
+  (unless (member "all-the-icons" (font-family-list))
     (all-the-icons-install-fonts))
   (add-to-list 'all-the-icons-icon-alist
              '("\\.p[ml]$"
