@@ -11,6 +11,7 @@
          ("C-r" . swiper)
          ("M-x" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
+         ("M-i" . counsel-imenu)
          ("C-x C-f" . counsel-find-file)
          ("C-c g" . counsel-rg)
          ("C-c G" . counsel-git-grep)

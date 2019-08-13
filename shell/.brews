@@ -139,3 +139,6 @@ yarn
 youtube-dl
 zplug
 zsh
+flyway
+terminal-notifier
+shellcheck

@@ -13,19 +13,20 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (set-face-attribute 'default nil
-                    :family "Iosevka"
-                    :height 200
-                    :weight 'regular)
-
-(set-face-attribute 'mode-line nil
-                    :family "Iosevka"
-                    :height 160
-                    :weight 'thin)
+                    :family "Hack Nerd Font Mono"
+                    :height 180
+                    :weight 'normal
+                    :width 'normal)
+(copy-face 'default 'fixed-pitch)
 
 (set-face-attribute 'variable-pitch nil
                     :family "Big Caslon Medium")
 
-(copy-face 'default 'fixed-pitch)
+(set-face-attribute 'mode-line nil
+                    :family "Hack Nerd Font Mono"
+                    :height 160
+                    :weight 'thin)
+
 
 (add-hook 'text-mode-hook
           (lambda ()

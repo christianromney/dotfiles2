@@ -74,8 +74,8 @@ documented.
 | `FZF_CD_COMMAND`               | Similar to ^                                                | Similar to ^                                                  |
 | `FZF_CD_WITH_HIDDEN_COMMAND`   | Similar to ^                                                | Similar to ^                                                  |
 | `FZF_OPEN_COMMAND`             | Similar to ^                                                | Similar to ^                                                  |
-| `FZF_PREVIEW_FILE_COMMAND`     | Modify the command used to generate preview of files.       | `set -U FZF_PREVIEW_FILE_COMMAND "head -n 10"`                |
-| `FZF_PREVIEW_DIR_COMMAND`      | Modify the command used to generate preview of directories. | `set -U FZF_PREVIEW_FILE_COMMAND "ls"`                        |
+| `FZF_PREVIEW_FILE_CMD`     | Modify the command used to generate preview of files.       | `set -U FZF_PREVIEW_FILE_CMD "head -n 10"`                |
+| `FZF_PREVIEW_DIR_CMD`      | Modify the command used to generate preview of directories. | `set -U FZF_PREVIEW_DIR_CMD "ls"`                        |
 
 ## Variables
 
@@ -87,6 +87,7 @@ documented.
 | `FZF_CD_WITH_HIDDEN_OPTS`   | Similar to ^                                                  | Similar to ^                                          |
 | `FZF_REVERSE_ISEARCH_OPTS`  | Similar to ^                                                  | Similar to ^                                          |
 | `FZF_OPEN_OPTS`             | Similar to ^                                                  | Similar to ^                                          |
+| `FZF_COMPLETE_OPTS`         | Similar to ^                                                  | Similar to ^                                          |
 | `FZF_TMUX`                  | Runs a tmux-friendly version of fzf instead.                  | `set -U FZF_TMUX 1`                                   |
 | `FZF_ENABLE_OPEN_PREVIEW`   | Enable preview window open command.                           | `set -U FZF_ENABLE_OPEN_PREVIEW 1`                    |
 

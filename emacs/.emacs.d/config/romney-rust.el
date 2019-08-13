@@ -53,5 +53,14 @@
   :ensure t
   :defer t)
 
+(romney/focus-command-windows
+ '(cargo-process-run
+   cargo-process-fmt
+   cargo-process-check
+   cargo-process-clean
+   cargo-process-search
+   cargo-process-test
+   cargo-process-doc))
+
 (provide 'romney-rust)
 ;;; romney-rust.el ends here

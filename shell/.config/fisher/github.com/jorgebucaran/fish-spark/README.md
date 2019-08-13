@@ -1,11 +1,8 @@
-# fish-spark
+# fish-spark [![Releases](https://img.shields.io/github/release/jorgebucaran/fish-spark.svg?label=&color=0080FF)](https://github.com/jorgebucaran/fish-spark/releases/latest)
 
-[![Build Status](https://img.shields.io/travis/jorgebucaran/fish-spark.svg)](https://travis-ci.org/jorgebucaran/fish-spark)
-[![Releases](https://img.shields.io/github/release/jorgebucaran/fish-spark.svg?label=latest)](https://github.com/jorgebucaran/fish-spark/releases)
+> ▁▂▃▅▂▇ in your fish shell.
 
-Spark is a sparkline generator for the fish shell. This is an unofficial port of the original [spark.sh](https://github.com/holman/spark).
-
-![](https://gitcdn.link/repo/jorgebucaran/789d7e2c08a968c7370ddbbff2c7c125/raw/3ea3780910872ca0a60d234723704a962c399187/fish-spark.svg)
+Spark is a sparkline generator for the <a href=https://fishshell.com title="friendly interactive shell">fish shell</a>. It's an unofficial port of the original [spark.sh](https://github.com/holman/spark) with options for adjusting the minimum and maximum values of the input and [faster execution time](#performance).
 
 ## Installation
 
@@ -37,7 +34,7 @@ To uninstall, remove the file.
 
 ## Usage
 
-You have a set of numbers which can be comma-delimited, separated by spaces, newlines, or tabs. What's a simple way to visualize these data on the terminal? Sparlines!
+You have a set of numbers which can be comma-delimited, separated by spaces, newlines, or tabs. What's a simple way to visualize these data on the terminal? Sparklines!
 
 ```console
 $ spark 0 1 2 3
@@ -60,7 +57,19 @@ $ spark --max=100 -- 10 20 30 40 50
 ▁▂▃▃▄
 ```
 
-This is just the tip of the iceberg. Check out [Wicked Cool Usage](https://github.com/holman/spark/wiki/Wicked-Cool-Usage) for more things you can do with Spark.
+Want to see what else Spark can do? Check out [Wicked Cool Usage](https://github.com/holman/spark/wiki/Wicked-Cool-Usage) and prepare to be amazed!
+
+## Performance
+
+Spark is up to 400x faster (that's not a typo!) than the original [`spark.sh`](https://github.com/holman/spark), reading and writing relatively large datasets under milliseconds.
+
+```console
+$ time fish -c "seq 10000 | sort -R | spark" >/dev/null
+       0.19 real         0.19 user         0.01 sys
+
+$ time fish -c "seq 10000 | sort -R | spark.sh" >/dev/null
+       86.15 real        84.44 user         0.53 sys
+```
 
 ## License
 
