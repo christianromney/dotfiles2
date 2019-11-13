@@ -2,16 +2,16 @@
 My personalized emacs configuration. Snippets are cobbled together from [[https://github.com/bbatsov/prelude][Prelude]],
 [[https://github.com/bbatsov/emacs.d][bbatsov's emacs config]], [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]], and other random goodies from around the web.
 
-- [[https://draculatheme.com/emacs/][Dracula theme]], [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]]
+- [[https://github.com/hlissner/emacs-doom-themes][doom-themes]], [[https://github.com/seagle0128/doom-modeline][doom-modeline]]
 - [[https://github.com/wbolster/emacs-direnv][direnv-mode]]
-- [[https://github.com/bbatsov/projectile][projectile]], [[https://company-mode.github.io/][company]], [[https://github.com/emacs-helm/helm][helm]]
+- [[https://github.com/bbatsov/projectile][projectile]], [[https://company-mode.github.io/][company]], counsel/ivy/swiper
 - [[https://github.com/abo-abo/avy][avy]], [[https://github.com/syohex/emacs-anzu][anzu]]
 - [[http://web-mode.org/][web-mode]]
 - [[https://orgmode.org/][org-mode]]
-- [[https://github.com/Fuco1/smartparens][smartparens]], [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]], [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]
+- [[https://github.com/Fuco1/smartparens][smartparens]], [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]]
 - and lots more...
 
-My configuration [[https://blog.d46.us/advanced-emacs-startup/][autoloads]] almost everything to keep startup time around 2
+My configuration [[https://blog.d46.us/advanced-emacs-startup/][autoloads]] almost everything to keep startup time around 3
 seconds.
 
 
