@@ -26,6 +26,8 @@
   staged = diff --cached
   file-rm = clean
   dir-rm = clean
+	praise = blame
+	shortsha = rev-parse --short=20
 [color]
   ui = auto
 [color "diff"]

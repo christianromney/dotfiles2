@@ -142,3 +142,6 @@ zsh
 flyway
 terminal-notifier
 shellcheck
+bitwise
+watchman
+yamllint

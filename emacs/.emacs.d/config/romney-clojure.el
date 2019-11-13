@@ -22,10 +22,7 @@
   :pin melpa-stable
   :defer t
   :defines (clojure--prettify-symbols-alist)
-  ;; :bind
-  ;; (("M-." . personal/find-tag-without-ns))
   :config
-  ;;(require 'clj-refactor)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (define-clojure-indent
     (defroutes 'defun)
@@ -51,14 +48,6 @@
   :ensure t
   :defer t
   :after (clojure-mode))
-
-(use-package clj-refactor
-  :ensure t
-  :pin melpa-stable
-  :hook (clojure-mode . clj-refactor-mode)
-  :config
-  (setq cljr-suppress-middleware-warnings t)
-  (cljr-add-keybindings-with-prefix "C-c C-a"))
 
 (use-package cl-lib
   :ensure t)
@@ -103,8 +92,14 @@
 
 (use-package cider-hydra
   :ensure t
-  :pin melpa-stable
   :hook (cider-mode . cider-hydra-mode))
+
+;; (use-package clj-refactor
+;;   :ensure t
+;;   :hook (clojure-mode . clj-refactor-mode)
+;;   :config
+;;   (setq cljr-suppress-middleware-warnings t)
+;;   (cljr-add-keybindings-with-prefix "C-c C-a"))
 
 (provide 'romney-clojure)
 ;;; romney-clojure.el ends here

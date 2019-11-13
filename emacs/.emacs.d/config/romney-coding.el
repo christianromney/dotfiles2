@@ -19,7 +19,9 @@
   :bind
   (("C-x g" . magit-status))
   :init
-  (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")))
+  (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+  :config
+  (setq magit-after-save-refresh-buffers t))
 
 (use-package magit-todos
   :ensure t
