@@ -20,13 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-set -g __done_version 1.8.0
+set -g __done_version 1.10.0
 
 function __done_get_focused_window_id
 	if type -q lsappinfo
 		lsappinfo info -only bundleID (lsappinfo front) | cut -d '"' -f4
+	else if test -n "$SWAYSOCK"
+	and type -q jq
+		swaymsg --type get_tree | jq '.. | objects | select(.focused == true) | .id'
 	else if type -q xprop
-	and test $DISPLAY
+	and test -n "$DISPLAY"
 		xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2
 	end
 end
@@ -55,11 +58,12 @@ end
 
 # verify that the system has graphical capabilites before initializing
 if test -z "$SSH_CLIENT"  # not over ssh
-and test -n __done_get_focused_window_id  # is able to get window id
+and count (__done_get_focused_window_id) > /dev/null  # is able to get window id
 
 	set -g __done_initial_window_id ''
 	set -q __done_min_cmd_duration; or set -g __done_min_cmd_duration 5000
 	set -q __done_exclude; or set -g __done_exclude 'git (?!push|pull)'
+	set -q __done_notify_sound; or set -g __done_notify_sound 0
 
 	function __done_started --on-event fish_preexec
 		set __done_initial_window_id (__done_get_focused_window_id)
@@ -84,23 +88,27 @@ and test -n __done_get_focused_window_id  # is able to get window id
 			set -l message "$wd/ $history[1]"
 			set -l sender $__done_initial_window_id
 
-			# workarout terminal notifier bug when sending notifications from inside tmux
-			# https://github.com/julienXX/terminal-notifier/issues/216
-			if test $TMUX
-				set sender "tmux"
-			end
-
 			if test $exit_status -ne 0
 				set title "Failed ($exit_status) after $humanized_duration"
 			end
 
 			if set -q __done_notification_command
 				eval $__done_notification_command
+				if test "$__done_notify_sound" -eq 1
+					echo -e "\a" # bell sound
+				end
 			else if type -q terminal-notifier  # https://github.com/julienXX/terminal-notifier
-				terminal-notifier -message "$message" -title "$title" -sender "$sender" -activate "$__done_initial_window_id"
+				if test "$__done_notify_sound" -eq 1
+					terminal-notifier -message "$message" -title "$title" -sender "$__done_initial_window_id" -sound default
+				else
+					terminal-notifier -message "$message" -title "$title" -sender "$__done_initial_window_id"
+				end
 
 			else if type -q osascript  # AppleScript
 				osascript -e "display notification \"$message\" with title \"$title\""
+				if test "$__done_notify_sound" -eq 1
+					echo -e "\a" # bell sound
+				end
 
 			else if type -q notify-send # Linux notify-send
 				set -l urgency
@@ -108,6 +116,9 @@ and test -n __done_get_focused_window_id  # is able to get window id
 					set urgency "--urgency=critical"
 				end
 				notify-send $urgency --icon=terminal --app-name=fish "$title" "$message"
+				if test "$__done_notify_sound" -eq 1
+					echo -e "\a" # bell sound
+				end
 
 			else if type -q notify-desktop # Linux notify-desktop
 				set -l urgency
@@ -115,6 +126,9 @@ and test -n __done_get_focused_window_id  # is able to get window id
 					set urgency "--urgency=critical"
 				end
 				notify-desktop $urgency --icon=terminal --app-name=fish "$title" "$message"
+				if test "$__done_notify_sound" -eq 1
+					echo -e "\a" # bell sound
+				end
 
 			else  # anything else
 				echo -e "\a" # bell sound

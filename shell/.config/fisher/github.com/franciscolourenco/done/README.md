@@ -34,11 +34,13 @@ curl -Lo ~/.config/fish/conf.d/done.fish --create-dirs https://raw.githubusercon
 
 ## Dependencies
 
-If you want notifications with icons on macOS, please install `terminal-notifier`
+- If you want notifications with icons on macOS, please install `terminal-notifier` with
 
 ```fish
 brew install terminal-notifier
 ```
+
+- If you are using https://swaywm.org please install `jq`.
 
 ## Updating
 
@@ -46,14 +48,12 @@ brew install terminal-notifier
 fisher
 ```
 
-[Subscribe](http://eepurl.com/cAcU3P) to the newsletter to be notified of new versions.
-
 ## Settings
 
 #### Only display notifications if a command takes more than a certain amount of time
 
 ```fish
-`set -U __done_min_cmd_duration 5000  # default: 5000 ms`
+set -U __done_min_cmd_duration 5000  # default: 5000 ms
 ```
 
 #### Prevent specific commands from triggering notifications. Accepts a regex.
@@ -61,7 +61,6 @@ fisher
 This is useful to exclude commands like `git commit` for instance, since it could trigger unwanted notifications if it is configured to use an external editor.
 
 ```fish
-
 set -U __done_exclude 'git (?!push|pull)'  # default: all git commands, except push and pull. accepts a regex.
 ```
 
@@ -69,6 +68,12 @@ set -U __done_exclude 'git (?!push|pull)'  # default: all git commands, except p
 
 ```fish
 set -U __done_notification_command 'some custom command'
+```
+
+#### Play sound when showing notifications.
+
+```fish
+set -U __done_notify_sound 1
 ```
 
 ## Support
