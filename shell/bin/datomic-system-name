@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [[ "$#" -eq 0 ]]; then
+  cat <<EOF
+usage: $(basename $0) <REGION> [OPTIONS]
+
+  REGION  - a valid AWS region e.g. us-east-1
+  OPTIONS - any valid AWS CLI options e.g. --profile home
+EOF
+else
+  region="${1}"
+  shift
+
+  aws ec2 describe-instances --region ${region} \
+    --filters "Name=tag-key,Values=datomic:tx-group" "Name=instance-state-name,Values=running" \
+    --query 'Reservations[*].Instances[*].[Tags[?Key==`datomic:system`].Value]' \
+    --output text \
+    $*
+fi

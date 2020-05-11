@@ -1,0 +1,8 @@
+#!/bin/sh
+if [[ $# -lt 1 ]]; then
+  echo "Generates, prints, and copies a passphrase to the clipboard"
+  echo "usage: $(basename $0) <num-words>"
+  exit 0
+fi
+
+java -jar $(dirname $0)/diceware-0.1.0-SNAPSHOT-standalone.jar $1 | tee /dev/tty | pbcopy

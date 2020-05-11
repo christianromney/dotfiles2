@@ -1,0 +1,255 @@
+#!/bin/bash
+
+set -e
+
+usage() {
+    cat << USAGE
+Usage: $0 [options] <command> system
+
+Control the access gateway for system.
+
+Available commands:
+
+  up        Start the access gateway
+  down      Stop the access gateway
+  restart   Restart the access gateway
+
+Options:
+  -p <profile>  AWS Profile to use with permissions to the system
+  -r <region>   AWS Region of the system
+  --wait        Wait until the command against the access gateway has finished.
+                When not provided, this command will exit immediately.
+
+USAGE
+    exit -1
+}
+
+# Gets the gateway instance id for the system
+# Exits if gateway instance not found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+# Returns:
+#   instance id
+gateway_id() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local gateway_id
+    gateway_id=$(aws ec2 describe-instances $region_arg --filters Name=tag:Name,Values=${system}-bastion Name=instance-state-name,Values=running --query Reservations[0].Instances[0].InstanceId --output text $profile_command)
+    if [ "$?" -ne 0 ] || [ "${gateway_id}" == None ]; then
+        echo "Gateway not found, make sure gateway is running." >&2
+        exit 1
+    fi
+    echo $gateway_id
+}
+
+# Waits for gateway to start
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+wait_for_instance_start() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    $(aws ec2 wait $region_arg $profile_command instance-running --filters Name=tag:Name,Values=${system}-bastion Name=instance-state-name,Values=running) >&2 || exit $?
+
+    local gateway_id
+    gateway_id=$(gateway_id $system "$region_arg" "$profile_command")
+    echo gateway $gateway_id >&2
+    if [ "$?" -ne 0 ]; then
+        exit $?
+    fi
+
+    $(aws ec2 wait $region_arg $profile_command instance-status-ok --instance-id $gateway_id) >&2 || exit $?
+}
+
+# Waits for gateway to terminate
+# Arguments:
+#   instance_id - required
+#   region arg - optional
+#   profile command - optional
+wait_for_instance_terminate() {
+    local instance_id=$1
+    local region_arg=$2
+    local profile_command=$3
+    $(aws ec2 wait $region_arg $profile_command instance-terminated --instance-id $instance_id) >&2  || exit $?
+}
+
+# Returns the gateway asg for the system
+# Exits if gateway not found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+gateway_asg() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local gateway_asg
+    gateway_asg=$(aws autoscaling describe-tags $region_arg $profile_command --filters Name=value,Values=${system}-bastion --query Tags[0].ResourceId --output text)
+    if [ "$?" -ne 0 ] || [ "${gateway_asg}" == None ]; then
+        echo "Gateway ASG not found, make sure your system name and AWS creds are correct.." >&2
+        exit 1
+    fi
+
+    echo $gateway_asg
+}
+
+# Sets the desired capacity of the gateway ASG to 0
+# Exits if gateway not found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+#   wait for instance status - optional 'y' to wait
+down() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local instance_wait=$4
+
+    local gateway_asg
+    gateway_asg=$(gateway_asg $system "$region_arg" "$profile_command")
+    if [ "$?" -ne 0 ]; then
+        exit $?
+    fi
+
+    local gateway_id
+    gateway_id=$(gateway_id $system "$region_arg" "$profile_command")
+    if [ "$?" -ne 0 ]; then
+        exit $?
+    fi
+
+    $(aws autoscaling update-auto-scaling-group $region_arg $profile_command --auto-scaling-group-name $gateway_asg --desired-capacity 0) >&2  || exit $?
+
+    if [ "$instance_wait" == "y" ]; then
+        echo "Waiting for gateway to terminate." >&2
+        $(wait_for_instance_terminate $gateway_id "$region_arg" "$profile_command") || exit $?
+        echo "Done" >&2
+    else
+        echo "Access Gateway is scheduled for termination" >&2
+    fi
+}
+
+# Sets the desired capacity of the gateway ASG to 1
+# Exits if gateway not found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+#   wait for instance status - optional 'y' to wait
+up() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local instance_wait=$4
+
+    local gateway_asg
+    gateway_asg=$(gateway_asg $system "$region_arg" "$profile_command")
+    if [ "$?" -ne 0 ]; then
+        exit $?
+    fi
+
+    $(aws autoscaling update-auto-scaling-group $region_arg $profile_command --auto-scaling-group-name $gateway_asg --desired-capacity 1) >&2 || exit $?
+
+    if [ "$instance_wait" == "y" ]; then
+        echo "Waiting for gateway to start." >&2
+        $(wait_for_instance_start $system "$region_arg" "$profile_command") || exit $?
+        echo "Done" >&2
+    else
+        echo "Access Gateway is starting, it may take up to a few minutes before it is available for establishing connections" >&2
+    fi
+}
+
+# Sets the gateway instance to unhealthy
+# Exits if gateway not found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+#   wait for instance status - optional 'y' to wait
+
+restart() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local instance_wait=$4
+
+    local gateway_id
+    gateway_id=$(gateway_id $system "$region_arg" "$profile_command")
+    if [ "$?" -ne 0 ]; then
+        exit $?
+    fi
+
+    $(aws autoscaling set-instance-health $region_arg $profile_command --instance-id ${gateway_id} --health-status Unhealthy --no-should-respect-grace-period) >&2 || exit $?
+
+    if [ "$instance_wait" == "y" ]; then
+        echo "Waiting for gateway to restart." >&2
+        $(wait_for_instance_terminate $gateway_id "$region_arg" "$profile_command") || exit $?
+        $(wait_for_instance_start $system "$region_arg" "$profile_command") || exit $?
+        echo "Done" >&2
+    else
+        echo "Access Gateway is restarting, it may take up to a few minutes before it is available for re-establishing connections" >&2
+    fi
+}
+
+# parse params, set globals
+POSITIONAL=()
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        -h | --help )
+            usage
+            exit
+            ;;
+        -p)
+            PROFILE_COMMAND="--profile $2"
+            shift 2
+            ;;
+        -r)
+            REGION=$2
+            shift 2
+            ;;
+        --wait)
+            INSTANCE_WAIT=y
+            shift
+            ;;
+
+        *)
+            POSITIONAL+=("$1")
+            shift
+            ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}"
+
+if [ "$1" == "" ] || [ "$2" == "" ]; then
+    usage $@
+fi
+
+SYSTEM=$2
+
+if [ "$REGION" == "" ]; then
+    REGION_ARG=
+else
+    REGION_ARG="--region $REGION"
+fi
+
+case "$1" in
+    up)
+        $(up $SYSTEM "$REGION_ARG" "$PROFILE_COMMAND" $INSTANCE_WAIT)
+        ;;
+    down)
+        $(down $SYSTEM "$REGION_ARG" "$PROFILE_COMMAND" $INSTANCE_WAIT)
+        ;;
+    restart)
+        $(restart $SYSTEM "$REGION_ARG" "$PROFILE_COMMAND" $INSTANCE_WAIT)
+        ;;
+    *)
+        usage
+        ;;
+esac

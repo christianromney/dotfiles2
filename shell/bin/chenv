@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# usage:
+#
+#   bengal-mode.sh [mode]
+#
+#     mode - site | sponsor
+#
+#   when given a mode parameter, updates the .envrc file to use
+#   the database and HTTP ports corresponding to site or sponsor.
+#
+#   when given no arguments, prints the current mode and ports.
+#
+# Setup: ensure your .envrc contains the following envvars
+#
+# export SITE_HTTP_PORT=2999
+# export SPONSOR_HTTP_PORT=3000
+# export SITE_PG_PORT=15433
+# export SPONSOR_PG_PORT=15432
+#
+# export API_MODE=site
+# export PORT=$SITE_HTTP_PORT
+# export PG_PORT=$SITE_PG_PORT
+# export DB_NAME=db
+#
+# export DB_SECURE="false"
+# export DATABASE_URL=postgres://postgres@localhost:${PG_PORT}/${DB_NAME}
+#
+if [[ "$1" = "sponsor" ]]; then
+  echo -e "Setting Bengal API mode to $(tput setaf 5)sponsor$(tput sgr0)"
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/API_MODE=site/API_MODE=sponsor/' .envrc
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/\$SITE_HTTP_PORT/$SPONSOR_HTTP_PORT/' .envrc
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/\$SITE_PG_PORT/$SPONSOR_PG_PORT/' .envrc
+elif [[ "$1" = "site" ]]; then
+  echo -e "Setting Bengal API mode to $(tput setaf 6)site$(tput sgr0)"
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/API_MODE=sponsor/API_MODE=site/' .envrc
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/\$SPONSOR_HTTP_PORT/$SITE_HTTP_PORT/' .envrc
+  # shellcheck disable=SC2016
+  sed -i '' -e 's/\$SPONSOR_PG_PORT/$SITE_PG_PORT/' .envrc
+fi
+echo
+if [[ $# -ne 0 ]]; then
+  direnv allow > /dev/null 2>&1
+else
+  if [[ "$API_MODE" = "sponsor" ]]; then
+    echo -e "Bengal API: $(tput setaf 5)sponsor$(tput sgr0)"
+
+  elif [[ "$API_MODE" = "site" ]]; then
+    echo -e "Bengal API: $(tput setaf 6)site$(tput sgr0)"
+  fi
+
+  echo "Database URL: $DATABASE_URL"
+  echo "HTTP Port: $PORT"
+  tput sgr0
+fi
+
+tput sgr0

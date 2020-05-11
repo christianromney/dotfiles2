@@ -1,0 +1,53 @@
+{
+  "name": "spacefish",
+  "version": "0.0.0-semantic-release",
+  "description": "A Fish Shell prompt for Astronauts",
+  "repository": "git@github.com:matchai/spacefish.git",
+  "author": "Matan Kushner <matchai@me.com>",
+  "scripts": {
+    "test": "fish tests/run.fish",
+    "docs:prepare": "gitbook install",
+    "docs:build": "npm run docs:prepare && gitbook build",
+    "docs:serve": "npm run docs:prepare && gitbook serve .",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/exec": "^3.3.1",
+    "@semantic-release/git": "^7.0.6",
+    "all-contributors-cli": "^5.4.1",
+    "gitbook-cli": "^2.3.2"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "./scripts/version.sh ${nextRelease.version}"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "fish_prompt.fish"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "releasedLabels": [
+            "Status: Released"
+          ]
+        }
+      ]
+    ]
+  }
+}

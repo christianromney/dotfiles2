@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+find . \! -name '.*' -name '*.clj*' | xargs etags --regex='/[ \t\(]*def[a-z]* \([a-z-!]+\)/\1/' --regex='/[ \t\(]*ns \([a-z.]+\)/\1/'

@@ -1,0 +1,112 @@
+#!/bin/bash
+
+set -e
+
+usage() {
+    cat << USAGE
+Usage: $0 [options] <command> system local-directory
+
+Analytics command line interface.
+
+Available commands:
+
+  sync    Sync analytics config files from local directory to S3
+
+Options:
+  -p <profile>       AWS Profile to use with permissions to the system
+  -r <region>        AWS Region of the system
+  -q <query-group>   Datomic Query Group to target for sync (defaults to the primary compute group)
+  --port <port>    Local port to use for forwarding (default to 8182 for client, 8989 for analytics)
+
+USAGE
+    exit -1
+}
+
+# Get S3 Bucket for System
+# Exits if no bucket found
+# Arguments:
+#   system - required
+#   region arg - optional
+#   profile command - optional
+# Returns:
+#   S3 Bucket Name
+s3_bucket() {
+    local system=$1
+    local region_arg=$2
+    local profile_command=$3
+    local s3
+    s3=$(aws resourcegroupstaggingapi get-resources $region_arg --resource-type-filters s3 --tag-filters Key=datomic:system,Values=$system --query "ResourceTagMappingList | [].ResourceARN" --output text $profile_command | sed -e 's/.*://g')
+    if [ "$s3" == None ] || [ "$s3" == "" ]; then
+        echo "Datomic system $system not found, make sure your system name and AWS creds are correct." >&2
+        exit 1
+    fi
+    echo "$s3"
+}
+
+# Sync files from local directory to System S3 path
+# Globals:
+#   SYSTEM
+#   REGION_ARG
+#   PROFILE_COMMAND
+#   LOCAL_DIR
+#   QUERY_GROUP
+sync() {
+    local s3
+    s3=$(s3_bucket $SYSTEM "$REGION_ARG" "$PROFILE_COMMAND")
+    aws $PROFILE_COMMAND s3 sync $LOCAL_DIR s3://${s3}/${SYSTEM}/datomic/analytics/${QUERY_GROUP}/etc --delete --exclude datomic/views/* >&2
+}
+
+# parse params, set globals
+POSITIONAL=()
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        -p)
+            PROFILE_COMMAND="--profile $2"
+            shift 2
+            ;;
+        -r)
+            REGION=$2
+            shift 2
+            ;;
+        -q)
+            QUERY_GROUP=$2
+            shift 2
+            ;;
+
+        *)
+            POSITIONAL+=("$1")
+            shift
+            ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}"
+
+if [ "$2" == "" ] || [ "$3" == "" ]; then
+    usage $@
+fi
+
+SYSTEM=$2
+LOCAL_DIR=$3
+QUERY_GROUP=${QUERY_GROUP:-$SYSTEM}
+
+if [ "$REGION" == "" ]; then
+    REGION_ARG=
+else
+    REGION_ARG="--region $REGION"
+fi
+
+case "$1" in
+    -h | --help )
+        usage
+        exit
+        ;;
+
+    sync)
+        sync
+        ;;
+    *)
+        usage
+        ;;
+esac
