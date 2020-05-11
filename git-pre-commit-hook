@@ -1,0 +1,40 @@
+#!/usr/bin/env fish
+set abort 0
+for x in brew cask
+
+  set catalog $x"file"
+  set tmpfile "/tmp/$catalog-"(date +"%Y%m%dT%H%M%S")".log"
+
+  # create catalog if not exists
+  if ! test -f "$catalog"
+    echo "creating new $x catalog at $catalog "
+    touch "$catalog"
+  end
+
+  # remove tempfile if exists
+  if test -f "$tmpfile"
+    rm -f "$tmpfile"
+  end
+
+  # create tempfile of installed apps
+  if [ "$x" = "cask" ]
+    brew cask list | sort > "$tmpfile"
+  else
+    brew list | sort > "$tmpfile"
+  end
+
+  set tmpmd5 (md5sum "$tmpfile" | cut -f1 -d ' ' -)
+  set catmd5 (md5sum "$catalog" | cut -f1 -d ' ' -)
+
+  if [ "$tmpmd5" != "$catmd5" ]
+    echo "$catalog ($catmd5) does not match installed ($tmpmd5)"
+    diff -u "$catalog" "$tmpfile"
+    mv "$tmpfile" "$catalog"
+    set abort 1
+  end
+end
+
+if [ "$abort" != "0" ]
+  echo "aborting commit"
+  exit $abort
+end
