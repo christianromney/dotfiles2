@@ -1,0 +1,41 @@
+# [JIRA: MTC-XXXX] Some piece of code learned to do something new
+#
+# After a blank line, I can give more details about the
+# nature of the change. Don't just list the files you
+# changed. Tell us something about *why* the change was
+# needed or about the way in which you met the requirement.
+# In other words, something we wouldn't know by merely
+# looking at the commit details.
+#
+# --- Additional guidance (from Linus Torvalds) ---
+#
+# Also, please write good git commit messages.  A good commit message
+# looks like this:
+#
+# 	Header line: explaining the commit in one line
+#
+# 	Body of commit message is a few lines of text, explaining things
+# 	in more detail, possibly giving some background about the issue
+# 	being fixed, etc etc.
+#
+# 	The body of the commit message can be several paragraphs, and
+# 	please do proper word-wrap and keep columns shorter than about
+# 	74 characters or so. That way "git log" will show things
+# 	nicely even when it's indented.
+#
+# 	Reported-by: whoever-reported-it
+# 	Signed-off-by: Your Name <youremail@yourhost.com>
+#
+# where that header line really should be meaningful, and really should be
+# just one line.  That header line is what is shown by tools like gitk and
+# shortlog, and should summarize the change in one readable line of text,
+# independently of the longer explanation.
+#
+# --- Borrowed from the readme of Linus' subsurface project  ---
+#
+# Lastly, here are some samples of poor commit messages
+# (Please don't be this person)
+#
+# updated javascript
+# fixed test
+#

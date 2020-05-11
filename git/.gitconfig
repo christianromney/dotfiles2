@@ -1,0 +1,89 @@
+[user]
+  name = Christian Romney
+  email = christian.a.romney@gmail.com
+  signingKey = A0FA17A0540AAC06
+[core]
+  autocrlf = input
+  excludesfile = ~/.gitignore_global
+  editor = emacs
+  pager = diff-so-fancy | less --tabs=2 -RFX
+[commit]
+  gpgSign = true
+[help]
+  autocorrect = 1
+[alias]
+  br = branch
+  ci = commit -Ss
+  co = checkout
+  cp = cherry-pick
+  dc = diff --cached
+  fp = format-patch
+  ls = log --oneline
+  st = status
+  up = pull
+  ff = pull --ff-only
+  rl = reflog
+  staged = diff --cached
+  file-rm = clean
+  dir-rm = clean
+	praise = blame
+	shortsha = rev-parse --short=20
+	minisha = rev-parse --short=20
+[color]
+  ui = auto
+[color "diff"]
+  meta = cyan bold
+  commit = green bold
+  frag = yellow bold
+  old = red
+  new = green
+  whitespace = red reverse
+[color "branch"]
+  current = cyan bold
+  local = cyan
+  remote = yellow
+[color "status"]
+  added = green
+  changed = yellow
+  untracked = red
+[push]
+  default = simple
+  followTags = true
+[merge]
+  tool = ediff
+  conflictStyle = diff3
+[mergetool]
+  prompt = false
+
+[mergetool.ediff]
+    cmd = emacs --eval \"\
+(progn\
+  (defun ediff-write-merge-buffer ()\
+    (let ((file ediff-merge-store-file))\
+      (set-buffer ediff-buffer-C)\
+      (write-region (point-min) (point-max) file)\
+      (message \\\"Merge buffer saved in: %s\\\" file)\
+      (set-buffer-modified-p nil)\
+      (sit-for 1)))\
+  (setq ediff-quit-hook 'kill-emacs\
+        ediff-quit-merge-hook 'ediff-write-merge-buffer)\
+  (ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\"\
+                                   \\\"$BASE\\\" nil \\\"$MERGED\\\"))\"
+[clean]
+  requireForce = false
+[include]
+path = ~/.gitconfig.secrets
+[diff]
+  tool = icdiff
+[difftool]
+  prompt = false
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff $LOCAL $REMOTE
+[rerere]
+  enabled = 1
+[magit]
+  hideCampaign = true
+[github]
+  user = christianromney
+[icdiff]
+  options = --highlight --line-numbers
