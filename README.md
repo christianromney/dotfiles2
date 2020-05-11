@@ -6,9 +6,15 @@ OS X, but most of this stuff should work equally well under Linux with a few
 tweaks.
 
 I use [GNU stow](https://www.gnu.org/software/stow/) to manage the symlinks in
-this repository, and the `homesync` script depends on it. To install it,
+this repository, and [Homebrew](https://brew.sh/) as my package manager. The
+`install.sh` script will bootstrap everything including the installation of stow
+and other packages.
 
-     brew install stow
+From then on, simply running `./homesync` should keep things running smoothly.
+
+The install script also configures a pre-commit hook in this repository that
+updates the brewfile and caskfile with any package differences it detects. This
+forces me to commit those changes.
 
 I run [iTerm2](https://www.iterm2.com/), [Fish Shell](https://fishshell.com/)
 using [Fisher](https://github.com/jorgebucaran/fisher) to manage plugins. iTerm2
@@ -19,14 +25,12 @@ terminal color theme is
 prompt is [Metro](https://github.com/fishpkg/fish-prompt-metro).
 
 
-![Terminal](terminal.png)
-
 License
 =======
 
 The MIT License
 
-Copyright (c) 2010-2019 Christian Romney <christian.a.romney@gmail.com>
+Copyright (c) 2010-2020 Christian Romney <christian.a.romney@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
