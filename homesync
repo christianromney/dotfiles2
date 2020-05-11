@@ -1,7 +1,5 @@
 #!/bin/bash
 
-for d in $(pwd)/*; do
-    if [ -d $d ]; then
-        stow -t $HOME -R $(basename $d)
-    fi
+find . -type d -depth 1 \! -name ".git" -print | while read d; do
+  stow --dotfiles --target="${HOME}" --stow "$(basename $d)"
 done
