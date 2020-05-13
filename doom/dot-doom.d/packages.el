@@ -54,3 +54,4 @@
 (package! org-beautify-theme)
 (package! org-re-reveal)
 (package! fish-mode)
+(package! janet-mode)
