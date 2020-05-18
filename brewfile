@@ -28,7 +28,6 @@ diffutils
 direnv
 docbook
 docker-compose
-emacs-plus
 exa
 exercism
 fd
@@ -50,6 +49,7 @@ gh
 ghostscript
 giflib
 git
+git-delta
 git-extras
 git-multipush
 gitup

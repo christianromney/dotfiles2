@@ -54,4 +54,6 @@
 (package! org-beautify-theme)
 (package! org-re-reveal)
 (package! fish-mode)
-(package! janet-mode)
+(package! cider :pin "bfcf9157a9")
+(package! xterm-color)
+(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))

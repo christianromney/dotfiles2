@@ -18,6 +18,9 @@
       ;;password-cache-expiry               (*4 60 60) ; 4 hours
       )
 
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+
 ;; Always maximize Emacs on startup
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -43,6 +46,9 @@
 (load! "org-extras.el")
 (load! "behavior.el")
 
+(after! magit-mode
+  (progn
+    (magit-delta-mode +1)))
 
 ;; (defun romney/save-place-reposition ()
 ;;   "Force windows to recenter current line (with saved position)."
