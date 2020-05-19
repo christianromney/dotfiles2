@@ -18,7 +18,8 @@
       "C-x M-t" #'transpose-paragraphs
       "C-c a"   #'org-agenda
       "M-%"     #'anzu-query-replace
-      "C-M-%"   #'anzu-query-replace-regexp)
+      "C-M-%"   #'anzu-query-replace-regexp
+      "<f5>"    #'deadgrep)
 
 ;; Clojure mode
 (map! :map clojure-mode-map

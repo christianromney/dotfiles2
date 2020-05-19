@@ -143,6 +143,7 @@
         +babel
         +capture
         +dragndrop         ; drag & drop files/images into org buffers
+        +gnuplot
         +hugo              ; use Emacs for hugo blogging
         ;;+jupyter         ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
@@ -171,7 +172,7 @@
        :email
        ;;(mu4e +gmail)
        ;;notmuch
-       (wanderlust +gmail)
+       ;; (wanderlust +gmail)
 
        :app
        calendar

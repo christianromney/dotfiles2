@@ -13,10 +13,8 @@
       org-agenda-files                    '("~/Dropbox/org/agenda/")
       ;; ui appearance / theme
       doom-theme                          'doom-snazzy
-      doom-font                           (font-spec :family "Hack Nerd Font Mono" :size 18)
-      display-line-numbers-type           t
-      ;;password-cache-expiry               (*4 60 60) ; 4 hours
-      )
+      doom-font                           (font-spec :family "Iosevka SS02" :weight 'medium :size 20)
+      display-line-numbers-type           t)
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -46,9 +44,9 @@
 (load! "org-extras.el")
 (load! "behavior.el")
 
-(after! magit-mode
-  (progn
-    (magit-delta-mode +1)))
+(add-hook 'prog-mode-hook #'rainbow-mode)
+(add-hook 'magit-mode-hook #'magit-delta-mode)
+
 
 ;; (defun romney/save-place-reposition ()
 ;;   "Force windows to recenter current line (with saved position)."

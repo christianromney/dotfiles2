@@ -1,5 +1,6 @@
 ack
 ant
+ant@1.9
 antibody
 aom
 asciidoc
@@ -27,6 +28,7 @@ diff-so-fancy
 diffutils
 direnv
 docbook
+docbook-xsl
 docker-compose
 exa
 exercism
@@ -57,6 +59,7 @@ glances
 glib
 global
 gmp
+gnu-getopt
 gnu-sed
 gnutls
 go
@@ -203,6 +206,7 @@ wget
 wtfutil
 x264
 x265
+xmlto
 xvid
 xz
 yamllint

@@ -27,7 +27,7 @@
        org-agenda-todo-ignore-scheduled t
        org-agenda-use-tag-inheritance nil
        org-agenda-window-setup 'current-window
-       org-ellipsis "⤵"
+       org-ellipsis "…"
        org-export-html-postamble nil
        org-fontify-done-headline t
        org-html-validation-link nil
@@ -45,22 +45,31 @@
        org-use-fast-todo-selection t
        org-use-sub-superscripts "{}"
 
-       org-bullets-bullet-list '("◉" "○" "◌" "●")
-
        org-refile-targets
        '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
-       org-tag-alist '(("work"       . ?w)
-                       ("personal"   . ?p)
-                       ("study"      . ?s))
+       org-tag-alist
+       '(("work"       . ?w)
+         ("personal"   . ?p)
+         ("study"      . ?s))
+
+       org-superstar-headline-bullets-list
+       '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+      ;; '("⁖")
 
        org-todo-keywords
-       '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)"))
+       '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)" "CANCELLED(c)"))
 
        org-todo-keyword-faces
-       '(("TODO"      . (:background "IndianRed1"   :foreground "red4"       :weight bold))
-         ("STARTED"   . (:background "gold1"        :foreground "black"      :weight bold))
-         ("DONE"      . (:background "light green"  :foreground "dark green" :weight bold)))
+       '(("TODO"      :foreground "#7c7c75" :weight normal :underline t)
+         ("STARTED"   :foreground "#0098dd" :weight normal :underline t)
+         ("DONE"      :foreground "#50a14f" :weight normal :underline t)
+         ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+
+       org-priority-faces
+       '((65 :foreground "#e45649")
+         (66 :foreground "#da8548")
+         (67 :foreground "#0098dd"))
 
        org-capture-templates
        `(("t" "Todo" entry (file+headline "todos.org" "Todos")
