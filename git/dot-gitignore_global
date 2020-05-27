@@ -93,3 +93,4 @@ bengal-run-tests.sh
 .cpcache
 .dir-locals.el
 .rebel_readline_history
+.rebl/prefs.edn

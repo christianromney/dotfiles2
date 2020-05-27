@@ -18,10 +18,9 @@
        ;;japanese
        :completion
        (company +auto)     ; the ultimate code completion backend
-       ;;helm              ; the *other* search engine for love and life
+       (helm +fuzzy)       ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy +prescient
-            +icons)        ; a search engine for love and life
+       ;;(ivy +prescient +icons)        ; a search engine for love and life
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -127,7 +126,7 @@
        ;;idris             ;
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript          ; all(hope(abandon(ye(who(enter(here))))))
-       julia               ; a better, faster MATLAB
+       ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        latex               ; writing papers in Emacs has never been so fun
        ;;lean
@@ -147,7 +146,7 @@
         +hugo              ; use Emacs for hugo blogging
         ;;+jupyter         ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
-        ;;+pomodoro        ; be fruitful with the tomato technique
+        +pomodoro          ; be fruitful with the tomato technique
         +present           ; using org-mode for presentations
         +publish)
        ;;perl              ; write code no one else can comprehend

@@ -5,8 +5,12 @@
  ;; -- tooling --
  :depviz {:plugins [[lein-ns-dep-graph "0.2.0-SNAPSHOT"]]}
 
- :scope {:dependencies
-         [[vvvvalvalval/scope-capture-nrepl "0.3.1"]]
+ :scope {:dependencies [[vvvvalvalval/scope-capture-nrepl "0.3.1"]
+                        [jsofra/data-scope "0.1.2"]]
+         :injections [(require 'data-scope.charts)
+                      (require 'data-scope.graphs)
+                      (require 'data-scope.inspect)
+                      (require 'data-scope.pprint)]
          :repl-options
          {:nrepl-middleware
           [sc.nrepl.middleware/wrap-letsc]}}
