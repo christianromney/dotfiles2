@@ -68,7 +68,8 @@
       "C-x M-t" #'transpose-paragraphs
       "C-c a"   #'org-agenda
       "M-%"     #'anzu-query-replace
-      "C-M-%"   #'anzu-query-replace-regexp)
+      "C-M-%"   #'anzu-query-replace-regexp
+      "C-e"     #'move-end-of-line)
 
 ;;
 ;; Clojure
@@ -243,10 +244,11 @@
 
 (add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
 (add-hook! 'org-mode-hook
-  (lambda () (progn
-               (setq left-margin-width 2)
-               (setq right-margin-width 2)
-               (set-window-buffer nil (current-buffer)))))
+  (lambda ()
+    (progn
+      (setq left-margin-width 2)
+      (setq right-margin-width 2))))
+
 
 ;; ==============================================================================
 ;;                      Emacs Behavioral Customizations
