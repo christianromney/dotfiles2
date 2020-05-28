@@ -25,18 +25,21 @@
 ;;                              PERSONALIZATION
 ;; ==============================================================================
 ;;
-(add-to-list 'default-frame-alist         '(fullscreen . maximized)) ; Maximize Emacs
-(setq user-full-name                      "Christian Romney"
-      user-mail-address                   "christian.a.romney@gmail.com"
-      calendar-location-name              "Pembroke Pines, FL"
-      calendar-longitude                  -80.34110799999999
-      calendar-latitude                   26.017
-      calendar-week-start-day             1
-      org-directory                       "~/Dropbox/org/"
-      doom-theme                          'doom-one
-      doom-font                           (font-spec :family "Iosevka SS02" :weight 'medium :size 20)
-      display-line-numbers-type           t
-      +default-want-RET-continue-comments nil)
+(add-to-list 'default-frame-alist              '(fullscreen . maximized))
+(setq-default doom-scratch-initial-major-mode  'emacs-lisp-mode)
+(setq user-full-name                           "Christian Romney"
+      user-mail-address                        "christian.a.romney@gmail.com"
+      calendar-location-name                   "Pembroke Pines, FL"
+      calendar-longitude                       -80.34110799999999
+      calendar-latitude                        26.017
+      calendar-week-start-day                  1
+      org-directory                            "~/Dropbox/org/"
+      doom-theme                               'doom-one
+      display-line-numbers-type                t
+      +default-want-RET-continue-comments      nil
+      doom-font                                (font-spec :family "Iosevka SS02"
+                                                          :weight 'medium
+                                                          :size 20))
 
 ;; ==============================================================================
 ;;                              GLOBAL SETTINGS
@@ -133,8 +136,10 @@
     (sp-backward-delete-char))
 
   (map! :map parinfer-mode-map
-        "M-\\"    #'personal-delete-horizontal-space
-        "M-SPC"   #'personal-just-one-space))
+        "M-\\"      #'personal-delete-horizontal-space
+        "M-SPC"     #'personal-just-one-space
+        "<s-right>" #'sp-forward-slurp-sexp
+        "<s-left>"  #'sp-forward-barf-sexp))
 
 ;;
 ;; Org
