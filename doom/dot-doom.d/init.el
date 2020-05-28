@@ -13,7 +13,7 @@
 ;; ============================================================================
 (doom! :completion
        company             ; the ultimate code completion backend
-       helm                ; the *other* search engine for love and life
+       (helm +fuzzy)       ; the *other* search engine for love and life
 
        :ui
        doom                ; what makes DOOM look the way it does
