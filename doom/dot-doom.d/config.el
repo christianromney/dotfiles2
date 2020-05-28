@@ -277,9 +277,13 @@
 ;; ==============================================================================
 ;;                      Emacs Behavioral Customizations
 ;; ==============================================================================
+;;
 ;; I like repeated searches to remain in the middle of the screen so I don't have
 ;; to scan my monitor for the place where I've landed. I can always stare at the
 ;; center of the screen and find my search results.
+;;
+;; ==============================================================================
+
 (defun private/after-jump ()
   "Centers vertically and flashes the current line"
   (interactive)
@@ -306,5 +310,3 @@
   (private/after-jump))
 
 (ad-activate 'isearch-repeat-backward)
-
-;; Line merging
