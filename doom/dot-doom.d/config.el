@@ -285,28 +285,29 @@
 ;; ==============================================================================
 
 (defun private/after-jump ()
-  "Centers vertically and flashes the current line"
+  "Centers vertically and flashes the current line."
   (interactive)
   (recenter)
   (+nav-flash/blink-cursor))
 
-;; ;; Always center when jumping to search results
 (add-hook! 'isearch-mode-end-hook #'private/after-jump)
 
 (defadvice isearch-forward
     (after isearch-forward-recenter activate)
-  (private/after-jump))
-
+    (private/after-jump))
 (ad-activate 'isearch-forward)
 
 (defadvice isearch-repeat-forward
     (after isearch-repeat-forward-recenter activate)
-  (private/after-jump))
-
+    (private/after-jump))
 (ad-activate 'isearch-repeat-forward)
+
+(defadvice isearch-backward
+    (after isearch-backward-recenter activate)
+    (private/after-jump))
+(ad-activate 'isearch-backward)
 
 (defadvice isearch-repeat-backward
     (after isearch-repeat-backward-recenter activate)
-  (private/after-jump))
-
+    (private/after-jump))
 (ad-activate 'isearch-repeat-backward)
