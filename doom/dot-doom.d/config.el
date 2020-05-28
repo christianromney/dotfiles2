@@ -238,6 +238,8 @@
                    (file+olp "journal.org" "Website")
                    (function org-hugo-new-subtree-post-capture-template)))))
 
+(add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
+
 ;; ==============================================================================
 ;;                      Emacs Behavioral Customizations
 ;; ==============================================================================

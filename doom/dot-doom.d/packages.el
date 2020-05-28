@@ -54,6 +54,7 @@
 
 ;;(package! org)
 (package! org-re-reveal)
+(package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! fish-mode)
 (package! cider :pin "bfcf9157a9")
 (package! xterm-color)
