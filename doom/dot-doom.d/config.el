@@ -129,10 +129,13 @@
 
 ;; appearance
 (setq org-ellipsis "…"
-      org-fontify-done-headline t
       org-pretty-entities t
       org-startup-indented t
       org-startup-folded nil
+      org-fontify-done-headline t
+      org-fontify-whole-heading-line t
+      org-fontify-quote-and-verse-blocks t
+      org-fontify-emphasized-text t
       org-src-fontify-natively t
       org-src-tab-acts-natively t
 
@@ -239,6 +242,11 @@
                    (function org-hugo-new-subtree-post-capture-template)))))
 
 (add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
+(add-hook! 'org-mode-hook
+  (lambda () (progn
+               (setq left-margin-width 2)
+               (setq right-margin-width 2)
+               (set-window-buffer nil (current-buffer)))))
 
 ;; ==============================================================================
 ;;                      Emacs Behavioral Customizations
