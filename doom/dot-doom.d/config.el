@@ -113,6 +113,29 @@
       helm-ff-search-library-in-sexp t
       helm-scroll-amount 8
       helm-echo-input-in-header-line nil)
+
+;;
+;; Parinfer
+;;
+(after! parinfer
+  (setq parinfer-auto-switch-indent-mode t
+        parinfer-delay-invoke-threshold  3000)
+
+  (defun personal-just-one-space ()
+    "Command to delete all but one whitespace character."
+    (interactive)
+    (just-one-space -1))
+
+  (defun personal-delete-horizontal-space ()
+    "Command to delete all whitespace."
+    (interactive)
+    (just-one-space -1)
+    (sp-backward-delete-char))
+
+  (map! :map parinfer-mode-map
+        "M-\\"    #'personal-delete-horizontal-space
+        "M-SPC"   #'personal-just-one-space))
+
 ;;
 ;; Org
 ;;
@@ -285,18 +308,3 @@
 (ad-activate 'isearch-repeat-backward)
 
 ;; Line merging
-
-(defun personal-just-one-space ()
-  "Command to delete all but one whitespace character."
-  (interactive)
-  (just-one-space -1))
-
-(defun personal-delete-horizontal-space ()
-  "Command to delete all whitespace."
-  (interactive)
-  (just-one-space -1)
-  (sp-backward-delete-char))
-
-(map! :map parinfer-mode-map
-      "M-\\"    #'personal-delete-horizontal-space
-      "M-SPC"   #'personal-just-one-space)

@@ -36,6 +36,7 @@
        :editor
        file-templates      ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
+       ;lispy               ; vim for lisp, for people who don't like vim
        parinfer            ; turn lisp into python, sort of
        rotate-text         ; cycle region at point between text candidates
        snippets            ; my elves. They type so I don't have to
@@ -96,15 +97,14 @@
        latex               ; writing papers in Emacs has never been so fun
        ;;ledger            ; an accounting system in Emacs
        markdown            ; writing docs for people to ignore
-       (org
+       (org                ; organize your plain life in plain text
         +dragndrop
         +gnuplot
         +hugo
         +journal
         +noter
         +pomodoro
-        +present
-        +roam)            ; organize your plain life in plain text
+        +present)
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
