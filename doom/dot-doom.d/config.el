@@ -267,12 +267,7 @@
                    (function org-hugo-new-subtree-post-capture-template)))))
 
 (add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
-(add-hook! 'org-mode-hook
-  (lambda ()
-    (progn
-      (setq left-margin-width 2)
-      (setq right-margin-width 2))))
-
+(add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2 right-margin-width 2)))
 
 ;; ==============================================================================
 ;;                      Emacs Behavioral Customizations
