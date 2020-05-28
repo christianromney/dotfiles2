@@ -1,22 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Personalization
-;; ===============
-(setq user-full-name                      "Christian Romney"
-      user-mail-address                   "christian.a.romney@gmail.com"
-      calendar-location-name              "Pembroke Pines, FL"
-      calendar-longitude                  -80.34110799999999
-      calendar-latitude                   26.017
-      calendar-week-start-day             1
-      ;; ui appearance / theme
-      doom-theme                          'doom-snazzy
-      doom-font                           (font-spec :family "Iosevka SS02" :weight 'medium :size 20)
-      display-line-numbers-type           t)
-
-;; Always maximize Emacs on startup
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
+;;
+;; ==============================================================================
+;;                                   HELP
+;; ==============================================================================
 ;; Here are some additional functions/macros that could help you configure Doom:
+;;
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package' for configuring packages
@@ -32,11 +20,37 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+;;
+;; ==============================================================================
+;;                              PERSONALIZATION
+;; ==============================================================================
+;;
+(add-to-list 'default-frame-alist         '(fullscreen . maximized)) ; Maximize Emacs
+(setq user-full-name                      "Christian Romney"
+      user-mail-address                   "christian.a.romney@gmail.com"
+      calendar-location-name              "Pembroke Pines, FL"
+      calendar-longitude                  -80.34110799999999
+      calendar-latitude                   26.017
+      calendar-week-start-day             1
+      org-directory                       "~/Dropbox/org/"
+      doom-theme                          'doom-one
+      doom-font                           (font-spec :family "Iosevka SS02" :weight 'medium :size 20)
+      display-line-numbers-type           t
+      +default-want-RET-continue-comments nil)
 
-;; Key bindings
-;; ============
+;; ==============================================================================
+;;                              GLOBAL SETTINGS
+;; ==============================================================================
 
-;; = global =
+(remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
+(electric-pair-mode +1)
+
+;; ==============================================================================
+;;                             KEY BINDINGS
+;; ==============================================================================
+;;
+;; Global
+;;
 (map! "C-x \\"  #'align-regexp
       "C-x g"   #'magit-status
       "M-/"     #'hippie-expand
@@ -54,37 +68,39 @@
       "C-x M-t" #'transpose-paragraphs
       "C-c a"   #'org-agenda
       "M-%"     #'anzu-query-replace
-      "C-M-%"   #'anzu-query-replace-regexp
-      "<f5>"    #'deadgrep)
+      "C-M-%"   #'anzu-query-replace-regexp)
 
-;; = clojure mode =
+;;
+;; Clojure
+;;
 (map! :map clojure-mode-map
       "<f5>"    #'cider-jack-in
       "M-<f5>"  #'cider-jack-in-clj&cljs)
 
-;; = ivy =
-(when (featurep! :completion ivy)
-  (map! :map ivy-minibuffer-map
-        "C-m"     #'ivy-alt-done
-        "C-l"     #'counsel-up-directory))
-
-;; = helm =
+;;
+;; Helm
+;;
 (when (featurep! :completion helm)
   (map! :map helm-map
         "<tab>"   #'helm-execute-persistent-action))
 
-;; = dired =
+;;
+;; Dired
+;;
 (map! :map dired-mode-map
-      "C-l"     #'dired-up-directory)
-
-;; Package customization
-;; =====================
-
-;; = magit =
-(add-hook 'prog-mode-hook #'rainbow-mode)
+      "C-l"     #'dired-up-directory) ;; make dired navigate like helm
+;;
+;; ==============================================================================
+;;                        Package Customization
+;; ==============================================================================
+;;
+;; Magit
+;;
 (add-hook 'magit-mode-hook #'magit-delta-mode)
 
-;; = helm =
+;;
+;; Helm
+;;
 (setq helm-autoresize-max-height 0
       helm-autoresize-min-height 40
       helm-M-x-fuzzy-match t
@@ -95,38 +111,10 @@
       helm-ff-search-library-in-sexp t
       helm-scroll-amount 8
       helm-echo-input-in-header-line nil)
-
-;; = smartparens =
-(after! smartparens
-  (progn
-    (defun personal-just-one-space ()
-      "Command to delete all but one whitespace character."
-      (interactive)
-      (just-one-space -1))
-
-    (defun personal-delete-horizontal-space ()
-      "Command to delete all whitespace."
-      (interactive)
-      (just-one-space -1)
-      (sp-backward-delete-char))
-
-    (map! :map smartparens-mode-map
-          "M-\\"    #'personal-delete-horizontal-space
-          "M-SPC"   #'personal-just-one-space)
-
-    ;; undo Doom's mistakes
-    (sp-pair "'" nil :unless nil)
-    (sp-pair "\"" nil :unless nil)
-    (dolist (brace '("(" "{" "["))
-      (sp-pair brace nil
-               :post-handlers '(("||\n[i]" "RET") ("| " "SPC"))
-               :unless nil))
-    ;; (smartparens-global-strict-mode +1)
-    ))
-
-(add-hook! prog-mode (smartparens-strict-mode +1))
-
-;; = org =
+;;
+;; Org
+;;
+;; agenda settings
 (setq org-agenda-include-diary t
       org-agenda-files '("~/Dropbox/org/agenda/")
       org-agenda-show-log t
@@ -137,34 +125,16 @@
       org-agenda-todo-ignore-deadlines t
       org-agenda-todo-ignore-scheduled t
       org-agenda-use-tag-inheritance nil
-      org-agenda-window-setup 'current-window
-      org-directory "~/Dropbox/org/"
-      org-ellipsis "…"
-      org-export-html-postamble nil
+      org-agenda-window-setup 'current-window)
+
+;; appearance
+(setq org-ellipsis "…"
       org-fontify-done-headline t
-      org-hide-emphasis-markers t
-      org-html-validation-link nil
-      org-log-done nil
-      org-outline-path-complete-in-steps nil
       org-pretty-entities t
-      org-refile-use-cache t
-      org-refile-use-outline-path t
-      org-return-follows-link t
-      org-src-fontify-natively t
-      org-src-tab-acts-natively t
-      org-src-window-setup 'current-window
       org-startup-indented t
       org-startup-folded nil
-      org-use-fast-todo-selection t
-      org-use-sub-superscripts "{}"
-
-      org-refile-targets
-      '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
-
-      org-tag-alist
-      '(("work"       . ?w)
-        ("personal"   . ?p)
-        ("study"      . ?s))
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t
 
       org-superstar-headline-bullets-list
       '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
@@ -181,7 +151,26 @@
       org-priority-faces
       '((65 :foreground "#e45649")
         (66 :foreground "#da8548")
-        (67 :foreground "#0098dd"))
+        (67 :foreground "#0098dd")))
+
+(setq org-export-html-postamble nil
+      org-hide-emphasis-markers t
+      org-html-validation-link nil
+      org-log-done nil
+      org-outline-path-complete-in-steps nil
+      org-refile-use-cache t
+      org-refile-use-outline-path t
+      org-return-follows-link t
+      org-src-window-setup 'current-window
+      org-use-fast-todo-selection t
+      org-use-sub-superscripts "{}"
+      org-refile-targets
+      '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
+
+      org-tag-alist
+      '(("work"       . ?w)
+        ("personal"   . ?p)
+        ("study"      . ?s))
 
       org-capture-templates
       `(("t" "Todo" entry (file+headline "todos.org" "Todos")
@@ -199,8 +188,9 @@
         ("n" "Agenda and all TODOs"
          ((agenda "" ((org-agenda-span 10)))
           (alltodo "")))))
-
-;; = org-reveal =
+;;
+;; org-reveal
+;;
 (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
       org-re-reveal-title-slide "%t"
       org-re-reveal-hlevel 2
@@ -219,13 +209,7 @@
       org-re-reveal-klipsify-src t
       reveal_inter_presentation_links t)
 
-;; smartparens bindings interfere with item (pro|de)motion in org-mode
-;; (add-hook! org-mode
-;;   (progn
-;;     (turn-off-smartparens-mode)
-;;     (turn-off-smartparens-strict-mode)))
-
-;; = org-capture =
+;; org-capture
 (after! org-capture
   (progn
     (defun org-hugo-new-subtree-post-capture-template ()
@@ -254,15 +238,20 @@
                    (file+olp "journal.org" "Website")
                    (function org-hugo-new-subtree-post-capture-template)))))
 
-;; Emacs behavioral changes
-;; ========================
+;; ==============================================================================
+;;                      Emacs Behavioral Customizations
+;; ==============================================================================
+;; I like repeated searches to remain in the middle of the screen so I don't have
+;; to scan my monitor for the place where I've landed. I can always stare at the
+;; center of the screen and find my search results.
 (defun private/after-jump ()
-  (recenter-top-bottom)
+  "Centers vertically and flashes the current line"
+  (interactive)
+  (recenter)
   (+nav-flash/blink-cursor))
 
-;; Always center when jumping to search results
-(add-hook 'isearch-mode-end-hook 'private/after-jump)
-(add-hook 'imenu-after-jump-hook 'private/after-jump)
+;; ;; Always center when jumping to search results
+(add-hook! 'isearch-mode-end-hook #'private/after-jump)
 
 (defadvice isearch-forward
     (after isearch-forward-recenter activate)
@@ -281,3 +270,20 @@
   (private/after-jump))
 
 (ad-activate 'isearch-repeat-backward)
+
+;; Line merging
+
+(defun personal-just-one-space ()
+  "Command to delete all but one whitespace character."
+  (interactive)
+  (just-one-space -1))
+
+(defun personal-delete-horizontal-space ()
+  "Command to delete all whitespace."
+  (interactive)
+  (just-one-space -1)
+  (sp-backward-delete-char))
+
+(map! :map parinfer-mode-map
+      "M-\\"    #'personal-delete-horizontal-space
+      "M-SPC"   #'personal-just-one-space)
