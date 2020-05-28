@@ -82,6 +82,7 @@
 ;; Helm
 ;;
 (when (featurep! :completion helm)
+  (map! "M-i"   #'helm-imenu)
   (map! :map helm-map
         "<tab>"   #'helm-execute-persistent-action))
 
