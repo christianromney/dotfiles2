@@ -57,7 +57,6 @@
 (map! "C-x \\"  #'align-regexp
       "C-x g"   #'magit-status
       "M-/"     #'hippie-expand
-      "C-x \\"  #'align-regexp
       "M-o"     #'other-window
       "C-'"     #'avy-goto-line
       "C-:"     #'avy-goto-char
