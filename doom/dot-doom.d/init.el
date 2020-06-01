@@ -102,9 +102,9 @@
         +gnuplot
         +hugo
         +journal
-        +noter
-        +pomodoro
-        +present)
+        +noter             ; sync notes with PDFs
+        +pomodoro          ; jedi mind trick yourself into focusing
+        +present)          ; includes org-re-reveal
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
