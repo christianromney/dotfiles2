@@ -1,4 +1,6 @@
 ack
+adns
+ansible
 ant
 ant@1.9
 antibody
@@ -21,6 +23,7 @@ chezscheme
 circleci
 cloc
 clojure
+cmake
 coreutils
 ctags
 datamash
@@ -61,6 +64,7 @@ global
 gmp
 gnu-getopt
 gnu-sed
+gnupg
 gnutls
 go
 googler
@@ -88,14 +92,18 @@ leptonica
 lesspipe
 libarchive
 libass
+libassuan
 libb2
 libbluray
 libcroco
 libde265
 libevent
 libffi
+libgcrypt
+libgpg-error
 libheif
 libidn2
+libksba
 libogg
 libomp
 libpng
@@ -109,6 +117,7 @@ libtasn1
 libtiff
 libtool
 libunistring
+libusb
 libvidstab
 libvorbis
 libvpx
@@ -130,6 +139,7 @@ netpbm
 nettle
 nmap
 node
+npth
 nspr
 nss
 oniguruma
@@ -144,9 +154,11 @@ ossp-uuid
 p11-kit
 pango
 parallel
+pass
 pcre
 pcre2
 peco
+pinentry
 pipenv
 pixman
 pkg-config
@@ -158,6 +170,7 @@ pyenv
 python
 python@3.8
 q
+qrencode
 qt
 rage
 rbenv

@@ -30,8 +30,8 @@
 (setq user-full-name                           "Christian Romney"
       user-mail-address                        "christian.a.romney@gmail.com"
       calendar-location-name                   "Pembroke Pines, FL"
-      calendar-longitude                       -80.34110799999999
-      calendar-latitude                        26.017
+      calendar-longitude                       -80.3432341
+      calendar-latitude                        26.0170038
       calendar-week-start-day                  1
       org-directory                            "~/Dropbox/org/"
       doom-theme                               'doom-one
@@ -40,6 +40,13 @@
       doom-font                                (font-spec :family "Iosevka SS02"
                                                           :weight 'medium
                                                           :size 20))
+
+;; jfdi
+;; doom-protect-fallback-buffer-h
+;; persp-kill-buffer-query-function
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
 
 ;; ==============================================================================
 ;;                              GLOBAL SETTINGS
@@ -54,25 +61,25 @@
 ;;
 ;; Global
 ;;
-(map! "C-x \\"  #'align-regexp
-      "C-x g"   #'magit-status
-      "M-/"     #'hippie-expand
-      "M-o"     #'other-window
+(map! "C-e"     #'move-end-of-line
       "C-'"     #'avy-goto-line
       "C-:"     #'avy-goto-char
-      "C-C M-o" #'occur
-      "C-x r I" #'string-insert-rectangle
+      "C-x \\"  #'align-regexp
+      "C-x g"   #'magit-status
       "C-x P"   #'print-buffer
-      "M-p"     #'fill-paragraph
+      "C-x r I" #'string-insert-rectangle
       "C-x C-h" #'add-file-local-variable-prop-line
       "C-x M-s" #'transpose-sexps
-      "C-c M-t" #'transpose-sentences
       "C-x M-t" #'transpose-paragraphs
       "C-c a"   #'org-agenda
+      "C-c M-o" #'helm-occur
+      "C-c M-t" #'transpose-sentences
+      "M-/"     #'hippie-expand
+      "M-o"     #'other-window
+      "M-p"     #'fill-paragraph
       "M-%"     #'anzu-query-replace
-      "C-M-%"   #'anzu-query-replace-regexp
-      "C-e"     #'move-end-of-line)
-
+      "C-M-%"   #'anzu-query-replace-regexp)
+      
 ;;
 ;; Clojure
 ;;

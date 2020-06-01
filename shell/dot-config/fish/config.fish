@@ -15,10 +15,10 @@ set SPACEFISH_TIME_SUFFIX " $SPACEFISH_PROMPT_DEFAULT_SUFFIX"
 set SPACEFISH_USER_SHOW "needed"
 
 # Path
-set PATH $HOME/.cargo/bin /usr/local/anaconda3/bin $HOME/bin $HOME/.emacs.d/bin $PATH
+set PATH $HOME/.cargo/bin $HOME/bin $HOME/.emacs.d/bin $PATH
 
 # Python, Ruby, Rust, Direnv
-source (conda info --root)/etc/fish/conf.d/conda.fish               # python
+status --is-interactive; and source (pyenv init -|psub)             # python
 status --is-interactive; and source (rbenv init -|psub)             # ruby
 set RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src  # rust
 eval (direnv hook fish)                                             # direnv
