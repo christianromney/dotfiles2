@@ -37,9 +37,12 @@
       doom-theme                               'doom-one
       display-line-numbers-type                t
       +default-want-RET-continue-comments      nil
-      doom-font                                (font-spec :family "Iosevka SS02"
-                                                          :weight 'medium
-                                                          :size 20))
+      doom-font                                (font-spec :family "Fira Code"
+                                                          :weight 'light
+                                                          :size 18)
+      doom-big-font                            (font-spec :family "Fira Code"
+                                                          :weight 'light
+                                                          :size 36))
 
 ;; jfdi
 ;; doom-protect-fallback-buffer-h
