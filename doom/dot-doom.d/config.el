@@ -37,11 +37,11 @@
       doom-theme                               'doom-one
       display-line-numbers-type                t
       +default-want-RET-continue-comments      nil
-      doom-font                                (font-spec :family "Fira Code"
-                                                          :weight 'light
+      doom-font                                (font-spec :family "Iosevka"
+                                                          :weight 'regular
                                                           :size 18)
-      doom-big-font                            (font-spec :family "Fira Code"
-                                                          :weight 'light
+      doom-big-font                            (font-spec :family "Iosevka"
+                                                          :weight 'regular
                                                           :size 36))
 
 ;; jfdi
