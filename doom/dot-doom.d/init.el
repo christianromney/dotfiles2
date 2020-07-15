@@ -72,9 +72,9 @@
        (eval +overlay)     ; run code, run (also, repls)
        gist                ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       ;;lsp
+       lsp
        macos               ; MacOS-specific commands
-       magit               ; a git porcelain for Emacs
+       (magit +forge)      ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf                 ; pdf enhancements
@@ -84,7 +84,7 @@
 
        :lang
        ;;cc                ; C/C++/Obj-C madness
-       clojure             ; java with a lisp
+       (clojure +lsp)      ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        data                ; config/data formats
        emacs-lisp          ; drown in parentheses
@@ -92,11 +92,11 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;(go +lsp)         ; the hipster dialect
        ;;hy                ; readability of scheme w/ speed of python
-       json                ; At least it ain't XML
+       (json +lsp)         ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       javascript          ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
-       latex               ; writing papers in Emacs has never been so fun
+       (latex +lsp)        ; writing papers in Emacs has never been so fun
        ;;ledger            ; an accounting system in Emacs
        markdown            ; writing docs for people to ignore
        (org                ; organize your plain life in plain text
@@ -111,15 +111,15 @@
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       python              ; beautiful is better than ugly
+       (python +lsp)       ; beautiful is better than ugly
        racket              ; a DSL for DSLs
        rest                ; Emacs as a REST client
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        scheme              ; a fully conniving family of lisps
-       sh                  ; she sells {ba,z,fi}sh shells on the C xor
-       web                 ; the tubes
-       yaml                ; JSON, but readable
+       (sh +fish +lsp)     ; she sells {ba,z,fi}sh shells on the C xor
+       (web +lsp)          ; the tubes
+       (yaml +lsp)         ; JSON, but readable
 
        :app
        calendar

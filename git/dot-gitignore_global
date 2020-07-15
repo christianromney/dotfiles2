@@ -94,3 +94,4 @@ bengal-run-tests.sh
 .dir-locals.el
 .rebel_readline_history
 .rebl/prefs.edn
+.lsp

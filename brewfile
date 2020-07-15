@@ -23,10 +23,12 @@ chezscheme
 circleci
 cloc
 clojure
+clojure-lsp
 cmake
 coreutils
 ctags
 datamash
+dav1d
 diff-so-fancy
 diffutils
 direnv
@@ -104,6 +106,7 @@ libgpg-error
 libheif
 libidn2
 libksba
+liblqr
 libogg
 libomp
 libpng
@@ -130,6 +133,7 @@ lz4
 lzo
 magic-wormhole
 maven
+midnight-commander
 mmix
 multimarkdown
 ncurses
@@ -173,6 +177,7 @@ q
 qrencode
 qt
 rage
+rav1e
 rbenv
 rbenv-gemset
 readline
@@ -183,6 +188,7 @@ rubberband
 ruby-build
 rust
 rustup-init
+s-lang
 sbcl
 screenresolution
 sdl2

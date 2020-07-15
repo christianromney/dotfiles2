@@ -52,8 +52,8 @@
   default = simple
   followTags = true
 [merge]
-  tool = ediff
-  conflictStyle = diff3
+  tool = opendiff
+
 [mergetool]
   prompt = false
 
@@ -89,3 +89,5 @@ path = ~/.gitconfig.secrets
   user = christianromney
 [icdiff]
   options = --highlight --line-numbers
+[pull]
+	ff = only

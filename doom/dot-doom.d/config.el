@@ -34,15 +34,15 @@
       calendar-latitude                        26.0170038
       calendar-week-start-day                  1
       org-directory                            "~/Dropbox/org/"
-      doom-theme                               'doom-one
+      doom-theme                               'doom-one-light
       display-line-numbers-type                t
       +default-want-RET-continue-comments      nil
       doom-font                                (font-spec :family "Iosevka"
                                                           :weight 'regular
-                                                          :size 18)
+                                                          :size 20)
       doom-big-font                            (font-spec :family "Iosevka"
                                                           :weight 'regular
-                                                          :size 36))
+                                                          :size 40))
 
 ;; jfdi
 ;; doom-protect-fallback-buffer-h
@@ -111,6 +111,7 @@
 ;; Magit
 ;;
 (add-hook 'magit-mode-hook #'magit-delta-mode)
+(setq magit-revision-show-gravatars t)
 
 ;;
 ;; Helm
@@ -150,12 +151,15 @@
         "<s-right>" #'sp-forward-slurp-sexp
         "<s-left>"  #'sp-forward-barf-sexp))
 
+(setq lsp-ui-doc-max-height 20
+      lsp-ui-doc-max-width  75)
+
 ;;
 ;; Org
 ;;
 ;; agenda settings
 (setq org-agenda-include-diary t
-      org-agenda-files '("~/Dropbox/org/agenda/")
+      org-agenda-files '("~/Dropbox/org/")
       org-agenda-show-log t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
