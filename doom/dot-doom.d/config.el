@@ -155,7 +155,7 @@
 
 (setq lsp-ui-doc-max-height 20
       lsp-ui-doc-max-width  75
-      lsp-julia-default-environment "~/.julia/environments/v1.4")
+      lsp-julia-default-environment "~/.julia/environments/v1.5")
 
 ;;
 ;; Org
