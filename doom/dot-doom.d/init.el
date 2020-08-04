@@ -63,7 +63,7 @@
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
-       ;;ansible
+       ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        direnv
        docker
@@ -88,14 +88,14 @@
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        data                ; config/data formats
        emacs-lisp          ; drown in parentheses
-       ;;ess               ; emacs speaks statistics
+       ess                 ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
        ;;(go +lsp)         ; the hipster dialect
        ;;hy                ; readability of scheme w/ speed of python
        (json +lsp)         ; At least it ain't XML
-       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
+       (java +meghanada)   ; the poster child for carpal tunnel syndrome
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
-       ;;julia             ; a better, faster MATLAB
+       (julia +lsp)        ; a better, faster MATLAB
        (latex +lsp)        ; writing papers in Emacs has never been so fun
        ;;ledger            ; an accounting system in Emacs
        markdown            ; writing docs for people to ignore
@@ -112,7 +112,7 @@
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python +lsp)       ; beautiful is better than ugly
-       racket              ; a DSL for DSLs
+       (racket +xp)        ; a DSL for DSLs
        rest                ; Emacs as a REST client
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()

@@ -3,6 +3,8 @@ anki
 appcleaner
 aptible
 arq
+atom
+aws-vault
 balenaetcher
 calibre
 chromedriver
@@ -16,10 +18,12 @@ gpg-suite
 graphql-playground
 java
 java11
+jd-gui
 julia
 keybase
 maccy
 mactex
+metasploit
 ngrok
 osirix-quicklook
 postgres

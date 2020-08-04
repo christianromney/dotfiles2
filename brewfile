@@ -12,6 +12,7 @@ autoconf
 automake
 awscli
 awslogs
+awsume
 bat
 berkeley-db
 bitwise
@@ -35,6 +36,7 @@ direnv
 docbook
 docbook-xsl
 docker-compose
+eslint
 exa
 exercism
 fd
@@ -81,6 +83,7 @@ icu4c
 ilmbase
 imagemagick
 imagemagick@6
+isl
 ispell
 janet
 jasper
@@ -107,6 +110,7 @@ libheif
 libidn2
 libksba
 liblqr
+libmpc
 libogg
 libomp
 libpng
@@ -135,6 +139,7 @@ magic-wormhole
 maven
 midnight-commander
 mmix
+mpfr
 multimarkdown
 ncurses
 neofetch
@@ -151,7 +156,6 @@ opencore-amr
 openexr
 openjdk
 openjpeg
-openssl
 openssl@1.1
 opus
 ossp-uuid
@@ -168,6 +172,7 @@ pixman
 pkg-config
 planck
 poppler
+procyon-decompiler
 psgrep
 pstree
 pyenv
