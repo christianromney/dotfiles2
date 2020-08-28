@@ -3,8 +3,8 @@
                   [lein-pprint "1.2.0"]]}
 
  ;; -- tooling --
- :depviz {:plugins [[lein-ns-dep-graph "0.2.0-SNAPSHOT"]]}
-
+ :depviz  {:plugins [[lein-ns-dep-graph "0.2.0-SNAPSHOT"]]}
+ :datomic {:dependencies [[com.datomic/dev-local "0.9.195"]]}
  :scope {:dependencies [[vvvvalvalval/scope-capture-nrepl "0.3.1"]
                         [jsofra/data-scope "0.1.2"]]
          :injections [(require 'data-scope.charts)
@@ -20,13 +20,7 @@
                    [refactor-nrepl "2.5.0" :exclusions [org.clojure/tools.logging]]
                    ]}
 
- :rebl {:resource-paths ["/Users/christian/.lein/REBL-0.9.220/REBL-0.9.220.jar"]
-        :dependencies [[cljfmt "0.6.4"]
-                       [org.openjfx/javafx-fxml     "11.0.1"]
-                       [org.openjfx/javafx-controls "11.0.1"]
-                       [org.openjfx/javafx-swing    "11.0.1"]
-                       [org.openjfx/javafx-base     "11.0.1"]
-                       [org.openjfx/javafx-web      "11.0.1"]]}
+ :rebl {:dependencies [[com.cognitect/rebl "0.9.241"]]}
 
  :doc {:plugins [[lein-codox "0.10.7"]]}
 

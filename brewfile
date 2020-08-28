@@ -5,14 +5,17 @@ ant
 ant@1.9
 antibody
 aom
+apgdiff
 asciidoc
 asciinema
 aspell
 autoconf
 automake
+aws-shell
 awscli
 awslogs
 awsume
+babashka
 bat
 berkeley-db
 bitwise
@@ -25,6 +28,8 @@ circleci
 cloc
 clojure
 clojure-lsp
+clojure@1.10.1.600
+clojure@1.10.1.619
 cmake
 coreutils
 ctags
@@ -71,11 +76,13 @@ gnu-sed
 gnupg
 gnutls
 go
+gobject-introspection
 googler
 graphite2
 graphviz
 gts
 harfbuzz
+hidapi
 httrack
 hugo
 icdiff
@@ -90,6 +97,7 @@ jasper
 joker
 jpeg
 jq
+json-c
 lame
 languagetool
 leiningen
@@ -123,6 +131,7 @@ libssh2
 libtasn1
 libtiff
 libtool
+libu2f-host
 libunistring
 libusb
 libvidstab
@@ -141,6 +150,7 @@ midnight-commander
 mmix
 mpfr
 multimarkdown
+ncdu
 ncurses
 neofetch
 netcat
@@ -176,7 +186,6 @@ procyon-decompiler
 psgrep
 pstree
 pyenv
-python
 python@3.8
 q
 qrencode
@@ -190,6 +199,7 @@ ripgrep
 rlwrap
 rtmpdump
 rubberband
+ruby
 ruby-build
 rust
 rustup-init
@@ -212,6 +222,9 @@ surfraw
 swi-prolog
 terminal-notifier
 terraform
+terraform-docs
+terraform_landscape
+terragrunt
 tesseract
 theora
 tig

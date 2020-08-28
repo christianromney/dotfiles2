@@ -12,6 +12,7 @@ dbeaver-community
 diffmerge
 docker
 dropbox
+dynamodb-local
 emacs
 firefox-developer-edition
 gpg-suite
@@ -25,6 +26,7 @@ maccy
 mactex
 metasploit
 ngrok
+nosql-workbench-for-amazon-dynamodb
 osirix-quicklook
 postgres
 postico

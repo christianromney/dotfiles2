@@ -95,3 +95,4 @@ bengal-run-tests.sh
 .rebel_readline_history
 .rebl/prefs.edn
 .lsp
+.python-version
