@@ -63,4 +63,5 @@
 (package! lsp-julia :recipe (:host github :repo "non-jedi/lsp-julia"))
 (package! javap-mode)
 (package! clojure-snippets)
+(package! google-this)
 ;; ==============================================================================

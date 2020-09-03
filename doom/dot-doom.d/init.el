@@ -23,7 +23,7 @@
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
        minimap             ; show a map of the code on the side
-       modeline            ; snazzy, Atom-inspired modeline, plus API
+       (modeline +light)   ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink cursor line after big motions
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
@@ -71,7 +71,9 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        gist                ; interacting with github gists
-       lookup              ; navigate your code and its documentation
+       (lookup
+        +docsets
+        +dictionary)       ; navigate your code and its documentation
        lsp
        macos               ; MacOS-specific commands
        (magit +forge)      ; a git porcelain for Emacs
@@ -81,6 +83,9 @@
        rgb                 ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        terraform           ; infrastructure as code
+
+       :os
+       macos
 
        :lang
        ;;cc                ; C/C++/Obj-C madness

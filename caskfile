@@ -16,6 +16,7 @@ dynamodb-local
 emacs
 firefox-developer-edition
 gpg-suite
+graalvm-ce-java11
 graphql-playground
 java
 java11

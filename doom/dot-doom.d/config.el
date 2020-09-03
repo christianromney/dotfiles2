@@ -48,8 +48,8 @@
 ;; doom-protect-fallback-buffer-h
 ;; persp-kill-buffer-query-function
 (setq kill-buffer-query-functions
-  (remq 'process-kill-buffer-query-function
-         kill-buffer-query-functions))
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
 
 ;; ==============================================================================
 ;;                              GLOBAL SETTINGS
@@ -81,6 +81,7 @@
       "M-o"     #'other-window
       "M-p"     #'fill-paragraph
       "M-%"     #'anzu-query-replace
+      "C-c g"   #'google-this
       "C-M-%"   #'anzu-query-replace-regexp)
       
 ;;

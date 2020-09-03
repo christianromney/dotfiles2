@@ -14,6 +14,7 @@ automake
 aws-shell
 awscli
 awslogs
+awsu
 awsume
 babashka
 bat
