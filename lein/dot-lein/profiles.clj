@@ -1,6 +1,6 @@
 {;; -- omnipresent --
  :user {:plugins [[lein-ancient "0.6.15"]
-                  [lein-pprint "1.2.0"]]}
+                  [lein-pprint "1.3.2"]]}
 
  ;; -- tooling --
  :depviz  {:plugins [[lein-ns-dep-graph "0.2.0-SNAPSHOT"]]}
@@ -16,7 +16,7 @@
           [sc.nrepl.middleware/wrap-letsc]}}
 
  :cider {:plugins [[org.clojure/tools.nrepl "0.2.13"]
-                   [cider/cider-nrepl "0.24.0" :exclusions [org.clojure/tools.nrepl]]
+                   [cider/cider-nrepl "0.25.3" :exclusions [org.clojure/tools.nrepl]]
                    [refactor-nrepl "2.5.0" :exclusions [org.clojure/tools.logging]]
                    ]}
 
@@ -25,8 +25,8 @@
  :doc {:plugins [[lein-codox "0.10.7"]]}
 
  ;; -- project-specific profiles --
- :salk {:dependencies [[figwheel-sidecar "0.5.18" :exclusions [commons-codec ring/ring-core]]
-                       [cider/piggieback "0.4.0" :exclusions [org.clojure/tools.logging]]
+ :salk {:dependencies [[figwheel-sidecar "0.5.20" :exclusions [commons-codec ring/ring-core]]
+                       [cider/piggieback "0.5.1" :exclusions [org.clojure/tools.logging]]
                        ]
         :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}
 

@@ -91,6 +91,9 @@
       "<f5>"    #'cider-jack-in
       "M-<f5>"  #'cider-jack-in-clj&cljs)
 
+(add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
+(add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
+
 ;;
 ;; Helm
 ;;
@@ -128,29 +131,23 @@
       helm-scroll-amount 8
       helm-echo-input-in-header-line nil)
 
-;;
-;; Parinfer
-;;
-(after! parinfer
-  (setq parinfer-auto-switch-indent-mode t
-        parinfer-delay-invoke-threshold  3000)
+;; global keys
 
-  (defun personal-just-one-space ()
-    "Command to delete all but one whitespace character."
-    (interactive)
-    (just-one-space -1))
+(defun personal-just-one-space ()
+  "Command to delete all but one whitespace character."
+  (interactive)
+  (just-one-space -1))
 
-  (defun personal-delete-horizontal-space ()
-    "Command to delete all whitespace."
-    (interactive)
-    (just-one-space -1)
-    (sp-backward-delete-char))
+(defun personal-delete-horizontal-space ()
+  "Command to delete all whitespace."
+  (interactive)
+  (just-one-space -1)
+  (sp-backward-delete-char))
 
-  (map! :map parinfer-mode-map
-        "M-\\"      #'personal-delete-horizontal-space
-        "M-SPC"     #'personal-just-one-space
-        "<s-right>" #'sp-forward-slurp-sexp
-        "<s-left>"  #'sp-forward-barf-sexp))
+(map! "M-\\"      #'personal-delete-horizontal-space
+      "M-SPC"     #'personal-just-one-space
+      "<s-right>" #'sp-forward-slurp-sexp
+      "<s-left>"  #'sp-forward-barf-sexp)
 
 ;; Language Server
 
@@ -353,6 +350,9 @@
     (after isearch-repeat-backward-recenter activate)
     (private/after-jump))
 (ad-activate 'isearch-repeat-backward)
+
+;; Automatically added by Custom
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

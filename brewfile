@@ -95,6 +95,7 @@ isl
 ispell
 janet
 jasper
+jet
 joker
 jpeg
 jq
@@ -166,6 +167,7 @@ oniguruma
 opencore-amr
 openexr
 openjdk
+openjdk@11
 openjpeg
 openssl@1.1
 opus
