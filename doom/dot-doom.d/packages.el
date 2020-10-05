@@ -56,11 +56,10 @@
 ;; ==============================================================================
 
 (package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! cider :pin "40e65fd")
+(package! cider :pin "a89b694cc3")
 (package! xterm-color)
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! lsp-ui)
-(package! lsp-julia :recipe (:host github :repo "non-jedi/lsp-julia"))
 (package! javap-mode)
 (package! clojure-snippets)
 (package! google-this)

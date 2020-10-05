@@ -1,0 +1,20 @@
+#+TITLE: README
+* Directory Organization
+This directory is configured as the ~:storage-dir~ for Datomic dev-local. Within
+the storage directory hierarchy, the first level represents a system. Beneath
+each system, each subdirectory represents a distinct database. Each database
+directory, in turn, contains the transaction log and various indexes used by
+Datomic.
+
+#+BEGIN_EXAMPLE
+
+$HOME/.datomic/data                # :storage dir
+└── datomic-samples                #   system
+    ├── movies                     #     database
+    │   ├── db.log                 #       transaction log
+    │   └── log.idx                #       index
+    └── streets                    #     database
+        ├── db.log                 #       transaction log
+        └── log.idx                #       index
+
+#+END_EXAMPLE

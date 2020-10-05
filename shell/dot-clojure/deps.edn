@@ -30,39 +30,39 @@
  ;;     :extra-paths - vector of additional paths to add to the classpath
  ;;     :classpath-overrides - map of lib to path that overrides the result of resolving deps
 
- :aliases {:new {:extra-deps {seancorfield/clj-new
-                              {:mvn/version "0.5.5"}}
-                 :main-opts ["-m" "clj-new.create"]}
+ :aliases {:new
+           {:extra-deps
+            {seancorfield/clj-new        {:mvn/version "1.1.216"}}
+            :main-opts ["-m" "clj-new.create"]}
 
-           :ion-dev
-           {:deps {com.datomic/ion-dev {:mvn/version "0.9.247"}}
-            :main-opts ["-m" "datomic.ion.dev"]}
+           :try
+           {:extra-deps
+            {deps-try/deps-try           {:git/url "https://gitlab.com/eval/deps-try"
+                                          :sha "9ccf64be248d5d9aa641df9e94feaea913bc0687"}}
+            :main-opts ["-m" "deps-try.main"]}
 
-           :depify {:extra-deps {org.clojure/clojure {:mvn/version "1.9.0"}
-                                 depify/depify       {:git/url "https://github.com/hagmonk/depify"
-                                                      :sha     "04329744872890711dbba8939a16e9987dd33bb3"}}
-                    :main-opts  ["-m" "depify.project"]}
+           :rebl
+           {:extra-deps
+            {com.cognitect/rebl          {:mvn/version "0.9.242"}
+             org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
+             org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
+             org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
+             org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
+             org.openjfx/javafx-web      {:mvn/version "15-ea+6"}}
+            :main-opts
+            ["-e" "((requiring-resolve,'cognitect.rebl/ui))" "-m" "nrepl.cmdline"]}
 
-           :try {:extra-deps {deps-try/deps-try {:git/url "https://gitlab.com/eval/deps-try"
-                                                 :sha "9ccf64be248d5d9aa641df9e94feaea913bc0687"}}
-                 :main-opts ["-m" "deps-try.main"]}
+           :datomic
+           {:extra-deps
+            {com.datomic/dev-local       {:mvn/version "0.9.195"}}}
 
-           :rebl    {:extra-deps {com.cognitect/rebl          {:mvn/version "0.9.241"}
-                                  org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
-                                  org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
-                                  org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
-                                  org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
-                                  org.openjfx/javafx-web      {:mvn/version "15-ea+6"}}
-                     :main-opts ["-m" "cognitect.rebl"]}
-
-           :datomic {:extra-deps {com.datomic/dev-local {:mvn/version "0.9.195"}}}
-
-           :zprint {:extra-deps {org.clojure/clojure {:mvn/version "1.9.0"}
-                                 zprint/zprint       {:mvn/version "0.4.9"}}
-                    :main-opts  ["-m" "zprint.main"]}}
+           :zprint
+           {:extra-deps
+            {org.clojure/clojure         {:mvn/version "1.9.0"}
+             zprint/zprint               {:mvn/version "0.4.9"}}
+            :main-opts  ["-m" "zprint.main"]}}
 
  ;; Provider attributes
- :mvn/repos {"datomic-cloud" {:url "s3://datomic-releases-1fc2183a/maven/releases"}
-             "central" {:url "https://repo1.maven.org/maven2/"}
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
              "clojars" {:url "https://repo.clojars.org/"}}
  }

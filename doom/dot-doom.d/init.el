@@ -18,26 +18,31 @@
        :ui
        doom                ; what makes DOOM look the way it does
        doom-dashboard      ; a nifty splash screen for Emacs
-       doom-quit           ; DOOM quit-message prompts when you quit Emacs
+       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       ;;fill-column       ; a `fill-column' indicator
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        ;;indent-guides     ; highlighted indent columns
-       minimap             ; show a map of the code on the side
+       ;;ligatures         ; ligatures and symbols to make your code pretty again
+       ;;minimap           ; show a map of the code on the side
        (modeline +light)   ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink cursor line after big motions
+       ;;neo-tree          ; a project drawer, like NERDTree for vim
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       (pretty-code
-        +iosevka)          ; uglify everything
+       (ligatures +iosevka); uglify everything
+       ;;tabs              ; a tab bar for Emacs
        treemacs            ; a project drawer, like neotree but cooler
        unicode             ; extended unicode support for various languages
        vc-gutter           ; vcs diff in the fringe
        window-select       ; visually switch windows
        workspaces          ; tab emulation, persistence & separate workspaces
+       ;;zen               ; distraction-free mode
 
        :editor
        file-templates      ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
+       ;;(format +onsave)  ; automated prettiness
        ;lispy              ; vim for lisp, for people who don't like vim
        ;parinfer           ; turn lisp into python, sort of
        rotate-text         ; cycle region at point between text candidates
@@ -77,11 +82,13 @@
        lsp
        (magit +forge)      ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
-       pass              ; password manager for nerds
+       pass                ; password manager for nerds
        pdf                 ; pdf enhancements
        rgb                 ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        terraform           ; infrastructure as code
+       ;;tmux              ; API for tmux interaction
+       
 
        :os
        macos
@@ -91,15 +98,16 @@
        clojure             ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        data                ; config/data formats
+       (dart +flutter)     ; paint ui and not much else
        emacs-lisp          ; drown in parentheses
-       ess                 ; emacs speaks statistics
+       ;;ess               ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
        ;;(go +lsp)         ; the hipster dialect
        ;;hy                ; readability of scheme w/ speed of python
        (json +lsp)         ; At least it ain't XML
        (java +meghanada)   ; the poster child for carpal tunnel syndrome
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
-       (julia +lsp)        ; a better, faster MATLAB
+       ;;(julia +lsp)        ; a better, faster MATLAB
        (latex +lsp)        ; writing papers in Emacs has never been so fun
        ;;ledger            ; an accounting system in Emacs
        markdown            ; writing docs for people to ignore

@@ -6,7 +6,15 @@
   autocrlf = input
   excludesfile = ~/.gitignore_global
   editor = emacs
-  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended Bright'
+  pager = delta
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = Monokai Extended Origin
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
 [interactive]
   diffFilter = delta --color-only
 [commit]
@@ -28,9 +36,8 @@
   staged = diff --cached
   file-rm = clean
   dir-rm = clean
-	praise = blame
-	shortsha = rev-parse --short=20
-	minisha = rev-parse --short=20
+  praise = blame
+  shortsha = rev-parse --short=20
 [color]
   ui = auto
 [color "diff"]
@@ -53,34 +60,16 @@
   followTags = true
 [merge]
   tool = opendiff
-
 [mergetool]
   prompt = false
-
-[mergetool.ediff]
-    cmd = emacs --eval \"\
-(progn\
-  (defun ediff-write-merge-buffer ()\
-    (let ((file ediff-merge-store-file))\
-      (set-buffer ediff-buffer-C)\
-      (write-region (point-min) (point-max) file)\
-      (message \\\"Merge buffer saved in: %s\\\" file)\
-      (set-buffer-modified-p nil)\
-      (sit-for 1)))\
-  (setq ediff-quit-hook 'kill-emacs\
-        ediff-quit-merge-hook 'ediff-write-merge-buffer)\
-  (ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\"\
-                                   \\\"$BASE\\\" nil \\\"$MERGED\\\"))\"
 [clean]
   requireForce = false
 [include]
-path = ~/.gitconfig.secrets
+  path = ~/.gitconfig.secrets
 [diff]
-  tool = icdiff
+  colorMoved = default
 [difftool]
   prompt = false
-[difftool "icdiff"]
-  cmd = /usr/local/bin/icdiff $LOCAL $REMOTE
 [rerere]
   enabled = 1
 [magit]
@@ -90,4 +79,4 @@ path = ~/.gitconfig.secrets
 [icdiff]
   options = --highlight --line-numbers
 [pull]
-	ff = only
+  ff = only
