@@ -8,7 +8,6 @@ $docker_context\
 $dart\
 $custom\
 $java\
-$aws\
 $env_var\
 $line_break\
 $jobs\
