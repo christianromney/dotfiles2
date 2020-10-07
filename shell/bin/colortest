@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "$(tput setaf 0; tput setab 7)BLACK$(tput sgr0)"
+echo "$(tput setaf 1)RED$(tput sgr0)"
+echo "$(tput setaf 2)GREEN$(tput sgr0)"
+echo "$(tput setaf 3)YELLOW$(tput sgr0)"
+echo "$(tput setaf 4)BLUE$(tput sgr0)"
+echo "$(tput setaf 5)MAGENTA$(tput sgr0)"
+echo "$(tput setaf 6)CYAN$(tput sgr0)"
+echo "$(tput setaf 7)WHITE$(tput sgr0)"

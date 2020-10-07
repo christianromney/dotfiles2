@@ -1,0 +1,40 @@
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$docker_context\
+$dart\
+$custom\
+$java\
+$aws\
+$env_var\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$character\
+"""
+
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+
+[docker_context]
+format = "via [🐳 $context](blue bold)"
+
+[git_commit]
+commit_hash_length = 8
+
+[custom.clj]
+command = "clojure --help | head -n 1 | awk '{print $2}'"  # shows output of command
+files = ["deps.edn"]       # can specify filters
+symbol = "🥃"
+style = "bold green"
+format = "[$symbol $output]($style) "
