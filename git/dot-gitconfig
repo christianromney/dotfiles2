@@ -17,8 +17,6 @@
     file-decoration-style = none
 [interactive]
   diffFilter = delta --color-only
-[commit]
-  gpgSign = true
 [help]
   autocorrect = 1
 [alias]
