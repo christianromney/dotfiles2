@@ -1,12 +1,10 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
-;;
-;; ==============================================================================
-;;                                   HELP
-;; ==============================================================================
+
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
+
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
@@ -50,16 +48,3 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-;;
-;; ==============================================================================
-;;                               EXTRA PACKAGES
-;; ==============================================================================
-
-(package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! cider :pin "a89b694cc3")
-(package! xterm-color)
-(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
-(package! lsp-ui)
-(package! clojure-snippets)
-(package! google-this)
-;; ==============================================================================
