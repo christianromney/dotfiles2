@@ -60,7 +60,6 @@
 (package! xterm-color)
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! lsp-ui)
-(package! javap-mode)
 (package! clojure-snippets)
 (package! google-this)
 ;; ==============================================================================

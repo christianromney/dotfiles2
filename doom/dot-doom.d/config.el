@@ -28,15 +28,17 @@
 (add-to-list 'default-frame-alist              '(fullscreen . maximized))
 (setq-default doom-scratch-initial-major-mode  'emacs-lisp-mode)
 (setq user-full-name                           "Christian Romney"
-      user-mail-address                        "christian.a.romney@gmail.com"
+      user-mail-address                        "christian.romney@cognitect.com"
       calendar-location-name                   "Pembroke Pines, FL"
       calendar-longitude                       -80.3432341
       calendar-latitude                        26.0170038
       calendar-week-start-day                  1
-      org-directory                            "~/Dropbox/org/"
+      org-directory                            "~/Documents/notes/"
       doom-theme                               'doom-one-light
       display-line-numbers-type                t
+      confirm-kill-emacs                       nil
       +default-want-RET-continue-comments      nil
+      fancy-splash-image                       "~/Pictures/logos/cognitect.png"
       doom-font                                (font-spec :family "Iosevka Nerd Font Mono"
                                                           :weight 'regular
                                                           :size 20)
@@ -56,6 +58,7 @@
 ;; ==============================================================================
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
+(add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 (electric-pair-mode +1)
 
 ;; ==============================================================================
@@ -75,7 +78,6 @@
       "C-x M-s" #'transpose-sexps
       "C-x M-t" #'transpose-paragraphs
       "C-c a"   #'org-agenda
-      "C-c M-o" #'helm-occur
       "C-c M-t" #'transpose-sentences
       "M-/"     #'hippie-expand
       "M-o"     #'other-window
@@ -83,7 +85,7 @@
       "M-%"     #'anzu-query-replace
       "C-c g"   #'google-this
       "C-M-%"   #'anzu-query-replace-regexp)
-      
+
 ;;
 ;; Clojure
 ;;
@@ -115,14 +117,6 @@
 (add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
 
 ;;
-;; Helm
-;;
-(when (featurep! :completion helm)
-  (map! "M-i"   #'helm-imenu)
-  (map! :map helm-map
-        "<tab>"   #'helm-execute-persistent-action))
-
-;;
 ;; Dired
 ;;
 (map! :map dired-mode-map
@@ -140,16 +134,28 @@
 ;;
 ;; Helm
 ;;
-(setq helm-autoresize-max-height 0
-      helm-autoresize-min-height 40
-      helm-M-x-fuzzy-match t
-      helm-buffers-fuzzy-matching t
-      helm-display-header-line t
-      helm-split-window-in-side-p nil
-      helm-move-to-line-cycle-in-source nil
-      helm-ff-search-library-in-sexp t
-      helm-scroll-amount 8
-      helm-echo-input-in-header-line nil)
+(when (featurep! :completion helm)
+  (map! "M-i"   #'helm-imenu)
+  (map! :map helm-map "<tab>"   #'helm-execute-persistent-action)
+  (setq helm-autoresize-max-height 0
+        helm-autoresize-min-height 40
+        helm-M-x-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-display-header-line t
+        helm-split-window-in-side-p nil
+        helm-move-to-line-cycle-in-source nil
+        helm-ff-search-library-in-sexp t
+        helm-scroll-amount 8
+        helm-echo-input-in-header-line nil))
+
+;; Ivy
+(when (featurep! :completion ivy)
+  (map! "M-i"     #'counsel-imenu
+        "C-c M-o" #'occur
+        "C-s"     #'swiper-isearch)
+
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-fuzzy))))
 
 ;; global keys
 
@@ -172,15 +178,14 @@
 ;; Language Server
 
 (setq lsp-ui-doc-max-height 20
-      lsp-ui-doc-max-width  75
-      lsp-julia-default-environment "~/.julia/environments/v1.5")
+      lsp-ui-doc-max-width  75)
 
 ;;
 ;; Org
 ;;
 ;; agenda settings
 (setq org-agenda-include-diary t
-      org-agenda-files '("~/Dropbox/org/")
+      org-agenda-files '("~/Documents/notes/")
       org-agenda-show-log t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t

@@ -2,12 +2,14 @@
 alfred
 amazon-photos
 arq
+aws-vault
 chromedriver
 dbeaver-community
 diffmerge
 docker
 dropbox
 emacs
+flutter
 font-fira-code-nerd-font
 font-inconsolata-nerd-font
 font-iosevka-nerd-font
@@ -19,6 +21,7 @@ iterm2
 joker
 julia
 keybase
+maccy
 mactex
 metasploit
 ngrok

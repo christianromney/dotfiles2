@@ -37,6 +37,7 @@ ffmpeg
 figlet
 fish
 flac
+flyway
 fontconfig
 freetype
 frei0r
@@ -174,6 +175,7 @@ speex
 sqlite
 srt
 ssh-copy-id
+starship
 stow
 swi-prolog
 terraform
