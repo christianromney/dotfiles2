@@ -1,7 +1,7 @@
 [user]
   name = Christian Romney
-  email = christian.a.romney@gmail.com
-  signingKey = A0FA17A0540AAC06
+  email = christian.romney@cognitect.com
+  signingKey = 470E5E8766FC10CB
 [core]
   autocrlf = input
   excludesfile = ~/.gitignore_global
