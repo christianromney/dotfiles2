@@ -118,6 +118,8 @@
       "M-SPC"     #'+personal/just-one-space
       "<s-right>" #'sp-forward-slurp-sexp
       "<s-left>"  #'sp-forward-barf-sexp
+      "C-c o w"   #'+pass/ivy
+      "C-c i w"   #'pass-insert
       "C-M-%"     #'anzu-query-replace-regexp)
 
 ;; ===============================================================================
