@@ -14,7 +14,6 @@
 
 (setq user-full-name                           "Christian Romney"
       user-mail-address                        "christian.a.romney@gmail.com"
-      org-directory                            "~/Documents/notes/"
       calendar-location-name                   "Pembroke Pines, FL"
       calendar-longitude                       -80.3432341
       calendar-latitude                        26.0170038
@@ -43,7 +42,6 @@
 ;; smartparens globally conflicts with many org-mode bindings
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
-(electric-pair-mode +1)
 
 ;; Don't ask me when killing process buffers
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
@@ -123,8 +121,17 @@
       "C-M-%"     #'anzu-query-replace-regexp)
 
 ;; ===============================================================================
-;;                           DOOM PACKAGE CUSTOMIZATION
+;;                           PACKAGE CUSTOMIZATION
 ;; ===============================================================================
+
+;; +-----------------------------------------------------------------------------+
+;; |                                   DIRED                                     |
+;; +-----------------------------------------------------------------------------+
+(setq insert-directory-program "/usr/local/bin/gls"
+      dired-listing-switches   "-aBhl --group-directories-first")
+
+(map! :map dired-mode-map
+      "C-l" #'dired-up-directory)
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Ivy                                        |
@@ -136,7 +143,8 @@
         "C-s"     #'swiper-isearch)
 
   (after! ivy
-    (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-file . ivy--regex-plus))))
+    (add-to-list 'ivy-re-builders-alist
+                 '(counsel-projectile-find-file . ivy--regex-plus))))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |

@@ -71,7 +71,7 @@
 [rerere]
   enabled = 1
 [magit]
-  hideCampaign = true
+  hideCampaign = true   
 [github]
   user = christianromney
 [icdiff]

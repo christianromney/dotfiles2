@@ -8,7 +8,8 @@
 ;;                                AGENDA
 ;; -------------------------------------------------------------------------
 
-(setq org-agenda-files                  '("~/Documents/notes/")
+(setq org-directory                     "~/doc/notes/"
+      org-agenda-files                  '("~/doc/notes/")
       org-agenda-window-setup           'current-window
       org-agenda-include-diary          t
       org-agenda-show-log               t
