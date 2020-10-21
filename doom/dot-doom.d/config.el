@@ -154,10 +154,6 @@
 ;; +-----------------------------------------------------------------------------+
 
 (setq magit-revision-show-gravatars t)
-
-;; Temporarily disable buggy magit-delta-mode
-;; https://github.com/dandavison/magit-delta
-
 (add-hook! 'magit-mode-hook
   (lambda () (magit-delta-mode +1)))
 
