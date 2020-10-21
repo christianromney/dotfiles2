@@ -142,6 +142,9 @@
         "C-c M-o" #'occur
         "C-s"     #'swiper-isearch)
 
+  (map! :map ivy-minibuffer-map
+        "C-l"     #'ivy-backward-delete-char) ;; behave like helm to go up a level
+
   (after! ivy
     (add-to-list 'ivy-re-builders-alist
                  '(counsel-projectile-find-file . ivy--regex-plus))))
