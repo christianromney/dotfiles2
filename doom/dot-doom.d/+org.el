@@ -155,4 +155,27 @@
 (add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
 (add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2 right-margin-width 2)))
 
+;; -------------------------------------------------------------------------
+;;                                   MARKUP
+;; -------------------------------------------------------------------------
+
+(defun personal/org-markup-word (theChar)
+  (save-excursion
+    (backward-word)
+    (insert-char theChar)
+    (forward-word)
+    (insert-char theChar)))
+
+(defun personal/org-italicize-word ()
+  (interactive)
+  (personal/org-markup-word #x00002F))
+
+(defun personal/org-bold-word ()
+  (interactive)
+  (personal/org-markup-word #x00002A))
+
+(map! :map org-mode-map
+      "C-. o b" #'personal/org-bold-word
+      "C-. o i" #'personal/org-italicize-word)
+
 (message "Loaded +org configuration")

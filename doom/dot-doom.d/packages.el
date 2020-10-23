@@ -46,6 +46,7 @@
 
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
+(package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! clojure-snippets)
 (package! google-this)
 (package! lsp-ui)
