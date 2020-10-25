@@ -44,21 +44,13 @@
       org-src-tab-acts-natively          t
 
       org-superstar-headline-bullets-list
-      '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+      '("𐄘" "𐄗" "𐄖" "𐄕" "𐄔" "𐄓" "𐄒" "𐄑" "𐄐")
 
-      org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)" "CANCELLED(c)"))
-
-      org-todo-keyword-faces
-      '(("TODO"      :foreground "#7c7c75" :weight normal :underline t)
-        ("STARTED"   :foreground "#0098dd" :weight normal :underline t)
-        ("DONE"      :foreground "#50a14f" :weight normal :underline t)
-        ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
-
-      org-priority-faces
-      '((65 :foreground "#e45649")
-        (66 :foreground "#da8548")
-        (67 :foreground "#0098dd")))
+      ;; map from default to replacement
+      org-superstar-item-bullet-alist
+      '((?* . ?•)
+        (?+ . ?‣)
+        (?- . ?–)))
 
 ;; -------------------------------------------------------------------------
 ;;                                 BEHAVIOR
