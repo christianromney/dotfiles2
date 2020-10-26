@@ -26,12 +26,8 @@
 ;; ===============================================================================
 
 (setq doom-theme                               'doom-one-light
-      doom-font                                (font-spec :family "Iosevka Nerd Font Mono"
-                                                     :weight 'regular
-                                                     :size 20)
-      doom-big-font                            (font-spec :family "Iosevka Nerd Font Mono"
-                                                          :weight 'regular
-                                                          :size 40)
+      doom-font                                (font-spec :family "Iosevka Medium"
+                                                          :size 20)
       fancy-splash-image                       (concat doom-private-dir "cognitect.png")
       display-line-numbers-type                t)
 
