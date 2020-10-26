@@ -131,6 +131,7 @@
        (java       . t)
        (js         . t)
        (makefile   . t)
+       (plantuml   . t)
        (prolog     . t)
        (python     . t)
        (R          . t)
@@ -139,6 +140,8 @@
        (sed        . t)
        (shell      . t)
        (sql        . t)))))
+
+(setq plantuml-default-exec-mode 'jar)
 
 ;; -------------------------------------------------------------------------
 ;;                                   CAPTURE
