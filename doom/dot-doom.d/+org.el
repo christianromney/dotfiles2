@@ -169,8 +169,13 @@
   (interactive)
   (personal/org-markup-word #x00002A))
 
+(defun personal/org-code-word ()
+  (interactive)
+  (personal/org-markup-word #x00007E))
+
 (map! :map org-mode-map
       "C-. o b" #'personal/org-bold-word
-      "C-. o i" #'personal/org-italicize-word)
+      "C-. o i" #'personal/org-italicize-word
+      "C-. o c" #'personal/org-code-word)
 
 (message "Loaded +org configuration")
