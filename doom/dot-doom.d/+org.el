@@ -173,9 +173,24 @@
   (interactive)
   (personal/org-markup-word #x00007E))
 
+(defun personal/org-underline-word ()
+  (interactive)
+  (personal/org-markup-word #x00005F))
+
+(defun personal/org-verbatim-word ()
+  (interactive)
+  (personal/org-markup-word #x00003D))
+
+(defun personal/org-strike-word ()
+  (interactive)
+  (personal/org-markup-word #x00002B))
+
 (map! :map org-mode-map
       "C-. o b" #'personal/org-bold-word
+      "C-. o c" #'personal/org-code-word
       "C-. o i" #'personal/org-italicize-word
-      "C-. o c" #'personal/org-code-word)
+      "C-. o s" #'personal/org-strike-word
+      "C-. o u" #'personal/org-underline-word
+      "C-. o v" #'personal/org-verbatim-word)
 
 (message "Loaded +org configuration")
