@@ -1,19 +1,15 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
 set EDITOR emacs
+set PATH $HOME/bin $HOME/.cargo/bin $HOME/.emacs.d/bin $HOME/.jenv/bin $PATH
 
-# Path
-set PATH $HOME/.cargo/bin $HOME/bin $HOME/.emacs.d/bin $HOME/.jenv/bin  $PATH
-
-# Nubank
 if test -f $HOME/.nurc
-  source $HOME/.nurc
+  bass source $HOME/.nurc
 end
 
-# Python, Ruby, Rust, Direnv
-status --is-interactive; and source (pyenv init -|psub) # python
-status --is-interactive; and source (rbenv init -|psub) # ruby
-status --is-interactive; and source (jenv init -|psub)  # jenv
+status --is-interactive; and source (pyenv init -|psub)
+status --is-interactive; and source (rbenv init -|psub)
+status --is-interactive; and source (jenv  init -|psub)
 
-eval (direnv hook fish)                                 # direnv
+eval (direnv hook fish)
 
-starship init fish | source                             # prompt
+starship init fish | source
