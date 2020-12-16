@@ -52,3 +52,4 @@
 (package! lsp-ui)
 (package! xterm-color)
 (package! cider :pin "a89b694cc3")
+(package! reveal-in-osx-finder)

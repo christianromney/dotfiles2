@@ -127,7 +127,8 @@
       dired-listing-switches   "-aBhl --group-directories-first")
 
 (map! :map dired-mode-map
-      "C-l" #'dired-up-directory)
+      "C-l" #'dired-up-directory
+      "r"   #'reveal-in-osx-finder)
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Ivy                                        |
