@@ -83,3 +83,7 @@
 	process = git-lfs filter-process
 	clean = git-lfs clean -- %f
 	required = true
+[gpg]
+	format = openpgp
+[gpg "openpgp"]
+	program = /usr/local/MacGPG2/bin/gpg
