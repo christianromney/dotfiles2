@@ -96,3 +96,4 @@ bengal-run-tests.sh
 .rebl/prefs.edn
 .lsp
 .python-version
+.java-version

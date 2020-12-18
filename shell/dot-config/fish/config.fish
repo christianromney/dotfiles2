@@ -1,6 +1,6 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
 set EDITOR emacs
-set PATH $HOME/bin $HOME/.cargo/bin $HOME/.emacs.d/bin $HOME/.jenv/bin $PATH
+set PATH $HOME/bin /usr/local/MacGPG2/bin $HOME/.cargo/bin $HOME/.emacs.d/bin $HOME/.jenv/bin $PATH
 
 if test -f $HOME/.nurc
   bass source $HOME/.nurc

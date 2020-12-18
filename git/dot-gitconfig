@@ -83,5 +83,3 @@
 	process = git-lfs filter-process
 	clean = git-lfs clean -- %f
 	required = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
