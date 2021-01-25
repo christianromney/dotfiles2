@@ -51,5 +51,5 @@
 (package! google-this)
 (package! lsp-ui)
 (package! xterm-color)
-(package! cider :pin "a89b694cc3")
+(package! cider :pin "a16ec7b19cac7997ab2adda7b158374f9391baeb")
 (package! reveal-in-osx-finder)

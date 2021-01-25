@@ -78,12 +78,12 @@
        (undo +tree)        ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
-       :term
+       ;;:term
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       (vterm
-        +here)             ; the best terminal emulation in Emacs
+       ;;(vterm
+       ;; +here)             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -174,7 +174,7 @@
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp)       ; beautiful is better than ugly
+       ;;(python +lsp)       ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        (racket +xp)        ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
