@@ -50,6 +50,7 @@
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! google-this)
 (package! reveal-in-osx-finder)
+(package! adoc-mode)
 (package! xterm-color)
 ;; clojure support (not cider)
 (package! clojure-snippets)
