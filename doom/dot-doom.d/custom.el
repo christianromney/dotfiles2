@@ -16,7 +16,13 @@
  '(rustic-ansi-faces
    ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
  '(safe-local-variable-values
-   '((romney-christian-dir-locals . t)
+   '((inf-clojure-custom-repl-type . clojure)
+     (cider-known-endpoints
+      ("shadow-nrepl" "127.0.0.1" "9000"))
+     (cider-known-endpoints quote
+                            (("shadow-nrepl" "127.0.0.1" "9000")))
+     (cider-shadow-watched-builds "main" "workspaces")
+     (romney-christian-dir-locals . t)
      (cider-save-file-on-load . t)
      (cider-clojure-cli-global-options . "-A:dev")))
  '(vc-annotate-background "#282a36")

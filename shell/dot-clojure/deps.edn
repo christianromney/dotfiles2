@@ -61,6 +61,8 @@
             :main-opts
             ["-e" "((requiring-resolve,'cognitect.rebl/ui))" "-m" "nrepl.cmdline"]}
 
+           :compliment {:extra-deps {compliment {:mvn/version "0.3.10"}}}
+
            :datomic
            {:extra-deps
             {com.datomic/dev-local       {:mvn/version "0.9.195"}}}
