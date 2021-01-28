@@ -24,6 +24,7 @@
       (defun +clojure-disable-lsp-indentation-h ()
         (setq-local lsp-enable-indentation nil))
       #'lsp!)
+
     (after! lsp-clojure
       (dolist (m '(clojure-mode
                    clojurec-mode
@@ -36,12 +37,11 @@
                      "[/\\\\]\\.lsp\\'"
                      "[/\\\\]\\.shadow-cljs\\'"
                      "[/\\\\]\\target\\'"))
-        (push dir lsp-file-watch-ignored))
+        (push dir lsp-file-watch-ignored)))
 
-      (setq-local lsp-enable-indentation nil
-                  lsp-diagnostic-package :none
-                  lsp-enable-snippet nil
-                  lsp-file-watch-threshold 2000)))
+    (setq lsp-diagnostic-package :none
+            lsp-enable-snippet nil
+            lsp-file-watch-threshold 2000))
 
   (defun +clojure-socket-repl-connect ()
     (interactive)
