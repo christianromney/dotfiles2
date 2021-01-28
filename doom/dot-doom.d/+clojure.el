@@ -57,9 +57,11 @@
         "C-c C-K"    #'inf-clojure-load-file
         ;; like CIDER
         "C-c C-e"    #'inf-clojure-eval-last-sexp
-        "C-x C-e"     #'inf-clojure-eval-last-sexp
+        "C-x C-e"    #'inf-clojure-eval-last-sexp
         "C-c j c"    #'inf-clojure
         "C-c j C"    #'inf-clojure-connect
+        "C-c j d"    #'lsp-ui-doc-glance
+        "C-c j i"    #'lsp-ui-imenu
         "C-c j o"    #'+clojure-socket-repl-connect
         "C-c j e b"  #'inf-clojure-eval-buffer
         "C-c j e d"  #'inf-clojure-eval-defun

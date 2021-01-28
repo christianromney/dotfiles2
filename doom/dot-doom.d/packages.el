@@ -45,6 +45,7 @@
 ;;(unpin! t)
 
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
+(package! git-link)
 (package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! google-this)
