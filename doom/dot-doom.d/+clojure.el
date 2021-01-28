@@ -14,16 +14,6 @@
       (insert-file-contents path)
       (buffer-string)))
 
-(use-package! company-lsp
-  :when (featurep! :tools lsp)
-  :config
-  (push 'company-lsp company-backends))
-
-(add-hook! 'prog-mode-hook
-  (lambda ()
-    (require 'company-lsp)
-    (add-to-list 'company-safe-backends '(company-lsp . "Language Server Protocol"))))
-
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
@@ -52,18 +42,21 @@
 
   (map! :map clojure-mode-map
         "C-c C-z"    #'inf-clojure-switch-to-repl
-        "C-c C-k"    #'inf-clojure-eval-buffer ;; like CIDER
-        (:prefix ("j" . "clojure")
-         "c"    #'inf-clojure
-         "C"    #'inf-clojure-connect
-         "o"    #'+clojure-socket-repl-connect
-         "e b"  #'inf-clojure-eval-buffer
-         "e d"  #'inf-clojure-eval-defun
-         "e D"  #'inf-clojure-eval-defun-and-go
-         "e f"  #'inf-clojure-eval-last-sexp
-         "e F"  #'inf-clojure-eval-form-and-next
-         "e r"  #'inf-clojure-eval-region
-         "e R"  #'inf-clojure-eval-region-and-go)))
+        "C-c C-k"    #'inf-clojure-eval-buffer
+        "C-c C-K"    #'inf-clojure-load-file
+        ;; like CIDER
+        "C-c C-e"    #'inf-clojure-eval-last-sexp
+        "C-x C-e"     #'inf-clojure-eval-last-sexp
+        "C-c j c"    #'inf-clojure
+        "C-c j C"    #'inf-clojure-connect
+        "C-c j o"    #'+clojure-socket-repl-connect
+        "C-c j e b"  #'inf-clojure-eval-buffer
+        "C-c j e d"  #'inf-clojure-eval-defun
+        "C-c j e D"  #'inf-clojure-eval-defun-and-go
+        "C-c j e f"  #'inf-clojure-eval-last-sexp
+        "C-c j e F"  #'inf-clojure-eval-form-and-next
+        "C-c j e r"  #'inf-clojure-eval-region
+        "C-c j e R"  #'inf-clojure-eval-region-and-go))
 
 (add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojure-mode-hook #'subword-mode)

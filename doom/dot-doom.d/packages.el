@@ -53,8 +53,5 @@
 ;; clojure support (not cider)
 (package! clojure-snippets)
 (package! inf-clojure :pin "2c8e46b584be71fe1a585c9072da86382710dc59")
-(when (featurep! :tools lsp)
-  (package! lsp-ui)
-  (package! company-lsp))
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))

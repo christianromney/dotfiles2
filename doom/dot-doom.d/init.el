@@ -67,8 +67,8 @@
        ;;multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
-       rotate-text       ; cycle region at point between text candidates
-       snippets          ; my elves. They type so I don't have to
+       rotate-text         ; cycle region at point between text candidates
+       snippets            ; my elves. They type so I don't have to
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
@@ -102,11 +102,11 @@
        (lookup
         +dictionary
         +offline)          ; navigate your code and its documentation
-       lsp
+       (lsp +peek)
        (magit +forge)      ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
-       (pass
-        +auth)              ; password manager for nerds
+       ;; (pass
+       ;;  +auth)              ; password manager for nerds
        pdf                 ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb                 ; creating color strings
@@ -146,7 +146,7 @@
        ;;idris             ; a language you can depend on
        (json +lsp)         ; At least it ain't XML
        (java
-        +meghanada
+        ;; +meghanada
         +lsp)              ; the poster child for carpal tunnel syndrome
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
