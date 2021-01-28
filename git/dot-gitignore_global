@@ -97,3 +97,4 @@ bengal-run-tests.sh
 .lsp
 .python-version
 .java-version
+.clj-kondo
