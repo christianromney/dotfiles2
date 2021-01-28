@@ -30,7 +30,18 @@
                    clojurescript-mode
                    clojurex-mode))
         (add-to-list 'lsp-language-id-configuration (cons m "clojure")))
-      (setq-local lsp-enable-indentation nil)))
+
+      (dolist (dir '("[/\\\\]\\.clj-kondo\\'"
+                     "[/\\\\]\\.cp-cache\\'"
+                     "[/\\\\]\\.lsp\\'"
+                     "[/\\\\]\\.shadow-cljs\\'"
+                     "[/\\\\]\\target\\'"))
+        (push dir lsp-file-watch-ignored))
+
+      (setq-local lsp-enable-indentation nil
+                  lsp-diagnostic-package :none
+                  lsp-enable-snippet nil
+                  lsp-file-watch-threshold 2000)))
 
   (defun +clojure-socket-repl-connect ()
     (interactive)

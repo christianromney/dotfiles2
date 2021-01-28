@@ -134,6 +134,8 @@
 ;; |                                  Ivy                                        |
 ;; +-----------------------------------------------------------------------------+
 
+
+
 (when (featurep! :completion ivy)
   (map! "M-i"     #'counsel-imenu
         "C-c M-o" #'occur
