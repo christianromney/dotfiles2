@@ -134,8 +134,6 @@
 ;; |                                  Ivy                                        |
 ;; +-----------------------------------------------------------------------------+
 
-
-
 (when (featurep! :completion ivy)
   (map! "M-i"     #'counsel-imenu
         "C-c M-o" #'occur
@@ -146,7 +144,10 @@
 
   (after! ivy
     (add-to-list 'ivy-re-builders-alist
-                 '(counsel-projectile-find-file . ivy--regex-plus))))
+                 '(counsel-projectile-find-file . ivy--regex-plus)))
+
+  (use-package! lsp-ivy
+    :hook lsp-mode))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
