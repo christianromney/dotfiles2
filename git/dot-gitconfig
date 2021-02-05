@@ -83,6 +83,9 @@
 	process = git-lfs filter-process
 	clean = git-lfs clean -- %f
 	required = true
+[commit]
+    gpgsign = true
+
 [gpg]
 	format = openpgp
 [gpg "openpgp"]
