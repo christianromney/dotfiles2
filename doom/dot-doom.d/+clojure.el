@@ -14,6 +14,10 @@
       (insert-file-contents path)
       (buffer-string)))
 
+(defun +my/port-open-p (port)
+  "Returns t if the given port is in use, nil otherwise."
+  (= 0 (call-process "lsof" nil nil nil "-P" "-i" (concat "TCP:" (number-to-string port)))))
+
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
@@ -45,11 +49,21 @@
 
   (defun +clojure-socket-repl-connect ()
     (interactive)
-    (let ((path (expand-file-name (concat (projectile-project-root) ".shadow-cljs/socket-repl.port"))))
-      (if (file-exists-p path)
-          (let ((port (+my/read-file-as-string path)))
-            (inf-clojure-connect "localhost" port))
-        (inf-clojure-connect))))
+    (let ((default-socket-repl-port 5555)
+          (path (expand-file-name (concat (projectile-project-root) ".shadow-cljs/socket-repl.port"))))
+      (cond
+       ;; option 1: check for shadow-cljs ephemeral port file
+       ((file-exists-p path)
+        (let ((port (+my/read-file-as-string path)))
+          (inf-clojure-connect "localhost" port)))
+
+       ;; option 2: check default port
+       ((+my/port-open-p default-socket-repl-port)
+        (inf-clojure-connect "localhost" default-socket-repl-port))
+
+       ;; option 3: ask me
+       t
+       (inf-clojure-connect))))
 
   (map! :map clojure-mode-map
         "C-c C-z"    #'inf-clojure-switch-to-repl
