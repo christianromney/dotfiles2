@@ -39,6 +39,7 @@
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 
+;; insert pairs even before words, but not in strings
 (dolist (mode'(emacs-lisp-mode clojure-mode))
   (sp-local-pair mode "(" nil :unless '((:rem sp-point-before-word-p)
                                         (:add sp-in-string-p)))
