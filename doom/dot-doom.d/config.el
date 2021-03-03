@@ -39,6 +39,16 @@
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 
+(dolist (mode'(emacs-lisp-mode clojure-mode))
+  (sp-local-pair mode "(" nil :unless '((:rem sp-point-before-word-p)
+                                        (:add sp-in-string-p)))
+
+  (sp-local-pair mode "[" nil :unless '((:rem sp-point-before-word-p)
+                                        (:add sp-in-string-p)))
+
+  (sp-local-pair mode "{" nil :unless '((:rem sp-point-before-word-p)
+                                        (:add sp-in-string-p))))
+
 ;; Don't ask me when killing process buffers
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       kill-buffer-query-functions     (remq 'process-kill-buffer-query-function
