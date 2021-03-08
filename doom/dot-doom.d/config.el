@@ -148,19 +148,18 @@
 ;; +-----------------------------------------------------------------------------+
 
 (when (featurep! :completion ivy)
-  (map! "M-i"     #'counsel-imenu
-        "C-c M-o" #'occur
-        "C-s"     #'swiper-isearch)
+  (use-package! ivy
+    :bind
+    (("M-i"     . #'counsel-imenu)
+     ("C-c M-o" . #'occur)
+     ("C-s"     . #'swiper-isearch)
+     :map ivy-minibuffer-map
+     ("C-l"     . #'ivy-backward-delete-char)) ;; behave like helm to go up a level
 
-  (map! :map ivy-minibuffer-map
-        "C-l"     #'ivy-backward-delete-char) ;; behave like helm to go up a level
-
-  (after! ivy
-    (add-to-list 'ivy-re-builders-alist
-                 '(counsel-projectile-find-file . ivy--regex-plus)))
-
-  (use-package! lsp-ivy
-    :hook lsp-mode))
+    :config
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |

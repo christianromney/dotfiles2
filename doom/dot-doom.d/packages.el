@@ -57,5 +57,3 @@
 (package! inf-clojure :pin "2c8e46b584be71fe1a585c9072da86382710dc59")
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
-(when (featurep! :tools lsp)
-  (package! lsp-ivy))
