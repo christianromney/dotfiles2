@@ -63,7 +63,10 @@
                        "(do \n(newline)\n(clojure.pprint/pprint *1))\n"))
 
   (defun +inf-clojure-load-file ()
-    "Send a load-file instruction to Clojure to load the current file"
+    "Send a load-file instruction to Clojure to load the current file.
+Uses comint-proc-query instead of comint-send-string like
+inf-clojure does by default, as that method breaks REPLs for me
+with large files for some reason."
     (interactive)
     (comint-proc-query
      (inf-clojure-proc)
