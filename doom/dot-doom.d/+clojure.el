@@ -68,10 +68,11 @@ Uses comint-proc-query instead of comint-send-string like
 inf-clojure does by default, as that method breaks REPLs for me
 with large files for some reason."
     (interactive)
-    (comint-proc-query
-     (inf-clojure-proc)
-     (format "(do (load-file \"%s\") :loaded)\n" (buffer-file-name)))
-    (message "Loaded Clojure file: %s" (buffer-file-name)))
+    (let ((file-name (buffer-file-name)))
+      (comint-proc-query
+       (inf-clojure-proc)
+       (format "(do (load-file \"%s\") :loaded)\n" file-name))
+      (message "inf-clojure :: Loaded file: %s" file-name)))
 
   (defun +inf-clojure-socket-repl-connect ()
     (interactive)
