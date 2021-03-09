@@ -71,7 +71,7 @@ with large files for some reason."
     (comint-proc-query
      (inf-clojure-proc)
      (format "(do (load-file \"%s\") :loaded)\n" (buffer-file-name)))
-    (message "Loaded Clojure file: %s" file-name))
+    (message "Loaded Clojure file: %s" (buffer-file-name)))
 
   (defun +inf-clojure-socket-repl-connect ()
     (interactive)
