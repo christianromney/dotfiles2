@@ -18,12 +18,6 @@
   "Returns t if the given port is in use, nil otherwise."
   (= 0 (call-process "lsof" nil nil nil "-P" "-i" (concat "TCP:" (number-to-string port)))))
 
-(defun +my/pretty-print ()
-  "Pretty print the last repl output"
-  (interactive)
-  (comint-proc-query (inf-clojure-proc)
-                     "(clojure.pprint/pprint *1)\n"))
-
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
@@ -51,9 +45,32 @@
 
     (setq lsp-diagnostic-package :none
           lsp-enable-snippet nil
-          lsp-file-watch-threshold 2000))
+          lsp-file-watch-threshold 2000)
 
-  (defun +clojure-socket-repl-connect ()
+    (map! :map clojure-mode-map
+          ;; docs
+          "C-c j d"    #'lsp-ui-doc-glance
+
+          ;; imenu
+          "C-c j i"    #'lsp-ui-imenu)))
+
+(use-package! inf-clojure
+  :config
+  (defun +inf-clojure-pretty-print ()
+    "Pretty print the last repl output"
+    (interactive)
+    (comint-proc-query (inf-clojure-proc)
+                       "(do \n(newline)\n(clojure.pprint/pprint *1))\n"))
+
+  (defun +inf-clojure-load-file ()
+    "Send a load-file instruction to Clojure to load the current file"
+    (interactive)
+    (comint-proc-query
+     (inf-clojure-proc)
+     (format "(do (load-file \"%s\") :loaded)\n" (buffer-file-name)))
+    (message "Loaded Clojure file: %s" file-name))
+
+  (defun +inf-clojure-socket-repl-connect ()
     (interactive)
     (let ((default-socket-repl-port 5555)
           (path
@@ -81,17 +98,13 @@
          (inf-clojure-connect)))))
 
   (map! :map clojure-mode-map
-        "C-c r c"    #'+clojure-socket-repl-connect
+        "C-c r c"    #'+inf-clojure-socket-repl-connect
 
         ;; connections
         "C-c j c"    #'inf-clojure
         "C-c j C"    #'inf-clojure-connect
         ;; docs
-        "C-c j d"    #'lsp-ui-doc-glance
         "C-c j D"    #'inf-clojure-show-var-documentation
-
-        ;; imenu
-        "C-c j i"    #'lsp-ui-imenu
 
         ;; eval
         "C-c j e b"  #'inf-clojure-eval-buffer
@@ -106,18 +119,31 @@
         "C-c j a"    #'inf-clojure-apropos
         "C-c j l"    #'inf-clojure-arglists
         "C-c j m"    #'inf-clojure-macroexpand
+        "C-c j r"    #'inf-clojure-reload
+        "C-c j R"    #'inf-clojure-restart
         "C-c j v"    #'inf-clojure-show-ns-vars
 
         ;; CIDER-like mappings
+        "C-c M-j"    #'+inf-clojure-socket-repl-connect
+        "C-c C-q"    #'inf-clojure-quit
         "C-c M-n"    #'inf-clojure-set-ns
-        "C-c M-p"    #'+my/pretty-print
+        "C-c M-p"    #'+inf-clojure-pretty-print
         "C-c C-e"    #'inf-clojure-eval-last-sexp
         "C-x C-e"    #'inf-clojure-eval-last-sexp
         "C-c C-z"    #'inf-clojure-switch-to-repl
-        "C-c C-k"    #'inf-clojure-load-file
+        "C-c C-k"    #'+inf-clojure-load-file
+        "C-c ,"      #'inf-clojure-clear-repl-buffer
 
         :map inf-clojure-mode-map
-        "C-c C-,"    #'inf-clojure-clear-repl-buffer))
+        "C-c ,"      #'inf-clojure-clear-repl-buffer
+        "C-c j R"    #'inf-clojure-restart))
+
+(defun +inf-clojure-reconfigure ()
+  (progn
+    (message "Setting clojure completion mode to compliment")
+    (inf-clojure-update-feature
+     'clojure 'completion
+     "(compliment.core/completions \"%s\")")))
 
 (add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojure-mode-hook #'subword-mode)
@@ -125,6 +151,7 @@
 (add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
+(add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
 
 (use-package! flycheck-clj-kondo
   :when (featurep! :checkers syntax)

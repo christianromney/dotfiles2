@@ -25,11 +25,10 @@
 ;;                                    APPEARANCE
 ;; ===============================================================================
 
-(setq doom-theme                               'doom-one-light
-      doom-font                                (font-spec :family "Iosevka Medium"
-                                                          :size 20)
-      fancy-splash-image                       (concat doom-private-dir "cognitect.png")
-      display-line-numbers-type                t)
+(setq doom-theme                     'doom-one-light
+      doom-font                      (font-spec :family "Iosevka Medium" :size 20)
+      fancy-splash-image             (concat doom-private-dir "cognitect.png")
+      display-line-numbers-type      t)
 
 ;; ===============================================================================
 ;;                                GLOBAL BEHAVIORS
