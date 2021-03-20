@@ -174,3 +174,4 @@
 
 (load! "+org")
 (load! "+clojure")
+(load! "+scheme")
