@@ -42,8 +42,8 @@
 (use-package! smartparens
   :config
   (pcase-dolist (`(,open . ,close) '(("(" . ")")
-                                       ("[" . "]")
-                                       ("{" . "}")))
+                                     ("[" . "]")
+                                     ("{" . "}")))
     ;; remove all default rules
     (sp-pair open close :post-handlers nil :unless nil)
     ;; add sole exception
