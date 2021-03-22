@@ -72,8 +72,6 @@
   enabled = 1
 [magit]
   hideCampaign = true   
-[github]
-  user = christianromney
 [icdiff]
   options = --highlight --line-numbers
 [pull]
@@ -85,7 +83,6 @@
 	required = true
 [commit]
     gpgsign = true
-
 [gpg]
 	format = openpgp
 [gpg "openpgp"]

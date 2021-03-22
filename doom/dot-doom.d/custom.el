@@ -16,7 +16,10 @@
  '(rustic-ansi-faces
    ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
  '(safe-local-variable-values
-   '((inf-clojure-custom-repl-type . clojure)
+   '((geiser-scheme-implementation quote chez)
+     (git-commit-major-mode . git-commit-elisp-text-mode)
+     (geiser-scheme-implementation quote mit)
+     (inf-clojure-custom-repl-type . clojure)
      (cider-known-endpoints
       ("shadow-nrepl" "127.0.0.1" "9000"))
      (cider-known-endpoints quote

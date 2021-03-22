@@ -34,20 +34,41 @@
 ;;                                GLOBAL BEHAVIORS
 ;; ===============================================================================
 
+;; SMARTPARENS
 ;; smartparens globally conflicts with many org-mode bindings
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 
 ;; insert pairs even before words, but not in strings
-(dolist (mode'(emacs-lisp-mode clojure-mode))
-  (sp-local-pair mode "(" nil :unless '((:rem sp-point-before-word-p)
-                                        (:add sp-in-string-p)))
+(defvar my-smartparens-mode-list
+  '(clojure-mode
+    common-lisp-mode
+    emacs-lisp-mode
+    eshell-mode
+    geiser-repl-mode
+    inf-clojure-mode
+    inferior-emacs-lisp-mode
+    inferior-lisp-mode
+    inferior-scheme-mode
+    lisp-interaction-mode
+    lisp-mode
+    racket-mode
+    racket-repl-mode
+    scheme-interaction-mode
+    scheme-mode
+    slime-repl-mode)
+  "The modes in which to configure smartparens.")
 
-  (sp-local-pair mode "[" nil :unless '((:rem sp-point-before-word-p)
-                                        (:add sp-in-string-p)))
-
-  (sp-local-pair mode "{" nil :unless '((:rem sp-point-before-word-p)
-                                        (:add sp-in-string-p))))
+;; Override "smart"parens local-pair handling
+(dolist (paren-pair '(("(" . ")")
+                      ("[" . "]")
+                      ("{" . "}")))
+  (let ((open  (car paren-pair))
+        (close (cdr paren-pair)))
+    ;; remove all rules
+    (sp-local-pair my-smartparens-mode-list open close :unless nil)
+    ;; add sole exception
+    (sp-local-pair my-smartparens-mode-list open close :unless '(:add sp-in-string-p))))
 
 ;; Don't ask me when killing process buffers
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
