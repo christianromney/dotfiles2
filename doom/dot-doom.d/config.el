@@ -153,12 +153,7 @@
      ("C-c M-o" . #'occur)
      ("C-s"     . #'swiper-isearch)
      :map ivy-minibuffer-map
-     ("C-l"     . #'ivy-backward-delete-char)) ;; behave like helm to go up a level
-
-    :config
-    (setq ivy-re-builders-alist
-          '((ivy-switch-buffer . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))))
+     ("C-l"     . #'ivy-backward-delete-char)))) ;; behave like helm to go up a level
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
