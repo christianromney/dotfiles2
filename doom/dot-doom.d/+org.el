@@ -193,4 +193,43 @@
       "C-. o u" #'personal/org-underline-word
       "C-. o v" #'personal/org-verbatim-word)
 
+;; -------------------------------------------------------------------------
+;;                              BIBTEX/ORG-REF
+;; -------------------------------------------------------------------------
+
+(use-package! org-ref
+  :hook org-mode
+  :config
+  (setq reftex-default-bibliography
+        (list (expand-file-name "bibliography/references.bib" org-directory))
+
+        org-ref-bibliography-notes
+        (expand-file-name "bibliography/notes.org" org-directory)
+
+        org-ref-default-bibliography
+        (list (expand-file-name "bibliography/references.bib" org-directory))
+
+        org-ref-pdf-directory
+        (expand-file-name "bibliography/bibtex-pdfs/" org-directory)
+
+        bibtex-completion-bibliography
+        (expand-file-name "bibliography/references.bib" org-directory)
+
+        bibtex-completion-library-path
+        (expand-file-name "bibliography/bibtex-pdfs/" org-directory)
+
+        bibtex-completion-notes-path
+        (expand-file-name "bibliography/bibtex-notes/" org-directory)
+
+        org-ref-completion-library          'org-ref-ivy-cite
+        org-ref-show-broken-links           t
+        bibtex-completion-pdf-open-function 'org-open-file
+        org-latex-pdf-process
+        '("pdflatex -interaction nonstopmode -output-directory %o %f"
+	  "bibtex %b"
+	  "pdflatex -interaction nonstopmode -output-directory %o %f"
+	  "pdflatex -interaction nonstopmode -output-directory %o %f"))
+  (require 'org-ref-isbn)
+  (require 'org-ref-arxiv))
+
 (message "Loaded +org configuration")
