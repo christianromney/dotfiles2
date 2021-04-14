@@ -61,7 +61,9 @@
             :main-opts
             ["-e" "((requiring-resolve,'cognitect.rebl/ui))" "-m" "nrepl.cmdline"]}
 
-           :compliment {:extra-deps {compliment {:mvn/version "0.3.10"}}}
+           :socket
+           {:jvm-opts ["-Dclojure.server.repl={:port 5555 :accept clojure.core.server/repl}"]
+            :extra-deps {compliment/compliment {:mvn/version "0.3.10"}}}
 
            :datomic
            {:extra-deps
