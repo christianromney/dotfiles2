@@ -102,10 +102,10 @@ with large files for some reason."
           (inf-clojure (cons "localhost" default-socket-repl-port))))
 
        ;; option 3: ask me
-       t
-       (progn
-         (message "Connecting clojure socket REPL interactively")
-         (inf-clojure-connect)))))
+       (t
+        (progn
+          (message "Connecting clojure socket REPL interactively")
+          (inf-clojure-connect))))))
 
   (map! :map clojure-mode-map
         "C-c r c"    #'+inf-clojure-socket-repl-connect
