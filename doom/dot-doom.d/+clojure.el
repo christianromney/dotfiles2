@@ -43,10 +43,11 @@
                      "[/\\\\]\\.lsp\\'"
                      "[/\\\\]\\.shadow-cljs\\'"
                      "[/\\\\]\\target\\'"))
-        (push dir lsp-file-watch-ignored)))
+        (add-to-list 'lsp-file-watch-ignored dir)))
 
     (setq lsp-diagnostic-package :none
           lsp-enable-snippet nil
+          lsp-lens-enable t
           lsp-file-watch-threshold 2000)
 
     (map! :map clojure-mode-map

@@ -19,7 +19,9 @@
       calendar-latitude                        26.0170038
       confirm-kill-emacs                       nil
       calendar-week-start-day                  1
-      +default-want-RET-continue-comments      nil)
+      +default-want-RET-continue-comments      nil
+      enable-dir-local-variables               t
+      enable-local-variables                   t)
 
 ;; ===============================================================================
 ;;                                    APPEARANCE
@@ -124,7 +126,9 @@
       "<s-left>"  #'sp-forward-barf-sexp
       "C-c o w"   #'+pass/ivy
       "C-c i w"   #'pass-insert
-      "C-M-%"     #'anzu-query-replace-regexp)
+      "C-M-%"     #'anzu-query-replace-regexp
+      "C-x b"     #'ivy-switch-buffer ;; reverse these annoying defaults
+      "C-x B"     #'+ivy/switch-workspace-buffer)
 
 ;; ===============================================================================
 ;;                           PACKAGE CUSTOMIZATION
