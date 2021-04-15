@@ -152,20 +152,22 @@
 
 (when (featurep! :completion ivy)
   (use-package! ivy
-    :config
-    ;; (autoload 'ivy-bibtex "ivy-bibtex" "" t)
-;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-;; ignores the order of regexp tokens when searching for matching candidates.
-;; Add something like this to your init file:
-    (setq ivy-re-builders-alist
-          '((ivy-bibtex . ivy--regex-ignore-order)
-            (t . ivy--regex-plus)))
     :bind
     (("M-i"     . #'counsel-imenu)
      ("C-c M-o" . #'occur)
      ("C-s"     . #'swiper-isearch)
+     ;; behave like helm to go up a level
      :map ivy-minibuffer-map
-     ("C-l"     . #'ivy-backward-delete-char)))) ;; behave like helm to go up a level
+     ("C-l"     . #'ivy-backward-delete-char))))
+
+(after! ivy
+  ;; (autoload 'ivy-bibtex "ivy-bibtex" "" t)
+  ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+  ;; ignores the order of regexp tokens when searching for matching candidates.
+  ;; Add something like this to your init file:
+  (setq ivy-re-builders-alist
+          '((ivy-bibtex . ivy--regex-ignore-order)
+            (t . ivy--regex-plus))))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |

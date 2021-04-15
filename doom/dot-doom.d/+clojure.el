@@ -45,10 +45,9 @@
                      "[/\\\\]\\target\\'"))
         (add-to-list 'lsp-file-watch-ignored dir)))
 
-    (setq lsp-diagnostic-package :none
-          lsp-enable-snippet nil
-          lsp-lens-enable t
-          lsp-file-watch-threshold 2000)
+    (setq lsp-lens-enable          t       ;; enable LSP code lens for inline reference counts
+          lsp-file-watch-threshold 2000
+          lsp-enable-snippet       t)
 
     (map! :map clojure-mode-map
           ;; docs
