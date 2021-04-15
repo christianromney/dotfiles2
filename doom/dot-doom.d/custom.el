@@ -18,7 +18,8 @@
  '(rustic-ansi-faces
    ["#282a36" "#ff5c57" "#5af78e" "#f3f99d" "#57c7ff" "#ff6ac1" "#9aedfe" "#f9f9f9"])
  '(safe-local-variable-values
-   '((inf-clojure-repl-type quote clojure)
+   '((inf-clojure-repl-type . clojure)
+     (inf-clojure-repl-type quote clojure)
      (inf-clojure-custom-repl-type quote clojure)
      (geiser-scheme-implementation quote chez)
      (git-commit-major-mode . git-commit-elisp-text-mode)

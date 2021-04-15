@@ -1,97 +1,152 @@
 ;;; ../src/open/dotfiles/doom/dot-doom.d/+org.el -*- lexical-binding: t; -*-
 
+;; -------------------------------------------------------------------------
+;;                          MARKUP FUNCTIONS
+;; -------------------------------------------------------------------------
+
+(defun personal/org-markup-word (theChar)
+  (save-excursion
+    (backward-word)
+    (insert-char theChar)
+    (forward-word)
+    (insert-char theChar)))
+
+(defun personal/org-italicize-word ()
+  (interactive)
+  (personal/org-markup-word #x00002F))
+
+(defun personal/org-bold-word ()
+  (interactive)
+  (personal/org-markup-word #x00002A))
+
+(defun personal/org-code-word ()
+  (interactive)
+  (personal/org-markup-word #x00007E))
+
+(defun personal/org-underline-word ()
+  (interactive)
+  (personal/org-markup-word #x00005F))
+
+(defun personal/org-verbatim-word ()
+  (interactive)
+  (personal/org-markup-word #x00003D))
+
+(defun personal/org-strike-word ()
+  (interactive)
+  (personal/org-markup-word #x00002B))
+
 ;; =========================================================================
 ;;                               ORG MODE
 ;; =========================================================================
 
+(use-package! org
+  :defer t
+  :bind
+  (("C-. o b" . #'personal/org-bold-word)
+   ("C-. o c" . #'personal/org-code-word)
+   ("C-. o i" . #'personal/org-italicize-word)
+   ("C-. o s" . #'personal/org-strike-word)
+   ("C-. o u" . #'personal/org-underline-word)
+   ("C-. o v" . #'personal/org-verbatim-word))
+  :config
+  ;; -------------------------------------------------------------------------
+  ;;                                AGENDA
+  ;; -------------------------------------------------------------------------
+  (setq org-directory                     "~/doc/notes/"
+        org-agenda-files                  '("~/doc/notes/")
+        org-agenda-window-setup           'current-window
+        org-agenda-include-diary          t
+        org-agenda-show-log               t
+        org-agenda-skip-deadline-if-done  t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-todo-ignore-deadlines  t
+        org-agenda-todo-ignore-scheduled  t
+        org-agenda-start-on-weekday       1
+        org-agenda-use-tag-inheritance    nil)
+
+  ;; -------------------------------------------------------------------------
+  ;;                                JOURNAL
+  ;; -------------------------------------------------------------------------
+
+  (setq org-journal-encrypt-journal       t
+        org-journal-file-format           "%Y%m%d.org")
+
+  ;; -------------------------------------------------------------------------
+  ;;                               APPEARANCE
+  ;; -------------------------------------------------------------------------
+
+  (setq org-ellipsis                       "…"
+        org-startup-folded                 nil
+        org-startup-indented               t
+        org-pretty-entities                t
+        org-fontify-done-headline          t
+        org-fontify-whole-heading-line     t
+        org-fontify-quote-and-verse-blocks t
+        org-fontify-emphasized-text        t
+        org-src-fontify-natively           t
+        org-src-tab-acts-natively          t
+
+        org-superstar-headline-bullets-list
+        '("𐄘" "𐄗" "𐄖" "𐄕" "𐄔" "𐄓" "𐄒" "𐄑" "𐄐")
+
+        ;; map from default to replacement
+        org-superstar-item-bullet-alist
+        '((?* . ?•)
+          (?+ . ?‣)
+          (?- . ?–)))
+
+  ;; -------------------------------------------------------------------------
+  ;;                                 BEHAVIOR
+  ;; -------------------------------------------------------------------------
+
+  (setq org-export-html-postamble          nil
+        org-hide-emphasis-markers          t
+        org-html-validation-link           nil
+        org-log-done                       nil
+        org-outline-path-complete-in-steps nil
+        org-refile-use-cache               t
+        org-refile-use-outline-path        t
+        org-return-follows-link            t
+        org-src-window-setup               'current-window
+        org-use-fast-todo-selection        t
+        org-use-sub-superscripts           "{}"
+
+        org-refile-targets
+        '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
+
+        org-tag-alist
+        '(("work"       . ?w)
+          ("personal"   . ?p)
+          ("study"      . ?s))
+
+        org-capture-templates
+        `(("t" "Todo" entry (file+headline "todos.org" "Todos")
+           "* TODO %^{Task} %^G")
+
+          ("j" "Journal Entry" entry (file+datetree "journal.org")
+           (file "journal.template")))
+
+        org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 10)))
+            (tags-todo "+PRIORITY=\"A\"")
+            (tags-todo "work")
+            (tags-todo "personal")))
+          ("n" "Agenda and all TODOs"
+           ((agenda "" ((org-agenda-span 10)))
+            (alltodo "")))))
+
+  (setq plantuml-default-exec-mode 'jar))
+
 ;; -------------------------------------------------------------------------
-;;                                AGENDA
+;;                                   HOOKS
 ;; -------------------------------------------------------------------------
 
-(setq org-directory                     "~/doc/notes/"
-      org-agenda-files                  '("~/doc/notes/")
-      org-agenda-window-setup           'current-window
-      org-agenda-include-diary          t
-      org-agenda-show-log               t
-      org-agenda-skip-deadline-if-done  t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-timestamp-if-done t
-      org-agenda-todo-ignore-deadlines  t
-      org-agenda-todo-ignore-scheduled  t
-      org-agenda-start-on-weekday       1
-      org-agenda-use-tag-inheritance    nil)
+(add-hook! 'org-mode-hook #'org-pretty-table-mode)
+(add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2
+                                           right-margin-width 2)))
 
-;; -------------------------------------------------------------------------
-;;                                JOURNAL
-;; -------------------------------------------------------------------------
-
-(setq org-journal-encrypt-journal       t
-      org-journal-file-format           "%Y%m%d.org")
-
-;; -------------------------------------------------------------------------
-;;                               APPEARANCE
-;; -------------------------------------------------------------------------
-
-(setq org-ellipsis                       "…"
-      org-startup-folded                 nil
-      org-startup-indented               t
-      org-pretty-entities                t
-      org-fontify-done-headline          t
-      org-fontify-whole-heading-line     t
-      org-fontify-quote-and-verse-blocks t
-      org-fontify-emphasized-text        t
-      org-src-fontify-natively           t
-      org-src-tab-acts-natively          t
-
-      org-superstar-headline-bullets-list
-      '("𐄘" "𐄗" "𐄖" "𐄕" "𐄔" "𐄓" "𐄒" "𐄑" "𐄐")
-
-      ;; map from default to replacement
-      org-superstar-item-bullet-alist
-      '((?* . ?•)
-        (?+ . ?‣)
-        (?- . ?–)))
-
-;; -------------------------------------------------------------------------
-;;                                 BEHAVIOR
-;; -------------------------------------------------------------------------
-
-(setq org-export-html-postamble          nil
-      org-hide-emphasis-markers          t
-      org-html-validation-link           nil
-      org-log-done                       nil
-      org-outline-path-complete-in-steps nil
-      org-refile-use-cache               t
-      org-refile-use-outline-path        t
-      org-return-follows-link            t
-      org-src-window-setup               'current-window
-      org-use-fast-todo-selection        t
-      org-use-sub-superscripts           "{}"
-
-      org-refile-targets
-      '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
-
-      org-tag-alist
-      '(("work"       . ?w)
-        ("personal"   . ?p)
-        ("study"      . ?s))
-
-      org-capture-templates
-      `(("t" "Todo" entry (file+headline "todos.org" "Todos")
-         "* TODO %^{Task} %^G")
-
-        ("j" "Journal Entry" entry (file+datetree "journal.org")
-         (file "journal.template")))
-
-      org-agenda-custom-commands
-      '(("d" "Dashboard"
-         ((agenda "" ((org-agenda-span 10)))
-          (tags-todo "+PRIORITY=\"A\"")
-          (tags-todo "work")
-          (tags-todo "personal")))
-        ("n" "Agenda and all TODOs"
-         ((agenda "" ((org-agenda-span 10)))
-          (alltodo "")))))
 ;; -------------------------------------------------------------------------
 ;;                                   REVEAL
 ;; -------------------------------------------------------------------------
@@ -141,57 +196,6 @@
        (shell      . t)
        (sql        . t)))))
 
-(setq plantuml-default-exec-mode 'jar)
-
-;; -------------------------------------------------------------------------
-;;                                   CAPTURE
-;; -------------------------------------------------------------------------
-
-(add-hook! 'org-mode-hook #'turn-on-org-pretty-table-mode)
-(add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2 right-margin-width 2)))
-
-;; -------------------------------------------------------------------------
-;;                                   MARKUP
-;; -------------------------------------------------------------------------
-
-(defun personal/org-markup-word (theChar)
-  (save-excursion
-    (backward-word)
-    (insert-char theChar)
-    (forward-word)
-    (insert-char theChar)))
-
-(defun personal/org-italicize-word ()
-  (interactive)
-  (personal/org-markup-word #x00002F))
-
-(defun personal/org-bold-word ()
-  (interactive)
-  (personal/org-markup-word #x00002A))
-
-(defun personal/org-code-word ()
-  (interactive)
-  (personal/org-markup-word #x00007E))
-
-(defun personal/org-underline-word ()
-  (interactive)
-  (personal/org-markup-word #x00005F))
-
-(defun personal/org-verbatim-word ()
-  (interactive)
-  (personal/org-markup-word #x00003D))
-
-(defun personal/org-strike-word ()
-  (interactive)
-  (personal/org-markup-word #x00002B))
-
-(map! :map org-mode-map
-      "C-. o b" #'personal/org-bold-word
-      "C-. o c" #'personal/org-code-word
-      "C-. o i" #'personal/org-italicize-word
-      "C-. o s" #'personal/org-strike-word
-      "C-. o u" #'personal/org-underline-word
-      "C-. o v" #'personal/org-verbatim-word)
 
 ;; -------------------------------------------------------------------------
 ;;                              BIBTEX/ORG-REF
