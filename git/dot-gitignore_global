@@ -98,3 +98,4 @@ bengal-run-tests.sh
 .python-version
 .java-version
 .clj-kondo
+.dir-locals.el

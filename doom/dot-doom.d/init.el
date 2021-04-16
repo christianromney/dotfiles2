@@ -58,8 +58,8 @@
        ;;zen               ; distraction-free coding or writing
 
        :editor
-       file-templates    ; auto-snippets for empty files
-       fold              ; (nigh) universal code folding
+       file-templates      ; auto-snippets for empty files
+       fold                ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
@@ -121,7 +121,7 @@
        :lang
        ;;agda              ; types of types of types of types...
        ;;cc                ; C/C++/Obj-C madness
-       ;; clojure          ; java with a lisp
+       ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
@@ -132,7 +132,7 @@
         +lsp)              ; paint ui and not much else
        ;;elixir            ; erlang done right
        ;;elm               ; care for a cup of TEA?
-       emacs-lisp        ; drown in parentheses
+       emacs-lisp          ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
@@ -144,9 +144,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        (json +lsp)         ; At least it ain't XML
-       (java
-        ;; +meghanada
-        +lsp)              ; the poster child for carpal tunnel syndrome
+       (java +lsp)         ; the poster child for carpal tunnel syndrome
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)

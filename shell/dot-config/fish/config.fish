@@ -7,6 +7,7 @@ if test -f $HOME/.nurc
 end
 
 set PATH /usr/local/MacGPG2/bin $HOME/bin $HOME/.cargo/bin $HOME/.emacs.d/bin $HOME/.jenv/bin $PATH
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 status --is-interactive; and source (pyenv init -|psub)
 status --is-interactive; and source (rbenv init -|psub)
