@@ -122,10 +122,7 @@
 
         org-capture-templates
         `(("t" "Todo" entry (file+headline "todos.org" "Todos")
-           "* TODO %^{Task} %^G")
-
-          ("j" "Journal Entry" entry (file+datetree "journal.org")
-           (file "journal.template")))
+           "* TODO %^{Task} %^G"))
 
         org-agenda-custom-commands
         '(("d" "Dashboard"
