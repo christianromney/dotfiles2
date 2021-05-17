@@ -152,3 +152,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+.ccls-cache
