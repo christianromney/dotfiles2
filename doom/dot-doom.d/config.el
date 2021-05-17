@@ -32,6 +32,8 @@
       fancy-splash-image             (concat doom-private-dir "cognitect.png")
       display-line-numbers-type      t)
 
+(setq-default tab-width 2)
+
 ;; ===============================================================================
 ;;                                GLOBAL BEHAVIORS
 ;; ===============================================================================
