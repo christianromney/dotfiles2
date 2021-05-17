@@ -58,6 +58,13 @@
 
 (use-package! inf-clojure
   :config
+  (defun +inf-clojure-run-tests ()
+    "Run clojure.test suite for the current namespace."
+    (interactive)
+    (comint-proc-query (inf-clojure-proc)
+                        "(clojure.test/run-tests)\n"))
+
+
   (defun +inf-clojure-pretty-print ()
     "Pretty print the last repl output"
     (interactive)
@@ -131,6 +138,7 @@ with large files for some reason."
         "C-c j r"    #'inf-clojure-reload
         "C-c j R"    #'inf-clojure-restart
         "C-c j v"    #'inf-clojure-show-ns-vars
+        "C-c j t"    #'+inf-clojure-run-tests
 
         ;; CIDER-like mappings
         "C-c M-j"    #'+inf-clojure-socket-repl-connect
