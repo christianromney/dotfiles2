@@ -9,17 +9,6 @@
 ;; it should have a lower threshold too.
 (add-to-list 'doom-large-file-size-alist '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
-(defun +my/read-file-as-string (path)
-  (string-trim
-   (with-temp-buffer
-     (insert-file-contents path)
-     (buffer-string))))
-
-(defun +my/port-open-p (port)
-  "Returns t if the given port is in use, nil otherwise."
-  (= 0 (call-process "lsof" nil nil nil "-P" "-i"
-                     (concat "TCP:" (number-to-string port)))))
-
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
@@ -97,12 +86,12 @@ with large files for some reason."
       (cond
        ;; option 1: check for shadow-cljs ephemeral port file
        (found-port-file
-        (let ((port (+my/read-file-as-string found-port-file)))
+        (let ((port (custom/read-file-as-string found-port-file)))
           (message "Connecting clojure socket REPL on ephemeral shadow port %s" port)
           (inf-clojure (cons "localhost" port))))
 
        ;; option 2: check default port
-       ((+my/port-open-p default-socket-repl-port)
+       ((custom/port-open-p default-socket-repl-port)
         (progn
           (message "Connecting clojure socket REPL on detected open port %d" default-socket-repl-port)
           (inf-clojure (cons "localhost" default-socket-repl-port))))

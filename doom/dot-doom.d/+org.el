@@ -1,40 +1,5 @@
 ;;; ../src/open/dotfiles/doom/dot-doom.d/+org.el -*- lexical-binding: t; -*-
 
-;; -------------------------------------------------------------------------
-;;                          MARKUP FUNCTIONS
-;; -------------------------------------------------------------------------
-
-(defun personal/org-markup-word (theChar)
-  (save-excursion
-    (backward-word)
-    (insert-char theChar)
-    (forward-word)
-    (insert-char theChar)))
-
-(defun personal/org-italicize-word ()
-  (interactive)
-  (personal/org-markup-word #x00002F))
-
-(defun personal/org-bold-word ()
-  (interactive)
-  (personal/org-markup-word #x00002A))
-
-(defun personal/org-code-word ()
-  (interactive)
-  (personal/org-markup-word #x00007E))
-
-(defun personal/org-underline-word ()
-  (interactive)
-  (personal/org-markup-word #x00005F))
-
-(defun personal/org-verbatim-word ()
-  (interactive)
-  (personal/org-markup-word #x00003D))
-
-(defun personal/org-strike-word ()
-  (interactive)
-  (personal/org-markup-word #x00002B))
-
 ;; =========================================================================
 ;;                               ORG MODE
 ;; =========================================================================
@@ -42,12 +7,12 @@
 (use-package! org
   :defer t
   :bind
-  (("C-. o b" . #'personal/org-bold-word)
-   ("C-. o c" . #'personal/org-code-word)
-   ("C-. o i" . #'personal/org-italicize-word)
-   ("C-. o s" . #'personal/org-strike-word)
-   ("C-. o u" . #'personal/org-underline-word)
-   ("C-. o v" . #'personal/org-verbatim-word))
+  (("C-. o b" . #'custom/org-bold-word)
+   ("C-. o c" . #'custom/org-code-word)
+   ("C-. o i" . #'custom/org-italicize-word)
+   ("C-. o s" . #'custom/org-strike-word)
+   ("C-. o u" . #'custom/org-underline-word)
+   ("C-. o v" . #'custom/org-verbatim-word))
   :config
   ;; -------------------------------------------------------------------------
   ;;                                AGENDA
@@ -202,34 +167,34 @@
   :hook org-mode
   :config
   (setq reftex-default-bibliography
-        (list (expand-file-name "bibliography/references.bib" org-directory))
+        (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
 
         org-ref-bibliography-notes
-        (expand-file-name "bibliography/notes.org" org-directory)
+        (custom/ensure-file (expand-file-name "bibliography/notes.org" org-directory))
 
         org-ref-default-bibliography
-        (list (expand-file-name "bibliography/references.bib" org-directory))
+        (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
 
         org-ref-pdf-directory
-        (expand-file-name "bibliography/bibtex-pdfs/" org-directory)
+        (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
 
         bibtex-completion-bibliography
-        (expand-file-name "bibliography/references.bib" org-directory)
+        (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory))
 
         bibtex-completion-library-path
-        (expand-file-name "bibliography/bibtex-pdfs/" org-directory)
+        (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
 
         bibtex-completion-notes-path
-        (expand-file-name "bibliography/bibtex-notes/" org-directory)
+        (custom/ensure-directory (expand-file-name "bibliography/bibtex-notes/" org-directory))
 
         org-ref-completion-library          'org-ref-ivy-cite
         org-ref-show-broken-links           t
         bibtex-completion-pdf-open-function 'org-open-file
         org-latex-pdf-process
         '("pdflatex -interaction nonstopmode -output-directory %o %f"
-	  "bibtex %b"
-	  "pdflatex -interaction nonstopmode -output-directory %o %f"
-	  "pdflatex -interaction nonstopmode -output-directory %o %f"))
+          "bibtex %b"
+          "pdflatex -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -interaction nonstopmode -output-directory %o %f"))
   (require 'org-ref-isbn)
   (require 'org-ref-arxiv))
 

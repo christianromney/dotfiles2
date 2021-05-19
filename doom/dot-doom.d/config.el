@@ -34,12 +34,24 @@
 
 (setq-default tab-width 2)
 
+(load! "+custom-functions") ;; load my custom functions before all other config
+
 ;; ===============================================================================
 ;;                                GLOBAL BEHAVIORS
 ;; ===============================================================================
+;;
+;; Don't ask me when killing process buffers
+;;
+(setq doom-scratch-initial-major-mode 'lisp-interaction-mode
+      kill-buffer-query-functions     (remq 'process-kill-buffer-query-function
+                                            kill-buffer-query-functions))
 
-;; SMARTPARENS
+;; -------------------------------------------------------------------------------
+;;                                SMART(ER)PARENS
+;; -------------------------------------------------------------------------------
+;;
 ;; smartparens globally conflicts with many org-mode bindings
+;;
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 
@@ -53,57 +65,45 @@
     ;; add sole exception
     (sp-pair open close :unless '(:add sp-in-string-p))))
 
-;; Don't ask me when killing process buffers
-(setq doom-scratch-initial-major-mode 'lisp-interaction-mode
-      kill-buffer-query-functions     (remq 'process-kill-buffer-query-function
-                                            kill-buffer-query-functions))
-
+;; -------------------------------------------------------------------------------
+;;                             NAVIGATION BEHAVIOR
+;; -------------------------------------------------------------------------------
+;;
 ;; I like repeated searches to remain in the middle of the screen so I don't
 ;; have to scan my monitor for the place where I've landed. I can always stare
 ;; at the center of the screen and find my search results.
+;;
 
-(defun private/after-jump ()
-  "Centers vertically and flashes the current line."
-  (interactive)
-  (recenter)
-  (+nav-flash/blink-cursor))
-
-(add-hook! 'isearch-mode-end-hook #'private/after-jump)
+(add-hook! 'isearch-mode-end-hook
+           #'custom/flash-view-centered)
 
 (defadvice isearch-forward
     (after isearch-forward-recenter activate)
-    (private/after-jump))
+  (custom/flash-view-centered))
+
 (ad-activate 'isearch-forward)
 
 (defadvice isearch-repeat-forward
     (after isearch-repeat-forward-recenter activate)
-    (private/after-jump))
+  (custom/flash-view-centered))
+
 (ad-activate 'isearch-repeat-forward)
 
 (defadvice isearch-backward
     (after isearch-backward-recenter activate)
-    (private/after-jump))
+    (custom/flash-view-centered))
 (ad-activate 'isearch-backward)
+
 
 (defadvice isearch-repeat-backward
     (after isearch-repeat-backward-recenter activate)
-    (private/after-jump))
+  (custom/flash-view-centered))
+
 (ad-activate 'isearch-repeat-backward)
 
 ;; ===============================================================================
 ;;                              GLOBAL KEY BINDINGS
 ;; ===============================================================================
-
-(defun +personal/just-one-space ()
-  "Command to delete all but one whitespace character."
-  (interactive)
-  (just-one-space -1))
-
-(defun +personal/delete-horizontal-space ()
-  "Command to delete all whitespace."
-  (interactive)
-  (just-one-space -1)
-  (sp-backward-delete-char))
 
 (map! "C-e"       #'move-end-of-line
       "C-'"       #'avy-goto-line
@@ -122,8 +122,8 @@
       "M-p"       #'fill-paragraph
       "M-%"       #'anzu-query-replace
       "C-c g"     #'google-this
-      "M-\\"      #'+personal/delete-horizontal-space
-      "M-SPC"     #'+personal/just-one-space
+      "M-\\"      #'custom/delete-horizontal-space
+      "M-SPC"     #'custom/just-one-space
       "<s-right>" #'sp-forward-slurp-sexp
       "<s-left>"  #'sp-forward-barf-sexp
       "C-c o w"   #'+pass/ivy
@@ -180,7 +180,7 @@
   (lambda () (magit-delta-mode +1)))
 
 ;; ===============================================================================
-;;                             MODE CUSTOMIZATIONS
+;;                   LOAD ADDITIONAL MODE-SPECIFIC CUSTOMIZATIONS
 ;; ===============================================================================
 
 (load! "+org")
