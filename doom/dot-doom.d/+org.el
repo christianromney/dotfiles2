@@ -163,39 +163,39 @@
 ;;                              BIBTEX/ORG-REF
 ;; -------------------------------------------------------------------------
 
-(use-package! org-ref
-  :hook org-mode
-  :config
-  (setq reftex-default-bibliography
-        (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
+;; (use-package org-ref
+;;   :after org
+;;   :config
+;;   (setq reftex-default-bibliography
+;;         (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
 
-        org-ref-bibliography-notes
-        (custom/ensure-file (expand-file-name "bibliography/notes.org" org-directory))
+;;         org-ref-bibliography-notes
+;;         (custom/ensure-file (expand-file-name "bibliography/notes.org" org-directory))
 
-        org-ref-default-bibliography
-        (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
+;;         org-ref-default-bibliography
+;;         (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
 
-        org-ref-pdf-directory
-        (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
+;;         org-ref-pdf-directory
+;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
 
-        bibtex-completion-bibliography
-        (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory))
+;;         bibtex-completion-bibliography
+;;         (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory))
 
-        bibtex-completion-library-path
-        (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
+;;         bibtex-completion-library-path
+;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
 
-        bibtex-completion-notes-path
-        (custom/ensure-directory (expand-file-name "bibliography/bibtex-notes/" org-directory))
+;;         bibtex-completion-notes-path
+;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-notes/" org-directory))
 
-        org-ref-completion-library          'org-ref-ivy-cite
-        org-ref-show-broken-links           t
-        bibtex-completion-pdf-open-function 'org-open-file
-        org-latex-pdf-process
-        '("pdflatex -interaction nonstopmode -output-directory %o %f"
-          "bibtex %b"
-          "pdflatex -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -interaction nonstopmode -output-directory %o %f"))
-  (require 'org-ref-isbn)
-  (require 'org-ref-arxiv))
+;;         org-ref-completion-library          'org-ref-ivy-cite
+;;         org-ref-show-broken-links           t
+;;         bibtex-completion-pdf-open-function 'org-open-file
+;;         org-latex-pdf-process
+;;         '("pdflatex -interaction nonstopmode -output-directory %o %f"
+;;           "bibtex %b"
+;;           "pdflatex -interaction nonstopmode -output-directory %o %f"
+;;           "pdflatex -interaction nonstopmode -output-directory %o %f"))
+;;   (require 'org-ref-isbn)
+;;   (require 'org-ref-arxiv))
 
 (message "Loaded +org configuration")

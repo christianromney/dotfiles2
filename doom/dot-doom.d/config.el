@@ -8,6 +8,7 @@
 
 (add-to-list 'default-frame-alist              '(fullscreen . maximized))
 
+
 ;; ===============================================================================
 ;;                                 PERSONALIZATION
 ;; ===============================================================================
@@ -39,9 +40,12 @@
 ;; ===============================================================================
 ;;                                GLOBAL BEHAVIORS
 ;; ===============================================================================
-;;
+
+;; move cache to private dir
+(setq doom-cache-dir
+      (custom/ensure-directory (expand-file-name ".local/cache/" doom-private-dir)))
+
 ;; Don't ask me when killing process buffers
-;;
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       kill-buffer-query-functions     (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
@@ -51,7 +55,6 @@
 ;; -------------------------------------------------------------------------------
 ;;
 ;; smartparens globally conflicts with many org-mode bindings
-;;
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook!    'emacs-lisp-mode-hook #'turn-on-smartparens-strict-mode)
 
