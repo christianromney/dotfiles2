@@ -33,6 +33,9 @@
       fancy-splash-image             (concat doom-private-dir "cognitect.png")
       display-line-numbers-type      t)
 
+(add-hook! 'rainbow-mode-hook
+  (hl-line-mode (if rainbow-mode -1 +1)))
+
 (setq-default tab-width 2)
 
 (load! "+custom-functions") ;; load my custom functions before all other config
@@ -181,6 +184,22 @@
 (setq magit-revision-show-gravatars t)
 (add-hook! 'magit-mode-hook
   (lambda () (magit-delta-mode +1)))
+
+;; +-----------------------------------------------------------------------------+
+;; |                                  IRC                                        |
+;; +-----------------------------------------------------------------------------+
+
+(after! circe
+  (let* ((host "irc.libera.chat")
+         (user (custom/read-auth-username :host host))
+         (pass (custom/read-auth-password :host host)))
+    (set-irc-server! host
+                     `(:tls t
+                       :port 6697 ;; TLS port
+                       :nick ,user
+                       :sasl-username ,user
+                       :sasl-password ,pass
+                       :channels ("#clojure" "#emacs")))))
 
 ;; ===============================================================================
 ;;                   LOAD ADDITIONAL MODE-SPECIFIC CUSTOMIZATIONS

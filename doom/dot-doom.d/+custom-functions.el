@@ -36,6 +36,21 @@ Returns the expanded pathname."
   (= 0 (call-process "lsof" nil nil nil "-P" "-i"
                      (concat "TCP:" (number-to-string port)))))
 
+(defun custom/read-auth-field (field &rest params)
+  (require 'auth-source)
+  (let ((match (car (apply #'auth-source-search params))))
+    (if match
+        (let ((secret (plist-get match field)))
+          (if (functionp secret)
+              (funcall secret)
+            secret))
+      (error "%s not found for %S" field params))))
+
+(defun custom/read-auth-username (&rest params)
+  (apply #'custom/read-auth-field :user params))
+
+(defun custom/read-auth-password (&rest params)
+  (apply #'custom/read-auth-field :secret params))
 
 ;; =============================================================
 ;; MARKUP FUNCTIONS
