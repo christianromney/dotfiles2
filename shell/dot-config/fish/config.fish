@@ -1,4 +1,10 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
+
+# ssh
+ls ~/.ssh/ | egrep -v '(config|known_hosts|\.pub)' | while read f
+  ssh-add $f
+end
+
 set EDITOR emacs
 set -x GPG_TTY (tty)
 
