@@ -1,8 +1,8 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
 
-# ssh
+# add ssh keys quietly
 ls ~/.ssh/ | egrep -v '(config|known_hosts|\.pub)' | while read f
-  ssh-add $f
+  ssh-add -q $f
 end
 
 set EDITOR emacs
