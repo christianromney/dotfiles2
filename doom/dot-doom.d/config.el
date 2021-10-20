@@ -189,6 +189,15 @@
 ;; +-----------------------------------------------------------------------------+
 
 (when (featurep! :completion vertico)
+  (use-package! vertico
+    :bind
+    (("M-i"     . #'consult-imenu)
+     ("C-c M-o" . #'consult-multi-occur)
+     ("C-s"     . #'embark-isearch)
+     ;; behave like helm to go up a level
+     :map vertico-map
+     ("C-l"     . #'vertico-directory-up)))
+
   ;; reverse these annoying defaults
   (map!
    "C-x b"     #'consult-buffer
