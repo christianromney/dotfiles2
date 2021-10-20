@@ -43,18 +43,30 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;;(unpin! t)
+;;
 
+;; ------------------------------------------------------------------------------
+;;  Git extras
+;; ------------------------------------------------------------------------------
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! git-link)
-(package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
+;; ------------------------------------------------------------------------------
+;;  Utilities
+;; ------------------------------------------------------------------------------
 (package! google-this)
+(package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! reveal-in-osx-finder)
-(package! adoc-mode)
 (package! xterm-color)
-;; clojure support (not cider)
+(package! adoc-mode)
+;; ------------------------------------------------------------------------------
+;;  Clojure support
+;; ------------------------------------------------------------------------------
 (package! clojure-snippets)
-(package! inf-clojure :pin "2c8e46b584be71fe1a585c9072da86382710dc59")
+(package! inf-clojure :pin "38e7dc1829646b93473c31d704bda0dee6644a38")
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
+;; ------------------------------------------------------------------------------
+;;  Org mode
+;; ------------------------------------------------------------------------------
+(package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
 ;; (package! org-ref)
