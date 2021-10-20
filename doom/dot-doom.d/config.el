@@ -190,18 +190,20 @@
 
 (when (featurep! :completion vertico)
   (use-package! vertico
+    :config
+    (setq orderless-matching-styles '(orderless-literal
+                                      orderless-initialism
+                                      orderless-regexp))
     :bind
     (("M-i"     . #'consult-imenu)
      ("C-c M-o" . #'consult-multi-occur)
      ("C-s"     . #'embark-isearch)
+     ;; reverse these annoying defaults
+     ("C-x b"   . #'consult-buffer)
+     ("C-x B"   . #'+vertico/switch-workspace-buffer)
      ;; behave like helm to go up a level
      :map vertico-map
-     ("C-l"     . #'vertico-directory-up)))
-
-  ;; reverse these annoying defaults
-  (map!
-   "C-x b"     #'consult-buffer
-   "C-x B"     #'+vertico/switch-workspace-buffer))
+     ("C-l"     . #'vertico-directory-up))))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
