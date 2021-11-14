@@ -26,9 +26,18 @@
 ;; ===============================================================================
 ;;                                    APPEARANCE
 ;; ===============================================================================
-
+;; valid font-spec :weight values:
+;; 'ultra-bold
+;; 'extra-bold
+;; 'bold
+;; 'semi-bold
+;; 'normal
+;; 'semi-light
+;; 'light
+;; 'extra-light
+;; 'ultra-light
 (setq doom-theme                     'doom-one-light
-      doom-font                      (font-spec :family "Iosevka" :weight "Medium" :size 20)
+      doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
       fancy-splash-image             (concat doom-private-dir "cognitect.png")
       display-line-numbers-type      t)
 
@@ -133,12 +142,7 @@
       "<s-left>"  #'sp-forward-barf-sexp
       "C-c i w"   #'pass-insert
       "C-M-%"     #'anzu-query-replace-regexp
-      ;; "C-x b"     #'ivy-switch-buffer ;; reverse these annoying defaults
-
-      ;; "C-x B"     #'+ivy/switch-workspace-buffer
       )
-
-
 
 ;; ===============================================================================
 ;;                           PACKAGE CUSTOMIZATION
@@ -170,10 +174,6 @@
      ("C-l"     . #'ivy-backward-delete-char)))
 
   (after! ivy
-    ;; (autoload 'ivy-bibtex "ivy-bibtex" "" t)
-    ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-    ;; ignores the order of regexp tokens when searching for matching candidates.
-    ;; Add something like this to your init file:
     (setq ivy-re-builders-alist
           '((ivy-bibtex . ivy--regex-ignore-order)
             (t . ivy--regex-plus))))
@@ -189,6 +189,7 @@
 
 (when (featurep! :completion vertico)
   (use-package! vertico
+    :demand t
     :config
     (setq orderless-matching-styles '(orderless-literal
                                       orderless-initialism

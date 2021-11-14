@@ -53,13 +53,15 @@
         org-src-tab-acts-natively          t
 
         org-superstar-headline-bullets-list
-        '("𐄘" "𐄗" "𐄖" "𐄕" "𐄔" "𐄓" "𐄒" "𐄑" "𐄐")
+        '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
+
 
         ;; map from default to replacement
         org-superstar-item-bullet-alist
         '((?* . ?•)
           (?+ . ?‣)
-          (?- . ?–)))
+          (?- . ?•))
+        )
 
   ;; -------------------------------------------------------------------------
   ;;                                 BEHAVIOR
@@ -88,6 +90,7 @@
         org-capture-templates
         `(("t" "Todo" entry (file+headline "todos.org" "Todos")
            "* TODO %^{Task} %^G"))
+
 
         org-agenda-custom-commands
         '(("d" "Dashboard"
