@@ -60,6 +60,11 @@
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       kill-buffer-query-functions     (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
+;; Abbrev mode
+(setq abbrev-file-name             ;; tell emacs where to read abbrev
+        "~/.doom.d/abbrev_defs")
+(setq save-abbrevs 'silent)
+(setq-default abbrev-mode t)
 
 ;; -------------------------------------------------------------------------------
 ;;                                SMART(ER)PARENS
