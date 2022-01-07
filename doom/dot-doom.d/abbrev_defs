@@ -1,7 +1,7 @@
 ;;-*-coding: utf-8;-*-
 (define-abbrev-table 'global-abbrev-table
   '(
-    ("jjcc" "ç" nil :count 1)
+    ("jjcc" "ç" nil :count 0)
     ("jjee" "é" nil :count 0)
     ("jjie" "ê" nil :count 0)
    ))
