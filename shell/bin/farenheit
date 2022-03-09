@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gunits tempC\($1\) tempF

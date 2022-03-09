@@ -196,6 +196,10 @@
   (use-package! vertico
     :demand t
     :config
+    (setq consult-grep-args
+          "grep --null --line-buffered --color=never --ignore-case \
+--exclude-dir=.git --line-number -I -r .")
+
     (setq orderless-matching-styles '(orderless-literal
                                       orderless-initialism
                                       orderless-regexp))
