@@ -206,7 +206,6 @@
     :bind
     (("M-i"     . #'consult-imenu)
      ("C-c M-o" . #'consult-multi-occur)
-     ("C-s"     . #'embark-isearch)
      ;; reverse these annoying defaults
      ("C-x b"   . #'consult-buffer)
      ("C-x B"   . #'+vertico/switch-workspace-buffer)

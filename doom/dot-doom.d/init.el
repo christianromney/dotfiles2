@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +tng)      ; the ultimate code completion backend
+       ;;(company +tng)      ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;; (ivy
@@ -166,7 +166,8 @@
         +journal
         +noter             ;; sync notes with PDFs
         +present
-        +pretty)
+        +pretty
+        +roam2)
                            ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
