@@ -6,11 +6,8 @@
 (use-package! org
   :defer t
   :init
-  ;; -------------------------------------------------------------------------
-  ;;                                 ROAM
-  ;; -------------------------------------------------------------------------
   (when (featurep! :lang org +roam2)
-    (setq org-roam-directory "~/doc/notes/"))
+    (setq org-roam-directory "~/doc/notes/roam/"))
   :bind
   (("C-. o b" . #'custom/org-bold-word)
    ("C-. o c" . #'custom/org-code-word)
