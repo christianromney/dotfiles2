@@ -3,9 +3,14 @@
 ;; =========================================================================
 ;;                               ORG MODE
 ;; =========================================================================
-
 (use-package! org
   :defer t
+  :init
+  ;; -------------------------------------------------------------------------
+  ;;                                 ROAM
+  ;; -------------------------------------------------------------------------
+  (when (featurep! :lang org +roam2)
+    (setq org-roam-directory "~/doc/notes/"))
   :bind
   (("C-. o b" . #'custom/org-bold-word)
    ("C-. o c" . #'custom/org-code-word)
@@ -85,12 +90,11 @@
         org-tag-alist
         '(("work"       . ?w)
           ("personal"   . ?p)
-          ("study"      . ?s))
+          ("learning"   . ?l))
 
         org-capture-templates
-        `(("t" "Todo" entry (file+headline "todos.org" "Todos")
+        `(("t" "Todo" entry (file+headline "todo.org" "Todos")
            "* TODO %^{Task} %^G"))
-
 
         org-agenda-custom-commands
         '(("d" "Dashboard"
@@ -160,7 +164,6 @@
        (sed        . t)
        (shell      . t)
        (sql        . t)))))
-
 
 ;; -------------------------------------------------------------------------
 ;;                              BIBTEX/ORG-REF
