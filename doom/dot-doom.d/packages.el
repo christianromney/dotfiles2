@@ -69,4 +69,5 @@
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
 (package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
-;; (package! org-ref)
+
+(package! org-roam-ui)

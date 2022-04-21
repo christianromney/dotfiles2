@@ -31,11 +31,6 @@
         org-agenda-todo-ignore-scheduled  t
         org-agenda-start-on-weekday       1
         org-agenda-use-tag-inheritance    nil)
-
-  ;; -------------------------------------------------------------------------
-  ;;                                CITATIONS
-  ;; -------------------------------------------------------------------------
-  (setq org-cite-global-bibliography "~/doc/notes/bibliography/references.bib")
   ;; -------------------------------------------------------------------------
   ;;                                JOURNAL
   ;; -------------------------------------------------------------------------
@@ -166,43 +161,52 @@
        (shell      . t)
        (sql        . t)))))
 
-;; -------------------------------------------------------------------------
-;;                              BIBTEX/ORG-REF
-;; -------------------------------------------------------------------------
 
-;; (use-package org-ref
-;;   :after org
-;;   :config
-;;   (setq reftex-default-bibliography
-;;         (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
+;; citar + zotero
+;; https://www.youtube.com/watch?v=KMlp9HUJI3s&list=PLVtKhBrRV_ZkPnBtt_TD1Cs9PJlU0IIdE&index=24
+;; http://www.mkbehr.com/posts/a-research-workflow-with-zotero-and-org-mode/
 
-;;         org-ref-bibliography-notes
-;;         (custom/ensure-file (expand-file-name "bibliography/notes.org" org-directory))
+(use-package! citar
+  :when (featurep! :tools biblio)
+  :after org
+  :bind (("C-c b" . citar-insert-citation)
+         :map minibuffer-local-map
+         ("M-b" . citar-insert-preset))
+  :config
+  (setq bibtex-dialect                  'biblatex
+        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"
+        citar-bibliography              '("~/doc/notes/bibliography/references.bib")
+        citar-notes-paths               '("~/doc/notes/roam/biblio/")
+        citar-library-paths             '("~/doc/notes/pdfs/")
+        citar-at-point-function         'embark-act
+        citar-format-reference-function 'citar-citeproc-format-reference
+        citar-citeproc-csl-styles-dir   org-cite-csl-styles-dir
+        citar-citeproc-csl-style        (file-name-concat org-cite-csl-styles-dir "apa.csl")
 
-;;         org-ref-default-bibliography
-;;         (list (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory)))
+        citar-symbol-separator          "  "
+        citar-templates
+        '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
+          (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
+          (preview . "${author editor} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
+          (note . "Notes on ${author editor}, ${title}"))
+        citar-symbols
+        `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
+          (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
+          (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
+  ;; use consult-completing-read for enhanced interface
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple))
 
-;;         org-ref-pdf-directory
-;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
+(use-package! websocket
+  :when (featurep! :lang org +roam2)
+  :after org)
 
-;;         bibtex-completion-bibliography
-;;         (custom/ensure-file (expand-file-name "bibliography/references.bib" org-directory))
-
-;;         bibtex-completion-library-path
-;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-pdfs/" org-directory))
-
-;;         bibtex-completion-notes-path
-;;         (custom/ensure-directory (expand-file-name "bibliography/bibtex-notes/" org-directory))
-
-;;         org-ref-completion-library          'org-ref-ivy-cite
-;;         org-ref-show-broken-links           t
-;;         bibtex-completion-pdf-open-function 'org-open-file
-;;         org-latex-pdf-process
-;;         '("pdflatex -interaction nonstopmode -output-directory %o %f"
-;;           "bibtex %b"
-;;           "pdflatex -interaction nonstopmode -output-directory %o %f"
-;;           "pdflatex -interaction nonstopmode -output-directory %o %f"))
-;;   (require 'org-ref-isbn)
-;;   (require 'org-ref-arxiv))
+(use-package! org-roam-ui
+  :when (featurep! :lang org +roam2)
+  :after org
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 (message "Loaded +org configuration")
