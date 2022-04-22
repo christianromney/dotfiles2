@@ -164,12 +164,9 @@
         +dragndrop
         +hugo
         +pandoc
-        +journal
         +noter             ;; sync notes with PDFs
         +present
-        +roam2)
-       ;;+pretty          ; try org-modern instead
-                           ; organize your plain life in plain text
+        +roam2)            ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional

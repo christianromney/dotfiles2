@@ -7,10 +7,26 @@
   :defer t
   :init
   (when (featurep! :lang org +roam2)
-    (setq org-roam-directory "~/doc/notes/roam/"
+    (setq org-roam-directory         "~/doc/notes/content/roam/"
+          org-roam-dailies-directory "journal/"
           org-roam-mode-sections
           '((org-roam-backlinks-section :unique t)
             org-roam-reflinks-section)
+          org-roam-capture-templates
+          '(("d" "default" plain "%?"
+            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                               "#+title: ${title}")
+            :unnarrowed t)
+            ("s" "sensitive" plain "%?"
+             :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
+                                "#+title: ${title}\n")
+             :unnarrowed t))
+          org-roam-dailies-capture-templates
+          '(("d" "default" entry
+             "* %?"
+             :target (file+head "%<%Y-%m-%d>.org.gpg"
+                                "#+title: %<%Y-%m-%d>\n")))
+
           +org-roam-auto-backlinks-buffer t))
   :bind
   (("C-. o b" . #'custom/org-bold-word)
@@ -23,8 +39,9 @@
   ;; -------------------------------------------------------------------------
   ;;                                AGENDA
   ;; -------------------------------------------------------------------------
-  (setq org-directory                     "~/doc/notes/"
-        org-agenda-files                  '("~/doc/notes/")
+  (setq org-directory                     "~/doc/notes/content/"
+        org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
+                                            "~/doc/notes/content/")
         org-agenda-window-setup           'current-window
         org-agenda-include-diary          t
         org-agenda-show-log               t
@@ -35,12 +52,6 @@
         org-agenda-todo-ignore-scheduled  t
         org-agenda-start-on-weekday       1
         org-agenda-use-tag-inheritance    nil)
-  ;; -------------------------------------------------------------------------
-  ;;                                JOURNAL
-  ;; -------------------------------------------------------------------------
-
-  (setq org-journal-encrypt-journal       t
-        org-journal-file-format           "%Y%m%d.org")
 
   ;; -------------------------------------------------------------------------
   ;;                               APPEARANCE
@@ -56,16 +67,6 @@
         org-fontify-emphasized-text        t
         org-src-fontify-natively           t
         org-src-tab-acts-natively          t
-
-        ;; org-superstar-headline-bullets-list
-        ;; '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
-
-
-        ;; ;; map from default to replacement
-        ;; org-superstar-item-bullet-alist
-        ;; '((?* . ?•)
-        ;;   (?+ . ?‣)
-        ;;   (?- . ?•))
         )
 
   ;; -------------------------------------------------------------------------
@@ -93,7 +94,7 @@
           ("learning"   . ?l))
 
         org-capture-templates
-        `(("t" "Todo" entry (file+headline "todo.org" "Todos")
+        `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
            "* TODO %^{Task} %^G"))
 
         org-agenda-custom-commands
