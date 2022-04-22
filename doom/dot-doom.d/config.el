@@ -36,7 +36,7 @@
 ;; 'light
 ;; 'extra-light
 ;; 'ultra-light
-(setq doom-theme                     'doom-one-light
+(setq doom-theme                     'doom-tomorrow-day
       doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
       fancy-splash-image             (concat doom-private-dir "cognitect.png")
       display-line-numbers-type      t)

@@ -91,7 +91,7 @@
 
        :tools
        ansible
-       biblio
+       ;;biblio
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        direnv
        (docker +lsp)
@@ -167,8 +167,8 @@
         +journal
         +noter             ;; sync notes with PDFs
         +present
-        +pretty
         +roam2)
+       ;;+pretty          ; try org-modern instead
                            ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more

@@ -68,6 +68,5 @@
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
-(package! org-pretty-table :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! zotxt)
-(package! org-roam-ui)
+(package! zotxt) ;; zotero bibliography support C-c " "
+(package! org-modern)

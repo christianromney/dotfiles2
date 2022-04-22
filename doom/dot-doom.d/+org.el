@@ -7,7 +7,11 @@
   :defer t
   :init
   (when (featurep! :lang org +roam2)
-    (setq org-roam-directory "~/doc/notes/roam/"))
+    (setq org-roam-directory "~/doc/notes/roam/"
+          org-roam-mode-sections
+          '((org-roam-backlinks-section :unique t)
+            org-roam-reflinks-section)
+          +org-roam-auto-backlinks-buffer t))
   :bind
   (("C-. o b" . #'custom/org-bold-word)
    ("C-. o c" . #'custom/org-code-word)
@@ -53,15 +57,15 @@
         org-src-fontify-natively           t
         org-src-tab-acts-natively          t
 
-        org-superstar-headline-bullets-list
-        '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
+        ;; org-superstar-headline-bullets-list
+        ;; '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
 
 
-        ;; map from default to replacement
-        org-superstar-item-bullet-alist
-        '((?* . ?•)
-          (?+ . ?‣)
-          (?- . ?•))
+        ;; ;; map from default to replacement
+        ;; org-superstar-item-bullet-alist
+        ;; '((?* . ?•)
+        ;;   (?+ . ?‣)
+        ;;   (?- . ?•))
         )
 
   ;; -------------------------------------------------------------------------
@@ -108,7 +112,9 @@
 ;;                                   HOOKS
 ;; -------------------------------------------------------------------------
 
-(add-hook! 'org-mode-hook #'org-pretty-table-mode)
+;;(add-hook! 'org-mode-hook #'org-pretty-table-mode)
+(add-hook! 'org-mode-hook #'org-modern-mode)
+(add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
 (add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2
                                            right-margin-width 2)))
 
@@ -161,27 +167,17 @@
        (shell      . t)
        (sql        . t)))))
 
-;; https://www.youtube.com/watch?v=KMlp9HUJI3s&list=PLVtKhBrRV_ZkPnBtt_TD1Cs9PJlU0IIdE&index=24
+;; -------------------------------------------------------------------------
+;;                               BIBLIOGRAPHY
+;; -------------------------------------------------------------------------
+;; w/ Zotero
+;; https://www.youtube.com/watch?v=KMlp9HUJI3s
 ;; http://www.mkbehr.com/posts/a-research-workflow-with-zotero-and-org-mode/
 (use-package! zotxt
-  :when (featurep! :tools biblio)
   :after org
   :hook (org-mode . org-zotxt-mode)
   :config
   (setq bibtex-dialect                  'biblatex
         org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
-
-(use-package! websocket
-  :when (featurep! :lang org +roam2)
-  :after org)
-
-(use-package! org-roam-ui
-  :when (featurep! :lang org +roam2)
-  :after org
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
 
 (message "Loaded +org configuration")
