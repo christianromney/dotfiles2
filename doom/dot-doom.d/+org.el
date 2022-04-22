@@ -161,40 +161,15 @@
        (shell      . t)
        (sql        . t)))))
 
-
-;; citar + zotero
 ;; https://www.youtube.com/watch?v=KMlp9HUJI3s&list=PLVtKhBrRV_ZkPnBtt_TD1Cs9PJlU0IIdE&index=24
 ;; http://www.mkbehr.com/posts/a-research-workflow-with-zotero-and-org-mode/
-
-(use-package! citar
+(use-package! zotxt
   :when (featurep! :tools biblio)
   :after org
-  :bind (("C-c b" . citar-insert-citation)
-         :map minibuffer-local-map
-         ("M-b" . citar-insert-preset))
+  :hook (org-mode . org-zotxt-mode)
   :config
   (setq bibtex-dialect                  'biblatex
-        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"
-        citar-bibliography              '("~/doc/notes/bibliography/references.bib")
-        citar-notes-paths               '("~/doc/notes/roam/biblio/")
-        citar-library-paths             '("~/doc/notes/pdfs/")
-        citar-at-point-function         'embark-act
-        citar-format-reference-function 'citar-citeproc-format-reference
-        citar-citeproc-csl-styles-dir   org-cite-csl-styles-dir
-        citar-citeproc-csl-style        (file-name-concat org-cite-csl-styles-dir "apa.csl")
-
-        citar-symbol-separator          "  "
-        citar-templates
-        '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
-          (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
-          (preview . "${author editor} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
-          (note . "Notes on ${author editor}, ${title}"))
-        citar-symbols
-        `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
-          (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
-          (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
-  ;; use consult-completing-read for enhanced interface
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple))
+        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
 
 (use-package! websocket
   :when (featurep! :lang org +roam2)
