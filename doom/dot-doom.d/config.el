@@ -146,14 +146,14 @@
       "<s-right>" #'sp-forward-slurp-sexp
       "<s-left>"  #'sp-forward-barf-sexp
       "C-c i w"   #'pass-insert
-      "C-M-%"     #'anzu-query-replace-regexp
-      )
+      "C-M-%"     #'anzu-query-replace-regexp)
 
 ;; ===============================================================================
 ;;                           PACKAGE CUSTOMIZATION
 ;; ===============================================================================
 
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
+(define-key which-key-mode-map (kbd "C-x <f5>") 'which-key-C-h-dispatch)
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                   DIRED                                     |
@@ -193,16 +193,9 @@
 ;; +-----------------------------------------------------------------------------+
 
 (when (featurep! :completion vertico)
+  ;; with Doom we can assume orderless, marginalia, consult, embark
   (use-package! vertico
     :demand t
-    :config
-    (setq consult-grep-args
-          "grep --null --line-buffered --color=never --ignore-case \
---exclude-dir=.git --line-number -I -r .")
-
-    (setq orderless-matching-styles '(orderless-literal
-                                      orderless-initialism
-                                      orderless-regexp))
     :bind
     (("M-i"     . #'consult-imenu)
      ("C-c M-o" . #'consult-multi-occur)
@@ -211,7 +204,17 @@
      ("C-x B"   . #'+vertico/switch-workspace-buffer)
      ;; behave like helm to go up a level
      :map vertico-map
-     ("C-l"     . #'vertico-directory-up))))
+     ("C-l"     . #'vertico-directory-up)
+     )
+    :config
+     (setq consult-grep-args
+           "grep --null --line-buffered --color=never --ignore-case \
+--exclude-dir=.git --line-number -I -r .")
+
+     (setq orderless-matching-styles '(orderless-literal
+                                       orderless-initialism
+                                       orderless-regexp)
+           marginalia-align          'right)))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
