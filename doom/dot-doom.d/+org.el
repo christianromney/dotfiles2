@@ -25,9 +25,7 @@
           '(("d" "default" entry
              "* %?"
              :target (file+head "%<%Y-%m-%d>.org.gpg"
-                                "#+title: %<%Y-%m-%d>\n")))
-
-          +org-roam-auto-backlinks-buffer t))
+                                "#+title: %<%Y-%m-%d>\n")))))
   :bind
   (("C-. o b" . #'custom/org-bold-word)
    ("C-. o c" . #'custom/org-code-word)
