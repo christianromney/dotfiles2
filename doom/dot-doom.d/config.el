@@ -66,6 +66,18 @@
 (setq save-abbrevs 'silent)
 (setq-default abbrev-mode t)
 
+;; spelling
+(when (featurep! :checkers spell)
+  (setq spell-fu-directory
+        (custom/ensure-directory (expand-file-name "etc/spell-fu/" doom-cache-dir)))
+  (add-hook 'spell-fu-mode-hook
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add
+               (spell-fu-get-personal-dictionary "en-personal"
+                                                 (expand-file-name "aspell.en.pws" doom-private-dir)))
+              (message "spelling dictionaries: %s" spell-fu-dictionaries))))
+
 ;; -------------------------------------------------------------------------------
 ;;                                SMART(ER)PARENS
 ;; -------------------------------------------------------------------------------
