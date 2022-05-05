@@ -262,3 +262,4 @@
 (load! "+org")
 (load! "+cc")
 (load! "+scheme")
+(load! "+prolog")
