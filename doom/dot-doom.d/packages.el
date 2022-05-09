@@ -62,7 +62,7 @@
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
 (package! clojure-snippets)
-(package! inf-clojure :pin "38e7dc1829646b93473c31d704bda0dee6644a38")
+(package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
 ;; ------------------------------------------------------------------------------
