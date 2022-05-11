@@ -1,3 +1,6 @@
+cardinality
 datalog
 datomic
+keysets
 prolog
+trie
