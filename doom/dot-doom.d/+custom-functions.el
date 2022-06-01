@@ -122,7 +122,7 @@ returns the conversion of each to the other. "
 
 (defun message-temperature-conversions (num)
   "Interprets the given num as farenheit and celsius degrees and
-displays the conversions in the echo area."
+displays the conversions of each to the other in the echo area."
   (let* ((temps (temperature-conversions num))
          (degf  (alist-get 'farenheit temps))
          (degc  (alist-get 'celsius temps)))
