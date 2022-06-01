@@ -127,7 +127,7 @@ returns the conversion of each to the other. "
          (degc  (alist-get 'celsius temps)))
     (message "Temperatures: %2.1f℃ => %2.1f℉; %2.1f℉ => %2.1f℃" num degf num degc)))
 
-(defun display-temperature-conversions ()
+(defun display-temperature-at-point-conversions ()
   "Displays the number at point as both farenheit and celsius degrees in the echo area."
   (interactive)
   (let ((num (number-at-point)))

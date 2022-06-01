@@ -46,7 +46,8 @@
 
 (setq-default tab-width 2)
 
-(load! "+custom-functions") ;; load my custom functions before all other config
+;; load my custom functions before all other config
+(load! "+custom-functions")
 
 ;; ===============================================================================
 ;;                                GLOBAL BEHAVIORS
@@ -77,6 +78,9 @@
                (spell-fu-get-personal-dictionary "en-personal"
                                                  (expand-file-name "aspell.en.pws" doom-private-dir)))
               (message "spelling dictionaries: %s" spell-fu-dictionaries))))
+
+;; handy temperature conversion display in the echo area
+(global-set-key (kbd "C-x t c") #'display-temperature-at-point-conversions)
 
 ;; -------------------------------------------------------------------------------
 ;;                                SMART(ER)PARENS
