@@ -132,5 +132,5 @@ displays the conversions of each to the other in the echo area."
   "Displays the number at point as both farenheit and celsius
 degrees in the echo area."
   (interactive)
-  (let ((num (number-at-point)))
-    (if num (message-temperature-conversions num))))
+  (when-let ((num (number-at-point)))
+    (message-temperature-conversions num)))
