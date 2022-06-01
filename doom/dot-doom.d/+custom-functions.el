@@ -107,3 +107,28 @@ Returns the expanded pathname."
   (interactive)
   (recenter)
   (+nav-flash/blink-cursor))
+
+;; =============================================================
+;; TEMPERATURE CONVERSION
+;; =============================================================
+
+(defun temperature-conversions (num)
+  "Interprets the given num as farenheit and celsius degrees and
+returns the conversion of each to the other. "
+  (let ((celsius (* 5.0 (/ (- num 32.0) 9.0)))
+        (farenheit (+ 32.0 (* 9.0 (/ num 5.0)))))
+     `((farenheit . ,farenheit)
+       (celsius . ,celsius))))
+
+(defun message-temperature-conversions (num)
+  "Interprets the given num as farenheit and celsius degrees and displays the conversions in the echo area."
+  (let* ((temps (temperature-conversions num))
+         (degf  (alist-get 'farenheit temps))
+         (degc  (alist-get 'celsius temps)))
+    (message "Temperatures: %2.1f℃ => %2.1f℉; %2.1f℉ => %2.1f℃" num degf num degc)))
+
+(defun display-temperature-conversions ()
+  "Displays the number at point as both farenheit and celsius degrees in the echo area."
+  (interactive)
+  (let ((num (number-at-point)))
+    (if num (message-temperature-conversions num))))
