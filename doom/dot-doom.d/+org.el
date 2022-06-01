@@ -142,6 +142,10 @@
 ;; -------------------------------------------------------------------------
 ;;                                   BABEL
 ;; -------------------------------------------------------------------------
+(use-package! graphviz-dot-mode
+  :config
+  (setq graphviz-dot-indent-width 2))
+
 ;; if tangling gives an error about "pdf-info-process-assert-running"
 ;; re-compile pdf-tools with M-x pdf-tools-install
 (after! org
