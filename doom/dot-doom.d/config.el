@@ -36,7 +36,7 @@
 ;; 'light
 ;; 'extra-light
 ;; 'ultra-light
-(setq doom-theme                     'doom-tomorrow-day
+(setq doom-theme                     'leuven
       doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
       fancy-splash-image             (concat doom-private-dir "cognitect.png")
       display-line-numbers-type      t)
@@ -108,20 +108,16 @@
 ;; have to scan my monitor for the place where I've landed. I can always stare
 ;; at the center of the screen and find my search results.
 ;;
-
 (add-hook! 'isearch-mode-end-hook
            #'custom/flash-view-centered)
-
 (defadvice isearch-forward
     (after isearch-forward-recenter activate)
   (custom/flash-view-centered))
-
 (ad-activate 'isearch-forward)
 
 (defadvice isearch-repeat-forward
     (after isearch-repeat-forward-recenter activate)
   (custom/flash-view-centered))
-
 (ad-activate 'isearch-repeat-forward)
 
 (defadvice isearch-backward
@@ -129,11 +125,9 @@
     (custom/flash-view-centered))
 (ad-activate 'isearch-backward)
 
-
 (defadvice isearch-repeat-backward
     (after isearch-repeat-backward-recenter activate)
   (custom/flash-view-centered))
-
 (ad-activate 'isearch-repeat-backward)
 
 ;; ===============================================================================

@@ -58,6 +58,7 @@
 (package! reveal-in-osx-finder)
 (package! xterm-color)
 (package! adoc-mode)
+(package! helpful)
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------

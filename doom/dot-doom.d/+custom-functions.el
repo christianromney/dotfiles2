@@ -111,7 +111,6 @@ Returns the expanded pathname."
 ;; =============================================================
 ;; TEMPERATURE CONVERSION
 ;; =============================================================
-
 (defun temperature-conversions (num)
   "Interprets the given num as farenheit and celsius degrees and
 returns the conversion of each to the other. "
