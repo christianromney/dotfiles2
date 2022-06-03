@@ -8,7 +8,24 @@
 ;;
 ;; For all attributes other than :paths, these config files are merged left to right.
 ;; Only the last :paths is kept and others are dropped.
-
+;;
+;; =================================================
+;;                      TOOLS
+;; =================================================
+;;
+;; clj-new - create new clojure projects
+;;
+;; install:
+;;     clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.381"}' :as clj-new
+;; usage:
+;;
+;;     To create a new application
+;;     clojure -Tclj-new app :name myname/myapp
+;;
+;;     To create a new library
+;;     clojure -Tclj-new lib :name myname/mylib
+;;
+;; =================================================
 {
  ;; Paths
  ;;   Directories in the current project to include in the classpath
@@ -30,21 +47,7 @@
  ;;     :extra-paths - vector of additional paths to add to the classpath
  ;;     :classpath-overrides - map of lib to path that overrides the result of resolving deps
 
- :aliases {:new
-           {:extra-deps
-            {seancorfield/clj-new        {:mvn/version "1.1.216"}}
-            :main-opts ["-m" "clj-new.create"]}
-
-           :cider-clj {:extra-deps {cider/cider-nrepl {:mvn/version "0.22.4"}}
-                       :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
-
-           :cider-cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.339"}
-                                     cider/cider-nrepl {:mvn/version "0.22.4"}
-                                     cider/piggieback {:mvn/version "0.5.1"}}
-                        :main-opts ["-m" "nrepl.cmdline" "--middleware"
-                                    "[cider.nrepl/cider-middleware,cider.piggieback/wrap-cljs-repl]"]}
-
-           :try
+ :aliases {:try
            {:extra-deps
             {deps-try/deps-try           {:git/url "https://gitlab.com/eval/deps-try"
                                           :sha "9ccf64be248d5d9aa641df9e94feaea913bc0687"}}
@@ -52,30 +55,23 @@
 
            :rebl
            {:extra-deps
-            {com.cognitect/rebl          {:mvn/version "0.9.242"}
+            {com.cognitect/rebl          {:mvn/version "0.9.245"}
              org.openjfx/javafx-fxml     {:mvn/version "15-ea+6"}
              org.openjfx/javafx-controls {:mvn/version "15-ea+6"}
              org.openjfx/javafx-swing    {:mvn/version "15-ea+6"}
              org.openjfx/javafx-base     {:mvn/version "15-ea+6"}
              org.openjfx/javafx-web      {:mvn/version "15-ea+6"}}
             :main-opts
-            ["-e" "((requiring-resolve,'cognitect.rebl/ui))" "-m" "nrepl.cmdline"]}
+            ["-m" "cognitect.rebl"]}
 
            :socket
            {:jvm-opts ["-Dclojure.server.repl={:port 5555 :accept clojure.core.server/repl}"]
-            :extra-deps {compliment/compliment {:mvn/version "0.3.10"}}}
+            :extra-deps {compliment/compliment {:mvn/version "0.3.12"}}}
 
            :datomic
            {:extra-deps
-            {com.datomic/dev-local       {:mvn/version "0.9.195"}}}
-
-           :zprint
-           {:extra-deps
-            {org.clojure/clojure         {:mvn/version "1.9.0"}
-             zprint/zprint               {:mvn/version "0.4.9"}}
-            :main-opts  ["-m" "zprint.main"]}}
+            {com.datomic/dev-local       {:mvn/version "1.0.243"}}}}
 
  ;; Provider attributes
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
-             "clojars" {:url "https://repo.clojars.org/"}}
- }
+             "clojars" {:url "https://repo.clojars.org/"}}}
