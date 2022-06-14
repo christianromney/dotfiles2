@@ -205,8 +205,6 @@
   ;; with Doom we can assume orderless, marginalia, consult, embark
   (use-package! vertico
     :demand t
-    :init
-    (require 'which-key)
     :bind
     (("M-i"      . #'consult-imenu)
      ("C-c M-o"  . #'consult-multi-occur)
@@ -215,9 +213,7 @@
      ("C-x B"    . #'+vertico/switch-workspace-buffer)
      ;; behave like helm to go up a level
      :map vertico-map
-     ("C-l"      . #'vertico-directory-up)
-     :map which-key-mode-map
-     ("C-x <f5>" . #'which-key-C-h-dispatch))
+     ("C-l"      . #'vertico-directory-up))
     :config
     (setq consult-grep-args
           "grep --null --line-buffered --color=never --ignore-case \

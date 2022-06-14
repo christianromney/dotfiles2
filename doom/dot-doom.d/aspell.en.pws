@@ -1,6 +1,9 @@
 cardinality
 datalog
 datomic
+elenchus
+eristic
 keysets
 prolog
+rollout
 trie
