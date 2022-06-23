@@ -38,7 +38,7 @@
 ;; 'ultra-light
 (setq doom-theme                     'leuven
       doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
-      fancy-splash-image             (concat doom-private-dir "cognitect.png")
+      fancy-splash-image             (concat doom-private-dir "splash.png")
       display-line-numbers-type      t)
 
 (add-hook! 'rainbow-mode-hook
