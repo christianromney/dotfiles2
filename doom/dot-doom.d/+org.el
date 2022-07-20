@@ -87,9 +87,10 @@
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
         org-tag-alist
-        '(("work"       . ?w)
-          ("personal"   . ?p)
-          ("learning"   . ?l))
+        '(("book"       . ?b)
+          ("paper"      . ?p)
+          ("work"       . ?w)
+          ("personal"   . ?p))
 
         org-capture-templates
         `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
