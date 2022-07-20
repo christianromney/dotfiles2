@@ -87,8 +87,12 @@
         '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
 
         org-tag-alist
-        '(("book"       . ?b)
+        '((:startgrouptag)
+          ("study"      . ?s)
+          (:grouptags)
+          ("book"       . ?b)
           ("paper"      . ?p)
+          (:endgrouptag)
           ("work"       . ?w)
           ("personal"   . ?p))
 
