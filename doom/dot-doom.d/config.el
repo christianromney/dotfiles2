@@ -155,7 +155,6 @@
       "M-SPC"     #'custom/just-one-space
       "<s-right>" #'sp-forward-slurp-sexp
       "<s-left>"  #'sp-forward-barf-sexp
-      "C-c i w"   #'pass-insert
       "C-M-%"     #'anzu-query-replace-regexp)
 
 ;; ===============================================================================
@@ -173,29 +172,6 @@
 (map! :map dired-mode-map
       "C-l" #'dired-up-directory
       "r"   #'reveal-in-osx-finder)
-
-;; +-----------------------------------------------------------------------------+
-;; |                                  Ivy                                        |
-;; +-----------------------------------------------------------------------------+
-(when (featurep! :completion ivy)
-  (use-package! ivy
-    :bind
-    (("M-i"     . #'counsel-imenu)
-     ("C-c M-o" . #'occur)
-     ("C-s"     . #'swiper-isearch)
-     ;; behave like helm to go up a level
-     :map ivy-minibuffer-map
-     ("C-l"     . #'ivy-backward-delete-char)))
-
-  (after! ivy
-    (setq ivy-re-builders-alist
-          '((ivy-bibtex . ivy--regex-ignore-order)
-            (t . ivy--regex-plus))))
-
-  ;; reverse these annoying defaults
-  (map!
-   "C-x b"     #'ivy-switch-buffer
-   "C-x B"     #'+ivy/switch-workspace-buffer))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Vertico                                    |
