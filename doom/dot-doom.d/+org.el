@@ -9,9 +9,8 @@
   (when (featurep! :lang org +roam2)
     (setq org-roam-directory         "~/doc/notes/content/roam/"
           org-roam-dailies-directory "journal/"
-          org-roam-mode-sections
-          '((org-roam-backlinks-section :unique t)
-            org-roam-reflinks-section)
+          org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
+                                       org-roam-reflinks-section)
           org-roam-capture-templates
           '(("d" "default" plain "%?"
             :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -84,7 +83,8 @@
         org-use-sub-superscripts           "{}"
 
         org-refile-targets
-        '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))
+        '((nil :maxlevel . 9)
+          (org-agenda-files :maxlevel . 9))
 
         org-tag-alist
         '((:startgrouptag)
