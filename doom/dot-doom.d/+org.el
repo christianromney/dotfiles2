@@ -11,6 +11,8 @@
           org-roam-dailies-directory "journal/"
           org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
                                        org-roam-reflinks-section)
+          org-roam-graph-executable  "neato"
+          ;; org-roam-graph-viewer
           org-roam-capture-templates
           '(("d" "default" plain "%?"
             :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -32,6 +34,7 @@
    ("C-. o s" . #'custom/org-strike-word)
    ("C-. o u" . #'custom/org-underline-word)
    ("C-. o v" . #'custom/org-verbatim-word))
+
   :config
   ;; -------------------------------------------------------------------------
   ;;                                AGENDA
@@ -48,7 +51,12 @@
         org-agenda-todo-ignore-deadlines  t
         org-agenda-todo-ignore-scheduled  t
         org-agenda-start-on-weekday       1
-        org-agenda-use-tag-inheritance    nil)
+        org-agenda-use-tag-inheritance    nil
+        calendar-mark-holidays-flag       t
+        calendar-location-name            "Pembroke Pines, FL"
+        calendar-latitude                 26.0170038
+        calendar-longitude                -80.3432341
+        calendar-week-start-day           1)
 
   ;; -------------------------------------------------------------------------
   ;;                               APPEARANCE
@@ -83,8 +91,8 @@
         org-use-sub-superscripts           "{}"
 
         org-refile-targets
-        '((nil :maxlevel . 9)
-          (org-agenda-files :maxlevel . 9))
+        '((nil :maxlevel . 5)
+          (org-agenda-files :maxlevel . 5))
 
         org-tag-alist
         '((:startgrouptag)
@@ -109,8 +117,28 @@
           ("n" "Agenda and all TODOs"
            ((agenda "" ((org-agenda-span 10)))
             (alltodo "")))))
-
   (setq plantuml-default-exec-mode 'jar))
+
+(use-package! org-super-agenda
+  :after org-agenda
+  :config
+  (setq org-super-agenda-groups '((:auto-dir-name t)))
+  (org-super-agenda-mode))
+
+(use-package! holidays
+  :after org-agenda
+  :config
+  (require 'brazilian-holidays)
+  (setq calendar-holidays
+        (append '((holiday-fixed 1 1   "New Year's Day")
+                  (holiday-fixed 2 14  "Valentine's Day")
+                  (holiday-fixed 4 1   "April Fools' Day")
+                  (holiday-fixed 10 31 "Halloween")
+                  (holiday-easter-etc)
+                  (holiday-fixed 12 24 "Christmas Eve")
+                  (holiday-fixed 12 25 "Christmas")
+                  (solar-equinoxes-solstices))
+                brazilian-holidays--general-holidays)))
 
 ;; -------------------------------------------------------------------------
 ;;                                   HOOKS
@@ -118,6 +146,7 @@
 
 ;;(add-hook! 'org-mode-hook #'org-pretty-table-mode)
 (add-hook! 'org-mode-hook #'org-modern-mode)
+(add-hook! 'org-mode-hook :append #'org-auto-tangle-mode)
 (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
 (add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2
                                            right-margin-width 2)))
@@ -154,6 +183,7 @@
 ;; if tangling gives an error about "pdf-info-process-assert-running"
 ;; re-compile pdf-tools with M-x pdf-tools-install
 (after! org
+  (setq org-auto-tangle-default t)
   (progn
     (pdf-loader-install)
     (org-babel-do-load-languages

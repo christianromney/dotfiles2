@@ -14,11 +14,7 @@
 
 (setq user-full-name                           "Christian Romney"
       user-mail-address                        "christian.a.romney@gmail.com"
-      calendar-location-name                   "Pembroke Pines, FL"
-      calendar-longitude                       -80.3432341
-      calendar-latitude                        26.0170038
       confirm-kill-emacs                       nil
-      calendar-week-start-day                  1
       +default-want-RET-continue-comments      nil
       enable-dir-local-variables               t
       enable-local-variables                   t)
@@ -182,23 +178,42 @@
   (use-package! vertico
     :demand t
     :bind
-    (("M-i"      . #'consult-imenu)
-     ("C-c M-o"  . #'consult-multi-occur)
-     ;; reverse these annoying defaults
-     ("C-x b"    . #'consult-buffer)
+    (("M-."      . #'embark-act)
      ("C-x B"    . #'+vertico/switch-workspace-buffer)
-     ;; behave like helm to go up a level
      :map vertico-map
-     ("C-l"      . #'vertico-directory-up))
+     ("C-l"      . #'vertico-directory-up)) ;; behave like helm to go up a level
+    :config
+    (setq vertico-cycle t
+          read-extended-command-predicate #'command-completion-default-include-p
+          orderless-matching-styles     '(orderless-literal
+                                          orderless-initialism
+                                          orderless-regexp)
+          completion-category-defaults  '((email (styles substring)))
+          completion-category-overrides '((file (styles +vertico-basic-remote
+                                                        orderless
+                                                        partial-completion)))
+          
+          marginalia-align          'right))
+
+  (use-package! consult
     :config
     (setq consult-grep-args
           "grep --null --line-buffered --color=never --ignore-case \
---exclude-dir=.git --line-number -I -r ."
+--exclude-dir=.git --line-number -I -r .")
+    :bind
+    (("M-i"      . #'consult-imenu)
+     ("C-c M-o"  . #'consult-multi-occur)
+     ("C-x b"    . #'consult-buffer)
+     ("C-x 4 b"  . #'consult-buffer-other-window)
+     ("C-x 5 b"  . #'consult-buffer-other-frame)
+     ("C-x r b"  . #'consult-bookmark)
+     ("M-g g"    . #'consult-goto-line)
+     )))
 
-          orderless-matching-styles '(orderless-literal
-                                      orderless-initialism
-                                      orderless-regexp)
-          marginalia-align          'right)))
+(when (and (featurep! :completion company)
+           (featurep! :completion vertico))
+  ;; (define-key company-mode-map [remap completion-at-point] #'consult-company)
+  )
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |

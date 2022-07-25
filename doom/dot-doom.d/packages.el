@@ -54,12 +54,15 @@
 ;; ------------------------------------------------------------------------------
 ;;  Utilities
 ;; ------------------------------------------------------------------------------
+(package! consult-company)
+(package! consult-yasnippet)
 (package! google-this)
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! reveal-in-osx-finder)
 (package! xterm-color)
 (package! adoc-mode)
 (package! helpful)
+(package! brazilian-holidays)
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
@@ -67,14 +70,16 @@
 (package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
+
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
 (package! zotxt) ;; zotero bibliography support C-c " "
-(package! org-modern)
 (package! graphviz-dot-mode)
-
-;; ------------------------------------------------------------------------------
+(package! org-modern)
+(package! org-super-agenda)
+(package! org-auto-tangle)
+;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------
 (package! ediprolog) ;; https://github.com/triska/ediprolog
