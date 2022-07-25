@@ -54,8 +54,8 @@
         org-agenda-use-tag-inheritance    nil
         calendar-mark-holidays-flag       t
         calendar-location-name            "Pembroke Pines, FL"
-        calendar-latitude                 26.0170038
-        calendar-longitude                -80.3432341
+        calendar-latitude                 26.0
+        calendar-longitude                -80.3
         calendar-week-start-day           1)
 
   ;; -------------------------------------------------------------------------

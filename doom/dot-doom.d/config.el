@@ -210,10 +210,10 @@
      ("M-g g"    . #'consult-goto-line)
      )))
 
-(when (and (featurep! :completion company)
-           (featurep! :completion vertico))
-  ;; (define-key company-mode-map [remap completion-at-point] #'consult-company)
-  )
+(when (and (featurep! :completion company))
+  (use-package! company
+    :config
+    (setq company-idle-delay 0.75)))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
