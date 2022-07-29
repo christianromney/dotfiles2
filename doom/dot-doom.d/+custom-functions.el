@@ -57,18 +57,20 @@ Returns the expanded pathname."
 ;; =============================================================
 (defun custom/org-markup-word (theChar)
   (if (use-region-p)
-      (progn
+      (let ((beg (region-beginning))
+            (end (+ 1 (region-end))))
         (save-excursion
-          (goto-char (region-beginning))
-          (insert-char theChar))
-        (save-excursion
-          (goto-char (region-end))
+          (goto-char beg)
+          (insert-char theChar)
+
+          (goto-char end)
           (insert-char theChar)))
     (save-excursion
       (backward-word)
       (insert-char theChar)
       (forward-word)
-      (insert-char theChar))))
+      (insert-char theChar)))
+  (forward-char))
 
 (defun custom/org-italicize-word ()
   (interactive)

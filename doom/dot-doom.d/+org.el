@@ -3,6 +3,18 @@
 ;; =========================================================================
 ;;                               ORG MODE
 ;; =========================================================================
+
+;; from https://takeonrules.com/2022/01/11/resolving-an-unable-to-resolve-link-error-for-org-mode-in-emacs/
+(defun custom/org-rebuild-cache ()
+  "Rebuild the `org-mode' (and `org-roam') cache(s)."
+  (interactive)
+  (org-id-update-id-locations)
+  ;; Note: you may need `org-roam-db-clear-all'
+  ;; followed by `org-roam-db-sync'
+  (when (featurep! :lang org +roam2)
+    (org-roam-db-sync)
+    (org-roam-update-org-id-locations)))
+
 (use-package! org
   :defer t
   :init
@@ -12,7 +24,6 @@
           org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
                                        org-roam-reflinks-section)
           org-roam-graph-executable  "neato"
-          ;; org-roam-graph-viewer
           org-roam-capture-templates
           '(("d" "default" plain "%?"
             :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -28,12 +39,14 @@
              :target (file+head "%<%Y-%m-%d>.org.gpg"
                                 "#+title: %<%Y-%m-%d>\n")))))
   :bind
-  (("C-. o b" . #'custom/org-bold-word)
-   ("C-. o c" . #'custom/org-code-word)
-   ("C-. o i" . #'custom/org-italicize-word)
-   ("C-. o s" . #'custom/org-strike-word)
-   ("C-. o u" . #'custom/org-underline-word)
-   ("C-. o v" . #'custom/org-verbatim-word))
+  (:map org-mode-map
+   ("C-. o b"   . #'custom/org-bold-word)
+   ("C-. o c"   . #'custom/org-code-word)
+   ("C-. o i"   . #'custom/org-italicize-word)
+   ("C-. o s"   . #'custom/org-strike-word)
+   ("C-. o u"   . #'custom/org-underline-word)
+   ("C-. o v"   . #'custom/org-verbatim-word)
+   :desc "Rebuild "("C-c n r b" . #'custom/org-rebuild-cache))
 
   :config
   ;; -------------------------------------------------------------------------
@@ -117,12 +130,15 @@
           ("n" "Agenda and all TODOs"
            ((agenda "" ((org-agenda-span 10)))
             (alltodo "")))))
+
   (setq plantuml-default-exec-mode 'jar))
 
 (use-package! org-super-agenda
   :after org-agenda
   :config
-  (setq org-super-agenda-groups '((:auto-dir-name t)))
+  (setq org-super-agenda-groups '((:auto-priority t)
+                                  (:auto-tags t)
+                                  (:auto-todo t)))
   (org-super-agenda-mode))
 
 (use-package! holidays
@@ -144,12 +160,11 @@
 ;;                                   HOOKS
 ;; -------------------------------------------------------------------------
 
-;;(add-hook! 'org-mode-hook #'org-pretty-table-mode)
+(add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
 (add-hook! 'org-mode-hook #'org-modern-mode)
 (add-hook! 'org-mode-hook :append #'org-auto-tangle-mode)
-(add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
-(add-hook! 'org-mode-hook (lambda () (setq left-margin-width 2
-                                           right-margin-width 2)))
+(add-hook! 'org-mode-hook :append (lambda () (setq left-margin-width 2
+                                                   right-margin-width 2)))
 
 ;; -------------------------------------------------------------------------
 ;;                                   REVEAL

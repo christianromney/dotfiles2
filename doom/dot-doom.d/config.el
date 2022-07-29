@@ -213,7 +213,7 @@
 (when (and (featurep! :completion company))
   (use-package! company
     :config
-    (setq company-idle-delay 0.75)))
+    (setq company-idle-delay 0.9)))
 
 ;; +-----------------------------------------------------------------------------+
 ;; |                                  Magit                                      |
