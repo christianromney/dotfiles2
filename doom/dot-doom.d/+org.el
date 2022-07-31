@@ -38,16 +38,6 @@
              "* %?"
              :target (file+head "%<%Y-%m-%d>.org.gpg"
                                 "#+title: %<%Y-%m-%d>\n")))))
-  :bind
-  (:map org-mode-map
-   ("C-. o b"   . #'custom/org-bold-word)
-   ("C-. o c"   . #'custom/org-code-word)
-   ("C-. o i"   . #'custom/org-italicize-word)
-   ("C-. o s"   . #'custom/org-strike-word)
-   ("C-. o u"   . #'custom/org-underline-word)
-   ("C-. o v"   . #'custom/org-verbatim-word)
-   ("C-c n r b" . #'custom/org-rebuild-cache)
-   )
 
   :config
   ;; -------------------------------------------------------------------------
@@ -132,7 +122,19 @@
            ((agenda "" ((org-agenda-span 10)))
             (alltodo "")))))
 
-  (setq plantuml-default-exec-mode 'jar))
+  (setq plantuml-default-exec-mode 'jar)
+
+  (map!
+   (:when (featurep! :lang org +roam2)
+     :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
+
+   (:map org-mode-map
+    "C-. o b" #'custom/org-bold-word
+    "C-. o c" #'custom/org-code-word
+    "C-. o i" #'custom/org-italicize-word
+    "C-. o s" #'custom/org-strike-word
+    "C-. o u" #'custom/org-underline-word
+    "C-. o v" #'custom/org-verbatim-word)))
 
 (use-package! org-super-agenda
   :after org-agenda
