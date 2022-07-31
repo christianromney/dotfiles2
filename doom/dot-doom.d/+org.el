@@ -46,7 +46,8 @@
    ("C-. o s"   . #'custom/org-strike-word)
    ("C-. o u"   . #'custom/org-underline-word)
    ("C-. o v"   . #'custom/org-verbatim-word)
-   :desc "Rebuild "("C-c n r b" . #'custom/org-rebuild-cache))
+   ("C-c n r b" . #'custom/org-rebuild-cache)
+   )
 
   :config
   ;; -------------------------------------------------------------------------
