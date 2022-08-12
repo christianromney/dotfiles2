@@ -90,8 +90,8 @@
        grammar             ; tasing grammar mistake every you make
 
        :tools
-       ansible
-       ;;biblio
+       ;; ansible
+       biblio
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        direnv
        (docker +lsp)

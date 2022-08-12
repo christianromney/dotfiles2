@@ -62,6 +62,9 @@
         calendar-longitude                -80.3
         calendar-week-start-day           1)
 
+  (when (featurep! :tools biblio)
+    (setq! citar-bibliography '("~/doc/notes/references.bib")))
+
   ;; -------------------------------------------------------------------------
   ;;                               APPEARANCE
   ;; -------------------------------------------------------------------------
@@ -158,6 +161,19 @@
                   (holiday-fixed 12 25 "Christmas")
                   (solar-equinoxes-solstices))
                 brazilian-holidays--general-holidays)))
+
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode)
+  :init
+  (defface org-glossary-term
+    '((t :inherit (org-link)
+         :weight bold
+         :underline nil
+         :foreground "black"
+         :background "LightGoldenrod1"))
+    "Base face used for term references.")
+  :config
+  (setq org-glossary-fontify-types-differently nil))
 
 ;; -------------------------------------------------------------------------
 ;;                                   HOOKS
