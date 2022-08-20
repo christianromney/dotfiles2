@@ -118,9 +118,9 @@ degrees in the echo area."
             (lambda ()
               (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
               (spell-fu-dictionary-add
-               (spell-fu-get-personal-dictionary "en-personal"
-                                                 (expand-file-name "aspell.en.pws" doom-private-dir)))
-              (message "spelling dictionaries: %s" spell-fu-dictionaries))))
+               (spell-fu-get-personal-dictionary
+                "en-personal"
+                (expand-file-name "aspell.en.pws" doom-private-dir))))))
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 
@@ -499,6 +499,7 @@ degrees in the echo area."
         org-fontify-emphasized-text        t
         org-fontify-quote-and-verse-blocks t
         org-fontify-whole-heading-line     t
+        org-modern-star                    '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾")
         org-pretty-entities                t
         org-src-fontify-natively           t
         org-src-tab-acts-natively          t

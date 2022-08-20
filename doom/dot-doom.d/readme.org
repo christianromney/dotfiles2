@@ -1,4 +1,3 @@
-
 #+title: Emacs Configuration
 * Introduction
 This file contains my [[https://github.com/doomemacs/doomemacs][literate Doom Emacs]] configuration for Mac OS. I use Doom
@@ -193,9 +192,9 @@ Ensure spelling dictionaries are source controlled.
             (lambda ()
               (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
               (spell-fu-dictionary-add
-               (spell-fu-get-personal-dictionary "en-personal"
-                                                 (expand-file-name "aspell.en.pws" doom-private-dir)))
-              (message "spelling dictionaries: %s" spell-fu-dictionaries))))
+               (spell-fu-get-personal-dictionary
+                "en-personal"
+                (expand-file-name "aspell.en.pws" doom-private-dir))))))
 #+end_src
 
 ** Smartparens
@@ -697,6 +696,7 @@ The [[https://github.com/minad/org-modern][org-modern]] package adds some nice a
         org-fontify-emphasized-text        t
         org-fontify-quote-and-verse-blocks t
         org-fontify-whole-heading-line     t
+        org-modern-star                    '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾")
         org-pretty-entities                t
         org-src-fontify-natively           t
         org-src-tab-acts-natively          t
