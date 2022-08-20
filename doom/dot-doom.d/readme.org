@@ -767,7 +767,7 @@ commands. That's all I want between Emacs and the REPL.
 
 These functions allow me to recreate some Cider functionality for inf-clojure
 mode.
-
+**** Custom Functions
 #+begin_src elisp
 (defun +inf-clojure-run-tests ()
   "Run clojure.test suite for the current namespace."
@@ -831,7 +831,8 @@ with large files for some reason."
      "(compliment.core/completions \"%s\")")))
 #+end_src
 
-Inferior clojure package configuration
+**** Package Configuration
+Inferior clojure mode keybindings.
 
 #+begin_src elisp
 (use-package! inf-clojure
