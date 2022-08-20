@@ -99,6 +99,7 @@ degrees in the echo area."
 (setq confirm-kill-emacs          nil
       enable-dir-local-variables  t
       enable-local-variables      t
+      initial-major-mode          'lisp-interaction-mode
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
 
@@ -505,10 +506,8 @@ degrees in the echo area."
         org-startup-folded                 nil
         org-startup-indented               t)
 
-  (when (featurep 'org-modern)
-    (add-hook! 'org-mode-hook #'org-modern-mode)
-    (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda))
-
+  (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
+  (add-hook! 'org-mode-hook #'org-modern-mode)
   (add-hook! 'org-mode-hook :append
     (lambda ()
       (setq left-margin-width 2
