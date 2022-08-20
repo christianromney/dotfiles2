@@ -1,3 +1,4 @@
+
 #+title: Emacs Configuration
 * Introduction
 This file contains my [[https://github.com/doomemacs/doomemacs][literate Doom Emacs]] configuration for Mac OS. I use Doom
@@ -16,8 +17,8 @@ First, I let emacs know who I am.
 
 ** Appearance
 Next, I configure emacs' appearance so that it's easy on the eyes. The default
-is just plain ugly. I like the Iosevka font in a nice large size, and I like to
-show a little company pride with my splash image. Line numbers are a must, and I
+is just plain ugly. I like the [[https://github.com/be5invis/Iosevka][Iosevka]] font in a large size, and I like to show
+a little company pride with my splash image. Line numbers are a must, and I
 prefer emacs to use all available screen real estate when it starts up.
 
 #+begin_src elisp
@@ -251,8 +252,8 @@ utility. I also like the keybindings for navigating up and opening Finder.app.
 #+end_src
 
 ** Completion
-The combination of company-mode with the modern suite of Vertico, Orderless,
-Consult, Embark and Marginalia is really well behaved and contains all the
+The combination of [[https://company-mode.github.io/][company-mode]] with the modern suite of [[https://github.com/minad/vertico][Vertico]], [[https://github.com/oantolin/orderless][Orderless]],
+[[https://github.com/minad/consult][Consult]], [[https://github.com/oantolin/embark][Embark]] and [[https://github.com/minad/marginalia][Marginalia]] is really well behaved and contains all the
 features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
 API to the fullest.
 
@@ -303,7 +304,7 @@ API to the fullest.
 
 ** Magit
 
-I use source control for everything, and enjoy a few extras for Magit.
+I use source control for everything, and enjoy a few extras for [[https://magit.vc/][Magit]].
 
 #+begin_src elisp
 
@@ -313,8 +314,8 @@ I use source control for everything, and enjoy a few extras for Magit.
 #+end_src
 
 ** Internet Relay Chat (IRC)
-I use circe to connect to Libera and read my credentials from an encrypted
-authinfo.
+I use [[https://github.com/emacs-circe/circe][circe]] to connect to [[https://libera.chat/][Libera]] and read my credentials from an encrypted
+[[https://www.gnu.org/software/emacs/manual/html_mono/epa.html][authinfo.gpg]].
 
 #+begin_src elisp
 (after! circe
@@ -369,7 +370,7 @@ Every Emacs configuration contains a few little odds and ends.
 #+end_src
 
 * Org Configuration
-I use org-mode, org-roam, and org-glossary extensively for note-taking. This
+I use [[https://orgmode.org/][org-mode]], [[https://www.orgroam.com/][org-roam]], and [[https://github.com/tecosaur/org-glossary][org-glossary]] extensively for note-taking. This
 custom function is used to solve a [[https://takeonrules.com/2022/01/11/resolving-an-unable-to-resolve-link-error-for-org-mode-in-emacs/][link resolution]] issue with org-roam.
 
 #+begin_src elisp
@@ -504,7 +505,7 @@ The principal configuration block sets up directories and org-capture templates.
 #+end_src
 
 ** Glossary
-The org-glossary package adds terms to a top-level =Glossary= heading and expands
+The [[https://github.com/tecosaur/org-glossary][org-glossary]] package adds terms to a top-level =Glossary= heading and expands
 the definition in the minibuffer whenever the cursor is over a glossary term.
 
 #+begin_src elisp
@@ -527,7 +528,7 @@ the definition in the minibuffer whenever the cursor is over a glossary term.
 ** Citations
 I am still experimenting with bibliography management and citation embedding. I
 often refer to computer science papers from my notes and am experimenting both
-with Citar and Zotero to manage references.
+with [[https://github.com/emacs-citar/citar][Citar]] and [[https://www.zotero.org/][Zotero]] to manage references.
 
 #+begin_src elisp
 (when (featurep! :lang org)
@@ -543,9 +544,10 @@ with Citar and Zotero to manage references.
 #+end_src
 
 ** Agenda
-The agenda is org-mode's todo list manager. Todo items can be given various
+The [[https://orgmode.org/manual/Agenda-Views.html][agenda]] is org-mode's todo list manager. Todo items can be given various
 states, priorities, deadlines and other properties. Agenda views can display
-upcoming deadlines and todo items in a calendar, topic,  or priority view.
+upcoming deadlines and todo items in a calendar, topic, or priority view. The
+[[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] package enables grouping in daily/weekly views.
 
 #+begin_src elisp
 (when (featurep! :lang org)
@@ -609,16 +611,17 @@ Calendar preferences include holidays, week start, and geographical location.
 #+end_src
 
 ** Literate Programming (org-babel)
-Org allows mixing of prose and language blocks (this configuration file is a
-prime example). Tangling exports code blocks into separate files which can be
-compiled or interpreted by the relevant program.
+Org-mode's [[https://orgmode.org/worg/org-contrib/babel/][Babel]] feature allows mixing of prose and language blocks (this
+configuration file is a prime example) for literate programming. Tangling
+exports code blocks into separate files which can be compiled or interpreted by
+the relevant program.
 
 #+begin_comment
 If tangling gives an error about "pdf-info-process-assert-running" re-compile
 pdf-tools with ~M-x pdf-tools-install~.
 #+end_comment
 
-I find Graphviz and Plant UML useful for creating diagrams to supplement my
+I find [[https://graphviz.org/][Graphviz]] and [[https://plantuml.com/][Plant UML]] useful for creating diagrams to supplement my
 notes. I enable all the languages I am likely to use.
 
 #+begin_src elisp
@@ -634,7 +637,9 @@ notes. I enable all the languages I am likely to use.
     (setq org-auto-tangle-default t))
 
   (after! org
-    (setq plantuml-default-exec-mode 'jar)
+    (when (featurep! :lang plantuml)
+      (setq plantuml-default-exec-mode 'jar))
+
     (progn
       (pdf-loader-install)
       (org-babel-do-load-languages
@@ -658,7 +663,7 @@ notes. I enable all the languages I am likely to use.
 #+end_src
 
 ** Export Settings
-I most often export my org notes to PDF or HTML presentation.
+I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]] HTML presentation.
 #+begin_src elisp
 (when (featurep! :lang org)
   (setq org-re-reveal-center               t
@@ -681,7 +686,7 @@ I most often export my org notes to PDF or HTML presentation.
 #+end_src
 
 ** Appearance
-The org-modern package adds some nice aesthetic touches to org-mode buffers.
+The [[https://github.com/minad/org-modern][org-modern]] package adds some nice aesthetic touches to org-mode buffers.
 Auto-tangling keeps tangled code files in sync on save.
 
 #+begin_src elisp
@@ -708,13 +713,13 @@ Auto-tangling keeps tangled code files in sync on save.
 #+end_src
 
 * Programming Major Modes
-Configuration for additional programming major modes. Clojure is my principal
+Configuration for additional programming major modes. [[https://clojure.org/][Clojure]] is my principal
 language these days. Given its power and elegance, it will likely remain so for
 a very long time.
 
 ** Clojure
-Doom's Clojure support provides Cider. I prefer the lightweight inf-clojure
-mode, so I bring my own packages and configuration. LSP mode provides lots of
+Doom's Clojure support provides Cider. I prefer the lightweight [[https://github.com/clojure-emacs/inf-clojure][inf-clojure]]
+mode, so I bring my own packages and configuration. [[https://clojure-lsp.io/][LSP]] mode provides lots of
 nice features than make living without Cider bearable.
 
 *** Clojure mode w/ LSP
@@ -878,7 +883,7 @@ Miscellaneous performance and project recognition settings.
 #+end_src
 
 *** Syntax Checking
-Static analysis courtesy of clj-kondo.
+Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]].
 
 #+begin_src elisp
 (when (featurep! :checkers syntax)
@@ -890,7 +895,7 @@ Static analysis courtesy of clj-kondo.
 #+end_src
 
 *** REBL Support
-I haven't used REBL much, but after talking with Rich and Stu, I fear I'm
+I haven't used [[https://docs.datomic.com/cloud/other-tools/REBL.html][REBL]] much, but after talking with Rich and Stu, I fear I'm
 missing out. This sample configuration from Robert Randolph should help when I'm
 ready to give it a shot.
 
@@ -920,10 +925,10 @@ ready to give it a shot.
 #+end_example
 
 ** Scheme
-I most often use Scheme when working through exercises in Essentials of
-Programming Languages, the Little books, or the +original+ /good/ version of SICP.
+I most often use [[https://www.scheme.com/tspl4/][Scheme]] when working through exercises in [[https://eopl3.com/][Essentials of
+Programming Languages]], the Little books, or the +original+ /good/ version of [[https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs][SICP]].
 
-Geiser mode is mostly ok, but it's a veritable nightmare with mit-scheme.
+[[https://www.nongnu.org/geiser/][Geiser]] mode is mostly ok, but it's a veritable nightmare with [[https://www.gnu.org/software/mit-scheme/][mit-scheme]].
 #+begin_src elisp
 (when (featurep! :lang scheme)
   (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)

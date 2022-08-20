@@ -453,7 +453,9 @@ degrees in the echo area."
     (setq org-auto-tangle-default t))
 
   (after! org
-    (setq plantuml-default-exec-mode 'jar)
+    (when (featurep! :lang plantuml)
+      (setq plantuml-default-exec-mode 'jar))
+
     (progn
       (pdf-loader-install)
       (org-babel-do-load-languages
