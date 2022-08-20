@@ -1,5 +1,27 @@
+#+title: Emacs Configuration
+* Introduction
+This file contains my [[https://github.com/doomemacs/doomemacs][literate Doom Emacs]] configuration for Mac OS. I run [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs
+plus]] installed via Homebrew.
+
+* General Configuration
+I use [[https://github.com/doomemacs/doomemacs][Doom Emacs]] because it's fast and ships /mostly/ sane defaults. It's allowed
+me to cut the lines of configuration I have to maintain in half without any
+compromises.
+
+First, I let emacs know who I am.
+
+#+begin_src elisp
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
+
+#+end_src
+** Appearance
+Next, I configure emacs' appearance so that it's easy on the eyes. The default
+is just plain ugly. I like the Iosevka font in a nice large size, and I like to
+show a little company pride with my splash image. Line numbers are a must, and I
+prefer emacs to use all available screen real estate when it starts up.
+
+#+begin_src elisp
 
 (setq doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
       fancy-splash-image             (concat doom-private-dir "splash.png")
@@ -7,12 +29,31 @@
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+#+end_src
+
+Dark themes are in vogue, but I find them to cause eye strain. I prefer dark
+text on a light background with plenty of contrast—just like a book or a paper.
+
+Protesilaos Stavrou's [[https://protesilaos.com/emacs/ef-themes][ef-themes]] are pleasing and designed for accessibility. I
+like the ef-light theme. It's a good idea to disable all other themes so there
+are no artifacts. I also set the default tab-width to two spaces. Four takes up
+more room than necessary.
+
+#+begin_src elisp
+
 (use-package ef-themes
   :init
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'ef-light :no-confirm)
   (setq-default tab-width 2))
 
+#+end_src
+
+** Custom Functions
+These helpers are used by the configuration that follows. Most functions have to
+do with file and directory handling and parsing. Others deal with whitespace.
+
+#+begin_src elisp
 (defun custom/ensure-directory (path)
   "Ensures the directory path exists, creating any parents as
 needed. Returns the expanded pathname."
@@ -72,7 +113,11 @@ Doom loads early."
   (interactive)
   (just-one-space -1)
   (sp-backward-delete-char))
+#+end_src
 
+These functions interpret a number as a temperature in Celsius and Farenheit.
+
+#+begin_src elisp
 (defun temperature-conversions (num)
   "Interprets the given num as farenheit and celsius degrees and
 returns the conversion of each to the other. "
@@ -95,6 +140,13 @@ degrees in the echo area."
   (interactive)
   (when-let ((num (number-at-point)))
     (message-temperature-conversions num)))
+#+end_src
+
+** Global Behaviors
+These settings should apply across all major modes. Disable the quit nannies and
+enable file and dir local variables.
+
+#+begin_src elisp
 
 (load! "+custom-functions")
 (setq confirm-kill-emacs          nil
@@ -102,16 +154,33 @@ degrees in the echo area."
       enable-local-variables      t
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
+#+end_src
 
+** Doom-Specific Settings
+These variables are all specific to the Doom emacs distribution.
+
+#+begin_src elisp
 (setq +default-want-RET-continue-comments nil
       doom-scratch-initial-major-mode     'lisp-interaction-mode
       doom-cache-dir                      (custom/ensure-directory
                                            (expand-file-name ".local/cache/" doom-private-dir)))
+#+end_src
 
+** Abbrev Mode
+Keep my abbreviations file in my source-controlled Doom directory, and do what I
+say without question.
+
+#+begin_src elisp
 (setq abbrev-file-name "~/.doom.d/abbrev_defs"
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 
+#+end_src
+
+** Spelling
+Ensure spelling dictionaries are source controlled,
+
+#+begin_src elisp
 (when (featurep! :checkers spell)
   (setq spell-fu-directory
         (custom/ensure-directory (expand-file-name "etc/spell-fu/" doom-cache-dir)))
@@ -122,6 +191,16 @@ degrees in the echo area."
                (spell-fu-get-personal-dictionary "en-personal"
                                                  (expand-file-name "aspell.en.pws" doom-private-dir)))
               (message "spelling dictionaries: %s" spell-fu-dictionaries))))
+#+end_src
+
+** Smartparens
+
+Smartparens doesn't play nicely with org-mode. This is one of the places where
+Doom is uncharacteristically heavy-handed with its defaults. I remove the global
+hook and enable smartparens (strict mode) where I want it, especially in Lisp
+buffers. I also don't like smartparens' default rules.
+
+#+begin_src elisp
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 
@@ -135,6 +214,15 @@ degrees in the echo area."
     (sp-pair open close :post-handlers nil :unless nil)
     ;; add sole exception
     (sp-pair open close :unless '(:add sp-in-string-p))))
+#+end_src
+
+** Navigation
+I like repeated searches to remain in the middle of the screen so I don't have
+to scan my monitor for the place where I've landed. I can always stare at the
+center of the screen and find my search results. With [[https://protesilaos.com/emacs/pulsar][pulsar]] I can recenter
+after jumps and highlight the search term.
+-------------------------------------------------------------------------------
+#+begin_src elisp
 
 (when (featurep! :completion vertico)
   (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
@@ -146,12 +234,31 @@ degrees in the echo area."
 (add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
 (add-hook 'isearch-mode-end-hook #'pulsar-reveal-entry)
 
+#+end_src
+
+** Dired
+
+These settings are optimized for Mac OS with the [[https://brew.sh/][Homebrew]] version of the GNU ls
+utility. I also like the keybindings for navigating up and opening Finder.app.
+
+#+begin_src elisp
+
 (setq insert-directory-program "/usr/local/bin/gls"
       dired-listing-switches   "-aBhl --group-directories-first")
 
 (map! :map dired-mode-map
       "C-l" #'dired-up-directory
       "r"   #'reveal-in-osx-finder)
+
+#+end_src
+
+** Completion
+The combination of company-mode with the modern suite of Vertico, Orderless,
+Consult, Embark and Marginalia is really well behaved and contains all the
+features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
+API to the fullest.
+
+#+begin_src elisp
 
 (when (featurep! :completion vertico)
   (use-package! vertico
@@ -194,9 +301,24 @@ degrees in the echo area."
     :config
     (setq company-idle-delay 0.9)))
 
+#+end_src
+
+** Magit
+
+I use source control for everything, and enjoy a few extras for Magit.
+
+#+begin_src elisp
+
 (setq magit-revision-show-gravatars t)
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
+#+end_src
+
+** Internet Relay Chat (IRC)
+I use circe to connect to Libera and read my credentials from an encrypted
+authinfo.
+
+#+begin_src elisp
 (after! circe
   (let* ((host "irc.libera.chat")
          (user (custom/read-auth-username :host host))
@@ -209,6 +331,12 @@ degrees in the echo area."
                        :sasl-password ,pass
                        :channels ("#clojure" "#emacs")))))
 
+#+end_src
+
+** Global Key Bindings
+My idiosyncratic global keybinding preferences.
+
+#+begin_src elisp
 (map! "C-e"       #'move-end-of-line
       "C-'"       #'avy-goto-line
       "C-:"       #'avy-goto-char
@@ -232,9 +360,21 @@ degrees in the echo area."
       "<s-left>"  #'sp-forward-barf-sexp
       "C-M-%"     #'anzu-query-replace-regexp
       "C-x t c"   #'display-temperature-at-point-conversions)
+#+end_src
 
+** Miscellaneous
+Every Emacs configuration contains a few little odds and ends.
+
+#+begin_src elisp
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
 (message "Loaded global configuration")
+#+end_src
+
+* Org Configuration
+I use org-mode, org-roam, and org-glossary extensively for note-taking. This
+custom function is used to solve a [[https://takeonrules.com/2022/01/11/resolving-an-unable-to-resolve-link-error-for-org-mode-in-emacs/][link resolution]] issue with org-roam.
+
+#+begin_src elisp
 
 (defun custom/org-rebuild-cache ()
   "Rebuild the `org-mode' (and `org-roam') cache(s)."
@@ -286,7 +426,11 @@ degrees in the echo area."
 (defun custom/org-strike-word ()
   (interactive)
   (custom/org-markup-word #x00002B))
+#+end_src
 
+** Main Configuration
+The principal configuration block sets up directories and org-capture templates.
+#+begin_src elisp
 (use-package! org
   :defer t
   :init
@@ -370,7 +514,13 @@ degrees in the echo area."
     "C-. o s" #'custom/org-strike-word
     "C-. o u" #'custom/org-underline-word
     "C-. o v" #'custom/org-verbatim-word)))
+#+end_src
 
+** Glossary
+The org-glossary package adds terms to a top-level =Glossary= heading and expands
+the definition in the minibuffer whenever the cursor is over a glossary term.
+
+#+begin_src elisp
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode)
   :init
@@ -384,7 +534,14 @@ degrees in the echo area."
   (map!
    (:map org-mode-map
     "C-. o g" #'org-glossary-create-definition)))
+#+end_src
 
+** Citations
+I am still experimenting with bibliography management and citation embedding. I
+often refer to computer science papers from my notes and am experimenting both
+with Citar and Zotero to manage references.
+
+#+begin_src elisp
 (use-package! zotxt
   :after org
   :hook (org-mode . org-zotxt-mode)
@@ -394,7 +551,14 @@ degrees in the echo area."
 
 (when (featurep! :tools biblio)
   (setq! citar-bibliography '("~/doc/notes/references.bib")))
+#+end_src
 
+** Agenda
+The agenda is org-mode's todo list manager. Todo items can be given various
+states, priorities, deadlines and other properties. Agenda views can display
+upcoming deadlines and todo items in a calendar, topic,  or priority view.
+
+#+begin_src elisp
 (use-package! org-agenda
   :defer t
   :config
@@ -427,6 +591,11 @@ degrees in the echo area."
                                   (:auto-tags t)
                                   (:auto-todo t)))
   (org-super-agenda-mode))
+#+end_src
+
+** Calendar
+Calendar preferences include holidays, week start, and geographical location.
+#+begin_src elisp
 
 (use-package! holidays
   :after org-agenda
@@ -447,7 +616,22 @@ degrees in the echo area."
                   (holiday-fixed 12 25 "Christmas")
                   (solar-equinoxes-solstices))
                 brazilian-holidays--general-holidays)))
+#+end_src
 
+** Literate Programming (org-babel)
+Org allows mixing of prose and language blocks (this configuration file is a
+prime example). Tangling exports code blocks into separate files which can be
+compiled or interpreted by the relevant program.
+
+#+begin_comment
+If tangling gives an error about "pdf-info-process-assert-running" re-compile
+pdf-tools with ~M-x pdf-tools-install~.
+#+end_comment
+
+I find Graphviz and Plant UML useful for creating diagrams to supplement my
+notes. I enable all the languages I am likely to use.
+
+#+begin_src elisp
 (use-package! graphviz-dot-mode
   :config
   (setq graphviz-dot-indent-width 2))
@@ -480,7 +664,11 @@ degrees in the echo area."
        (sed        . t)
        (shell      . t)
        (sql        . t)))))
+#+end_src
 
+** Export Settings
+I most often export my org notes to PDF or HTML presentation.
+#+begin_src elisp
 (setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
       org-re-reveal-title-slide          "%t"
       org-re-reveal-hlevel               2
@@ -498,16 +686,42 @@ degrees in the echo area."
       org-re-reveal-overview             t
       org-re-reveal-klipsify-src         t
       reveal_inter_presentation_links    t)
+#+end_src
 
+** Hooks
+The org-modern package adds some nice aesthetic touches to org-mode buffers.
+Auto-tangling keeps tangled code files in sync on save.
+
+#+begin_src elisp
 (add-hook! 'org-mode-hook #'org-modern-mode)
 (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
 (add-hook! 'org-mode-hook :append
   (lambda ()
     (setq left-margin-width 2
           right-margin-width 2)))
+#+end_src
 
+** Tracing
+I fire a tracer bullet at the end of each major section so I can detect broken
+configuration more easily.
+
+#+begin_src elisp
 (message "Loaded +org configuration")
+#+end_src
 
+
+* Programming Major Modes
+Configuration for additional programming major modes. Clojure is my principal
+language these days. Given its power and elegance, it will likely remain so for
+a very long time.
+
+** Clojure
+Doom's Clojure support provides Cider. I prefer the lightweight inf-clojure
+mode, so I bring my own packages and configuration. LSP mode provides lots of
+nice features than make living without Cider bearable.
+
+*** Clojure mode w/ LSP
+#+begin_src elisp
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
@@ -546,7 +760,13 @@ degrees in the echo area."
 (add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
+#+end_src
 
+*** Inferior Clojure Mode
+Inferior clojure mode is /simple/. With it, one can connect to a socket and send
+commands. That's all I want between Emacs and the REPL.
+
+#+begin_src elisp
 (use-package! inf-clojure
   :config
   (defun +inf-clojure-run-tests ()
@@ -654,19 +874,68 @@ with large files for some reason."
 
 (add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
+#+end_src
 
+*** Miscellany
+Miscellaneous performance and project recognition settings.
+#+begin_src elisp
 (after! projectile
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
+#+end_src
 
+*** Syntax Checking
+Static analysis courtesy of clj-kondo.
+
+#+begin_src elisp
 (use-package! flycheck-clj-kondo
   :when (featurep! :checkers syntax)
   :after flycheck)
+#+end_src
 
+*** REBL Support
+I haven't used REBL much, but after talking with Rich and Stu, I fear I'm
+missing out. This sample configuration from Robert Randolph should help when I'm
+ready to give it a shot.
+
+#+begin_example
+ ;; Similar to C-x C-e, but sends to REBL
+ (defun rebl-eval-last-sexp ()
+   (interactive)
+   (let* ((bounds (cider-last-sexp 'bounds))
+          (s (cider-last-sexp))
+          (reblized (concat "(cognitect.rebl/inspect " s ")")))
+     (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
+
+ ;; Similar to C-M-x, but sends to REBL
+ (defun rebl-eval-defun-at-point ()
+   (interactive)
+   (let* ((bounds (cider-defun-at-point 'bounds))
+          (s (cider-defun-at-point))
+          (reblized (concat "(cognitect.rebl/inspect " s ")")))
+     (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
+
+ (map! :map clojure-mode-map
+       "<f5>"    #'cider-jack-in
+       "M-<f5>"  #'cider-jack-in-clj&cljs
+       :map cider-mode-map
+       "C-s-x"   #'rebl-eval-defun-at-point
+       "C-x C-r" #'rebl-eval-last-sexp)
+#+end_example
+
+*** Tracing
+Check for mistakes.
+#+begin_src elisp
 (message "Loaded Clojure configuration)
+#+end_src
+** Scheme
+I most often use Scheme when working through exercises in Essentials of
+Programming Languages, the Little books, or the +original+ /good/ version of SICP.
 
+Geiser mode is mostly ok, but it's a veritable nightmare with mit-scheme.
+#+begin_src elisp
 (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
 (map! :map scheme-mode-map
@@ -681,7 +950,13 @@ with large files for some reason."
       "C-c I p" #'xscheme-send-proceed)
 
 (message "Loaded scheme configuration")
+#+end_src
 
+** C
+It's rare that I need to write C code, but the disassembler is occasionally
+useful.
+
+#+begin_src elisp
 (when (featurep! :lang cc)
   (map! :map c-mode-base-map
         ;; disassembler (objdump)
@@ -696,3 +971,4 @@ with large files for some reason."
   (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
 
 (message "Loaded C configuration")
+#+end_src
