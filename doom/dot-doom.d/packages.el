@@ -82,7 +82,6 @@
 (package! org-super-agenda)
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
-
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------
