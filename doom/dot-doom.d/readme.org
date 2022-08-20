@@ -715,8 +715,7 @@ The [[https://github.com/minad/org-modern][org-modern]] package adds some nice a
 
 * Programming Major Modes
 Configuration for additional programming major modes. [[https://clojure.org/][Clojure]] is my principal
-language these days. Given its power and elegance, it will likely remain so for
-a very long time.
+language these days. Given its power and elegance, it will likely remain so.
 
 ** Clojure
 Doom's Clojure support provides Cider. I prefer the lightweight [[https://github.com/clojure-emacs/inf-clojure][inf-clojure]]
