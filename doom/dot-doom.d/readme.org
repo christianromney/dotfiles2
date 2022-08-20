@@ -5,7 +5,11 @@ This file contains my [[https://github.com/doomemacs/doomemacs][literate Doom Em
 Emacs because it's fast and ships /mostly/ sane defaults. It's allowed me to cut
 the lines of configuration I have to maintain in half without many compromises.
 
-I run [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs plus]] installed via Homebrew.
+I run [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs plus]] installed via Homebrew with the following options:
++ ~--with-native-comp~
++ ~--with-mailutils~
++ ~--with-modern-doom3-icon~
++ ~--with-xwidgets~
 
 * General Configuration
 First, I let emacs know who I am.
