@@ -286,226 +286,235 @@ degrees in the echo area."
   (interactive)
   (custom/org-markup-word #x00002B))
 
-(use-package! org
-  :defer t
-  :init
-  (setq  org-directory "~/doc/notes/content/")
-  (when (featurep! :lang org +roam2)
+(when (featurep! :lang org)
+  (use-package! org
+    :defer t
+    :init
+    (setq  org-directory "~/doc/notes/content/")
+    (when (featurep! :lang org +roam2)
+      (setq
+       org-roam-directory         "~/doc/notes/content/roam/"
+       org-roam-dailies-directory "journal/"
+       org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
+                                    org-roam-reflinks-section)
+       org-roam-graph-executable  "neato"
+       org-roam-capture-templates
+       '(("d" "default" plain "%?"
+          :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                             "#+title: ${title}")
+          :unnarrowed t)
+         ("s" "sensitive" plain "%?"
+          :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
+                             "#+title: ${title}\n")
+          :unnarrowed t))
+       org-roam-dailies-capture-templates
+       '(("d" "default" entry
+          "* %?"
+          :target (file+head "%<%Y-%m-%d>.org.gpg"
+                             "#+title: %<%Y-%m-%d>\n")))))
+    :config
+    ;; behaviors
+    (setq org-export-html-postamble          nil
+          org-hide-emphasis-markers          t
+          org-html-validation-link           nil
+          org-log-done                       nil
+          org-outline-path-complete-in-steps nil
+          org-refile-use-cache               t
+          org-refile-use-outline-path        t
+          org-return-follows-link            t
+          org-src-window-setup               'current-window
+          org-use-fast-todo-selection        t
+          org-use-sub-superscripts           "{}")
+
+    ;; refiling
     (setq
-     org-roam-directory         "~/doc/notes/content/roam/"
-     org-roam-dailies-directory "journal/"
-     org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
-                                  org-roam-reflinks-section)
-     org-roam-graph-executable  "neato"
-     org-roam-capture-templates
-     '(("d" "default" plain "%?"
-        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ${title}")
-        :unnarrowed t)
-       ("s" "sensitive" plain "%?"
-        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
-                           "#+title: ${title}\n")
-        :unnarrowed t))
-     org-roam-dailies-capture-templates
-     '(("d" "default" entry
-        "* %?"
-        :target (file+head "%<%Y-%m-%d>.org.gpg"
-                           "#+title: %<%Y-%m-%d>\n")))))
-  :config
-  ;; appearance settings
+     org-refile-targets
+     '((nil :maxlevel . 5)
+       (org-agenda-files :maxlevel . 5))
+
+     ;; tags
+     org-tag-alist
+     '((:startgrouptag)
+       ("study"      . ?s)
+       (:grouptags)
+       ("book"       . ?b)
+       ("paper"      . ?p)
+       (:endgrouptag)
+       ("work"       . ?w)
+       ("personal"   . ?p))
+
+     ;; capture
+     org-capture-templates
+     `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
+        "* TODO %^{Task} %^G")))
+
+    (map!
+     (:when (featurep! :lang org +roam2)
+      :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
+     (:map org-mode-map
+      "C-. o b" #'custom/org-bold-word
+      "C-. o c" #'custom/org-code-word
+      "C-. o i" #'custom/org-italicize-word
+      "C-. o s" #'custom/org-strike-word
+      "C-. o u" #'custom/org-underline-word
+      "C-. o v" #'custom/org-verbatim-word))))
+
+(when (featurep! :lang org)
+  (use-package! org-glossary
+    :hook (org-mode . org-glossary-mode)
+    :init
+    ;; this macro supplies theme color names inside the body
+    (defface org-glossary-term
+      '((default :inherit (popup-tip-face)
+          :weight normal))
+      "Base face used for term references.")
+    :config
+    (setq org-glossary-fontify-types-differently nil)
+    (map!
+     (:map org-mode-map
+      "C-. o g" #'org-glossary-create-definition))))
+
+(when (featurep! :lang org)
+  (use-package! zotxt
+    :after org
+    :hook (org-mode . org-zotxt-mode)
+    :config
+    (setq bibtex-dialect                  'biblatex
+          org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
+
+  (when (featurep! :tools biblio)
+    (setq! citar-bibliography '("~/doc/notes/references.bib"))))
+
+(when (featurep! :lang org)
+  (use-package! org-agenda
+    :defer t
+    :config
+    (setq org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
+                                              "~/doc/notes/content/")
+          org-agenda-window-setup           'current-window
+          org-agenda-include-diary          t
+          org-agenda-show-log               t
+          org-agenda-skip-deadline-if-done  t
+          org-agenda-skip-scheduled-if-done t
+          org-agenda-skip-timestamp-if-done t
+          org-agenda-todo-ignore-deadlines  t
+          org-agenda-todo-ignore-scheduled  t
+          org-agenda-start-on-weekday       1
+          org-agenda-use-tag-inheritance    nil)
+    org-agenda-custom-commands
+    ' (("d" "Dashboard"
+        ((agenda "" ((org-agenda-span 10)))
+         (tags-todo "+PRIORITY=\"A\"")
+         (tags-todo "work")
+         (tags-todo "personal")))
+       ("n" "Agenda and all TODOs"
+        ((agenda "" ((org-agenda-span 10)))
+         (alltodo "")))))
+
+  (use-package! org-super-agenda
+    :after org-agenda
+    :config
+    (setq org-super-agenda-groups '((:auto-priority t)
+                                    (:auto-tags t)
+                                    (:auto-todo t)))
+    (org-super-agenda-mode)))
+
+(when (featurep! :lang org)
+  (use-package! holidays
+    :after org-agenda
+    :config
+    (require 'brazilian-holidays)
+    (setq calendar-location-name      "Pembroke Pines, FL"
+          calendar-latitude           26.0
+          calendar-longitude          -80.3
+          calendar-week-start-day     1
+          calendar-mark-holidays-flag t
+          calendar-holidays
+          (append '((holiday-fixed 1 1   "New Year's Day")
+                    (holiday-fixed 2 14  "Valentine's Day")
+                    (holiday-fixed 4 1   "April Fools' Day")
+                    (holiday-fixed 10 31 "Halloween")
+                    (holiday-easter-etc)
+                    (holiday-fixed 12 24 "Christmas Eve")
+                    (holiday-fixed 12 25 "Christmas")
+                    (solar-equinoxes-solstices))
+                  brazilian-holidays--general-holidays))))
+
+(when (featurep! :lang org)
+  (use-package! graphviz-dot-mode
+    :config)
+  (setq graphviz-dot-indent-width 2)
+
+  (use-package! org-auto-tangle
+    :defer t
+    :hook (org-mode . org-auto-tangle-mode)
+    :config
+    (setq org-auto-tangle-default t))
+
+  (after! org
+    (setq plantuml-default-exec-mode 'jar)
+    (progn
+      (pdf-loader-install)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((clojure    . t)
+         (css        . t)
+         (dot        . t)
+         (emacs-lisp . t)
+         (java       . t)
+         (js         . t)
+         (makefile   . t)
+         (plantuml   . t)
+         (prolog     . t)
+         (python     . t)
+         (R          . t)
+         (ruby       . t)
+         (scheme     . t)
+         (sed        . t)
+         (shell      . t)
+         (sql        . t))))))
+
+(when (featurep! :lang org)
+  (setq org-re-reveal-center               t
+        org-re-reveal-control              t
+        org-re-reveal-default-frag-style   'appear
+        org-re-reveal-defaulttiming        nil
+        org-re-reveal-fragmentinurl        t
+        org-re-reveal-history              nil
+        org-re-reveal-hlevel               2
+        org-re-reveal-keyboard             t
+        org-re-reveal-klipsify-src         t
+        org-re-reveal-mousewheel           nil
+        org-re-reveal-overview             t
+        org-re-reveal-pdfseparatefragments nil
+        org-re-reveal-progress             t
+        org-re-reveal-rolling-links        nil
+        org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
+        org-re-reveal-title-slide          "%t"
+        reveal_inter_presentation_links    t))
+
+(when (featurep! :lang org)
   (setq org-ellipsis                       "…"
-        org-startup-folded                 nil
-        org-startup-indented               t
-        org-pretty-entities                t
         org-fontify-done-headline          t
-        org-fontify-whole-heading-line     t
-        org-fontify-quote-and-verse-blocks t
         org-fontify-emphasized-text        t
+        org-fontify-quote-and-verse-blocks t
+        org-fontify-whole-heading-line     t
+        org-pretty-entities                t
         org-src-fontify-natively           t
-        org-src-tab-acts-natively          t)
+        org-src-tab-acts-natively          t
+        org-startup-folded                 nil
+        org-startup-indented               t)
 
-  ;; behaviors
-  (setq org-export-html-postamble          nil
-        org-hide-emphasis-markers          t
-        org-html-validation-link           nil
-        org-log-done                       nil
-        org-outline-path-complete-in-steps nil
-        org-refile-use-cache               t
-        org-refile-use-outline-path        t
-        org-return-follows-link            t
-        org-src-window-setup               'current-window
-        org-use-fast-todo-selection        t
-        org-use-sub-superscripts           "{}")
+  (when (featurep 'org-modern)
+    (add-hook! 'org-mode-hook #'org-modern-mode)
+    (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda))
 
-  ;; refiling
-  (setq
-   org-refile-targets
-   '((nil :maxlevel . 5)
-     (org-agenda-files :maxlevel . 5))
+  (add-hook! 'org-mode-hook :append
+    (lambda ()
+      (setq left-margin-width 2
+            right-margin-width 2)))
 
-   ;; tags
-   org-tag-alist
-   '((:startgrouptag)
-     ("study"      . ?s)
-     (:grouptags)
-     ("book"       . ?b)
-     ("paper"      . ?p)
-     (:endgrouptag)
-     ("work"       . ?w)
-     ("personal"   . ?p))
-
-   ;; capture
-   org-capture-templates
-   `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
-      "* TODO %^{Task} %^G")))
-
-  (map!
-   (:when (featurep! :lang org +roam2)
-    :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
-   (:map org-mode-map
-    "C-. o b" #'custom/org-bold-word
-    "C-. o c" #'custom/org-code-word
-    "C-. o i" #'custom/org-italicize-word
-    "C-. o s" #'custom/org-strike-word
-    "C-. o u" #'custom/org-underline-word
-    "C-. o v" #'custom/org-verbatim-word)))
-
-(use-package! org-glossary
-  :hook (org-mode . org-glossary-mode)
-  :init
-  ;; this macro supplies theme color names inside the body
-  (defface org-glossary-term
-    '((default :inherit (popup-tip-face)
-        :weight normal))
-    "Base face used for term references.")
-  :config
-  (setq org-glossary-fontify-types-differently nil)
-  (map!
-   (:map org-mode-map
-    "C-. o g" #'org-glossary-create-definition)))
-
-(use-package! zotxt
-  :after org
-  :hook (org-mode . org-zotxt-mode)
-  :config
-  (setq bibtex-dialect                  'biblatex
-        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
-
-(when (featurep! :tools biblio)
-  (setq! citar-bibliography '("~/doc/notes/references.bib")))
-
-(use-package! org-agenda
-  :defer t
-  :config
-  (setq org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
-                                            "~/doc/notes/content/")
-        org-agenda-window-setup           'current-window
-        org-agenda-include-diary          t
-        org-agenda-show-log               t
-        org-agenda-skip-deadline-if-done  t
-        org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-timestamp-if-done t
-        org-agenda-todo-ignore-deadlines  t
-        org-agenda-todo-ignore-scheduled  t
-        org-agenda-start-on-weekday       1
-        org-agenda-use-tag-inheritance    nil)
-        org-agenda-custom-commands
-        ' (("d" "Dashboard"
-           ((agenda "" ((org-agenda-span 10)))
-            (tags-todo "+PRIORITY=\"A\"")
-            (tags-todo "work")
-            (tags-todo "personal")))
-          ("n" "Agenda and all TODOs"
-           ((agenda "" ((org-agenda-span 10)))
-            (alltodo "")))))
-
-(use-package! org-super-agenda
-  :after org-agenda
-  :config
-  (setq org-super-agenda-groups '((:auto-priority t)
-                                  (:auto-tags t)
-                                  (:auto-todo t)))
-  (org-super-agenda-mode))
-
-(use-package! holidays
-  :after org-agenda
-  :config
-  (require 'brazilian-holidays)
-  (setq calendar-location-name      "Pembroke Pines, FL"
-        calendar-latitude           26.0
-        calendar-longitude          -80.3
-        calendar-week-start-day     1
-        calendar-mark-holidays-flag t
-        calendar-holidays
-        (append '((holiday-fixed 1 1   "New Year's Day")
-                  (holiday-fixed 2 14  "Valentine's Day")
-                  (holiday-fixed 4 1   "April Fools' Day")
-                  (holiday-fixed 10 31 "Halloween")
-                  (holiday-easter-etc)
-                  (holiday-fixed 12 24 "Christmas Eve")
-                  (holiday-fixed 12 25 "Christmas")
-                  (solar-equinoxes-solstices))
-                brazilian-holidays--general-holidays)))
-
-(use-package! graphviz-dot-mode
-  :config
-  (setq graphviz-dot-indent-width 2))
-
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
-
-(after! org
-  (setq plantuml-default-exec-mode 'jar)
-  (progn
-    (pdf-loader-install)
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((clojure    . t)
-       (css        . t)
-       (dot        . t)
-       (emacs-lisp . t)
-       (java       . t)
-       (js         . t)
-       (makefile   . t)
-       (plantuml   . t)
-       (prolog     . t)
-       (python     . t)
-       (R          . t)
-       (ruby       . t)
-       (scheme     . t)
-       (sed        . t)
-       (shell      . t)
-       (sql        . t)))))
-
-(setq org-re-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
-      org-re-reveal-title-slide          "%t"
-      org-re-reveal-hlevel               2
-      org-re-reveal-default-frag-style   'appear
-      org-re-reveal-control              t
-      org-re-reveal-progress             t
-      org-re-reveal-history              nil
-      org-re-reveal-center               t
-      org-re-reveal-rolling-links        nil
-      org-re-reveal-keyboard             t
-      org-re-reveal-mousewheel           nil
-      org-re-reveal-defaulttiming        nil
-      org-re-reveal-fragmentinurl        t
-      org-re-reveal-pdfseparatefragments nil
-      org-re-reveal-overview             t
-      org-re-reveal-klipsify-src         t
-      reveal_inter_presentation_links    t)
-
-(add-hook! 'org-mode-hook #'org-modern-mode)
-(add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
-(add-hook! 'org-mode-hook :append
-  (lambda ()
-    (setq left-margin-width 2
-          right-margin-width 2)))
-
-(message "Loaded +org configuration")
+  (message "Loaded +org configuration"))
 
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
@@ -647,38 +656,41 @@ with large files for some reason."
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
-(use-package! flycheck-clj-kondo
-  :when (featurep! :checkers syntax)
-  :after flycheck)
+(when (featurep! :checkers syntax)
+  (use-package! flycheck-clj-kondo
+    :when (featurep! :checkers syntax)
+    :after flycheck))
 
 (message "Loaded Clojure configuration")
 
-(add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
-(add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
-(map! :map scheme-mode-map
-      "C-c C-b" #'xscheme-send-buffer
-      "C-c C-e" #'xscheme-send-previous-expression
-      "C-c C-r" #'xscheme-send-region
-      "C-c C-z" #'xscheme-select-process-buffer
-      "C-c C-c" #'xscheme-send-control-g-interrupt
-      "C-c I x" #'xscheme-send-control-x-interrupt
-      "C-c I u" #'xscheme-send-control-u-interrupt
-      "C-c I b" #'xscheme-send-breakpoint-interrupt
-      "C-c I p" #'xscheme-send-proceed)
-
-(message "Loaded scheme configuration")
+(when (featurep! :lang scheme)
+  (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
+  (add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
+  (map! :map scheme-mode-map
+        "C-c C-b" #'xscheme-send-buffer
+        "C-c C-e" #'xscheme-send-previous-expression
+        "C-c C-r" #'xscheme-send-region
+        "C-c C-z" #'xscheme-select-process-buffer
+        "C-c C-c" #'xscheme-send-control-g-interrupt
+        "C-c I x" #'xscheme-send-control-x-interrupt
+        "C-c I u" #'xscheme-send-control-u-interrupt
+        "C-c I b" #'xscheme-send-breakpoint-interrupt
+        "C-c I p" #'xscheme-send-proceed)
+  (message "Loaded scheme configuration"))
 
 (when (featurep! :lang cc)
   (map! :map c-mode-base-map
         ;; disassembler (objdump)
-        "C-c o a"    #'disaster))
+        "C-c o a"    #'disaster)
 
-;; disassembler
-(use-package! disaster
-  :config
-  ;; the default -M att argument doesn't work for me using
-  ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
-  ;; Target: x86_64-apple-darwin20.4.0
-  (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-
-(message "Loaded C configuration")
+  ;; disassembler
+  (use-package! disaster
+    :commands (disaster)
+    :init
+    (setq disaster-assembly-mode 'nasm-mode)
+    :config
+    ;; the default -M att argument doesn't work for me using
+    ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
+    ;; Target: x86_64-apple-darwin20.4.0
+    (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
+  (message "Loaded C configuration"))
