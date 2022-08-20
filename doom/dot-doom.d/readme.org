@@ -183,7 +183,7 @@ say without question.
 #+end_src
 
 ** Spelling
-Ensure spelling dictionaries are source controlled,
+Ensure spelling dictionaries are source controlled.
 
 #+begin_src elisp
 (when (featurep! :checkers spell)
