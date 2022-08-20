@@ -7,8 +7,8 @@ the lines of configuration I have to maintain in half without many compromises.
 
 I run [[https://github.com/d12frosted/homebrew-emacs-plus][Emacs plus]] installed via Homebrew with the following options:
 + ~--with-native-comp~
-+ ~--with-mailutils~
 + ~--with-modern-doom3-icon~
++ ~--with-mailutils~
 + ~--with-xwidgets~
 
 * General Configuration
@@ -36,7 +36,7 @@ prefer emacs to use all available screen real estate when it starts up.
 #+end_src
 
 Dark themes are in vogue, but I find them to cause eye strain. I prefer dark
-text on a light background with plenty of contrast—just like a book or a paper.
+text on a light background with plenty of contrast—you know, like print.
 
 Protesilaos Stavrou's [[https://protesilaos.com/emacs/ef-themes][ef-themes]] are pleasing and designed for accessibility. I
 like the ef-light theme. It's a good idea to disable all other themes so there
@@ -55,7 +55,8 @@ more room than necessary.
 
 ** Custom Functions
 These helpers are used by the configuration that follows. Most functions have to
-do with file and directory handling and parsing. Others deal with whitespace.
+do with file and directory handling and parsing. Others are for wrangling
+whitespace.
 
 #+begin_src elisp
 (defun custom/ensure-directory (path)
@@ -148,7 +149,8 @@ degrees in the echo area."
 
 ** Global Behaviors
 These settings should apply across all major modes. Disable the quit nannies and
-enable file and dir local variables.
+enable file and dir local variables. Ensure the ~*scratch*~ buffer allows [[https://www.gnu.org/software/emacs/manual/html_node/eintr/][Emacs
+Lisp]] evaluation.
 
 #+begin_src elisp
 (setq confirm-kill-emacs          nil
@@ -160,11 +162,11 @@ enable file and dir local variables.
 #+end_src
 
 ** Doom-Specific Settings
-These variables are all specific to the Doom emacs distribution.
+These variables are all specific to the Doom emacs distribution. The comment
+variable ensures return will continue commenting on the new line.
 
 #+begin_src elisp
 (setq +default-want-RET-continue-comments nil
-      doom-scratch-initial-major-mode     'lisp-interaction-mode
       doom-cache-dir                      (custom/ensure-directory
                                            (expand-file-name ".local/cache/" doom-private-dir)))
 #+end_src
@@ -197,8 +199,7 @@ Ensure spelling dictionaries are source controlled,
 #+end_src
 
 ** Smartparens
-
-Smartparens doesn't play nicely with org-mode. This is one of the places where
+[[https://github.com/Fuco1/smartparens][Smartparens]] doesn't play nicely with org-mode. This is one of the places where
 Doom is uncharacteristically heavy-handed with its defaults. I remove the global
 hook and enable smartparens (strict mode) where I want it, especially in Lisp
 buffers. I also don't like smartparens' default rules.
@@ -240,18 +241,15 @@ after jumps and highlight the search term.
 #+end_src
 
 ** Dired
-
 These settings are optimized for Mac OS with the [[https://brew.sh/][Homebrew]] version of the GNU ls
 utility. I also like the keybindings for navigating up and opening Finder.app.
 
 #+begin_src elisp
-
-(setq insert-directory-program "/usr/local/bin/gls"
-      dired-listing-switches   "-aBhl --group-directories-first")
-
-(map! :map dired-mode-map
-      "C-l" #'dired-up-directory
-      "r"   #'reveal-in-osx-finder)
+(when IS-MAC
+  (setq insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches   "-aBhl --group-directories-first")
+  (map! :map dired-mode-map "r"  #'reveal-in-osx-finder))
+(map! :map dired-mode-map "C-l" #'dired-up-directory)
 
 #+end_src
 
@@ -259,7 +257,7 @@ utility. I also like the keybindings for navigating up and opening Finder.app.
 The combination of [[https://company-mode.github.io/][company-mode]] with the modern suite of [[https://github.com/minad/vertico][Vertico]], [[https://github.com/oantolin/orderless][Orderless]],
 [[https://github.com/minad/consult][Consult]], [[https://github.com/oantolin/embark][Embark]] and [[https://github.com/minad/marginalia][Marginalia]] is really well behaved and contains all the
 features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
-API to the fullest.
+API as intended.
 
 #+begin_src elisp
 
@@ -296,8 +294,7 @@ API to the fullest.
      ("C-x 4 b"  . #'consult-buffer-other-window)
      ("C-x 5 b"  . #'consult-buffer-other-frame)
      ("C-x r b"  . #'consult-bookmark)
-     ("M-g g"    . #'consult-goto-line)
-     )))
+     ("M-g g"    . #'consult-goto-line))))
 
 (when (featurep! :completion company)
   (use-package! company
@@ -626,7 +623,8 @@ pdf-tools with ~M-x pdf-tools-install~.
 #+end_comment
 
 I find [[https://graphviz.org/][Graphviz]] and [[https://plantuml.com/][Plant UML]] useful for creating diagrams to supplement my
-notes. I enable all the languages I am likely to use.
+notes. I enable all the languages I am likely to use. Auto-tangling keeps
+tangled code files in sync on save.
 
 #+begin_src elisp
 (when (featurep! :lang org)
@@ -691,7 +689,6 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
 
 ** Appearance
 The [[https://github.com/minad/org-modern][org-modern]] package adds some nice aesthetic touches to org-mode buffers.
-Auto-tangling keeps tangled code files in sync on save.
 
 #+begin_src elisp
 (when (featurep! :lang org)

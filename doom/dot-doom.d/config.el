@@ -104,7 +104,6 @@ degrees in the echo area."
                                             kill-buffer-query-functions))
 
 (setq +default-want-RET-continue-comments nil
-      doom-scratch-initial-major-mode     'lisp-interaction-mode
       doom-cache-dir                      (custom/ensure-directory
                                            (expand-file-name ".local/cache/" doom-private-dir)))
 
@@ -146,12 +145,11 @@ degrees in the echo area."
 (add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
 (add-hook 'isearch-mode-end-hook #'pulsar-reveal-entry)
 
-(setq insert-directory-program "/usr/local/bin/gls"
-      dired-listing-switches   "-aBhl --group-directories-first")
-
-(map! :map dired-mode-map
-      "C-l" #'dired-up-directory
-      "r"   #'reveal-in-osx-finder)
+(when IS-MAC
+  (setq insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches   "-aBhl --group-directories-first")
+  (map! :map dired-mode-map "r"  #'reveal-in-osx-finder))
+(map! :map dired-mode-map "C-l" #'dired-up-directory)
 
 (when (featurep! :completion vertico)
   (use-package! vertico
@@ -186,8 +184,7 @@ degrees in the echo area."
      ("C-x 4 b"  . #'consult-buffer-other-window)
      ("C-x 5 b"  . #'consult-buffer-other-frame)
      ("C-x r b"  . #'consult-bookmark)
-     ("M-g g"    . #'consult-goto-line)
-     )))
+     ("M-g g"    . #'consult-goto-line))))
 
 (when (featurep! :completion company)
   (use-package! company
