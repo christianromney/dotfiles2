@@ -51,6 +51,7 @@
 ;; ------------------------------------------------------------------------------
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! git-link)
+
 ;; ------------------------------------------------------------------------------
 ;;  Utilities
 ;; ------------------------------------------------------------------------------
@@ -63,6 +64,7 @@
 (package! adoc-mode)
 (package! helpful)
 (package! brazilian-holidays)
+(package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
@@ -80,6 +82,7 @@
 (package! org-super-agenda)
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
+
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------

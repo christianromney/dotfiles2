@@ -22,20 +22,16 @@
 ;; ===============================================================================
 ;;                                    APPEARANCE
 ;; ===============================================================================
-;; valid font-spec :weight values:
-;; 'ultra-bold
-;; 'extra-bold
-;; 'bold
-;; 'semi-bold
-;; 'normal
-;; 'semi-light
-;; 'light
-;; 'extra-light
-;; 'ultra-light
-(setq doom-theme                     'leuven
-      doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
+;; valid font-spec =:weight= values:
+;; '(ultra-bold extra-bold bold semi-bold normal semi-light light extra-light ultra-light)
+(setq doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
       fancy-splash-image             (concat doom-private-dir "splash.png")
       display-line-numbers-type      t)
+
+(use-package ef-themes
+  :init
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme 'ef-light :no-confirm))
 
 (add-hook! 'rainbow-mode-hook
   (hl-line-mode (if rainbow-mode -1 +1)))

@@ -137,7 +137,8 @@
     "C-. o i" #'custom/org-italicize-word
     "C-. o s" #'custom/org-strike-word
     "C-. o u" #'custom/org-underline-word
-    "C-. o v" #'custom/org-verbatim-word)))
+    "C-. o v" #'custom/org-verbatim-word
+    "C-. o g" #'org-glossary-create-definition)))
 
 (use-package! org-super-agenda
   :after org-agenda
@@ -165,13 +166,15 @@
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode)
   :init
-  (defface org-glossary-term
-    '((t :inherit (org-link)
-         :weight bold
-         :underline nil
-         :foreground "black"
-         :background "LightGoldenrod1"))
-    "Base face used for term references.")
+  ;; this macro supplies theme color names inside the body
+  (ef-themes-with-colors
+    (defface org-glossary-term
+      '((default :inherit (org-link)
+          :foreground fg-main
+          :background bg-info
+          :weight bold
+          :underline nil))
+      "Base face used for term references."))
   :config
   (setq org-glossary-fontify-types-differently nil))
 
