@@ -95,32 +95,22 @@
 ;; -------------------------------------------------------------------------------
 ;;                             NAVIGATION BEHAVIOR
 ;; -------------------------------------------------------------------------------
-;;
 ;; I like repeated searches to remain in the middle of the screen so I don't
 ;; have to scan my monitor for the place where I've landed. I can always stare
 ;; at the center of the screen and find my search results.
-;;
-(add-hook! 'isearch-mode-end-hook
-           #'custom/flash-view-centered)
-(defadvice isearch-forward
-    (after isearch-forward-recenter activate)
-  (custom/flash-view-centered))
-(ad-activate 'isearch-forward)
 
-(defadvice isearch-repeat-forward
-    (after isearch-repeat-forward-recenter activate)
-  (custom/flash-view-centered))
-(ad-activate 'isearch-repeat-forward)
+;; integration with the `consult' package:
+(when (featurep! :completion vertico)
+  (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
+  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
 
-(defadvice isearch-backward
-    (after isearch-backward-recenter activate)
-    (custom/flash-view-centered))
-(ad-activate 'isearch-backward)
+;; integration with the built-in `imenu':
+(add-hook 'imenu-after-jump-hook #'pulsar-recenter-middle)
+(add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
 
-(defadvice isearch-repeat-backward
-    (after isearch-repeat-backward-recenter activate)
-  (custom/flash-view-centered))
-(ad-activate 'isearch-repeat-backward)
+;; integration with the buit-in `isearch':
+(add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
+(add-hook 'isearch-mode-end-hook #'pulsar-reveal-entry)
 
 ;; ===============================================================================
 ;;                              GLOBAL KEY BINDINGS
@@ -189,7 +179,7 @@
                                                         orderless
                                                         partial-completion)))
           
-          marginalia-align          'right))
+          marginalia-align              'right))
 
   (use-package! consult
     :config
@@ -206,7 +196,7 @@
      ("M-g g"    . #'consult-goto-line)
      )))
 
-(when (and (featurep! :completion company))
+(when (featurep! :completion company)
   (use-package! company
     :config
     (setq company-idle-delay 0.9)))

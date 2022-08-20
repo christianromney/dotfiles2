@@ -111,12 +111,6 @@ Returns the expanded pathname."
   (just-one-space -1)
   (sp-backward-delete-char))
 
-(defun custom/flash-view-centered ()
-  "Centers vertically and flashes the current line."
-  (interactive)
-  (recenter)
-  (+nav-flash/blink-cursor))
-
 ;; =============================================================
 ;; TEMPERATURE CONVERSION
 ;; =============================================================
