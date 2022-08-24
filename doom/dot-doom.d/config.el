@@ -1,17 +1,21 @@
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 
-(setq doom-font                      (font-spec :family "Iosevka" :weight 'normal :size 20)
-      fancy-splash-image             (concat doom-private-dir "splash.png")
-      display-line-numbers-type      t)
-
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 (use-package ef-themes
   :init
+  (setq doom-font                 "JetBrains Mono:pixelsize=20"
+        display-line-numbers-type t
+        fancy-splash-image        (concat doom-private-dir "splash.png"))
+
+  (setq-default tab-width 2)
+
+  ;; theme selection
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme 'ef-light :no-confirm)
-  (setq-default tab-width 2))
+
+  ;; ligature support
+  (mac-auto-operator-composition-mode)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 (defun custom/ensure-directory (path)
   "Ensures the directory path exists, creating any parents as
@@ -87,7 +91,8 @@ displays the conversions of each to the other in the echo area."
   (let* ((temps (temperature-conversions num))
          (degf  (alist-get 'farenheit temps))
          (degc  (alist-get 'celsius temps)))
-    (message "Temperatures: %2.1f℃ => %2.1f℉; %2.1f℉ => %2.1f℃" num degf num degc)))
+    (message "Temperatures: %2.1f℃ => %2.1f℉; %2.1f℉ => %2.1f℃"
+             num degf num degc)))
 
 (defun display-temperature-at-point-conversions ()
   "Displays the number at point as both farenheit and celsius
@@ -104,8 +109,9 @@ degrees in the echo area."
                                             kill-buffer-query-functions))
 
 (setq +default-want-RET-continue-comments nil
-      doom-cache-dir                      (custom/ensure-directory
-                                           (expand-file-name ".local/cache/" doom-private-dir)))
+      doom-cache-dir
+      (custom/ensure-directory
+       (expand-file-name ".local/cache/" doom-private-dir)))
 
 (setq abbrev-file-name "~/.doom.d/abbrev_defs"
       save-abbrevs     'silent)
@@ -151,6 +157,48 @@ degrees in the echo area."
   (map! :map dired-mode-map "r"  #'reveal-in-osx-finder))
 (map! :map dired-mode-map "C-l" #'dired-up-directory)
 
+(use-package diredfl
+  :hook
+  (dired-mode . diredfl-mode))
+
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode)
+  :custom
+  (dirvish-quick-access-entries
+   '(("h" "~/"                          "Home")
+     ("d" "~/Downloads/"                "Downloads")
+     ("p" "~/Desktop/"                  "Desktop")))
+  :config
+  (setq dirvish-use-header-line 'global
+        delete-by-moving-to-trash t)
+  (setq dirvish-mode-line-format
+        '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
+  (setq dirvish-attributes '(all-the-icons collapse file-size subtree-state vc-state))
+  (setq dired-listing-switches
+        "-l --almost-all --human-readable --time-style=long-iso \
+--group-directories-first --no-group")
+  :bind
+  (("C-c f" . dirvish-fd)
+   :map dirvish-mode-map            ; dirvish inherits `dired-mode-map'
+   ("^"   . dirvish-history-last)
+   ("a"   . dirvish-quick-access)
+   ("f"   . dirvish-file-info-menu)
+   ("h"   . dirvish-history-jump)   ; remapped `describe-mode'
+   ("N"   . dirvish-narrow)
+   ("s"   . dirvish-quicksort)      ; remapped `dired-sort-toggle-or-edit'
+   ("v"   . dirvish-vc-menu)        ; remapped `dired-view-file'
+   ("y"   . dirvish-yank-menu)
+   ("TAB" . dirvish-subtree-toggle)
+   ("M-f" . dirvish-history-go-forward)
+   ("M-b" . dirvish-history-go-backward)
+   ("M-l" . dirvish-ls-switches-menu)
+   ("M-m" . dirvish-mark-menu)
+   ("M-t" . dirvish-layout-toggle)
+   ("M-s" . dirvish-setup-menu)
+   ("M-e" . dirvish-emerge-menu)
+   ("M-j" . dirvish-fd-jump)))
+
 (when (featurep! :completion vertico)
   (use-package! vertico
     :demand t
@@ -178,13 +226,13 @@ degrees in the echo area."
           "grep --null --line-buffered --color=never --ignore-case \
 --exclude-dir=.git --line-number -I -r .")
     :bind
-    (("M-i"      . #'consult-imenu)
-     ("C-c M-o"  . #'consult-multi-occur)
-     ("C-x b"    . #'consult-buffer)
-     ("C-x 4 b"  . #'consult-buffer-other-window)
-     ("C-x 5 b"  . #'consult-buffer-other-frame)
-     ("C-x r b"  . #'consult-bookmark)
-     ("M-g g"    . #'consult-goto-line))))
+    (("M-i"     . #'consult-imenu)
+     ("C-c M-o" . #'consult-multi-occur)
+     ("C-x b"   . #'consult-buffer)
+     ("C-x 4 b" . #'consult-buffer-other-window)
+     ("C-x 5 b" . #'consult-buffer-other-frame)
+     ("C-x r b" . #'consult-bookmark)
+     ("M-g g"   . #'consult-goto-line))))
 
 (when (featurep! :completion company)
   (use-package! company

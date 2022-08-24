@@ -44,27 +44,24 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;;(unpin! t)
-;;
-
 ;; ------------------------------------------------------------------------------
 ;;  Git extras
 ;; ------------------------------------------------------------------------------
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! git-link)
-
 ;; ------------------------------------------------------------------------------
 ;;  Utilities
 ;; ------------------------------------------------------------------------------
+(package! adoc-mode)
 (package! consult-company)
 (package! consult-yasnippet)
+(package! dirvish)
 (package! google-this)
+(package! helpful)
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! reveal-in-osx-finder)
-(package! xterm-color)
-(package! adoc-mode)
-(package! helpful)
-(package! brazilian-holidays)
 (package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
+(package! xterm-color)
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
@@ -72,16 +69,16 @@
 (package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
 (when (featurep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
-
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
-(package! zotxt) ;; zotero bibliography support C-c " "
+(package! brazilian-holidays)
 (package! graphviz-dot-mode)
 (package! org-modern)
 (package! org-super-agenda)
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
+(package! zotxt) ;; zotero bibliography support C-c " "
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------
