@@ -435,8 +435,11 @@ degrees in the echo area."
   (use-package! org-agenda
     :defer t
     :config
-    (setq org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
-                                              "~/doc/notes/content/")
+    (setq org-agenda-file-regexp            "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
+          org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
+                                              "~/doc/notes/content/"
+                                              "~/doc/notes/content/roam/"
+                                              "~/doc/notes/content/roam/journal/")
           org-agenda-window-setup           'current-window
           org-agenda-include-diary          t
           org-agenda-show-log               t
