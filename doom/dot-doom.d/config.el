@@ -117,7 +117,7 @@ degrees in the echo area."
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 
-(when (featurep! :checkers spell)
+(when (modulep! :checkers spell)
   (setq spell-fu-directory
         (custom/ensure-directory (expand-file-name "etc/spell-fu/" doom-cache-dir)))
   (add-hook 'spell-fu-mode-hook
@@ -141,7 +141,7 @@ degrees in the echo area."
     ;; add sole exception
     (sp-pair open close :unless '(:add sp-in-string-p))))
 
-(when (featurep! :completion vertico)
+(when (modulep! :completion vertico)
   (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
   (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
 
@@ -199,7 +199,7 @@ degrees in the echo area."
    ("M-e" . dirvish-emerge-menu)
    ("M-j" . dirvish-fd-jump)))
 
-(when (featurep! :completion vertico)
+(when (modulep! :completion vertico)
   (use-package! vertico
     :demand t
     :bind
@@ -234,7 +234,7 @@ degrees in the echo area."
      ("C-x r b" . #'consult-bookmark)
      ("M-g g"   . #'consult-goto-line))))
 
-(when (featurep! :completion company)
+(when (modulep! :completion company)
   (use-package! company
     :config
     (setq company-idle-delay 0.9)))
@@ -279,7 +279,7 @@ degrees in the echo area."
       "C-x t c"   #'display-temperature-at-point-conversions)
 
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
-(message "Loaded global configuration")
+(message "=> loaded global configuration")
 
 (defun custom/org-rebuild-cache ()
   "Rebuild the `org-mode' (and `org-roam') cache(s)."
@@ -287,7 +287,7 @@ degrees in the echo area."
   (org-id-update-id-locations)
   ;; Note: you may need `org-roam-db-clear-all'
   ;; followed by `org-roam-db-sync'
-  (when (featurep! :lang org +roam2)
+  (when (modulep! :lang org +roam2)
     (org-roam-db-sync)
     (org-roam-update-org-id-locations)))
 
@@ -332,12 +332,12 @@ degrees in the echo area."
   (interactive)
   (custom/org-markup-word #x00002B))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org
     :defer t
     :init
     (setq  org-directory "~/doc/notes/content/")
-    (when (featurep! :lang org +roam2)
+    (when (modulep! :lang org +roam2)
       (setq
        org-roam-directory         "~/doc/notes/content/roam/"
        org-roam-dailies-directory "journal/"
@@ -395,7 +395,7 @@ degrees in the echo area."
         "* TODO %^{Task} %^G")))
 
     (map!
-     (:when (featurep! :lang org +roam2)
+     (:when (modulep! :lang org +roam2)
       :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
      (:map org-mode-map
       "C-. o b" #'custom/org-bold-word
@@ -405,7 +405,7 @@ degrees in the echo area."
       "C-. o u" #'custom/org-underline-word
       "C-. o v" #'custom/org-verbatim-word))))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org-glossary
     :hook (org-mode . org-glossary-mode)
     :init
@@ -420,7 +420,7 @@ degrees in the echo area."
      (:map org-mode-map
       "C-. o g" #'org-glossary-create-definition))))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! zotxt
     :after org
     :hook (org-mode . org-zotxt-mode)
@@ -428,10 +428,10 @@ degrees in the echo area."
     (setq bibtex-dialect                  'biblatex
           org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
 
-  (when (featurep! :tools biblio)
+  (when (modulep! :tools biblio)
     (setq! citar-bibliography '("~/doc/notes/references.bib"))))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org-agenda
     :defer t
     :config
@@ -468,7 +468,7 @@ degrees in the echo area."
                                     (:auto-todo t)))
     (org-super-agenda-mode)))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! holidays
     :after org-agenda
     :config
@@ -489,7 +489,7 @@ degrees in the echo area."
                     (solar-equinoxes-solstices))
                   brazilian-holidays--general-holidays))))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! graphviz-dot-mode
     :config)
   (setq graphviz-dot-indent-width 2)
@@ -501,7 +501,7 @@ degrees in the echo area."
     (setq org-auto-tangle-default t))
 
   (after! org
-    (when (featurep! :lang plantuml)
+    (when (modulep! :lang plantuml)
       (setq plantuml-default-exec-mode 'jar))
 
     (progn
@@ -525,7 +525,7 @@ degrees in the echo area."
          (shell      . t)
          (sql        . t))))))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (setq org-re-reveal-center               t
         org-re-reveal-control              t
         org-re-reveal-default-frag-style   'appear
@@ -544,7 +544,7 @@ degrees in the echo area."
         org-re-reveal-title-slide          "%t"
         reveal_inter_presentation_links    t))
 
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (setq org-ellipsis                       "…"
         org-fontify-done-headline          t
         org-fontify-emphasized-text        t
@@ -564,12 +564,12 @@ degrees in the echo area."
       (setq left-margin-width 2
             right-margin-width 2)))
 
-  (message "Loaded +org configuration"))
+  (message "=> loaded org configuration"))
 
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
-  (when (featurep! :tools lsp)
+  (when (modulep! :tools lsp)
     (add-hook! '(clojure-mode-local-vars-hook
                  clojurec-mode-local-vars-hook
                  clojurescript-mode-local-vars-hook)
@@ -706,14 +706,14 @@ with large files for some reason."
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
-(when (featurep! :checkers syntax)
+(when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
-    :when (featurep! :checkers syntax)
+    :when (modulep! :checkers syntax)
     :after flycheck))
 
-(message "Loaded Clojure configuration")
+(message "=> loaded clojure configuration")
 
-(when (featurep! :lang scheme)
+(when (modulep! :lang scheme)
   (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
   (add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
   (map! :map scheme-mode-map
@@ -726,9 +726,9 @@ with large files for some reason."
         "C-c I u" #'xscheme-send-control-u-interrupt
         "C-c I b" #'xscheme-send-breakpoint-interrupt
         "C-c I p" #'xscheme-send-proceed)
-  (message "Loaded scheme configuration"))
+  (message "=> loaded scheme configuration"))
 
-(when (featurep! :lang cc)
+(when (modulep! :lang cc)
   (map! :map c-mode-base-map
         ;; disassembler (objdump)
         "C-c o a"    #'disaster)
@@ -743,4 +743,4 @@ with large files for some reason."
     ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
     ;; Target: x86_64-apple-darwin20.4.0
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-  (message "Loaded C configuration"))
+  (message "=> loaded C configuration"))

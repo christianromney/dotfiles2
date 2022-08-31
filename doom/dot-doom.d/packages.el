@@ -67,7 +67,7 @@
 ;; ------------------------------------------------------------------------------
 (package! clojure-snippets)
 (package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
-(when (featurep! :checkers syntax)
+(when (modulep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
@@ -87,5 +87,5 @@
 ;; ------------------------------------------------------------------------------
 ;; C
 ;; ------------------------------------------------------------------------------
-(when (featurep! :lang cc)
+(when (modulep! :lang cc)
   (package! disaster :recipe (:host github :repo "jart/disaster")))

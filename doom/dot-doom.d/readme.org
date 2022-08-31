@@ -186,7 +186,7 @@ say without question.
 Ensure spelling dictionaries are source controlled.
 
 #+begin_src elisp
-(when (featurep! :checkers spell)
+(when (modulep! :checkers spell)
   (setq spell-fu-directory
         (custom/ensure-directory (expand-file-name "etc/spell-fu/" doom-cache-dir)))
   (add-hook 'spell-fu-mode-hook
@@ -226,7 +226,7 @@ center of the screen and find my search results. With [[https://protesilaos.com/
 after jumps and highlight the search term.
 -------------------------------------------------------------------------------
 #+begin_src elisp
-(when (featurep! :completion vertico)
+(when (modulep! :completion vertico)
   (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
   (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
 
@@ -302,7 +302,7 @@ features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
 API as intended.
 
 #+begin_src elisp
-(when (featurep! :completion vertico)
+(when (modulep! :completion vertico)
   (use-package! vertico
     :demand t
     :bind
@@ -337,7 +337,7 @@ API as intended.
      ("C-x r b" . #'consult-bookmark)
      ("M-g g"   . #'consult-goto-line))))
 
-(when (featurep! :completion company)
+(when (modulep! :completion company)
   (use-package! company
     :config
     (setq company-idle-delay 0.9)))
@@ -403,7 +403,7 @@ Every Emacs configuration contains a few little odds and ends.
 
 #+begin_src elisp
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
-(message "Loaded global configuration")
+(message "=> loaded global configuration")
 #+end_src
 
 * Org Configuration
@@ -417,7 +417,7 @@ custom function is used to solve a [[https://takeonrules.com/2022/01/11/resolvin
   (org-id-update-id-locations)
   ;; Note: you may need `org-roam-db-clear-all'
   ;; followed by `org-roam-db-sync'
-  (when (featurep! :lang org +roam2)
+  (when (modulep! :lang org +roam2)
     (org-roam-db-sync)
     (org-roam-update-org-id-locations)))
 
@@ -466,12 +466,12 @@ custom function is used to solve a [[https://takeonrules.com/2022/01/11/resolvin
 ** Main Configuration
 The principal configuration block sets up directories and org-capture templates.
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org
     :defer t
     :init
     (setq  org-directory "~/doc/notes/content/")
-    (when (featurep! :lang org +roam2)
+    (when (modulep! :lang org +roam2)
       (setq
        org-roam-directory         "~/doc/notes/content/roam/"
        org-roam-dailies-directory "journal/"
@@ -529,7 +529,7 @@ The principal configuration block sets up directories and org-capture templates.
         "* TODO %^{Task} %^G")))
 
     (map!
-     (:when (featurep! :lang org +roam2)
+     (:when (modulep! :lang org +roam2)
       :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
      (:map org-mode-map
       "C-. o b" #'custom/org-bold-word
@@ -545,7 +545,7 @@ The [[https://github.com/tecosaur/org-glossary][org-glossary]] package adds term
 the definition in the minibuffer whenever the cursor is over a glossary term.
 
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org-glossary
     :hook (org-mode . org-glossary-mode)
     :init
@@ -567,7 +567,7 @@ often refer to computer science papers from my notes and am experimenting both
 with [[https://github.com/emacs-citar/citar][Citar]] and [[https://www.zotero.org/][Zotero]] to manage references.
 
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! zotxt
     :after org
     :hook (org-mode . org-zotxt-mode)
@@ -575,7 +575,7 @@ with [[https://github.com/emacs-citar/citar][Citar]] and [[https://www.zotero.or
     (setq bibtex-dialect                  'biblatex
           org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
 
-  (when (featurep! :tools biblio)
+  (when (modulep! :tools biblio)
     (setq! citar-bibliography '("~/doc/notes/references.bib"))))
 #+end_src
 
@@ -586,7 +586,7 @@ upcoming deadlines and todo items in a calendar, topic, or priority view. The
 [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] package enables grouping in daily/weekly views.
 
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! org-agenda
     :defer t
     :config
@@ -630,7 +630,7 @@ upcoming deadlines and todo items in a calendar, topic, or priority view. The
 ** Calendar
 Calendar preferences include holidays, week start, and geographical location.
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! holidays
     :after org-agenda
     :config
@@ -668,7 +668,7 @@ notes. I enable all the languages I am likely to use. Auto-tangling keeps
 tangled code files in sync on save.
 
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (use-package! graphviz-dot-mode
     :config)
   (setq graphviz-dot-indent-width 2)
@@ -680,7 +680,7 @@ tangled code files in sync on save.
     (setq org-auto-tangle-default t))
 
   (after! org
-    (when (featurep! :lang plantuml)
+    (when (modulep! :lang plantuml)
       (setq plantuml-default-exec-mode 'jar))
 
     (progn
@@ -708,7 +708,7 @@ tangled code files in sync on save.
 ** Export Settings
 I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]] HTML presentation.
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (setq org-re-reveal-center               t
         org-re-reveal-control              t
         org-re-reveal-default-frag-style   'appear
@@ -732,7 +732,7 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
 The [[https://github.com/minad/org-modern][org-modern]] package adds some nice aesthetic touches to org-mode buffers.
 
 #+begin_src elisp
-(when (featurep! :lang org)
+(when (modulep! :lang org)
   (setq org-ellipsis                       "…"
         org-fontify-done-headline          t
         org-fontify-emphasized-text        t
@@ -752,7 +752,7 @@ The [[https://github.com/minad/org-modern][org-modern]] package adds some nice a
       (setq left-margin-width 2
             right-margin-width 2)))
 
-  (message "Loaded +org configuration"))
+  (message "=> loaded org configuration"))
 #+end_src
 
 * Programming Major Modes
@@ -769,7 +769,7 @@ nice features than make living without Cider bearable.
 (use-package! clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
-  (when (featurep! :tools lsp)
+  (when (modulep! :tools lsp)
     (add-hook! '(clojure-mode-local-vars-hook
                  clojurec-mode-local-vars-hook
                  clojurescript-mode-local-vars-hook)
@@ -929,12 +929,12 @@ Miscellaneous performance and project recognition settings.
 Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]].
 
 #+begin_src elisp
-(when (featurep! :checkers syntax)
+(when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
-    :when (featurep! :checkers syntax)
+    :when (modulep! :checkers syntax)
     :after flycheck))
 
-(message "Loaded Clojure configuration")
+(message "=> loaded clojure configuration")
 #+end_src
 
 *** REBL Support
@@ -973,7 +973,7 @@ Programming Languages]], the Little books, or the +original+ /good/ version of [
 
 [[https://www.nongnu.org/geiser/][Geiser]] mode is mostly ok, but it's a veritable nightmare with [[https://www.gnu.org/software/mit-scheme/][mit-scheme]].
 #+begin_src elisp
-(when (featurep! :lang scheme)
+(when (modulep! :lang scheme)
   (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
   (add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
   (map! :map scheme-mode-map
@@ -986,7 +986,7 @@ Programming Languages]], the Little books, or the +original+ /good/ version of [
         "C-c I u" #'xscheme-send-control-u-interrupt
         "C-c I b" #'xscheme-send-breakpoint-interrupt
         "C-c I p" #'xscheme-send-proceed)
-  (message "Loaded scheme configuration"))
+  (message "=> loaded scheme configuration"))
 #+end_src
 
 ** C
@@ -994,7 +994,7 @@ It's rare that I need to write C code, but the disassembler is occasionally
 useful. This configuration is active when ~:lang cc~ is enabled in init.el.
 
 #+begin_src elisp
-(when (featurep! :lang cc)
+(when (modulep! :lang cc)
   (map! :map c-mode-base-map
         ;; disassembler (objdump)
         "C-c o a"    #'disaster)
@@ -1009,5 +1009,5 @@ useful. This configuration is active when ~:lang cc~ is enabled in init.el.
     ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
     ;; Target: x86_64-apple-darwin20.4.0
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-  (message "Loaded C configuration"))
+  (message "=> loaded C configuration"))
 #+end_src
