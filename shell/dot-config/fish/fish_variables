@@ -10,9 +10,9 @@ SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
-SETUVAR Z_DATA:/Users/christian/\x2elocal/share/z/data
-SETUVAR Z_DATA_DIR:/Users/christian/\x2elocal/share/z
-SETUVAR Z_EXCLUDE:\x5e/Users/christian\x24
+SETUVAR Z_DATA:"$HOME/\x2elocal/share/z/data"
+SETUVAR Z_DATA_DIR:"$HOME/\x2elocal/share/z"
+SETUVAR Z_EXCLUDE:"\x5e$HOME\x24"
 SETUVAR --export __ABBR_TIPS_KEYS:\x1d
 SETUVAR --export __ABBR_TIPS_VALUES:\x1d
 SETUVAR __fish_initialized:3400
