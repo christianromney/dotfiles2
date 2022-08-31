@@ -251,6 +251,15 @@ degrees in the echo area."
         mml-secure-smime-encrypt-to-self t
         mml-secure-smime-sign-with-sender t))
 
+(use-package! smtpmail
+  :config
+  (setq smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server         "smtp.gmail.com"
+        smtpmail-smtp-service        587
+        send-mail-function           'smtpmail-send-it
+        smtpmail-queue-dir           "~/mail/personal/queue/cur"
+        smtpmail-debug-info  t))
+
 (use-package! message
   :config
   (setq compose-mail-user-agent-warnings nil
@@ -258,8 +267,13 @@ degrees in the echo area."
         message-confirm-send nil
         message-kill-buffer-on-exit t
         message-mail-user-agent t
-        message-wide-reply-confirm-recipients t)
+        message-wide-reply-confirm-recipients t
+        message-send-mail-function   'smtpmail-send-it)
   (add-hook 'message-setup-hook #'message-sort-headers))
+
+(use-package! notmuch
+  :config
+  (setq notmuch-show-logo nil))
 
 (after! circe
   (let* ((host "irc.libera.chat")

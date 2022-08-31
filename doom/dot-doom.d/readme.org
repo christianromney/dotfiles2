@@ -364,6 +364,15 @@ Giving this a go.
         mml-secure-smime-encrypt-to-self t
         mml-secure-smime-sign-with-sender t))
 
+(use-package! smtpmail
+  :config
+  (setq smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server         "smtp.gmail.com"
+        smtpmail-smtp-service        587
+        send-mail-function           'smtpmail-send-it
+        smtpmail-queue-dir           "~/mail/personal/queue/cur"
+        smtpmail-debug-info  t))
+
 (use-package! message
   :config
   (setq compose-mail-user-agent-warnings nil
@@ -371,10 +380,15 @@ Giving this a go.
         message-confirm-send nil
         message-kill-buffer-on-exit t
         message-mail-user-agent t
-        message-wide-reply-confirm-recipients t)
+        message-wide-reply-confirm-recipients t
+        message-send-mail-function   'smtpmail-send-it)
   (add-hook 'message-setup-hook #'message-sort-headers))
-#+end_src
 
+(use-package! notmuch
+  :config
+  (setq notmuch-show-logo nil))
+
+#+end_src
 
 ** Internet Relay Chat (IRC)
 I use [[https://github.com/emacs-circe/circe][circe]] to connect to [[https://libera.chat/][Libera]] and read my credentials from an encrypted

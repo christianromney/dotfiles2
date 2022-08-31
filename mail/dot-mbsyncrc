@@ -2,17 +2,18 @@ IMAPStore personal-remote
 Host imap.gmail.com
 SSLType IMAPS
 AuthMechs Login
-UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
-PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
 
 MaildirStore personal-local
-Path ~/mail/personal/
-Inbox ~/mail/personal/INBOX/
+Path ~/.mail/personal/
+Inbox ~/.mail/personal/INBOX/
 Subfolders Verbatim
 
 Channel personal
 Far :personal-remote:
 Near :personal-local:
+CopyArrivalDate yes
 Create Both
 Expunge Both
 Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin" !"[Airmail]*"
