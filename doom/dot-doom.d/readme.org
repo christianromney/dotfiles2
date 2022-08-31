@@ -351,6 +351,31 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 #+end_src
 
+** Mail (mbsync + notmuch)
+Giving this a go.
+#+begin_src elisp
+
+(use-package! auth-source)
+(use-package! mm-encode)
+(use-package! mml-sec
+  :config
+  (setq mml-secure-openpgp-encrypt-to-self t
+        mml-secure-openpgp-sign-with-sender t
+        mml-secure-smime-encrypt-to-self t
+        mml-secure-smime-sign-with-sender t))
+
+(use-package! message
+  :config
+  (setq compose-mail-user-agent-warnings nil
+        mail-user-agent 'message-user-agent
+        message-confirm-send nil
+        message-kill-buffer-on-exit t
+        message-mail-user-agent t
+        message-wide-reply-confirm-recipients t)
+  (add-hook 'message-setup-hook #'message-sort-headers))
+#+end_src
+
+
 ** Internet Relay Chat (IRC)
 I use [[https://github.com/emacs-circe/circe][circe]] to connect to [[https://libera.chat/][Libera]] and read my credentials from an encrypted
 [[https://www.gnu.org/software/emacs/manual/html_mono/epa.html][authinfo.gpg]].

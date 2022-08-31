@@ -242,6 +242,25 @@ degrees in the echo area."
 (setq magit-revision-show-gravatars t)
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
+(use-package! auth-source)
+(use-package! mm-encode)
+(use-package! mml-sec
+  :config
+  (setq mml-secure-openpgp-encrypt-to-self t
+        mml-secure-openpgp-sign-with-sender t
+        mml-secure-smime-encrypt-to-self t
+        mml-secure-smime-sign-with-sender t))
+
+(use-package! message
+  :config
+  (setq compose-mail-user-agent-warnings nil
+        mail-user-agent 'message-user-agent
+        message-confirm-send nil
+        message-kill-buffer-on-exit t
+        message-mail-user-agent t
+        message-wide-reply-confirm-recipients t)
+  (add-hook 'message-setup-hook #'message-sort-headers))
+
 (after! circe
   (let* ((host "irc.libera.chat")
          (user (custom/read-auth-username :host host))
