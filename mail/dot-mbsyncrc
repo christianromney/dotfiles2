@@ -17,7 +17,7 @@ Near :personal-local:
 CopyArrivalDate yes
 Create Both
 Expunge Both
-Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin" !"[Airmail]*"
+Patterns *
 SyncState *
 
 # cognitect email
