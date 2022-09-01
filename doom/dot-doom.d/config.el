@@ -272,7 +272,7 @@ degrees in the echo area."
           message-wide-reply-confirm-recipients t
           mu4e-index-cleanup nil
           mu4e-index-lazy-check t
-          mu4e-update-interval 60
+          mu4e-update-interval (* 10 60)
           send-mail-function #'smtpmail-send-it
           sendmail-program (executable-find "msmtp"))
     (add-hook 'message-setup-hook #'message-sort-headers))
