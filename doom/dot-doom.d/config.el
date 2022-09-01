@@ -247,22 +247,25 @@ degrees in the echo area."
   (use-package! mu4e
     :defer t
     :config
+    (setq mu4e-maildir "~/.mail")
     (set-email-account!
      "personal"
-     '((mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
+     '((user-mail-address      . "christian.a.romney@gmail.com")
+       (smtpmail-smtp-user     . "christian.a.romney@gmail.com")
+       (mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
        (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
        (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
        (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
-       (smtpmail-smtp-user     . "christian.a.romney@gmail.com")
        (mu4e-compose-signature . "---\nRegards,\nChristian"))
      t)
     (set-email-account!
      "cognitect"
-     '((mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
+     '((user-mail-address      . "christian.romney@cognitect.com")
+       (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
+       (mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
        (mu4e-drafts-folder     . "/cognitect/[Gmail]/Drafts")
        (mu4e-trash-folder      . "/cognitect/[Gmail]/Trash")
        (mu4e-refile-folder     . "/cognitect/[Gmail]/All Mail")
-       (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
        (mu4e-compose-signature . "---\nRegards,\nChristian"))
      t))
   (after! mu4e
@@ -274,7 +277,6 @@ degrees in the echo area."
           message-kill-buffer-on-exit t
           message-mail-user-agent t
           message-send-mail-function #'message-send-mail-with-sendmail
-          message-send-mail-function 'message-send-mail-with-sendmail
           message-sendmail-envelope-from 'header
           message-sendmail-extra-arguments '("--read-envelope-from")
           message-sendmail-f-is-evil t
