@@ -1,14 +1,12 @@
+# all accounts
 defaults
 port 587
 auth on
 tls on
 tls_starttls on
+tls_trust_file /usr/local/share/ca-certificates/cacert.pem
 
-# Set a list of trusted CAs for TLS. The default is to use system settings, but
-# you can select your own file.
-# tls_trust_file /usr/local/share/ca-certificates/cacert.pem
-
-# personal gmail
+# account 1: personal gmail
 account personal
 host smtp.gmail.com
 domain smtp.gmail.com
