@@ -50,7 +50,6 @@ Returns the expanded pathname."
                      (concat "TCP:" (number-to-string port)))))
 
 (defun custom/read-auth-field (field &rest params)
-  (require 'auth-source)
   (let ((match (car (apply #'auth-source-search params))))
     (if match
         (let ((secret (plist-get match field)))
