@@ -1,9 +1,10 @@
+# personal email
 IMAPStore personal-remote
 Host imap.gmail.com
 SSLType IMAPS
 AuthMechs Login
-UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
-PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep christian.a.romney | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
+PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep christian.a.romney | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
 
 MaildirStore personal-local
 Path ~/.mail/personal/
@@ -17,4 +18,27 @@ CopyArrivalDate yes
 Create Both
 Expunge Both
 Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin" !"[Airmail]*"
+SyncState *
+
+# cognitect email
+
+IMAPStore cognitect-remote
+Host imap.gmail.com
+SSLType IMAPS
+AuthMechs Login
+UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep thinkrelevance | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
+PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep thinkrelevance | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+
+MaildirStore cognitect-local
+Path ~/.mail/cognitect/
+Inbox ~/.mail/cognitect/INBOX/
+Subfolders Verbatim
+
+Channel cognitect
+Far :cognitect-remote:
+Near :cognitect-local:
+CopyArrivalDate yes
+Create Both
+Expunge Both
+Patterns *
 SyncState *
