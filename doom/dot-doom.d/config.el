@@ -50,6 +50,7 @@ Returns the expanded pathname."
                      (concat "TCP:" (number-to-string port)))))
 
 (defun custom/read-auth-field (field &rest params)
+  (require 'auth-source)
   (let ((match (car (apply #'auth-source-search params))))
     (if match
         (let ((secret (plist-get match field)))
@@ -165,9 +166,9 @@ degrees in the echo area."
   (dirvish-override-dired-mode)
   :custom
   (dirvish-quick-access-entries
-   '(("h" "~/"                          "Home")
-     ("d" "~/Downloads/"                "Downloads")
-     ("p" "~/Desktop/"                  "Desktop")))
+   '(("h" "~/" "Home")
+     ("d" "~/Downloads/" "Downloads")
+     ("p" "~/Desktop/" "Desktop")))
   :config
   (setq dirvish-use-header-line 'global
         delete-by-moving-to-trash t)
@@ -235,66 +236,50 @@ degrees in the echo area."
 
 (when (modulep! :completion company)
   (use-package! company
+    :defer t
     :config
     (setq company-idle-delay 0.9)))
 
 (setq magit-revision-show-gravatars t)
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
-(use-package! auth-source)
-(use-package! mm-encode)
-(use-package! mml-sec
-  :config
-  (setq mml-secure-openpgp-encrypt-to-self t
-        mml-secure-openpgp-sign-with-sender t
-        mml-secure-smime-encrypt-to-self t
-        mml-secure-smime-sign-with-sender t))
-
-;; (use-package! smtpmail
-;;   :config
-;;   (setq smtpmail-default-smtp-server "smtp.gmail.com"
-;;         smtpmail-smtp-server         "smtp.gmail.com"
-;;         smtpmail-smtp-service        587
-;;         send-mail-function           'smtpmail-send-it
-;;         smtpmail-stream-type         'starttls
-;;         smtpmail-debug-info          t
-;;         smtpmail-debug-verb          t
-;;         smtpmail-queue-dir           "~/mail/personal/queue/cur"))
-
-(use-package! message
-  :config
-  ;;message-sendmail-f-is-evil nil
-  (setq compose-mail-user-agent-warnings nil
-        mail-envelope-from 'header
-        mail-specify-envelope-from t
-        mail-user-agent 'message-user-agent
-        message-confirm-send nil
-        message-kill-buffer-on-exit t
-        message-mail-user-agent t
-        message-send-mail-function 'message-send-mail-with-sendmail
-        message-sendmail-envelope-from 'header
-        message-wide-reply-confirm-recipients t
-        send-mail-function 'message-send-mail-function
-        sendmail-program "/usr/local/bin/msmtp")
-  (add-hook 'message-setup-hook #'message-sort-headers))
-
-(use-package! notmuch
-  :config
-  (setq +notmuch-sync-backend 'mbsync
-        notmuch-show-logo     nil
-        notmuch-saved-searches
-        '((:name "inbox"  :query "tag:inbox")
-          (:name "unread" :query "tag:inbox AND tag:unread")
-          (:name "pinned" :query "tag:inbox AND tag:flagged"))))
-
-(after! notmuch
-  (setq notmuch-show-log nil
-        notmuch-hello-sections `(notmuch-hello-insert-saved-searches
-                                 notmuch-hello-insert-alltags)
-        ;; To hide headers while composing an email
-        notmuch-message-headers-visible t))
+(when (modulep! :email mu4e)
+  (use-package! mu4e
+    :defer t
+    :config
+    (set-email-account!
+     "personal"
+     '((mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
+       (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
+       (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
+       (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
+       (smtpmail-smtp-user     . "christian.a.romney@gmail.com.com")
+       (mu4e-compose-signature . "---\nRegards,\nChristian"))
+     t))
+  (after! mu4e
+    (setq compose-mail-user-agent-warnings nil
+          mail-envelope-from 'header
+          mail-specify-envelope-from t
+          mail-user-agent 'message-user-agent
+          message-confirm-send nil
+          message-kill-buffer-on-exit t
+          message-mail-user-agent t
+          message-send-mail-function #'message-send-mail-with-sendmail
+          message-send-mail-function 'message-send-mail-with-sendmail
+          message-sendmail-envelope-from 'header
+          message-sendmail-extra-arguments '("--read-envelope-from")
+          message-sendmail-f-is-evil t
+          message-wide-reply-confirm-recipients t
+          mu4e-index-cleanup nil
+          mu4e-index-lazy-check t
+          mu4e-update-interval 60
+          send-mail-function #'smtpmail-send-it
+          sendmail-program (executable-find "msmtp"))
+    (add-hook 'message-setup-hook #'message-sort-headers))
+  (message "=> loaded mail configuration"))
 
 (after! circe
+  (require 'auth-source)
   (let* ((host "irc.libera.chat")
          (user (custom/read-auth-username :host host))
          (pass (custom/read-auth-password :host host)))
@@ -459,6 +444,7 @@ degrees in the echo area."
 
 (when (modulep! :lang org)
   (use-package! org-glossary
+    :after org
     :hook (org-mode . org-glossary-mode)
     :init
     ;; this macro supplies theme color names inside the body
@@ -543,8 +529,9 @@ degrees in the echo area."
 
 (when (modulep! :lang org)
   (use-package! graphviz-dot-mode
-    :config)
-  (setq graphviz-dot-indent-width 2)
+    :defer t
+    :config
+    (setq graphviz-dot-indent-width 2))
 
   (use-package! org-auto-tangle
     :defer t
@@ -578,23 +565,24 @@ degrees in the echo area."
          (sql        . t))))))
 
 (when (modulep! :lang org)
-  (setq org-re-reveal-center               t
-        org-re-reveal-control              t
-        org-re-reveal-default-frag-style   'appear
-        org-re-reveal-defaulttiming        nil
-        org-re-reveal-fragmentinurl        t
-        org-re-reveal-history              nil
-        org-re-reveal-hlevel               2
-        org-re-reveal-keyboard             t
-        org-re-reveal-klipsify-src         t
-        org-re-reveal-mousewheel           nil
-        org-re-reveal-overview             t
-        org-re-reveal-pdfseparatefragments nil
-        org-re-reveal-progress             t
-        org-re-reveal-rolling-links        nil
-        org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
-        org-re-reveal-title-slide          "%t"
-        reveal_inter_presentation_links    t))
+  (after! org
+    (setq org-re-reveal-center               t
+          org-re-reveal-control              t
+          org-re-reveal-default-frag-style   'appear
+          org-re-reveal-defaulttiming        nil
+          org-re-reveal-fragmentinurl        t
+          org-re-reveal-history              nil
+          org-re-reveal-hlevel               2
+          org-re-reveal-keyboard             t
+          org-re-reveal-klipsify-src         t
+          org-re-reveal-mousewheel           nil
+          org-re-reveal-overview             t
+          org-re-reveal-pdfseparatefragments nil
+          org-re-reveal-progress             t
+          org-re-reveal-rolling-links        nil
+          org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
+          org-re-reveal-title-slide          "%t"
+          reveal_inter_presentation_links    t)))
 
 (when (modulep! :lang org)
   (setq org-ellipsis                       "…"
@@ -619,9 +607,13 @@ degrees in the echo area."
   (message "=> loaded org configuration"))
 
 (use-package! clojure-mode
+  :defer t
   :hook (clojure-mode . rainbow-delimiters-mode)
   :config
   (when (modulep! :tools lsp)
+    (map! :map clojure-mode-map
+          "C-c j d"    #'lsp-ui-doc-glance
+          "C-c j i"    #'lsp-ui-imenu)
     (add-hook! '(clojure-mode-local-vars-hook
                  clojurec-mode-local-vars-hook
                  clojurescript-mode-local-vars-hook)
@@ -644,10 +636,7 @@ degrees in the echo area."
           lsp-file-watch-threshold 2000
           lsp-enable-snippet       t)))
 
-(map! :map clojure-mode-map
-      "C-c j d"    #'lsp-ui-doc-glance
-      "C-c j i"    #'lsp-ui-imenu)
-
+;; TODO: try moving these to the :hook ()
 (add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojure-mode-hook :append #'subword-mode)
 (add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
@@ -716,6 +705,8 @@ with large files for some reason."
      "(compliment.core/completions \"%s\")")))
 
 (use-package! inf-clojure
+  :defer t
+  :after clojure
   :config
   (map! :map clojure-mode-map
         "C-c r c"    #'+inf-clojure-socket-repl-connect
