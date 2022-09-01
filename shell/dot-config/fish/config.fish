@@ -6,7 +6,7 @@ ssh-add -q
 
 set EDITOR emacs
 set -x GPG_TTY (tty)
-set -x -U GPG_AGENT_INFO "~/.gnupg/S.gpg-agent:"(pgrep gpg-agent)":1"
+set -x GPG_AGENT_INFO "~/.gnupg/S.gpg-agent:"(pgrep gpg-agent)":1"
 
 if test -f $HOME/.nurc
     bass source $HOME/.nurc
