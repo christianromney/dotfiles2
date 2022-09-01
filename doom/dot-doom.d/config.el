@@ -251,29 +251,49 @@ degrees in the echo area."
         mml-secure-smime-encrypt-to-self t
         mml-secure-smime-sign-with-sender t))
 
-(use-package! smtpmail
-  :config
-  (setq smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server         "smtp.gmail.com"
-        smtpmail-smtp-service        587
-        send-mail-function           'smtpmail-send-it
-        smtpmail-queue-dir           "~/mail/personal/queue/cur"
-        smtpmail-debug-info  t))
+;; (use-package! smtpmail
+;;   :config
+;;   (setq smtpmail-default-smtp-server "smtp.gmail.com"
+;;         smtpmail-smtp-server         "smtp.gmail.com"
+;;         smtpmail-smtp-service        587
+;;         send-mail-function           'smtpmail-send-it
+;;         smtpmail-stream-type         'starttls
+;;         smtpmail-debug-info          t
+;;         smtpmail-debug-verb          t
+;;         smtpmail-queue-dir           "~/mail/personal/queue/cur"))
 
 (use-package! message
   :config
+  ;;message-sendmail-f-is-evil nil
   (setq compose-mail-user-agent-warnings nil
+        mail-envelope-from 'header
+        mail-specify-envelope-from t
         mail-user-agent 'message-user-agent
         message-confirm-send nil
         message-kill-buffer-on-exit t
         message-mail-user-agent t
+        message-send-mail-function 'message-send-mail-with-sendmail
+        message-sendmail-envelope-from 'header
         message-wide-reply-confirm-recipients t
-        message-send-mail-function   'smtpmail-send-it)
+        send-mail-function 'message-send-mail-function
+        sendmail-program "/usr/local/bin/msmtp")
   (add-hook 'message-setup-hook #'message-sort-headers))
 
 (use-package! notmuch
   :config
-  (setq notmuch-show-logo nil))
+  (setq +notmuch-sync-backend 'mbsync
+        notmuch-show-logo     nil
+        notmuch-saved-searches
+        '((:name "inbox"  :query "tag:inbox")
+          (:name "unread" :query "tag:inbox AND tag:unread")
+          (:name "pinned" :query "tag:inbox AND tag:flagged"))))
+
+(after! notmuch
+  (setq notmuch-show-log nil
+        notmuch-hello-sections `(notmuch-hello-insert-saved-searches
+                                 notmuch-hello-insert-alltags)
+        ;; To hide headers while composing an email
+        notmuch-message-headers-visible t))
 
 (after! circe
   (let* ((host "irc.libera.chat")

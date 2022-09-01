@@ -11,6 +11,7 @@
 # configured here named ".notmuch".
 #
 [database]
+path=/Users/christian/.mail
 
 # User configuration
 #
@@ -45,7 +46,8 @@ primary_email=christian.a.romney@gmail.com
 #		in the mail store.
 #
 [new]
-tags=new
+tags=new;unread;inbox;
+
 # Search configuration
 #
 # The following option is supported here:

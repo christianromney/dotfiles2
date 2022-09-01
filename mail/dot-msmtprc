@@ -1,0 +1,19 @@
+defaults
+port 587
+auth on
+tls on
+tls_starttls on
+
+# Set a list of trusted CAs for TLS. The default is to use system settings, but
+# you can select your own file.
+# tls_trust_file /usr/local/share/ca-certificates/cacert.pem
+
+# personal gmail
+account personal
+host smtp.gmail.com
+domain smtp.gmail.com
+from christian.a.romney@gmail.com
+user christian.a.romney@gmail.com
+passwordeval gpg2 -q --no-tty --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/smtp\.gmail\.com/ {print $NF; exit;}'
+logfile /var/log/mail.log
+account default : personal
