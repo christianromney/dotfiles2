@@ -12,6 +12,25 @@ host smtp.gmail.com
 domain smtp.gmail.com
 from christian.a.romney@gmail.com
 user christian.a.romney@gmail.com
-passwordeval gpg2 -q --no-tty --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/smtp\.gmail\.com/ {print $NF; exit;}'
+passwordeval gpg2 -q --no-tty --for-your-eyes-only -d ~/.authinfo.gpg | grep christian.a.romney |  awk -F ' ' '/smtp\.gmail\.com/ {print $NF; exit;}'
 logfile /var/log/mail.log
+
+# account 2: cognitect gmail
+account cognitect
+host smtp.gmail.com
+domain smtp.gmail.com
+from christian.romney@cognitect.com
+user christian.romney@thinkrelevance.com
+passwordeval gpg2 -q --no-tty --for-your-eyes-only -d ~/.authinfo.gpg | grep thinkrelevance | awk -F ' ' '/smtp\.gmail\.com/ {print $NF; exit;}'
+logfile /var/log/mail.log
+
+# account 3: legacy gmail
+account legacy
+host smtp.gmail.com
+domain smtp.gmail.com
+from xmlblog@gmail.com
+user xmlblog@gmail.com
+passwordeval gpg2 -q --no-tty --for-your-eyes-only -d ~/.authinfo.gpg | grep xmlblog | awk -F ' ' '/smtp\.gmail\.com/ {print $NF; exit;}'
+logfile /var/log/mail.log
+
 account default : personal

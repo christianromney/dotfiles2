@@ -21,7 +21,6 @@ Patterns *
 SyncState *
 
 # cognitect email
-
 IMAPStore cognitect-remote
 Host imap.gmail.com
 SSLType IMAPS
@@ -37,6 +36,29 @@ Subfolders Verbatim
 Channel cognitect
 Far :cognitect-remote:
 Near :cognitect-local:
+CopyArrivalDate yes
+Create Both
+Expunge Both
+Patterns *
+SyncState *
+
+# legacy email
+
+IMAPStore legacy-remote
+Host imap.gmail.com
+SSLType IMAPS
+AuthMechs Login
+UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep xmlblog | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
+PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep xmlblog | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+
+MaildirStore legacy-local
+Path ~/.mail/legacy/
+Inbox ~/.mail/legacy/INBOX/
+Subfolders Verbatim
+
+Channel legacy
+Far :legacy-remote:
+Near :legacy-local:
 CopyArrivalDate yes
 Create Both
 Expunge Both
