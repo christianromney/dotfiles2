@@ -282,9 +282,9 @@ degrees in the echo area."
 
         (:name "re: Randi" :query "Randi" :key ?r)
         (:name "re: Sebastian" :query "Sebastian" :key ?s)
-        (:name "re: Mom" :query "Jenny" :key ?j)
-        (:name "re: Dad" :query "Leslie" :key ?l)
-        (:name "re: Wes" :query "Wesley" :key ?y)
+        (:name "from: Mom" :query "from:jennyromney" :key ?j)
+        (:name "from: Dad" :query "from:leslieromney" :key ?l)
+        (:name "from: Wes" :query "from:wesleyromney" :key ?y)
 
         (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
         (:name "Today's messages" :query "date:today..now" :key ?t)
@@ -328,6 +328,9 @@ degrees in the echo area."
      t))
 
   (after! mu4e
+    (mu4e-marker-icons-mode 1)
+    (mu4e-alert-set-default-style 'notifier)
+    (mu4e-alert-enable-notifications)
     (add-hook 'message-setup-hook #'message-sort-headers))
 
   (message "=> loaded mail configuration"))

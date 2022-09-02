@@ -62,6 +62,7 @@
 (package! reveal-in-osx-finder)
 (package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! xterm-color)
+(package! mu4e-marker-icons)
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
