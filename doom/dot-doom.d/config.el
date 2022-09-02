@@ -246,8 +246,53 @@ degrees in the echo area."
 (when (modulep! :email mu4e)
   (use-package! mu4e
     :defer t
+    :init
+    (setq compose-mail-user-agent-warnings nil
+          message-mail-user-agent t
+          mail-user-agent 'message-user-agent
+
+          message-wide-reply-confirm-recipients t
+          message-confirm-send nil
+          message-kill-buffer-on-exit t)
+
+    (setq mail-specify-envelope-from t
+          mail-envelope-from 'header
+          message-sendmail-envelope-from 'header
+          message-sendmail-extra-arguments '("--read-envelope-from")
+          message-sendmail-f-is-evil t
+          message-send-mail-function #'smtpmail-send-it
+          send-mail-function #'smtpmail-send-it
+          sendmail-program (executable-find "msmtp"))
+
+    (setq mu4e-attachment-dir "~/Desktop"
+          mu4e-change-filenames-when-moving t
+          mu4e-context-policy 'ask-if-none
+          mu4e-compose-context-policy 'always-ask
+          mu4e-index-cleanup nil
+          mu4e-index-lazy-check t
+          mu4e-update-interval (* 10 60)
+          +mu4e-gmail-accounts
+          '(("christian.a.romney@gmail.com" . "/personal")
+            ("christian.romney@thinkrelevance.com" . "/cognitect")))
+
+    (setq mu4e-bookmarks
+      '((:name "Personal messages" :query "m:/personal/INBOX" :key ?p)
+        (:name "Cognitect messages" :query "m:/cognitect/INBOX" :key ?c)
+
+        (:name "re: Randi" :query "Randi" :key ?r)
+        (:name "re: Sebastian" :query "Sebastian" :key ?s)
+        (:name "re: Mom" :query "Jenny" :key ?j)
+        (:name "re: Dad" :query "Leslie" :key ?l)
+        (:name "re: Wes" :query "Wesley" :key ?y)
+
+        (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
+        (:name "Today's messages" :query "date:today..now" :key ?t)
+        (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+        (:name "Messages with attachments" :query "mime:*" :key ?a)
+        (:name "Messages with images" :query "mime:image/*" :key ?i)
+        (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+
     :config
-    (setq mu4e-maildir "~/.mail")
     (set-email-account!
      "personal"
      '((user-mail-address      . "christian.a.romney@gmail.com")
@@ -256,37 +301,23 @@ degrees in the echo area."
        (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
        (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
        (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
-       (mu4e-compose-signature . "---\nRegards,\nChristian"))
+       (mu4e-compose-signature . "\n\nRegards,\nChristian"))
      t)
+
     (set-email-account!
      "cognitect"
-     '((user-mail-address      . "christian.romney@cognitect.com")
+     '((user-mail-address      . "christian.romney@thinkrelevance.com")
        (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
        (mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
        (mu4e-drafts-folder     . "/cognitect/[Gmail]/Drafts")
        (mu4e-trash-folder      . "/cognitect/[Gmail]/Trash")
        (mu4e-refile-folder     . "/cognitect/[Gmail]/All Mail")
-       (mu4e-compose-signature . "---\nRegards,\nChristian"))
+       (mu4e-compose-signature . "\n\nRegards,\nChristian Romney"))
      t))
+
   (after! mu4e
-    (setq compose-mail-user-agent-warnings nil
-          mail-envelope-from 'header
-          mail-specify-envelope-from t
-          mail-user-agent 'message-user-agent
-          message-confirm-send nil
-          message-kill-buffer-on-exit t
-          message-mail-user-agent t
-          message-send-mail-function #'message-send-mail-with-sendmail
-          message-sendmail-envelope-from 'header
-          message-sendmail-extra-arguments '("--read-envelope-from")
-          message-sendmail-f-is-evil t
-          message-wide-reply-confirm-recipients t
-          mu4e-index-cleanup nil
-          mu4e-index-lazy-check t
-          mu4e-update-interval (* 10 60)
-          send-mail-function #'smtpmail-send-it
-          sendmail-program (executable-find "msmtp"))
     (add-hook 'message-setup-hook #'message-sort-headers))
+
   (message "=> loaded mail configuration"))
 
 (after! circe
