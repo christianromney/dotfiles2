@@ -276,8 +276,9 @@ degrees in the echo area."
             ("christian.romney@thinkrelevance.com" . "/cognitect")))
 
     (setq mu4e-bookmarks
-      '((:name "Personal messages" :query "m:/personal/INBOX" :key ?p)
-        (:name "Cognitect messages" :query "m:/cognitect/INBOX" :key ?c)
+      '((:name "Personal inbox" :query "m:/personal/INBOX" :key ?p)
+        (:name "Cognitect inbox" :query "m:/cognitect/INBOX" :key ?c)
+        (:name "Legacy inbox" :query "m:/legacy/INBOX" :key ?x)
 
         (:name "re: Randi" :query "Randi" :key ?r)
         (:name "re: Sebastian" :query "Sebastian" :key ?s)
