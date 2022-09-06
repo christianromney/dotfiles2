@@ -4,6 +4,7 @@
 (use-package ef-themes
   :init
   (setq doom-font                 "JetBrains Mono:pixelsize=20"
+        doom-unicode-font         "FontAwesome:pixelsize=20"
         display-line-numbers-type t
         fancy-splash-image        (concat doom-private-dir "splash.png"))
 
@@ -243,97 +244,118 @@ degrees in the echo area."
 (setq magit-revision-show-gravatars t)
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
-(when (modulep! :email mu4e)
-  (use-package! mu4e
-    :defer t
-    :init
-    (setq compose-mail-user-agent-warnings nil
-          message-mail-user-agent t
-          mail-user-agent 'message-user-agent
+(use-package! mu4e
+  :when (modulep! :email mu4e)
+  :defer t
+  :init
+  ;; general emacs mail behavior
+  (setq compose-mail-user-agent-warnings nil
+        message-wide-reply-confirm-recipients t
+        message-confirm-send nil
+        message-kill-buffer-on-exit t)
 
-          message-wide-reply-confirm-recipients t
-          message-confirm-send nil
-          message-kill-buffer-on-exit t)
+  ;; sendmail configuration
+  (setq message-mail-user-agent t
+        mail-user-agent 'message-user-agent
+        sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-send-mail-function #'smtpmail-send-it
+        message-sendmail-envelope-from 'header
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-sendmail-f-is-evil t
+        mail-envelope-from 'header
+        mail-specify-envelope-from t)
 
-    (setq mail-specify-envelope-from t
-          mail-envelope-from 'header
-          message-sendmail-envelope-from 'header
-          message-sendmail-extra-arguments '("--read-envelope-from")
-          message-sendmail-f-is-evil t
-          message-send-mail-function #'smtpmail-send-it
-          send-mail-function #'smtpmail-send-it
-          sendmail-program (executable-find "msmtp"))
+  ;; general mu4e settings
+  (setq mu4e-attachment-dir "~/Desktop"
+        mu4e-change-filenames-when-moving t
+        mu4e-context-policy 'ask-if-none
+        mu4e-compose-context-policy 'always-ask
+        mu4e-index-cleanup nil
+        mu4e-index-lazy-check t
+        mu4e-update-interval (* 10 60))
 
-    (setq mu4e-attachment-dir "~/Desktop"
-          mu4e-change-filenames-when-moving t
-          mu4e-context-policy 'ask-if-none
-          mu4e-compose-context-policy 'always-ask
-          mu4e-index-cleanup nil
-          mu4e-index-lazy-check t
-          mu4e-update-interval (* 10 60)
-          +mu4e-gmail-accounts
-          '(("christian.a.romney@gmail.com" . "/personal")
-            ("christian.romney@thinkrelevance.com" . "/cognitect")))
+  ;; mu4e appearance customizations
+  (setq mu4e-headers-attach-mark    '("a" . " ")
+        mu4e-headers-calendar-mark  '("c" . " ")
+        mu4e-headers-draft-mark     '("D" . " ")
+        mu4e-headers-encrypted-mark '("x" . " ")
+        mu4e-headers-flagged-mark   '("F" . " ")
+        mu4e-headers-list-mark      '("l" . " ")
+        mu4e-headers-passed-mark    '("P" . " ")
+        mu4e-headers-personal-mark  '("p" . " ")
+        mu4e-headers-replied-mark   '("R" . " ")
+        mu4e-headers-seen-mark      '("s" . " ")
+        mu4e-headers-signed-mark    '("S" . " ")
+        mu4e-headers-trashed-mark   '("T" . " ")
+        mu4e-headers-unread-mark    '("u" . " "))
+  :config
+  ;; configure mu4e main screen bookmarks
+  (setq mu4e-bookmarks
+        '((:name "Personal inbox" :query "m:/personal/INBOX" :key ?p)
+          (:name "Cognitect inbox" :query "m:/cognitect/INBOX" :key ?c)
+          (:name "Legacy inbox" :query "m:/legacy/INBOX" :key ?x)
 
-    (setq mu4e-bookmarks
-      '((:name "Personal inbox" :query "m:/personal/INBOX" :key ?p)
-        (:name "Cognitect inbox" :query "m:/cognitect/INBOX" :key ?c)
-        (:name "Legacy inbox" :query "m:/legacy/INBOX" :key ?x)
+          (:name "re: Randi" :query "Randi" :key ?r)
+          (:name "re: Sebastian" :query "Sebastian" :key ?s)
+          (:name "from: Mom" :query "from:jennyromney" :key ?j)
+          (:name "from: Dad" :query "from:leslieromney" :key ?l)
+          (:name "from: Wes" :query "from:wesleyromney" :key ?y)
 
-        (:name "re: Randi" :query "Randi" :key ?r)
-        (:name "re: Sebastian" :query "Sebastian" :key ?s)
-        (:name "from: Mom" :query "from:jennyromney" :key ?j)
-        (:name "from: Dad" :query "from:leslieromney" :key ?l)
-        (:name "from: Wes" :query "from:wesleyromney" :key ?y)
+          (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
+          (:name "Today's messages" :query "date:today..now" :key ?t)
+          (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+          (:name "Messages with attachments" :query "mime:*" :key ?a)
+          (:name "Messages with images" :query "mime:image/*" :key ?i)
+          (:name "Flagged messages" :query "flag:flagged" :key ?f)))
 
-        (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
-        (:name "Today's messages" :query "date:today..now" :key ?t)
-        (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
-        (:name "Messages with attachments" :query "mime:*" :key ?a)
-        (:name "Messages with images" :query "mime:image/*" :key ?i)
-        (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+  ;; let mu4e know these are gmail accounts
+  (setq +mu4e-gmail-accounts
+        '(("christian.a.romney@gmail.com"        . "/personal")
+          ("christian.romney@thinkrelevance.com" . "/cognitect")
+          ("xmlblog@gmail.com"                   . "/legacy")))
 
-    :config
-    (set-email-account!
-     "personal"
-     '((user-mail-address      . "christian.a.romney@gmail.com")
-       (smtpmail-smtp-user     . "christian.a.romney@gmail.com")
-       (mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
-       (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
-       (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
-       (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
-       (mu4e-compose-signature . "\n\nRegards,\nChristian"))
-     t)
+  ;; let mu4e know which account is which
+  (set-email-account!
+   "personal"
+   '((user-mail-address      . "christian.a.romney@gmail.com")
+     (smtpmail-smtp-user     . "christian.a.romney@gmail.com")
+     (mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
+     (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
+     (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
+     (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
+     (mu4e-compose-signature . "\n\nRegards,\nChristian"))
+   t)
 
-    (set-email-account!
-     "cognitect"
-     '((user-mail-address      . "christian.romney@thinkrelevance.com")
-       (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
-       (mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
-       (mu4e-drafts-folder     . "/cognitect/[Gmail]/Drafts")
-       (mu4e-trash-folder      . "/cognitect/[Gmail]/Trash")
-       (mu4e-refile-folder     . "/cognitect/[Gmail]/All Mail")
-       (mu4e-compose-signature . "\n\nRegards,\nChristian Romney"))
-     t)
+  (set-email-account!
+   "cognitect"
+   '((user-mail-address      . "christian.romney@thinkrelevance.com")
+     (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
+     (mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
+     (mu4e-drafts-folder     . "/cognitect/[Gmail]/Drafts")
+     (mu4e-trash-folder      . "/cognitect/[Gmail]/Trash")
+     (mu4e-refile-folder     . "/cognitect/[Gmail]/All Mail")
+     (mu4e-compose-signature . "\n\nRegards,\nChristian Romney"))
+   t)
 
-    (set-email-account!
-     "legacy"
-     '((user-mail-address      . "xmlblog@gmail.com")
-       (smtpmail-smtp-user     . "xmlblog@gmail.com")
-       (mu4e-sent-folder       . "/legacy/[Gmail]/Sent Mail")
-       (mu4e-drafts-folder     . "/legacy/[Gmail]/Drafts")
-       (mu4e-trash-folder      . "/legacy/[Gmail]/Trash")
-       (mu4e-refile-folder     . "/legacy/[Gmail]/All Mail")
-       (mu4e-compose-signature . "\n\nRegards,\nChristian"))
-     t))
+  (set-email-account!
+   "legacy"
+   '((user-mail-address      . "xmlblog@gmail.com")
+     (smtpmail-smtp-user     . "xmlblog@gmail.com")
+     (mu4e-sent-folder       . "/legacy/[Gmail]/Sent Mail")
+     (mu4e-drafts-folder     . "/legacy/[Gmail]/Drafts")
+     (mu4e-trash-folder      . "/legacy/[Gmail]/Trash")
+     (mu4e-refile-folder     . "/legacy/[Gmail]/All Mail")
+     (mu4e-compose-signature . "\n\nRegards,\nChristian"))
+   t))
 
-  (after! mu4e
-    (mu4e-marker-icons-mode 1)
-    (mu4e-alert-set-default-style 'notifier)
-    (mu4e-alert-enable-notifications)
-    (add-hook 'message-setup-hook #'message-sort-headers))
+;; set up hooks and notifications
+(after! mu4e
+  (mu4e-alert-set-default-style 'notifier)
+  (mu4e-alert-enable-notifications)
+  (add-hook 'message-setup-hook #'message-sort-headers))
 
-  (message "=> loaded mail configuration"))
+(message "=> loaded mail configuration")
 
 (after! circe
   (require 'auth-source)
