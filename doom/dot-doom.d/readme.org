@@ -170,7 +170,7 @@ variable ensures return will continue commenting on the new line.
 (setq +default-want-RET-continue-comments nil
       doom-cache-dir
       (custom/ensure-directory
-       (expand-file-name ".local/cache/" doom-private-dir)))
+       (expand-file-name "~/.local/emacs/cache/" doom-private-dir)))
 #+end_src
 
 ** Abbrev Mode

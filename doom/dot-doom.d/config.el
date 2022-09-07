@@ -112,7 +112,7 @@ degrees in the echo area."
 (setq +default-want-RET-continue-comments nil
       doom-cache-dir
       (custom/ensure-directory
-       (expand-file-name ".local/cache/" doom-private-dir)))
+       (expand-file-name "~/.local/emacs/cache/" doom-private-dir)))
 
 (setq abbrev-file-name "~/.doom.d/abbrev_defs"
       save-abbrevs     'silent)
