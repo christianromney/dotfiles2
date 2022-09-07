@@ -142,15 +142,12 @@ degrees in the echo area."
     ;; add sole exception
     (sp-pair open close :unless '(:add sp-in-string-p))))
 
-(when (modulep! :completion vertico)
-  (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
-  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
-
-(add-hook 'imenu-after-jump-hook #'pulsar-recenter-middle)
-(add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
-
-(add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
-(add-hook 'isearch-mode-end-hook #'pulsar-reveal-entry)
+(use-package! pulsar
+  :init
+  (setq pulsar-pulse t
+        pulsar-delay 0.1
+        pulsar-iterations 5)
+  (pulsar-global-mode t))
 
 (when IS-MAC
   (setq insert-directory-program "/usr/local/bin/gls"
