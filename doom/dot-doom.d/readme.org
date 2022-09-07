@@ -10,7 +10,7 @@ I run the [[https://bitbucket.org/mituharu/emacs-mac/src/master/][Emacs mac-port
 brew install emacs-mac --with-native-comp --with-imagemagick
 #+end_example
 
-This enables ligature support (see
+This enables ligature support (see [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions#using-composition-mode-in-emacs-mac-port][here]]).
 
 * General Configuration
 First, I let emacs know who I am.
