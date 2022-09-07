@@ -500,7 +500,7 @@ degrees in the echo area."
        ("study"      . ?s)
        (:grouptags)
        ("book"       . ?b)
-       ("paper"      . ?P)
+       ("paper"      . ?a)
        (:endgrouptag)
        ("work"       . ?w)
        ("personal"   . ?p))
