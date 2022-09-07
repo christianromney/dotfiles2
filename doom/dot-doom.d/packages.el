@@ -63,6 +63,7 @@
 (package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! xterm-color)
 (package! mu4e-marker-icons)
+(package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
