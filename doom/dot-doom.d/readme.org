@@ -650,7 +650,7 @@ The principal configuration block sets up directories and org-capture templates.
        ("study"      . ?s)
        (:grouptags)
        ("book"       . ?b)
-       ("paper"      . ?p)
+       ("paper"      . ?P)
        (:endgrouptag)
        ("work"       . ?w)
        ("personal"   . ?p))
