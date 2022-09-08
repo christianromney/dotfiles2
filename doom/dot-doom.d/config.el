@@ -18,7 +18,7 @@
   (mac-auto-operator-composition-mode)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-(defun custom/ensure-directory (path)
+(defun +mkdirp (path)
   "Ensures the directory path exists, creating any parents as
 needed. Returns the expanded pathname."
   (let ((abspath (expand-file-name path)))
@@ -28,7 +28,7 @@ needed. Returns the expanded pathname."
         (make-directory abspath 'parents)
         abspath))))
 
-(defun custom/ensure-file (path)
+(defun +touch (path)
   "Ensures the file path exists, creating any parents as needed.
 Returns the expanded pathname."
   (let ((abspath (expand-file-name path)))
@@ -106,21 +106,30 @@ degrees in the echo area."
       enable-dir-local-variables  t
       enable-local-variables      t
       initial-major-mode          'lisp-interaction-mode
+      user-emacs-directory        (+mkdirp (expand-file-name "~/.local/emacs/cache/"))
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
 
 (setq +default-want-RET-continue-comments nil
-      doom-cache-dir
-      (custom/ensure-directory
-       (expand-file-name "~/.local/emacs/cache/" doom-private-dir)))
+      +file-templates-dir                 (expand-file-name "snippets" doom-private-dir)
+      doom-cache-dir                      user-emacs-directory)
+
+(add-to-list 'doom-large-file-size-alist
+             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (setq abbrev-file-name "~/.doom.d/abbrev_defs"
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 
+(setq bookmark-default-file     (+touch
+                                 (expand-file-name "etc/bookmarks" doom-cache-dir))
+      bookmark-old-default-file bookmark-default-file
+      bookmark-file             bookmark-default-file
+      bookmark-sort-flag        t)
+
 (when (modulep! :checkers spell)
   (setq spell-fu-directory
-        (custom/ensure-directory (expand-file-name "etc/spell-fu/" doom-cache-dir)))
+        (+mkdirp (expand-file-name "etc/spell-fu/" doom-cache-dir)))
   (add-hook 'spell-fu-mode-hook
             (lambda ()
               (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
@@ -255,7 +264,9 @@ degrees in the echo area."
     :config
     (setq company-idle-delay 0.9)))
 
-(setq magit-revision-show-gravatars t)
+(setq magit-revision-show-gravatars t
+      forge-database-file
+      (expand-file-name "forge/forge-database.sqlite" doom-cache-dir))
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
 (use-package! mu4e
@@ -266,7 +277,8 @@ degrees in the echo area."
   (setq compose-mail-user-agent-warnings nil
         message-wide-reply-confirm-recipients t
         message-confirm-send nil
-        message-kill-buffer-on-exit t)
+        message-kill-buffer-on-exit t
+        message-directory "~/.mail")
 
   ;; sendmail configuration
   (setq message-mail-user-agent t
@@ -507,24 +519,33 @@ and bibliographies.")
   (setq
    org-refile-targets
    '((nil :maxlevel . 5)
-     (org-agenda-files :maxlevel . 5))
+     (org-agenda-files :maxlevel . 5)))
 
-   ;; tags
-   org-tag-alist
-   '((:startgrouptag)
-     ("study"      . ?s)
-     (:grouptags)
-     ("book"       . ?b)
-     ("paper"      . ?a)
-     (:endgrouptag)
-     ("work"       . ?w)
-     ("personal"   . ?p))
+  ;; tags
+  (setq org-tag-alist
+        '((:startgrouptag)
+          ("study"      . ?s)
+          (:grouptags)
+          ("book"       . ?b)
+          ("paper"      . ?a)
+          (:endgrouptag)
+          ("work"       . ?w)
+          ("personal"   . ?p)))
 
-   ;; capture
-   org-capture-templates
-   `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
-      "* TODO %^{Task} %^G")))
+  ;; clock in/out
+  (setq org-clock-persist-file
+        (expand-file-name "etc/org-clock-save.el" doom-cache-dir))
 
+  ;; capture
+  (setq +org-capture-changelog-file "changelog.org.gpg"
+        +org-capture-notes-file "notes.org.gpg"
+        +org-capture-projects-file "projects.org.gpg"
+        +org-capture-todo-file "todo.org.gpg"
+        +org-capture-journal-file "journal.org.gpg"
+
+        org-capture-templates
+        `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
+           "* TODO %^{Task} %^G")))
   (map!
    (:when (modulep! :lang org +roam2)
     :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
@@ -578,16 +599,18 @@ and bibliographies.")
         org-agenda-todo-ignore-deadlines  t
         org-agenda-todo-ignore-scheduled  t
         org-agenda-start-on-weekday       1
-        org-agenda-use-tag-inheritance    nil)
-  org-agenda-custom-commands
-  ' (("d" "Dashboard"
-      ((agenda "" ((org-agenda-span 10)))
-       (tags-todo "+PRIORITY=\"A\"")
-       (tags-todo "work")
-       (tags-todo "personal")))
-     ("n" "Agenda and all TODOs"
-      ((agenda "" ((org-agenda-span 10)))
-       (alltodo "")))))
+        org-agenda-use-tag-inheritance    nil
+        org-icalendar-combined-agenda-file
+        (expand-file-name "org.ics" org-directory)
+        org-agenda-custom-commands
+        ' (("d" "Dashboard"
+            ((agenda "" ((org-agenda-span 10)))
+             (tags-todo "+PRIORITY=\"A\"")
+             (tags-todo "work")
+             (tags-todo "personal")))
+           ("n" "Agenda and all TODOs"
+            ((agenda "" ((org-agenda-span 10)))
+             (alltodo ""))))))
 
 (use-package! org-super-agenda
   :after org-agenda
@@ -715,6 +738,19 @@ and bibliographies.")
           right-margin-width 2)))
 
 (message "=> loaded org configuration")
+
+(use-package! projectile
+  :defer t
+  :config
+  (+mkdirp (expand-file-name "projectile" doom-cache-dir))
+  (setq
+   projectile-cache-file
+   (expand-file-name "projectile/projectile.cache" doom-cache-dir)
+   projectile-known-projects-file
+   (expand-file-name "projectile/projectile.projects" doom-cache-dir)))
+
+(after! projectile
+  (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
 (use-package! clojure-mode
   :defer t
@@ -852,12 +888,6 @@ with large files for some reason."
 
 (add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
-
-(after! projectile
-  (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
-
-(add-to-list 'doom-large-file-size-alist
-             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
