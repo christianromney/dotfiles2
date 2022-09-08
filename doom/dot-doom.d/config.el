@@ -648,7 +648,8 @@ and bibliographies.")
         cal-html-directory                   "~/Desktop"
         cal-html-holidays                    t
         diary-file
-        (expand-file-name "appointment-diary.gpg" org-directory)))
+        (expand-file-name "appointment-diary.gpg" org-directory))
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
 
 (use-package! holidays
   :after org
