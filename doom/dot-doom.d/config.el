@@ -145,9 +145,26 @@ degrees in the echo area."
 (use-package! pulsar
   :init
   (setq pulsar-pulse t
-        pulsar-delay 0.1
-        pulsar-iterations 5)
-  (pulsar-global-mode t))
+        pulsar-delay 0.05
+        pulsar-iterations 5
+        pulsar-face 'pulsar-yellow
+        pulsar-highlight-face 'pulsar-magenta)
+  (pulsar-global-mode t)
+  :config
+  ;; integration with the `consult' package:
+  (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
+  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
+
+  ;; integration with the built-in `isearch':
+  (add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
+  (advice-add 'isearch-forward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-repeat-forward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-backward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-repeat-backward :after #'pulsar-recenter-middle)
+
+  ;; integration with the built-in `imenu':
+  (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+  (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
 
 (when IS-MAC
   (setq insert-directory-program "/usr/local/bin/gls"
@@ -445,242 +462,257 @@ degrees in the echo area."
   (interactive)
   (custom/org-markup-word #x00002B))
 
-(when (modulep! :lang org)
-  (use-package! org
-    :defer t
-    :init
-    (setq  org-directory "~/doc/notes/content/")
-    (when (modulep! :lang org +roam2)
-      (setq
-       org-roam-directory         "~/doc/notes/content/roam/"
-       org-roam-dailies-directory "journal/"
-       org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
-                                    org-roam-reflinks-section)
-       org-roam-graph-executable  "neato"
-       org-roam-capture-templates
-       '(("d" "default" plain "%?"
-          :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                             "#+title: ${title}")
-          :unnarrowed t)
-         ("s" "sensitive" plain "%?"
-          :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
-                             "#+title: ${title}\n")
-          :unnarrowed t))
-       org-roam-dailies-capture-templates
-       '(("d" "default" entry
-          "* %?"
-          :target (file+head "%<%Y-%m-%d>.org.gpg"
-                             "#+title: %<%Y-%m-%d>\n")))))
-    :config
-    ;; behaviors
-    (setq org-export-html-postamble          nil
-          org-hide-emphasis-markers          t
-          org-html-validation-link           nil
-          org-log-done                       nil
-          org-outline-path-complete-in-steps nil
-          org-refile-use-cache               t
-          org-refile-use-outline-path        t
-          org-return-follows-link            t
-          org-src-window-setup               'current-window
-          org-use-fast-todo-selection        t
-          org-use-sub-superscripts           "{}")
-
-    ;; refiling
+(use-package! org
+  :defer t
+  :init
+  (setq  org-directory "~/doc/notes/content/")
+  (when (modulep! :lang org +roam2)
     (setq
-     org-refile-targets
-     '((nil :maxlevel . 5)
-       (org-agenda-files :maxlevel . 5))
+     org-roam-directory         "~/doc/notes/content/roam/"
+     org-roam-dailies-directory "journal/"
+     org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
+                                  org-roam-reflinks-section)
+     org-roam-graph-executable  "neato"
+     org-roam-capture-templates
+     '(("d" "default" plain "%?"
+        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ${title}")
+        :unnarrowed t)
+       ("s" "sensitive" plain "%?"
+        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
+                           "#+title: ${title}\n")
+        :unnarrowed t))
+     org-roam-dailies-capture-templates
+     '(("d" "default" entry
+        "* %?"
+        :target (file+head "%<%Y-%m-%d>.org.gpg"
+                           "#+title: %<%Y-%m-%d>\n")))))
+  :config
+  ;; behaviors
+  (setq org-export-html-postamble          nil
+        org-hide-emphasis-markers          t
+        org-html-validation-link           nil
+        org-log-done                       nil
+        org-outline-path-complete-in-steps nil
+        org-refile-use-cache               t
+        org-refile-use-outline-path        t
+        org-return-follows-link            t
+        org-src-window-setup               'current-window
+        org-use-fast-todo-selection        t
+        org-use-sub-superscripts           "{}")
 
-     ;; tags
-     org-tag-alist
-     '((:startgrouptag)
-       ("study"      . ?s)
-       (:grouptags)
-       ("book"       . ?b)
-       ("paper"      . ?a)
-       (:endgrouptag)
-       ("work"       . ?w)
-       ("personal"   . ?p))
+  ;; refiling
+  (setq
+   org-refile-targets
+   '((nil :maxlevel . 5)
+     (org-agenda-files :maxlevel . 5))
 
-     ;; capture
-     org-capture-templates
-     `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
-        "* TODO %^{Task} %^G")))
+   ;; tags
+   org-tag-alist
+   '((:startgrouptag)
+     ("study"      . ?s)
+     (:grouptags)
+     ("book"       . ?b)
+     ("paper"      . ?a)
+     (:endgrouptag)
+     ("work"       . ?w)
+     ("personal"   . ?p))
 
-    (map!
-     (:when (modulep! :lang org +roam2)
-      :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
-     (:map org-mode-map
-      "C-. o b" #'custom/org-bold-word
-      "C-. o c" #'custom/org-code-word
-      "C-. o i" #'custom/org-italicize-word
-      "C-. o s" #'custom/org-strike-word
-      "C-. o u" #'custom/org-underline-word
-      "C-. o v" #'custom/org-verbatim-word))))
+   ;; capture
+   org-capture-templates
+   `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
+      "* TODO %^{Task} %^G")))
 
-(when (modulep! :lang org)
-  (use-package! org-glossary
-    :after org
-    :hook (org-mode . org-glossary-mode)
-    :init
-    ;; this macro supplies theme color names inside the body
-    (defface org-glossary-term
-      '((default :inherit (popup-tip-face)
-          :weight normal))
-      "Base face used for term references.")
-    :config
-    (setq org-glossary-fontify-types-differently nil)
-    (map!
-     (:map org-mode-map
-      "C-. o g" #'org-glossary-create-definition))))
+  (map!
+   (:when (modulep! :lang org +roam2)
+    :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
+   (:map org-mode-map
+    "C-. o b" #'custom/org-bold-word
+    "C-. o c" #'custom/org-code-word
+    "C-. o i" #'custom/org-italicize-word
+    "C-. o s" #'custom/org-strike-word
+    "C-. o u" #'custom/org-underline-word
+    "C-. o v" #'custom/org-verbatim-word)))
 
-(when (modulep! :lang org)
-  (use-package! zotxt
-    :after org
-    :hook (org-mode . org-zotxt-mode)
-    :config
-    (setq bibtex-dialect                  'biblatex
-          org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
+(use-package! org-glossary
+  :after org
+  :hook (org-mode . org-glossary-mode)
+  :init
+  ;; this macro supplies theme color names inside the body
+  (defface org-glossary-term
+    '((default :inherit (popup-tip-face)
+        :weight normal))
+    "Base face used for term references.")
+  :config
+  (setq org-glossary-fontify-types-differently nil)
+  (map!
+   (:map org-mode-map
+    "C-. o g" #'org-glossary-create-definition)))
 
-  (when (modulep! :tools biblio)
-    (setq! citar-bibliography '("~/doc/notes/references.bib"))))
+(use-package! zotxt
+  :after org
+  :hook (org-mode . org-zotxt-mode)
+  :config
+  (setq bibtex-dialect                  'biblatex
+        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
 
-(when (modulep! :lang org)
-  (use-package! org-agenda
-    :defer t
-    :config
-    (setq org-agenda-file-regexp            "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
-          org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
-                                              "~/doc/notes/content/"
-                                              "~/doc/notes/content/roam/"
-                                              "~/doc/notes/content/roam/journal/")
-          org-agenda-window-setup           'current-window
-          org-agenda-include-diary          t
-          org-agenda-show-log               t
-          org-agenda-skip-deadline-if-done  t
-          org-agenda-skip-scheduled-if-done t
-          org-agenda-skip-timestamp-if-done t
-          org-agenda-todo-ignore-deadlines  t
-          org-agenda-todo-ignore-scheduled  t
-          org-agenda-start-on-weekday       1
-          org-agenda-use-tag-inheritance    nil)
-    org-agenda-custom-commands
-    ' (("d" "Dashboard"
-        ((agenda "" ((org-agenda-span 10)))
-         (tags-todo "+PRIORITY=\"A\"")
-         (tags-todo "work")
-         (tags-todo "personal")))
-       ("n" "Agenda and all TODOs"
-        ((agenda "" ((org-agenda-span 10)))
-         (alltodo "")))))
+(when (modulep! :tools biblio)
+  (setq! citar-bibliography '("~/doc/notes/references.bib")))
 
-  (use-package! org-super-agenda
-    :after org-agenda
-    :config
-    (setq org-super-agenda-groups '((:auto-priority t)
-                                    (:auto-tags t)
-                                    (:auto-todo t)))
-    (org-super-agenda-mode)))
+(use-package! org-agenda
+  :defer t
+  :config
+  (setq org-agenda-file-regexp            "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
+        org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
+                                            "~/doc/notes/content/"
+                                            "~/doc/notes/content/roam/"
+                                            "~/doc/notes/content/roam/journal/")
+        org-agenda-window-setup           'current-window
+        org-agenda-include-diary          t
+        org-agenda-show-log               t
+        org-agenda-skip-deadline-if-done  t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-todo-ignore-deadlines  t
+        org-agenda-todo-ignore-scheduled  t
+        org-agenda-start-on-weekday       1
+        org-agenda-use-tag-inheritance    nil)
+  org-agenda-custom-commands
+  ' (("d" "Dashboard"
+      ((agenda "" ((org-agenda-span 10)))
+       (tags-todo "+PRIORITY=\"A\"")
+       (tags-todo "work")
+       (tags-todo "personal")))
+     ("n" "Agenda and all TODOs"
+      ((agenda "" ((org-agenda-span 10)))
+       (alltodo "")))))
 
-(when (modulep! :lang org)
-  (use-package! holidays
-    :after org-agenda
-    :config
-    (require 'brazilian-holidays)
-    (setq calendar-location-name      "Pembroke Pines, FL"
-          calendar-latitude           26.0
-          calendar-longitude          -80.3
-          calendar-week-start-day     1
-          calendar-mark-holidays-flag t
-          calendar-holidays
-          (append '((holiday-fixed 1 1   "New Year's Day")
-                    (holiday-fixed 2 14  "Valentine's Day")
-                    (holiday-fixed 4 1   "April Fools' Day")
-                    (holiday-fixed 10 31 "Halloween")
-                    (holiday-easter-etc)
-                    (holiday-fixed 12 24 "Christmas Eve")
-                    (holiday-fixed 12 25 "Christmas")
-                    (solar-equinoxes-solstices))
-                  brazilian-holidays--general-holidays))))
+(use-package! org-super-agenda
+  :after org-agenda
+  :config
+  (setq org-super-agenda-groups '((:auto-priority t)
+                                  (:auto-tags t)
+                                  (:auto-todo t)))
+  (org-super-agenda-mode))
 
-(when (modulep! :lang org)
-  (use-package! graphviz-dot-mode
-    :defer t
-    :config
-    (setq graphviz-dot-indent-width 2))
+(use-package! calendar
+  :after org
+  :config
+  (defface +calendar-holiday
+    '((t . (:inherit pulsar-cyan)))
+    "Face for holidays in calendar.")
 
-  (use-package! org-auto-tangle
-    :defer t
-    :hook (org-mode . org-auto-tangle-mode)
-    :config
-    (setq org-auto-tangle-default t))
+  (defface +calendar-today
+    '((t . (:foreground "violet red" :box t)))
+    "Face for the current day in calendar.")
 
-  (after! org
-    (when (modulep! :lang plantuml)
-      (setq plantuml-default-exec-mode 'jar))
+  (defface +calendar-appointment
+    '((t . (:inherit pulsar-yellow)))
+    "Face for appointment diary entries in calendar.")
 
-    (progn
-      (pdf-loader-install)
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((clojure    . t)
-         (css        . t)
-         (dot        . t)
-         (emacs-lisp . t)
-         (java       . t)
-         (js         . t)
-         (makefile   . t)
-         (plantuml   . t)
-         (prolog     . t)
-         (python     . t)
-         (R          . t)
-         (ruby       . t)
-         (scheme     . t)
-         (sed        . t)
-         (shell      . t)
-         (sql        . t))))))
+  (setq calendar-location-name               "Pembroke Pines, FL"
+        calendar-latitude                    26.0
+        calendar-longitude                   -80.3
+        calendar-week-start-day              0
+        calendar-mark-holidays-flag          t
+        calendar-mark-diary-entries-flag     t
+        calendar-christian-all-holidays-flag nil
+        calendar-holiday-marker              '+calendar-holiday
+        calendar-today-marker                '+calendar-today
+        diary-entry-marker                   '+calendar-appointment
+        cal-html-directory                   "~/Desktop"
+        cal-html-holidays                    t
+        diary-file
+        (expand-file-name "appointment-diary.gpg" org-directory)))
 
-(when (modulep! :lang org)
-  (after! org
-    (setq org-re-reveal-center               t
-          org-re-reveal-control              t
-          org-re-reveal-default-frag-style   'appear
-          org-re-reveal-defaulttiming        nil
-          org-re-reveal-fragmentinurl        t
-          org-re-reveal-history              nil
-          org-re-reveal-hlevel               2
-          org-re-reveal-keyboard             t
-          org-re-reveal-klipsify-src         t
-          org-re-reveal-mousewheel           nil
-          org-re-reveal-overview             t
-          org-re-reveal-pdfseparatefragments nil
-          org-re-reveal-progress             t
-          org-re-reveal-rolling-links        nil
-          org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
-          org-re-reveal-title-slide          "%t"
-          reveal_inter_presentation_links    t)))
+(use-package! holidays
+  :after org
+  :config
+  (require 'brazilian-holidays)
+  (setq calendar-holidays
+        (append holiday-general-holidays
+                holiday-local-holidays
+                holiday-other-holidays
+                holiday-christian-holidays
+                holiday-solar-holidays
+                brazilian-holidays--general-holidays
+                brazilian-holidays-sp-holidays)))
 
-(when (modulep! :lang org)
-  (setq org-ellipsis                       "…"
-        org-fontify-done-headline          t
-        org-fontify-emphasized-text        t
-        org-fontify-quote-and-verse-blocks t
-        org-fontify-whole-heading-line     t
-        org-modern-star                    '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾")
-        org-pretty-entities                t
-        org-src-fontify-natively           t
-        org-src-tab-acts-natively          t
-        org-startup-folded                 nil
-        org-startup-indented               t)
+(use-package! graphviz-dot-mode
+  :defer t
+  :config
+  (setq graphviz-dot-indent-width 2))
 
-  (add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
-  (add-hook! 'org-mode-hook #'org-modern-mode)
-  (add-hook! 'org-mode-hook :append
-    (lambda ()
-      (setq left-margin-width 2
-            right-margin-width 2)))
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
 
-  (message "=> loaded org configuration"))
+(after! org
+  (when (modulep! :lang plantuml)
+    (setq plantuml-default-exec-mode 'jar))
+
+  (progn
+    (pdf-loader-install)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((clojure    . t)
+       (css        . t)
+       (dot        . t)
+       (emacs-lisp . t)
+       (java       . t)
+       (js         . t)
+       (makefile   . t)
+       (plantuml   . t)
+       (prolog     . t)
+       (python     . t)
+       (R          . t)
+       (ruby       . t)
+       (scheme     . t)
+       (sed        . t)
+       (shell      . t)
+       (sql        . t)))))
+
+(after! org
+  (setq org-re-reveal-center               t
+        org-re-reveal-control              t
+        org-re-reveal-default-frag-style   'appear
+        org-re-reveal-defaulttiming        nil
+        org-re-reveal-fragmentinurl        t
+        org-re-reveal-history              nil
+        org-re-reveal-hlevel               2
+        org-re-reveal-keyboard             t
+        org-re-reveal-klipsify-src         t
+        org-re-reveal-mousewheel           nil
+        org-re-reveal-overview             t
+        org-re-reveal-pdfseparatefragments nil
+        org-re-reveal-progress             t
+        org-re-reveal-rolling-links        nil
+        org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
+        org-re-reveal-title-slide          "%t"
+        reveal_inter_presentation_links    t))
+
+(setq org-ellipsis                       "…"
+      org-fontify-done-headline          t
+      org-fontify-emphasized-text        t
+      org-fontify-quote-and-verse-blocks t
+      org-fontify-whole-heading-line     t
+      org-modern-star                    '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾")
+      org-pretty-entities                t
+      org-src-fontify-natively           t
+      org-src-tab-acts-natively          t
+      org-startup-folded                 nil
+      org-startup-indented               t)
+
+(add-hook! 'org-agenda-finalize-hook #'org-modern-agenda)
+(add-hook! 'org-mode-hook #'org-modern-mode)
+(add-hook! 'org-mode-hook :append
+  (lambda ()
+    (setq left-margin-width 2
+          right-margin-width 2)))
+
+(message "=> loaded org configuration")
 
 (use-package! clojure-mode
   :defer t
