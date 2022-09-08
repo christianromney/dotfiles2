@@ -541,6 +541,7 @@ and bibliographies.")
         org-html-validation-link           nil
         org-log-done                       nil
         org-outline-path-complete-in-steps nil
+        org-M-RET-may-split-line           t
         org-refile-use-cache               t
         org-refile-use-outline-path        t
         org-return-follows-link            t
