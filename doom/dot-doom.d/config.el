@@ -281,7 +281,7 @@ degrees in the echo area."
         mail-specify-envelope-from t)
 
   ;; general mu4e settings
-  (setq mu4e-attachment-dir "~/Desktop"
+  (setq mu4e-attachment-dir "~/Documents/"
         mu4e-change-filenames-when-moving t
         mu4e-context-policy 'ask-if-none
         mu4e-compose-context-policy 'always-ask
@@ -462,31 +462,33 @@ degrees in the echo area."
   (interactive)
   (custom/org-markup-word #x00002B))
 
+(defvar +info-dir "~/Documents/personal/notes"
+  "The root for all notes, calendars, agendas, todos, attachments,
+and bibliographies.")
 (use-package! org
   :defer t
   :init
-  (setq  org-directory "~/doc/notes/content/")
-  (when (modulep! :lang org +roam2)
-    (setq
-     org-roam-directory         "~/doc/notes/content/roam/"
-     org-roam-dailies-directory "journal/"
-     org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
-                                  org-roam-reflinks-section)
-     org-roam-graph-executable  "neato"
-     org-roam-capture-templates
-     '(("d" "default" plain "%?"
-        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ${title}")
-        :unnarrowed t)
-       ("s" "sensitive" plain "%?"
-        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
-                           "#+title: ${title}\n")
-        :unnarrowed t))
-     org-roam-dailies-capture-templates
-     '(("d" "default" entry
-        "* %?"
-        :target (file+head "%<%Y-%m-%d>.org.gpg"
-                           "#+title: %<%Y-%m-%d>\n")))))
+  (setq
+   org-directory              (expand-file-name "content" +info-dir)
+   org-roam-directory         (expand-file-name "roam" org-directory)
+   org-roam-dailies-directory "journal/"
+   org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
+                                org-roam-reflinks-section)
+   org-roam-graph-executable  "neato"
+   org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}")
+      :unnarrowed t)
+     ("s" "sensitive" plain "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org.gpg"
+                         "#+title: ${title}\n")
+      :unnarrowed t))
+   org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org.gpg"
+                         "#+title: %<%Y-%m-%d>\n"))))
   :config
   ;; behaviors
   (setq org-export-html-postamble          nil
@@ -554,19 +556,19 @@ degrees in the echo area."
   :hook (org-mode . org-zotxt-mode)
   :config
   (setq bibtex-dialect                  'biblatex
-        org-cite-csl-styles-dir         "~/doc/notes/zotero/styles/"))
+        org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir)))
 
 (when (modulep! :tools biblio)
-  (setq! citar-bibliography '("~/doc/notes/references.bib")))
+  (setq! citar-bibliography
+         (list (expand-file-name "references.bib" +info-dir))))
 
 (use-package! org-agenda
   :defer t
   :config
   (setq org-agenda-file-regexp            "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
-        org-agenda-files                  '("~/doc/notes/content/todo.org.gpg"
-                                            "~/doc/notes/content/"
-                                            "~/doc/notes/content/roam/"
-                                            "~/doc/notes/content/roam/journal/")
+        org-agenda-files                  (list org-directory
+                                                org-roam-directory
+                                                org-roam-dailies-directory)
         org-agenda-window-setup           'current-window
         org-agenda-include-diary          t
         org-agenda-show-log               t
