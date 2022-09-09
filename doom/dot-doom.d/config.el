@@ -17,6 +17,10 @@
   (mac-auto-operator-composition-mode)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+(setq face-remapping-alist
+'((show-paren-match . (:inherit pulsar-yellow)) ;; yellow highlight
+  (show-paren-mismatch . (:inherit flycheck-error)))) ;; red squiggly underline
+
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"
          :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
@@ -512,8 +516,10 @@ and bibliographies.")
 (use-package! org
   :defer t
   :init
+  (setq org-directory              (expand-file-name "content" +info-dir))
+
+  ;;
   (setq
-   org-directory              (expand-file-name "content" +info-dir)
    org-roam-directory         (expand-file-name "roam" org-directory)
    org-roam-dailies-directory "journal/"
    org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
@@ -781,6 +787,13 @@ and bibliographies.")
           right-margin-width 2)))
 
 (message "=> loaded org configuration")
+
+(use-package paren
+  :config
+  (setq blink-matching-paren t
+      show-paren-mode t
+      show-paren-style 'parenthesis
+      show-paren-delay 0))
 
 (use-package! projectile
   :defer t

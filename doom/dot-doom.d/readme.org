@@ -52,6 +52,18 @@ more room than necessary.
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 #+end_src
 
+*** Face Remapping
+Sometimes I want control over previously defined (or default) faces. We can't
+simply "redefine" an existing face with ~defface~, but we can remap them using the
+~face-remapping-alist~. This is a list that starts with the face to remap followed
+by partial specs.
+
+#+begin_src elisp
+(setq face-remapping-alist
+'((show-paren-match . (:inherit pulsar-yellow)) ;; yellow highlight
+  (show-paren-mismatch . (:inherit flycheck-error)))) ;; red squiggly underline
+#+end_src
+
 ** Dashboard
 My customization of the Doom dashboard.
 
@@ -673,8 +685,10 @@ and bibliographies.")
 (use-package! org
   :defer t
   :init
+  (setq org-directory              (expand-file-name "content" +info-dir))
+
+  ;;
   (setq
-   org-directory              (expand-file-name "content" +info-dir)
    org-roam-directory         (expand-file-name "roam" org-directory)
    org-roam-dailies-directory "journal/"
    org-roam-mode-sections     '((org-roam-backlinks-section :unique t)
@@ -1000,6 +1014,18 @@ The [[https://github.com/minad/org-modern][org-modern]] package adds some nice a
 
 * Programming
 Configuration for additional programming modes.
+
+** Paren Matching
+Highlight and blink matching parentheses.
+
+#+begin_src elisp
+(use-package paren
+  :config
+  (setq blink-matching-paren t
+      show-paren-mode t
+      show-paren-style 'parenthesis
+      show-paren-delay 0))
+#+end_src
 
 ** Projects
 Have projectile save things where I want them.
