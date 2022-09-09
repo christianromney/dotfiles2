@@ -436,7 +436,6 @@ degrees in the echo area."
       "C-x g"     #'magit-status
       "C-x P"     #'print-buffer
       "C-x r I"   #'string-insert-rectangle
-      "C-x C-h"   #'add-file-local-variable-prop-line
       "C-x M-s"   #'transpose-sexps
       "C-x M-t"   #'transpose-paragraphs
       "C-c a"     #'org-agenda
@@ -535,10 +534,7 @@ and bibliographies.")
       :target (file+head "%<%Y-%m-%d>.org.gpg"
                          "#+title: %<%Y-%m-%d>\n"))))
   :config
-  (setq org-indent-mode-turns-off-org-adapt-indentation t
-        org-adapt-indentation nil
-        org-startup-numerated nil
-        org-startup-folded t
+  (setq org-startup-folded t
         org-startup-indented t
         org-startup-with-inline-images t
         org-startup-with-latex-preview t
@@ -974,3 +970,5 @@ with large files for some reason."
     ;; Target: x86_64-apple-darwin20.4.0
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
   (message "=> loaded C configuration"))
+
+(message "=> loaded all configuration.")
