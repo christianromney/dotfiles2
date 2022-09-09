@@ -696,25 +696,32 @@ and bibliographies.")
       :target (file+head "%<%Y-%m-%d>.org.gpg"
                          "#+title: %<%Y-%m-%d>\n"))))
   :config
+  (setq org-indent-mode-turns-off-org-adapt-indentation t
+        org-adapt-indentation nil
+        org-startup-numerated nil
+        org-startup-folded t
+        org-startup-indented t
+        org-startup-with-inline-images t
+        org-startup-with-latex-preview t
+        org-M-RET-may-split-line       t)
+
   ;; behaviors
   (setq org-export-html-postamble          nil
         org-hide-emphasis-markers          t
         org-html-validation-link           nil
         org-log-done                       nil
         org-outline-path-complete-in-steps nil
-        org-M-RET-may-split-line           t
-        org-refile-use-cache               t
-        org-refile-use-outline-path        t
         org-return-follows-link            t
         org-src-window-setup               'current-window
         org-use-fast-todo-selection        t
         org-use-sub-superscripts           "{}")
 
   ;; refiling
-  (setq
-   org-refile-targets
-   '((nil :maxlevel . 5)
-     (org-agenda-files :maxlevel . 5)))
+  (setq org-refile-use-cache               t
+        org-refile-use-outline-path        t
+           org-refile-targets
+        '((nil :maxlevel . 5)
+          (org-agenda-files :maxlevel . 5)))
 
   ;; tags
   (setq org-tag-alist
