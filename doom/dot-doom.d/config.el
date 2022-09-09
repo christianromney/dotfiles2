@@ -306,6 +306,26 @@ degrees in the echo area."
       (expand-file-name "forge/forge-database.sqlite" doom-cache-dir))
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 
+(when (modulep! :email mu4e)
+  (defvar alert-notifier-default-sound
+    "default"
+    "The default sound to use for the terminal-notifier")
+
+  (defvar +mu4e-mail-alert-icon
+    (expand-file-name "inbox.png" doom-private-dir)
+    "The icon to use for mail alerts.")
+
+  (defun alert-notifier-notify-with-sound (info)
+    "Extend the standard alert-notifier-notify to play a sound."
+    (if alert-notifier-command
+        (let* ((args
+                (list "-title"   (alert-encode-string (plist-get info :title))
+                      "-appIcon" (or (plist-get info :icon) alert-notifier-default-icon)
+                      "-sound"   (or (plist-get info :sound) alert-notifier-default-sound)
+                      "-message" (alert-encode-string (plist-get info :message)))))
+        (apply #'call-process alert-notifier-command nil nil nil args)
+      (alert-message-notify info))))
+
 (use-package! mu4e
   :when (modulep! :email mu4e)
   :defer t
@@ -354,6 +374,7 @@ degrees in the echo area."
         mu4e-headers-unread-mark    '("u" . " "))
   :config
   ;; configure mu4e main screen bookmarks
+
   (setq mu4e-bookmarks
         '((:name "Personal inbox" :query "m:/personal/INBOX" :key ?p)
           (:name "Cognitect inbox" :query "m:/cognitect/INBOX" :key ?c)
@@ -414,7 +435,14 @@ degrees in the echo area."
 
 ;; set up hooks and notifications
 (after! mu4e
-  (mu4e-alert-set-default-style 'notifier)
+  (alert-define-style 'notifier-with-sound
+                      :title "Notify using terminal-notifier (with sound)"
+                      :notifier
+                      (lambda (info)
+                        (alert-notifier-notify-with-sound
+                         (append info (list :icon +mu4e-mail-alert-icon)))))
+
+  (mu4e-alert-set-default-style 'notifier-with-sound)
   (mu4e-alert-enable-notifications)
   (add-hook 'message-setup-hook #'message-sort-headers))
 
