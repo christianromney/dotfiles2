@@ -563,7 +563,12 @@ and bibliographies.")
           ("book"       . ?b)
           ("paper"      . ?a)
           (:endgrouptag)
+          (:startgrouptag)
           ("work"       . ?w)
+          (:grouptags)
+          ("cognicast"  . ?c)
+          ("perf-cycle" . ?f)
+          (:endgrouptag)
           ("personal"   . ?p)))
 
   ;; clock in/out
