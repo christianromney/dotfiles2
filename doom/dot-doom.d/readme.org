@@ -466,7 +466,8 @@ workflow.
                       "-appIcon" (or (plist-get info :icon) alert-notifier-default-icon)
                       "-sound"   (or (plist-get info :sound) alert-notifier-default-sound)
                       "-message" (alert-encode-string (plist-get info :message)))))
-        (apply #'call-process alert-notifier-command nil nil nil args)
+          (message "alerting: %s" args)
+          (apply #'call-process alert-notifier-command nil nil nil args))
       (alert-message-notify info))))
 
 (use-package! mu4e
@@ -583,7 +584,8 @@ workflow.
                       :notifier
                       (lambda (info)
                         (alert-notifier-notify-with-sound
-                         (append info (list :icon +mu4e-mail-alert-icon)))))
+                         (append info (list :icon +mu4e-mail-alert-icon
+                                            :sound "Blow")))))
 
   (mu4e-alert-set-default-style 'notifier-with-sound)
   (mu4e-alert-enable-notifications)
