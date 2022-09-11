@@ -1,10 +1,16 @@
+#global channel settings
+Sync All
+Create Both
+Expunge Both
+CopyArrivalDate yes
+
 # personal email
 IMAPStore personal-remote
 Host imap.gmail.com
 SSLType IMAPS
 AuthMechs Login
-UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep christian.a.romney | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
-PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep christian.a.romney | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+User christian.a.romney@gmail.com
+UseKeychain yes
 
 MaildirStore personal-local
 Path ~/.mail/personal/
@@ -14,9 +20,6 @@ Subfolders Verbatim
 Channel personal
 Far :personal-remote:
 Near :personal-local:
-CopyArrivalDate yes
-Create Both
-Expunge Both
 Patterns *
 SyncState *
 
@@ -25,8 +28,8 @@ IMAPStore cognitect-remote
 Host imap.gmail.com
 SSLType IMAPS
 AuthMechs Login
-UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep thinkrelevance | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
-PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep thinkrelevance | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+User christian.romney@thinkrelevance.com
+UseKeychain yes
 
 MaildirStore cognitect-local
 Path ~/.mail/cognitect/
@@ -36,20 +39,16 @@ Subfolders Verbatim
 Channel cognitect
 Far :cognitect-remote:
 Near :cognitect-local:
-CopyArrivalDate yes
-Create Both
-Expunge Both
 Patterns *
 SyncState *
 
 # legacy email
-
 IMAPStore legacy-remote
 Host imap.gmail.com
 SSLType IMAPS
 AuthMechs Login
-UserCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep xmlblog | awk -F ' ' '/imap\.gmail\.com/ {print $(NF-2); exit;}'"
-PassCmd "gpg2 -q --for-your-eyes-only -d ~/.authinfo.gpg | grep xmlblog | awk -F ' ' '/imap\.gmail\.com/ {print $NF; exit;}'"
+User xmlblog@gmail.com
+UseKeychain yes
 
 MaildirStore legacy-local
 Path ~/.mail/legacy/
@@ -59,8 +58,5 @@ Subfolders Verbatim
 Channel legacy
 Far :legacy-remote:
 Near :legacy-local:
-CopyArrivalDate yes
-Create Both
-Expunge Both
 Patterns *
 SyncState *
