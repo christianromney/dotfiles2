@@ -231,8 +231,9 @@ These settings are for sending mail and are independent of email user interface.
 Experiment with notmuch.
 #+begin_src elisp
 (use-package! notmuch
-  :bind (("C-c M M" . #'notmuch-hello)
-         ("C-c M U" . #'+notmuch/update))
+  :bind (("C-c m m" . #'notmuch-hello)
+         ("C-c m u" . #'+notmuch/update)
+         ("C-c m c" . #'+notmuch/compose))
   :config
   (setq +notmuch-sync-backend             'mbsync
         notmuch-hello-auto-refresh        t

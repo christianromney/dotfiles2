@@ -144,8 +144,9 @@ degrees in the echo area."
       message-send-mail-function #'smtpmail-send-it)
 
 (use-package! notmuch
-  :bind (("C-c M M" . #'notmuch-hello)
-         ("C-c M U" . #'+notmuch/update))
+  :bind (("C-c m m" . #'notmuch-hello)
+         ("C-c m u" . #'+notmuch/update)
+         ("C-c m c" . #'+notmuch/compose))
   :config
   (setq +notmuch-sync-backend             'mbsync
         notmuch-hello-auto-refresh        t
