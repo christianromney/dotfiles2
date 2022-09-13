@@ -225,8 +225,7 @@ degrees in the echo area."
         notmuch-message-forwarded-tags '("+forwarded")
         notmuch-show-mark-read-tags    '("-unread")
         notmuch-draft-tags             '("+draft")
-        notmuch-dr
-        aft-folder           "drafts"
+        notmuch-draft-folder           "drafts"
         notmuch-draft-save-plaintext   'ask)
 
   (setq notmuch-tag-formats

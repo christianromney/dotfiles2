@@ -229,6 +229,7 @@ These settings are for sending mail and are independent of email user interface.
 
 *** notmuch email
 Experiment with notmuch.
+
 #+begin_src elisp
 (use-package! notmuch
   :bind (("C-c m m" . #'notmuch-hello)
@@ -312,8 +313,7 @@ Experiment with notmuch.
         notmuch-message-forwarded-tags '("+forwarded")
         notmuch-show-mark-read-tags    '("-unread")
         notmuch-draft-tags             '("+draft")
-        notmuch-dr
-        aft-folder           "drafts"
+        notmuch-draft-folder           "drafts"
         notmuch-draft-save-plaintext   'ask)
 
   (setq notmuch-tag-formats
