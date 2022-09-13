@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 echo "Getting new mail at $(date)"
 /usr/local/bin/mbsync -a
 /usr/local/bin/notmuch new

@@ -4,38 +4,38 @@ Post-processing new mail tags\n"
 #             { actions to take } -- { items to take them on }
 # notmuch tag [+added] [-removed] -- <query>
 # Mark replied messages as seen
-notmuch tag -unread -new -- tag:replied
-notmuch tag -unread -new -- tag:deleted
+/usr/local/bin/notmuch tag -unread -new -- tag:replied
+/usr/local/bin/notmuch tag -unread -new -- tag:deleted
 
 # tag all "new" messages "inbox" and "unread"
-notmuch tag +inbox +unread -new -- tag:new
+/usr/local/bin/notmuch tag +inbox +unread -new -- tag:new
 
 # tag my replies as "sent"
-notmuch tag -new -unread +inbox +sent -- '(from:"christian.a.romney@gmail.com" not tag:list not tag:archived)'
-notmuch tag -new -unread +inbox +sent -- '(from:"christian.romney*" not tag:list not tag:archived)'
-notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
-notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
+/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"christian.a.romney@gmail.com" not tag:list not tag:archived)'
+/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"christian.romney*" not tag:list not tag:archived)'
+/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
+/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
 
 # mailing list handling
-notmuch tag +flagged -- tag:lists/hacker-bed-and-breakfast
-notmuch tag --remove-all +unread +lists +lists/ally -- tag:lists/155657 or from:email@email.ally.com
-notmuch tag --remove-all +unread +lists +lists/amex -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
-notmuch tag --remove-all +unread +lists +lists/bestbuy -- tag:lists/97338
-notmuch tag --remove-all +unread +lists +lists/betterment -- tag:lists/1066362 or from:support@email.betterment.com
-notmuch tag --remove-all +unread +lists +lists/bgg -- tag:lists/0db21d5230552f59a521c4ae3 or from:thegeekweekly@boardgamegeek.com
-notmuch tag --remove-all +unread +lists +lists/bluecross -- tag:lists/10965357 or from:Member.Comm@mail-bcbsnc.com
-notmuch tag --remove-all +unread +lists +lists/chessable -- tag:lists/11f006260982f4483c6a6fcd1 or from:promotions@chessable.com
-notmuch tag --remove-all +unread +lists +lists/delta -- tag:lists/10965567 or from:DeltaAirLines@t.delta.com
-notmuch tag --remove-all +unread +lists +lists/fordauthority -- tag:lists/336e6e07cbfc18410b87e54ce
-notmuch tag --remove-all +unread +lists +lists/freshmarket -- tag:lists/100012486 or from:freshideas@thefreshmarketmail.com
-notmuch tag --remove-all +unread +lists +lists/github -- tag:lists/9d7ced8c4bbd6c2f238673f0f
-notmuch tag --remove-all +unread +lists +lists/homedepot -- tag:lists/10137247 or from:HomeDepotCustomerCare@email.homedepot.com
-notmuch tag --remove-all +unread +lists +lists/library -- tag:lists/c86277b4d2f46b47f057b6ab3
-notmuch tag --remove-all +unread +lists +lists/netgear -- tag:lists/10907971 or from:security@e.netgear.com
-notmuch tag --remove-all +unread +lists +lists/oreilly -- tag:lists/up7ad5hm6qf043nmpon79tiekqb3cdkuej3fddg
-notmuch tag --remove-all +unread +lists +lists/playstation -- tag:lists/6151033
-notmuch tag --remove-all +unread +lists +lists/pragprog -- tag:lists/mjg5njg1oc00mzqzltq=
-notmuch tag --remove-all +unread +lists +lists/publix -- tag:lists/1333583 or from:update-noreply@exact.publix.com
-notmuch tag --remove-all +unread +lists +lists/totalwine -- tag:lists/104644 or from:totalwine@email-totalwine.com
-notmuch tag --remove-all +unread +lists +lists/westmarine -- tag:lists/514006019 or from:westmarine@wm1.westmarine.com
-notmuch tag --remove-all +unread +lists +lists/yachts -- tag:lists/be985ea8b7b0ed018dc53c35c
+/usr/local/bin/notmuch tag +flagged -- tag:lists/hacker-bed-and-breakfast
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/ally -- tag:lists/155657 or from:email@email.ally.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/amex -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/bestbuy -- tag:lists/97338
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/betterment -- tag:lists/1066362 or from:support@email.betterment.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/bgg -- tag:lists/0db21d5230552f59a521c4ae3 or from:thegeekweekly@boardgamegeek.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/bluecross -- tag:lists/10965357 or from:Member.Comm@mail-bcbsnc.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/chessable -- tag:lists/11f006260982f4483c6a6fcd1 or from:promotions@chessable.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/delta -- tag:lists/10965567 or from:DeltaAirLines@t.delta.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/fordauthority -- tag:lists/336e6e07cbfc18410b87e54ce
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/freshmarket -- tag:lists/100012486 or from:freshideas@thefreshmarketmail.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/github -- tag:lists/9d7ced8c4bbd6c2f238673f0f
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/homedepot -- tag:lists/10137247 or from:HomeDepotCustomerCare@email.homedepot.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/library -- tag:lists/c86277b4d2f46b47f057b6ab3
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/netgear -- tag:lists/10907971 or from:security@e.netgear.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/oreilly -- tag:lists/up7ad5hm6qf043nmpon79tiekqb3cdkuej3fddg
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/playstation -- tag:lists/6151033
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/pragprog -- tag:lists/mjg5njg1oc00mzqzltq=
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/publix -- tag:lists/1333583 or from:update-noreply@exact.publix.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/totalwine -- tag:lists/104644 or from:totalwine@email-totalwine.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/westmarine -- tag:lists/514006019 or from:westmarine@wm1.westmarine.com
+/usr/local/bin/notmuch tag --remove-all +unread +lists +lists/yachts -- tag:lists/be985ea8b7b0ed018dc53c35c
