@@ -172,8 +172,8 @@
        (web +lsp +tree-sitter)          ; the tubes
        (yaml +lsp)         ; JSON, but readable
        :email
-       (mu4e +gmail +org)
-       ;;(notmuch +afew +org)
+       ;; (mu4e +gmail +org)
+       (notmuch +afew +org)
        ;;(wanderlust +gmail)
 
        :app

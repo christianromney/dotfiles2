@@ -1,0 +1,40 @@
+#!/bin/sh
+printf "\n
+Post-processing new mail tags\n"
+#             { actions to take } -- { items to take them on }
+# notmuch tag [+added] [-removed] -- <query>
+# Mark replied messages as seen
+notmuch tag -unread -new -- tag:replied
+notmuch tag -unread -new -- tag:deleted
+
+# tag all "new" messages "inbox" and "unread"
+notmuch tag +inbox +unread -new -- tag:new
+
+# tag my replies as "sent"
+notmuch tag -new -unread +inbox +sent -- '(from:"christian.a.romney@gmail.com" not tag:list not tag:archived)'
+notmuch tag -new -unread +inbox +sent -- '(from:"christian.romney*" not tag:list not tag:archived)'
+notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
+notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
+
+# mailing list handling
+notmuch tag +inbox +flagged -- tag:lists/hacker-bed-and-breakfast
+notmuch tag -inbox +lists +lists/ally -lists/155657 -- tag:lists/155657 or from:email@email.ally.com
+notmuch tag -inbox +lists +lists/amex -lists/7201234 -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
+notmuch tag -inbox +lists +lists/bestbuy -lists/97338 -- tag:lists/97338
+notmuch tag -inbox +lists +lists/betterment -lists/1066362 -- tag:lists/1066362 or from:support@email.betterment.com
+notmuch tag -inbox +lists +lists/bgg -lists/0db21d5230552f59a521c4ae3 -- tag:lists/0db21d5230552f59a521c4ae3 or from:thegeekweekly@boardgamegeek.com
+notmuch tag -inbox +lists +lists/bluecross -lists/10965357 -- tag:lists/10965357 or from:Member.Comm@mail-bcbsnc.com
+notmuch tag -inbox +lists +lists/chessable -lists/11f006260982f4483c6a6fcd1 -- tag:lists/11f006260982f4483c6a6fcd1 or from:promotions@chessable.com
+notmuch tag -inbox +lists +lists/delta -lists/10965567 -- tag:lists/10965567 or from:DeltaAirLines@t.delta.com
+notmuch tag -inbox +lists +lists/freshmarket -lists/100012486 -- tag:lists/100012486 or from:freshideas@thefreshmarketmail.com
+notmuch tag -inbox +lists +lists/github -lists/9d7ced8c4bbd6c2f238673f0f -- tag:lists/9d7ced8c4bbd6c2f238673f0f
+notmuch tag -inbox +lists +lists/homedepot -lists/10137247 -- tag:lists/10137247 or from:HomeDepotCustomerCare@email.homedepot.com
+notmuch tag -inbox +lists +lists/library -lists/c86277b4d2f46b47f057b6ab3 -- tag:lists/c86277b4d2f46b47f057b6ab3
+notmuch tag -inbox +lists +lists/netgear -lists/10907971 -- tag:lists/10907971 or from:security@e.netgear.com
+notmuch tag -inbox +lists +lists/oreilly -- tag:lists/up7ad5hm6qf043nmpon79tiekqb3cdkuej3fddg
+notmuch tag -inbox +lists +lists/playstation -lists/6151033 -- tag:lists/6151033
+notmuch tag -inbox +lists +lists/pragprog -lists/mjg5njg1oc00mzqzltq= -- tag:lists/mjg5njg1oc00mzqzltq=
+notmuch tag -inbox +lists +lists/publix -lists/1333583 -- tag:lists/1333583 or from:update-noreply@exact.publix.com
+notmuch tag -inbox +lists +lists/totalwine -lists/104644 -- tag:lists/104644 or from:totalwine@email-totalwine.com
+notmuch tag -inbox +lists +lists/westmarine -lists/514006019 -- tag:lists/514006019 or from:westmarine@wm1.westmarine.com
+notmuch tag -inbox +lists +lists/yachts -lists/be985ea8b7b0ed018dc53c35c -- tag:lists/be985ea8b7b0ed018dc53c35c

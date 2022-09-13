@@ -64,45 +64,6 @@ by partial specs.
   (show-paren-mismatch . (:inherit flycheck-error)))) ;; red squiggly underline
 #+end_src
 
-** Dashboard
-My customization of the Doom dashboard.
-
-#+begin_src elisp
-(setq +doom-dashboard-menu-sections
-      '(("Reload last session"
-         :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
-         :when (cond ((modulep! :ui workspaces)
-                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
-                     ((require 'desktop nil t)
-                      (file-exists-p (desktop-full-file-name))))
-         :face (:inherit (doom-dashboard-menu-title bold))
-         :action doom/quickload-session)
-        ("Open org-agenda"
-         :icon (all-the-icons-octicon "calendar" :face 'doom-dashboard-menu-title)
-         :when (fboundp 'org-agenda)
-         :action org-agenda)
-        ("Open mail"
-         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
-         :when (modulep! :ui doom-dashboard)
-         :action =mu4e)
-        ("Recently opened files"
-         :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
-         :action recentf-open-files)
-        ("Open project"
-         :icon (all-the-icons-octicon "briefcase" :face 'doom-dashboard-menu-title)
-         :action projectile-switch-project)
-        ("Jump to bookmark"
-         :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
-         :action bookmark-jump)
-        ("Open private configuration"
-         :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
-         :when (file-directory-p doom-user-dir)
-         :action doom/open-private-config)
-        ("Open documentation"
-         :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
-         :action doom/help)))
-#+end_src
-
 ** Custom Functions
 These helpers are used by the configuration that follows. Most functions have to
 do with file and directory handling and parsing. Others are for wrangling
@@ -211,6 +172,7 @@ Lisp]] evaluation.
       user-emacs-directory        (+mkdirp (expand-file-name "~/.local/emacs/cache/"))
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
+(setq native-comp-async-report-warnings-errors 'silent)
 #+end_src
 
 ** Doom-Specific Settings
@@ -226,6 +188,208 @@ variable ensures return will continue commenting on the new line.
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 #+end_src
 
+** Mail
+I am experimenting with using Emacs as my mail client because I can't stand
+Apple Mail and even Readdle's Spark isn't cutting it for me these days.
+
+I use [[https://isync.sourceforge.io/][mbsync]] to fetch IMAP mail from Gmail accounts configured to use app
+passwords which have been stored in my encrypted authinfo.gpg. The mbsync
+configuration allows me to invoke GPG to retrieve the login and password.
+
+mu4e handles indexing with [[https://www.djcbsoftware.nl/code/mu/][mu]] on an interval and provides a nice experience
+within emacs. Lastly, [[https://marlam.de/msmtp/][msmtp]] is configured as a sendmail client. It forwards mail
+to Gmail and can be invoked on demand rather than running as a daemon. It
+conforms to the sendmail which makes it easy to incorporate into any email
+workflow.
+*** General email settings
+These settings are for sending mail and are independent of email user interface.
+#+begin_src elisp
+(require 'smtpmail)
+(setq smtpmail-queue-mail nil)
+
+(require 'sendmail)
+(setq sendmail-program (executable-find "msmtp")
+      send-mail-function #'smtpmail-send-it)
+
+(require 'message)
+(setq compose-mail-user-agent-warnings nil
+      mail-envelope-from 'header
+      mail-specify-envelope-from t
+      mail-user-agent 'message-user-agent
+      message-confirm-send nil
+      message-directory "~/.mail"
+      message-kill-buffer-on-exit t
+      message-mail-user-agent t
+      message-sendmail-envelope-from 'header
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-sendmail-f-is-evil t
+      message-wide-reply-confirm-recipients t
+      message-send-mail-function #'smtpmail-send-it)
+#+end_src
+
+*** notmuch email
+Experiment with notmuch.
+#+begin_src elisp
+(use-package! notmuch
+  :bind (("C-c M M" . #'notmuch-hello)
+         ("C-c M U" . #'+notmuch/update))
+  :config
+  (setq +notmuch-sync-backend             'mbsync
+        notmuch-hello-auto-refresh        t
+        notmuch-hello-recent-searches-max 20
+        notmuch-message-headers           '("To" "Cc" "Subject" "Date")
+        notmuch-message-headers-visible   t
+        notmuch-search-oldest-first       nil
+        notmuch-show-all-tags-list        t
+        notmuch-show-logo                 nil
+        notmuch-unthreaded-show-out       nil
+        notmuch-wash-wrap-lines-length    120)
+
+  (setq notmuch-saved-searches
+        '((:name "unread (inbox)"
+           :query "tag:unread and tag:inbox"
+           :key "u"
+           :sort-order newest-first)
+
+          (:name "unread (all)"
+           :query "tag:unread not tag:archived"
+           :key "U"
+           :sort-order newest-first)
+
+          (:name "inbox"
+           :query "tag:inbox"
+           :key "i"
+           :sort-order newest-first)
+
+          (:name "flagged"
+           :query "tag:flagged"
+           :key "f"
+           :sort-order newest-first)
+
+          (:name "all mail"
+           :query "*"
+           :key "a"
+           :sort-order newest-first)
+
+          (:name "attachments"
+           :query "tag:attachment"
+           :key "A"
+           :sort-order newest-first)
+
+          (:name "sent"
+           :query "tag:sent"
+           :key "t"
+           :sort-order newest-first)
+
+          (:name "todo"
+           :query "tag:todo not tag:archived"
+           :key "T"
+           :sort-order newest-first)
+
+          (:name "drafts"
+           :query "tag:draft not tag:archived"
+           :key "d"
+           :sort-order newest-first)
+
+          (:name "mailing lists"
+           :query "tag:lists not tag:archived"
+           :key "M"
+           :sort-order newest-first)
+
+          (:name "lists/clojure"
+           :query "(tag:lists/clojure or tag:lists/clojure-dev) not tag:archived"
+           :key "C"
+           :sort-order newest-first)
+
+          (:name "lists/datomic"
+           :query "tag:lists/datomic not tag:archived"
+           :key "D"
+           :sort-order newest-first)))
+  ;; tags
+  (setq notmuch-archive-tags           '("-inbox" "+archived")
+        notmuch-message-replied-tags   '("+replied")
+        notmuch-message-forwarded-tags '("+forwarded")
+        notmuch-show-mark-read-tags    '("-unread")
+        notmuch-draft-tags             '("+draft")
+        notmuch-dr
+        aft-folder           "drafts"
+        notmuch-draft-save-plaintext   'ask)
+
+  (setq notmuch-tag-formats
+        '(("unread" (propertize tag 'face 'notmuch-tag-unread))
+          ("flag"   (propertize tag 'face 'notmuch-tag-flagged))))
+
+  (setq notmuch-tag-deleted-formats
+        '(("unread" (notmuch-apply-face bare-tag `notmuch-tag-deleted))
+          (".*"     (notmuch-apply-face tag `notmuch-tag-deleted))))
+
+  ;; Writing email
+  (setq notmuch-address-command 'internal
+        notmuch-always-prompt-for-sender t
+        notmuch-crypto-get-keys-asynchronously t
+        notmuch-crypto-process-mime t
+        notmuch-maildir-use-notmuch-insert t
+        notmuch-mua-cite-function 'message-cite-original-without-signature
+        notmuch-mua-compose-in 'current-window
+        notmuch-mua-hidden-headers nil
+        notmuch-mua-reply-insert-header-p-function 'notmuch-show-reply-insert-header-p-never
+        notmuch-mua-user-agent-function #'notmuch-mua-user-agent-full)
+
+  ;; Reading email
+  (setq notmuch-show-relative-dates                  t
+        notmuch-show-all-multipart/alternative-parts nil
+        notmuch-show-indent-messages-width           0
+        notmuch-show-indent-multipart                nil
+        notmuch-show-part-button-default-action
+        'notmuch-show-view-part)
+  (message "-> done loading notmuch config."))
+
+(after! notmuch
+  (set-popup-rule! "^\\*notmuch-hello" :ignore t))
+
+#+end_src
+
+** Dashboard
+My customization of the Doom dashboard.
+#+begin_src elisp
+(setq +doom-dashboard-menu-sections
+      '(("Reload last session"
+         :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
+         :when (cond ((modulep! :ui workspaces)
+                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
+                     ((require 'desktop nil t)
+                      (file-exists-p (desktop-full-file-name))))
+         :face (:inherit (doom-dashboard-menu-title bold))
+         :action doom/quickload-session)
+        ("Open org-agenda"
+         :icon (all-the-icons-octicon "calendar" :face 'doom-dashboard-menu-title)
+         :when (fboundp 'org-agenda)
+         :action org-agenda)
+        ("Open mail"
+         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
+         :when (modulep! :email mu4e)
+         :action =mu4e)
+        ("Open mail"
+         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
+         :when (modulep! :email notmuch)
+         :action notmuch-hello)
+        ("Recently opened files"
+         :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
+         :action recentf-open-files)
+        ("Open project"
+         :icon (all-the-icons-octicon "briefcase" :face 'doom-dashboard-menu-title)
+         :action projectile-switch-project)
+        ("Jump to bookmark"
+         :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
+         :action bookmark-jump)
+        ("Open private configuration"
+         :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
+         :when (file-directory-p doom-user-dir)
+         :action doom/open-private-config)
+        ("Open documentation"
+         :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
+         :action doom/help)))
+#+end_src
 
 ** Abbrev Mode
 Keep my abbreviations file in my source-controlled Doom directory, and do what I
@@ -432,166 +596,6 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
       forge-database-file
       (expand-file-name "forge/forge-database.sqlite" doom-cache-dir))
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
-#+end_src
-
-** Mail (mbsync + mu4e)
-I am experimenting with using Emacs as my mail client because I can't stand
-Apple Mail and even Readdle's Spark isn't cutting it for me these days.
-
-I use [[https://isync.sourceforge.io/][mbsync]] to fetch IMAP mail from Gmail accounts configured to use app
-passwords which have been stored in my encrypted authinfo.gpg. The mbsync
-configuration allows me to invoke GPG to retrieve the login and password.
-
-mu4e handles indexing with [[https://www.djcbsoftware.nl/code/mu/][mu]] on an interval and provides a nice experience
-within emacs. Lastly, [[https://marlam.de/msmtp/][msmtp]] is configured as a sendmail client. It forwards mail
-to Gmail and can be invoked on demand rather than running as a daemon. It
-conforms to the sendmail which makes it easy to incorporate into any email
-workflow.
-
-#+begin_src elisp
-(when (modulep! :email mu4e)
-  (defvar alert-notifier-default-sound
-    "default"
-    "The default sound to use for the terminal-notifier")
-
-  (defvar +mu4e-mail-alert-icon
-    (expand-file-name "inbox.png" doom-private-dir)
-    "The icon to use for mail alerts.")
-
-  (defun alert-notifier-notify-with-sound (info)
-    "Extend the standard alert-notifier-notify to play a sound."
-    (if alert-notifier-command
-        (let* ((args
-                (list "-title"   (alert-encode-string (plist-get info :title))
-                      "-appIcon" (or (plist-get info :icon) alert-notifier-default-icon)
-                      "-sound"   (or (plist-get info :sound) alert-notifier-default-sound)
-                      "-message" (alert-encode-string (plist-get info :message)))))
-          (message "alerting: %s" args)
-          (apply #'call-process alert-notifier-command nil nil nil args))
-      (alert-message-notify info))))
-
-(use-package! mu4e
-  :when (modulep! :email mu4e)
-  :defer t
-  :init
-  ;; general emacs mail behavior
-  (setq compose-mail-user-agent-warnings nil
-        message-wide-reply-confirm-recipients t
-        message-confirm-send nil
-        message-kill-buffer-on-exit t
-        message-directory "~/.mail")
-
-  ;; sendmail configuration
-  (setq message-mail-user-agent t
-        mail-user-agent 'message-user-agent
-        sendmail-program (executable-find "msmtp")
-        send-mail-function #'smtpmail-send-it
-        message-send-mail-function #'smtpmail-send-it
-        message-sendmail-envelope-from 'header
-        message-sendmail-extra-arguments '("--read-envelope-from")
-        message-sendmail-f-is-evil t
-        mail-envelope-from 'header
-        mail-specify-envelope-from t)
-
-  ;; general mu4e settings
-  (setq mu4e-attachment-dir "~/Documents/"
-        mu4e-change-filenames-when-moving t
-        mu4e-context-policy 'ask-if-none
-        mu4e-compose-context-policy 'always-ask
-        mu4e-index-cleanup nil
-        mu4e-index-lazy-check t
-        mu4e-update-interval (* 10 60))
-
-  ;; mu4e appearance customizations
-  (setq mu4e-headers-attach-mark    '("a" . " ")
-        mu4e-headers-calendar-mark  '("c" . " ")
-        mu4e-headers-draft-mark     '("D" . " ")
-        mu4e-headers-encrypted-mark '("x" . " ")
-        mu4e-headers-flagged-mark   '("F" . " ")
-        mu4e-headers-list-mark      '("l" . " ")
-        mu4e-headers-passed-mark    '("P" . " ")
-        mu4e-headers-personal-mark  '("p" . " ")
-        mu4e-headers-replied-mark   '("R" . " ")
-        mu4e-headers-seen-mark      '("s" . " ")
-        mu4e-headers-signed-mark    '("S" . " ")
-        mu4e-headers-trashed-mark   '("T" . " ")
-        mu4e-headers-unread-mark    '("u" . " "))
-  :config
-  ;; configure mu4e main screen bookmarks
-
-  (setq mu4e-bookmarks
-        '((:name "Personal inbox" :query "m:/personal/INBOX" :key ?p)
-          (:name "Cognitect inbox" :query "m:/cognitect/INBOX" :key ?c)
-          (:name "Legacy inbox" :query "m:/legacy/INBOX" :key ?x)
-
-          (:name "re: Randi" :query "Randi" :key ?r)
-          (:name "re: Sebastian" :query "Sebastian" :key ?s)
-          (:name "from: Mom" :query "from:jennyromney" :key ?j)
-          (:name "from: Dad" :query "from:leslieromney" :key ?l)
-          (:name "from: Wes" :query "from:wesleyromney" :key ?y)
-
-          (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
-          (:name "Today's messages" :query "date:today..now" :key ?t)
-          (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
-          (:name "Messages with attachments" :query "mime:*" :key ?a)
-          (:name "Messages with images" :query "mime:image/*" :key ?i)
-          (:name "Flagged messages" :query "flag:flagged" :key ?f)))
-
-  ;; let mu4e know these are gmail accounts
-  (setq +mu4e-gmail-accounts
-        '(("christian.a.romney@gmail.com"        . "/personal")
-          ("christian.romney@thinkrelevance.com" . "/cognitect")
-          ("xmlblog@gmail.com"                   . "/legacy")))
-
-  ;; let mu4e know which account is which
-  (set-email-account!
-   "personal"
-   '((user-mail-address      . "christian.a.romney@gmail.com")
-     (smtpmail-smtp-user     . "christian.a.romney@gmail.com")
-     (mu4e-sent-folder       . "/personal/[Gmail]/Sent Mail")
-     (mu4e-drafts-folder     . "/personal/[Gmail]/Drafts")
-     (mu4e-trash-folder      . "/personal/[Gmail]/Trash")
-     (mu4e-refile-folder     . "/personal/[Gmail]/All Mail")
-     (mu4e-compose-signature . "\n\nRegards,\nChristian"))
-   t)
-
-  (set-email-account!
-   "cognitect"
-   '((user-mail-address      . "christian.romney@thinkrelevance.com")
-     (smtpmail-smtp-user     . "christian.romney@thinkrelevance.com")
-     (mu4e-sent-folder       . "/cognitect/[Gmail]/Sent Mail")
-     (mu4e-drafts-folder     . "/cognitect/[Gmail]/Drafts")
-     (mu4e-trash-folder      . "/cognitect/[Gmail]/Trash")
-     (mu4e-refile-folder     . "/cognitect/[Gmail]/All Mail")
-     (mu4e-compose-signature . "\n\nRegards,\nChristian Romney"))
-   t)
-
-  (set-email-account!
-   "legacy"
-   '((user-mail-address      . "xmlblog@gmail.com")
-     (smtpmail-smtp-user     . "xmlblog@gmail.com")
-     (mu4e-sent-folder       . "/legacy/[Gmail]/Sent Mail")
-     (mu4e-drafts-folder     . "/legacy/[Gmail]/Drafts")
-     (mu4e-trash-folder      . "/legacy/[Gmail]/Trash")
-     (mu4e-refile-folder     . "/legacy/[Gmail]/All Mail")
-     (mu4e-compose-signature . "\n\nRegards,\nChristian"))
-   t))
-
-;; set up hooks and notifications
-(after! mu4e
-  (alert-define-style 'notifier-with-sound
-                      :title "Notify using terminal-notifier (with sound)"
-                      :notifier
-                      (lambda (info)
-                        (alert-notifier-notify-with-sound
-                         (append info (list :icon +mu4e-mail-alert-icon
-                                            :sound "Blow")))))
-
-  (mu4e-alert-set-default-style 'notifier-with-sound)
-  (mu4e-alert-enable-notifications)
-  (add-hook 'message-setup-hook #'message-sort-headers))
-
-(message "=> loaded mail configuration")
 #+end_src
 
 ** Internet Relay Chat (IRC)

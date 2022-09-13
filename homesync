@@ -1,5 +1,11 @@
 #!/bin/bash
+echo "Symlinking configuration"
 
-find . -type d -depth 1 \! -name ".git" -print | while read d; do
+find . -type d -depth 1 \! -name ".git" \! -name ".lsp" \! -name ".clj-kondo" \
+  \! -name "notmuch" -print | sort | while read d; do
+  printf " - $(basename $d)\n"
   stow --dotfiles --target="${HOME}" --stow "$(basename $d)"
 done
+
+printf "\nSymlinking notmuch email hooks"
+stow --dotfiles --target="${HOME}/.mail/.notmuch/" --stow "notmuch"
