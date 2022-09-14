@@ -14,7 +14,7 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
 
-# mailing list handling
+# mailing list handling: skip the inbox
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/ally -- tag:new tag:lists/155657 or from:email@email.ally.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/amex -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/bestbuy -- tag:lists/97338
@@ -43,5 +43,5 @@ Post-processing new mail tags\n"
 # HBB
 /usr/local/bin/notmuch tag +inbox +unread +flagged -new -- tag:new and tag:lists/hacker-bed-and-breakfast
 
-# tag all "new" messages "inbox" and "unread"
+# tag all other "new" messages "inbox" and "unread"
 /usr/local/bin/notmuch tag +inbox +unread -new -- tag:new
