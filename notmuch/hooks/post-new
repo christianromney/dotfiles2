@@ -31,6 +31,7 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/flyshop -- 'from:(^@)+@olefloridaflyshop.com'
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/github -- tag:lists/9d7ced8c4bbd6c2f238673f0f
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/homedepot -- tag:lists/10137247 or from:HomeDepotCustomerCare@email.homedepot.com
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/jetblue -- from:jetblueairways@email.jetblue.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/library -- tag:lists/c86277b4d2f46b47f057b6ab3
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/navsafety -- from:NAVSAFETY@nga.mil
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/netflix -- from:info@mailer.netflix.com
