@@ -14,13 +14,16 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
 
-# mailing list handling: skip the inbox
-/usr/local/bin/notmuch tag -new -inbox +lists +lists/ally -- tag:new tag:lists/155657 or from:email@email.ally.com
+# mailing list handling
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/ally -- tag:lists/155657 or from:email@email.ally.com
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/amazon -- 'from:customer-reviews-messages@amazon.com or from:"(^@)+@marketplace.amazon.com"'
+/usr/local/bin/notmuch tag -new +inbox +lists +lists/amazon -- from:auto-confirm@amazon.com or from:shipment-tracking@amazon.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/amex -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/bestbuy -- tag:lists/97338
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/betterment -- tag:lists/1066362 or from:support@email.betterment.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/bgg -- tag:lists/0db21d5230552f59a521c4ae3 or from:thegeekweekly@boardgamegeek.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/bluecross -- tag:lists/10965357 or from:Member.Comm@mail-bcbsnc.com
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/chase --  from:no-reply@alertsp.chase.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/chessable -- tag:lists/11f006260982f4483c6a6fcd1 or from:promotions@chessable.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/delta -- tag:lists/10965567 or from:DeltaAirLines@t.delta.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/fordauthority -- tag:lists/336e6e07cbfc18410b87e54ce
@@ -30,18 +33,20 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/library -- tag:lists/c86277b4d2f46b47f057b6ab3
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/navsafety -- from:NAVSAFETY@nga.mil
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/netgear -- tag:lists/10907971 or from:security@e.netgear.com
+/usr/local/bin/notmuch tag -new +inbox +lists +lists/news -- from:nytdirect@nytimes.com or from:dailybriefing@thomsonreuters.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/nextdoor -- from:reply@rs.email.nextdoor.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/oreilly -- tag:lists/up7ad5hm6qf043nmpon79tiekqb3cdkuej3fddg
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/playstation -- tag:lists/6151033
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/pragprog -- tag:lists/mjg5njg1oc00mzqzltq=
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/publix -- tag:lists/1333583 or from:update-noreply@exact.publix.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/redhat -- from:email@engage.redhat.com
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/reddit -- from:noreply@redditmail.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/totalwine -- tag:lists/104644 or from:totalwine@email-totalwine.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/westmarine -- tag:lists/514006019 or from:westmarine@wm1.westmarine.com
-/usr/local/bin/notmuch tag -new -inbox +lists +lists/yachts -- tag:lists/be985ea8b7b0ed018dc53c35c
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/yachts -- 'tag:lists/be985ea8b7b0ed018dc53c35c or from:(^@)+@catalinayachts.com'
 
 # HBB
 /usr/local/bin/notmuch tag +inbox +unread +flagged -new -- tag:new and tag:lists/hacker-bed-and-breakfast
 
-# tag all other "new" messages "inbox" and "unread"
+# tag all "new" messages "inbox" and "unread"
 /usr/local/bin/notmuch tag +inbox +unread -new -- tag:new

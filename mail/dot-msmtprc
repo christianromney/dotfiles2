@@ -13,7 +13,7 @@ domain smtp.gmail.com
 from christian.a.romney@gmail.com
 user christian.a.romney@gmail.com
 passwordeval security find-internet-password -a christian.a.romney@gmail.com -r smtp -w
-logfile /var/log/mail.log
+logfile /var/log/sendmail.log
 
 # account 2: cognitect gmail
 account cognitect
@@ -22,7 +22,7 @@ domain smtp.gmail.com
 from christian.romney@cognitect.com
 user christian.romney@thinkrelevance.com
 passwordeval security find-internet-password -a christian.romney@thinkrelevance.com -r smtp -w
-logfile /var/log/mail.log
+logfile /var/log/sendmail.log
 
 # account 3: legacy gmail
 account legacy
@@ -31,6 +31,6 @@ domain smtp.gmail.com
 from xmlblog@gmail.com
 user xmlblog@gmail.com
 passwordeval security find-internet-password -a xmlblog@gmail.com -r smtp -w
-logfile /var/log/mail.log
+logfile /var/log/sendmail.log
 
 account default : personal
