@@ -9,7 +9,7 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -unread -new -- tag:deleted
 
 # tag my replies as "sent"
-/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"christian.a.romney@gmail.com" not tag:list not tag:archived)'
+/usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"christian.a.romney*" not tag:list not tag:archived)'
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"christian.romney*" not tag:list not tag:archived)'
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"xmlblog*" not tag:list not tag:archived)'
 /usr/local/bin/notmuch tag -new -unread +inbox +sent -- '(from:"romney@duck.com" not tag:list not tag:archived)'
