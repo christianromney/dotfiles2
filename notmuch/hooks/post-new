@@ -33,6 +33,7 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/homedepot -- tag:lists/10137247 or from:HomeDepotCustomerCare@email.homedepot.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/library -- tag:lists/c86277b4d2f46b47f057b6ab3
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/navsafety -- from:NAVSAFETY@nga.mil
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/netflix -- from:info@mailer.netflix.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/netgear -- tag:lists/10907971 or from:security@e.netgear.com
 /usr/local/bin/notmuch tag -new +inbox +lists +lists/news -- from:nytdirect@nytimes.com or from:dailybriefing@thomsonreuters.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/nextdoor -- from:reply@rs.email.nextdoor.com
