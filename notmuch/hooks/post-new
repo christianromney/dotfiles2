@@ -46,8 +46,9 @@ Post-processing new mail tags\n"
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/westmarine -- tag:lists/514006019 or from:westmarine@wm1.westmarine.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/yachts -- 'tag:lists/be985ea8b7b0ed018dc53c35c or from:(^@)+@catalinayachts.com'
 
-# HBB
+# Flag important messages
 /usr/local/bin/notmuch tag +inbox +unread +flagged -new -- tag:new and tag:lists/hacker-bed-and-breakfast
+/usr/local/bin/notmuch tag +inbox +unread +house +flagged -new -- tag:new and 'from:(^@)+@kabcokitchens.com'
 
 # tag all "new" messages "inbox" and "unread"
 /usr/local/bin/notmuch tag +inbox +unread -new -- tag:new
