@@ -48,7 +48,6 @@
 ;; ------------------------------------------------------------------------------
 ;; Appearance
 ;; ------------------------------------------------------------------------------
-(package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
 (package! svg-tag-mode :recipe (:host github :repo "rougier/svg-tag-mode"))
 (package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
 (package! xterm-color)
