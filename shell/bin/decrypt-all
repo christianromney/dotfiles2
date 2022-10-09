@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+find . -type f -iname '*.gpg' | while read -l encrypted
+    set unencrypted (string sub --end -4 "$encrypted")
+    gpg --decrypt --quiet --output "$unencrypted" "$encrypted"
+    rm -f "$encrypted"
+    echo "Replaced $encrypted with $unencrypted"
+end

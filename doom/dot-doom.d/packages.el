@@ -44,11 +44,21 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;;(unpin! t)
+
+;; ------------------------------------------------------------------------------
+;; Appearance
+;; ------------------------------------------------------------------------------
+(package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
+(package! svg-tag-mode :recipe (:host github :repo "rougier/svg-tag-mode"))
+(package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
+(package! xterm-color)
+
 ;; ------------------------------------------------------------------------------
 ;;  Git extras
 ;; ------------------------------------------------------------------------------
 (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! git-link)
+
 ;; ------------------------------------------------------------------------------
 ;;  Utilities
 ;; ------------------------------------------------------------------------------
@@ -56,14 +66,10 @@
 (package! consult-company)
 (package! consult-yasnippet)
 (package! dirvish)
+(package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! google-this)
 (package! helpful)
-(package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! reveal-in-osx-finder)
-(package! ef-themes :recipe (:host github :repo "protesilaos/ef-themes"))
-(package! xterm-color)
-(package! mu4e-marker-icons)
-(package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
@@ -71,6 +77,7 @@
 (package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
 (when (modulep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
+
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
@@ -81,6 +88,7 @@
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
 (package! zotxt) ;; zotero bibliography support C-c " "
+
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------

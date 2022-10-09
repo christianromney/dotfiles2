@@ -1,21 +1,34 @@
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 
-(use-package ef-themes
-  :init
-  (setq doom-font                 "JetBrains Mono:pixelsize=20"
-        display-line-numbers-type t
-        fancy-splash-image        (concat doom-private-dir "splash.png"))
+(setq doom-font                   "JetBrains Mono:pixelsize=20"
+      display-line-numbers-type   t
+      fancy-splash-image          (concat doom-private-dir "splash.png"))
 
-  (setq-default tab-width 2)
-
-  ;; theme selection
+(use-package! doom-themes
+  :ensure t
+  :config
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme 'ef-light :no-confirm)
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t
+        doom-themes-padded-modeline t)
+  (load-theme 'doom-ayu-light t)
 
-  ;; ligature support
-  (mac-auto-operator-composition-mode)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+  (doom-themes-visual-bell-config)
+  (setq doom-themes-treemacs-theme "doom-ayu-light")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
+
+;; tab width
+(setq-default tab-width 2)
+
+;; ligature support
+(mac-auto-operator-composition-mode)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; double rainbow
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'rainbow-mode)
 
 (setq face-remapping-alist
 '((show-paren-match . (:inherit pulsar-yellow)) ;; yellow highlight
@@ -363,8 +376,7 @@ degrees in the echo area."
 (map! :map dired-mode-map "C-l" #'dired-up-directory)
 
 (use-package diredfl
-  :hook
-  (dired-mode . diredfl-mode))
+  :hook (dired-mode . diredfl-mode))
 
 (use-package dirvish
   :init
@@ -567,7 +579,7 @@ and bibliographies.")
    org-roam-dailies-capture-templates
    '(("d" "default" entry
       "* %?"
-      :target (file+head "%<%Y-%m-%d>.org.gpg"
+      :target (file+head "%<%Y-%m-%d>.org"
                          "#+title: %<%Y-%m-%d>\n"))))
   :config
   (setq org-startup-folded t
@@ -634,6 +646,98 @@ and bibliographies.")
     "C-. o s" #'custom/org-strike-word
     "C-. o u" #'custom/org-underline-word
     "C-. o v" #'custom/org-verbatim-word)))
+
+(defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+(defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+(defconst day-re "[A-Za-z]\\{3\\}")
+(defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+
+(defun svg-progress-percent (value)
+  (svg-image (svg-lib-concat
+              (svg-lib-progress-bar (/ (string-to-number value) 100.0)
+                                    nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+              (svg-lib-tag (concat value "%")
+                           nil :stroke 0 :margin 0)) :ascent 'center))
+
+(defun svg-progress-count (value)
+  (let* ((seq (mapcar #'string-to-number (split-string value "/")))
+         (count (float (car seq)))
+         (total (float (cadr seq))))
+    (svg-image (svg-lib-concat
+                (svg-lib-progress-bar (/ count total) nil
+                                      :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                (svg-lib-tag value nil
+                             :stroke 0 :margin 0)) :ascent 'center)))
+
+(use-package! svg-tag-mode
+  :hook ((org-agenda-mode org-super-agenda-mode). svg-tag-mode)
+  :config
+  (setq svg-tag-tags
+      `(
+        ;; Org tags
+        (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
+                                    (svg-tag-make tag :face 'org-modern-tag))))
+        (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
+
+        ;; Task priority
+        ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                              (svg-tag-make tag
+                                            :face 'org-modern-priority
+                                            :radius 8
+                                            :beg 2 :end -1 :margin 0))))
+
+        ;; Progress
+        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+                                            (svg-progress-percent (substring tag 1 -2)))))
+        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+                                          (svg-progress-count (substring tag 1 -1)))))
+
+        ;; TODO / DONE
+        ("TODO" . ((lambda (tag)
+                     (svg-tag-make "TODO" :face 'org-modern-todo
+                                   :inverse t :margin 0))))
+        ("STRT" . ((lambda (tag) (svg-tag-make "STRT"
+                                               :face 'org-modern-todo :inverse nil :margin 0))))
+        ("WAIT" . ((lambda (tag) (svg-tag-make "WAIT"
+                                               :face 'pulsar-yellow :inverse nil :margin 0))))
+        ("HOLD" . ((lambda (tag) (svg-tag-make "HOLD"
+                                               :face 'pulsar-yello :inverse t :margin 0))))
+        ("DONE" . ((lambda (tag)
+                     (svg-tag-make "DONE" :face 'org-modern-done :inverse nil :margin 0))))
+
+        ;; Citation of the form [cite:@Knuth:1984]
+        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                          (svg-tag-make tag
+                                                        :inverse t
+                                                        :beg 7 :end -1
+                                                        :crop-right t))))
+        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                                   (svg-tag-make tag
+                                                                 :end -1
+                                                                 :crop-left t))))
+
+
+        ;; Active date (with or without day name, with or without time)
+        (,(format "\\(<%s>\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+
+        ;; Inactive date  (with or without day name, with or without time)
+        (,(format "\\(\\[%s\\]\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+        (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+        (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
 
 (use-package! org-glossary
   :after org
@@ -726,7 +830,7 @@ and bibliographies.")
         cal-html-directory                   "~/Desktop"
         cal-html-holidays                    t
         diary-file
-        (expand-file-name "appointment-diary.gpg" org-directory))
+        (expand-file-name "appointment-diary" org-directory))
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
 
 (use-package! holidays
