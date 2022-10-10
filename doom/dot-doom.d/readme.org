@@ -863,7 +863,8 @@ Use svg-tag-mode to beautify org-mode tags, deadlines, and todos.
       `(
         ;; Org tags
         (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
-                                    (svg-tag-make tag :face 'org-modern-tag :radius 8))))
+                                    (svg-tag-make tag :face 'org-modern-tag
+                                                  :padding 1 :radius 3))))
         (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
 
         ;; Task priority
@@ -1174,6 +1175,9 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
 The [[https://github.com/minad/org-modern][org-modern]] package adds some nice aesthetic touches to org-mode buffers.
 
 #+begin_src elisp
+(face-spec-set 'org-modern-tag
+               '((default :weight normal :background "#d1bce5")))
+
 (setq org-ellipsis                       "…"
       org-fontify-done-headline          t
       org-fontify-emphasized-text        t

@@ -694,7 +694,8 @@ and bibliographies.")
       `(
         ;; Org tags
         (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
-                                    (svg-tag-make tag :face 'org-modern-tag :radius 8))))
+                                    (svg-tag-make tag :face 'org-modern-tag
+                                                  :padding 1 :radius 3))))
         (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
 
         ;; Task priority
@@ -951,6 +952,9 @@ and bibliographies.")
         org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
         org-re-reveal-title-slide          "%t"
         reveal_inter_presentation_links    t))
+
+(face-spec-set 'org-modern-tag
+               '((default :weight normal :background "#d1bce5")))
 
 (setq org-ellipsis                       "…"
       org-fontify-done-headline          t
