@@ -770,7 +770,8 @@ and bibliographies.")
   :init
   ;; this macro supplies theme color names inside the body
   (defface org-glossary-term
-    '((default :inherit (popup-tip-face)
+    '((default :inherit (show-paren-match)
+        :background "papaya whip"
         :weight normal))
     "Base face used for term references.")
   :config

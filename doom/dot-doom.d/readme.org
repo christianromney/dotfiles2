@@ -944,7 +944,8 @@ the definition in the minibuffer whenever the cursor is over a glossary term.
   :init
   ;; this macro supplies theme color names inside the body
   (defface org-glossary-term
-    '((default :inherit (popup-tip-face)
+    '((default :inherit (show-paren-match)
+        :background "papaya whip"
         :weight normal))
     "Base face used for term references.")
   :config
