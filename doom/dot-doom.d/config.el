@@ -18,7 +18,12 @@
   (doom-themes-visual-bell-config)
   (setq doom-themes-treemacs-theme "doom-ayu-light")
   (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (face-spec-set 'doom-themes-visual-bell
+                 '((default :weight normal :background "firebrick2"
+                     :foreground "white")))
+  (face-spec-set 'hl-line
+                 '((default :weight normal :background "linen"))))
 
 ;; tab width
 (setq-default tab-width 2)
@@ -352,7 +357,7 @@ degrees in the echo area."
   (setq pulsar-pulse t
         pulsar-delay 0.065
         pulsar-iterations 9
-        pulsar-face 'pulsar-cyan
+        pulsar-face 'pulsar-green
         pulsar-highlight-face 'pulsar-red)
   (pulsar-global-mode t)
   :config
