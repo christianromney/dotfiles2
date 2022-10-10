@@ -350,10 +350,10 @@ degrees in the echo area."
 (use-package! pulsar
   :init
   (setq pulsar-pulse t
-        pulsar-delay 0.05
-        pulsar-iterations 5
-        pulsar-face 'pulsar-yellow
-        pulsar-highlight-face 'pulsar-magenta)
+        pulsar-delay 0.065
+        pulsar-iterations 9
+        pulsar-face 'pulsar-cyan
+        pulsar-highlight-face 'pulsar-red)
   (pulsar-global-mode t)
   :config
   ;; integration with the `consult' package:
@@ -771,7 +771,7 @@ and bibliographies.")
   ;; this macro supplies theme color names inside the body
   (defface org-glossary-term
     '((default :inherit (show-paren-match)
-        :background "papaya whip"
+        :background "antique white"
         :weight normal))
     "Base face used for term references.")
   :config
