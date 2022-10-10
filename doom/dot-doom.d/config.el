@@ -2,6 +2,7 @@
       user-mail-address "christian.a.romney@gmail.com")
 
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
+      inhibit-startup-message     t
       display-line-numbers-type   t
       fancy-splash-image          (concat doom-private-dir "splash.png"))
 
@@ -31,8 +32,9 @@
 (add-hook 'prog-mode-hook #'rainbow-mode)
 
 (setq face-remapping-alist
-'((show-paren-match . (:inherit pulsar-yellow)) ;; yellow highlight
-  (show-paren-mismatch . (:inherit flycheck-error)))) ;; red squiggly underline
+'((show-paren-match . (:inherit pulsar-yellow))      ;; yellow highlight
+  (show-paren-mismatch . (:inherit flycheck-error))) ;; red squiggly underline
+)
 
 (defun +mkdirp (path)
   "Ensures the directory path exists, creating any parents as
@@ -605,6 +607,9 @@ and bibliographies.")
            org-refile-targets
         '((nil :maxlevel . 5)
           (org-agenda-files :maxlevel . 5)))
+  ;; todo
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WIP(w)" "WAIT(a)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
 
   ;; tags
   (setq org-tag-alist
@@ -618,9 +623,10 @@ and bibliographies.")
           ("work"       . ?w)
           (:grouptags)
           ("cognicast"  . ?c)
-          ("perf-cycle" . ?f)
+          ("perf-cycle" . ?p)
           (:endgrouptag)
-          ("personal"   . ?p)))
+          ("personal"   . ?m)
+          ("FLAGGED"    . ?f)))
 
   ;; clock in/out
   (setq org-clock-persist-file
@@ -676,34 +682,40 @@ and bibliographies.")
       `(
         ;; Org tags
         (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
-                                    (svg-tag-make tag :face 'org-modern-tag))))
+                                    (svg-tag-make tag :face 'org-modern-tag :radius 8))))
         (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
 
         ;; Task priority
         ("\\[#[A-Z]\\]" . ( (lambda (tag)
-                              (svg-tag-make tag
-                                            :face 'org-modern-priority
-                                            :radius 8
-                                            :beg 2 :end -1 :margin 0))))
+                              (svg-tag-make tag :radius 8 :beg 2 :end -1 :margin 0))))
 
         ;; Progress
         ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
                                             (svg-progress-percent (substring tag 1 -2)))))
+
         ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
                                           (svg-progress-count (substring tag 1 -1)))))
 
-        ;; TODO / DONE
+        ;; Task Statuses
         ("TODO" . ((lambda (tag)
                      (svg-tag-make "TODO" :face 'org-modern-todo
-                                   :inverse t :margin 0))))
-        ("STRT" . ((lambda (tag) (svg-tag-make "STRT"
-                                               :face 'org-modern-todo :inverse nil :margin 0))))
-        ("WAIT" . ((lambda (tag) (svg-tag-make "WAIT"
-                                               :face 'pulsar-yellow :inverse nil :margin 0))))
-        ("HOLD" . ((lambda (tag) (svg-tag-make "HOLD"
-                                               :face 'pulsar-yello :inverse t :margin 0))))
+                                   :inverse t :margin 0 :radius 8))))
+        ("WIP" . ((lambda (tag)
+                    (svg-tag-make "WIP"
+                                  :face 'org-modern-todo
+                                  :inverse nil :margin 0 :radius 8))))
+        ("WAIT" . ((lambda (tag)
+                     (svg-tag-make "WAIT"
+                                   :face 'pulsar-yellow
+                                   :inverse nil :margin 0 :radius 8))))
+        ("HOLD" . ((lambda (tag)
+                     (svg-tag-make "HOLD"
+                                   :face 'pulsar-yello
+                                   :inverse t :margin 0 :radius 8))))
         ("DONE" . ((lambda (tag)
-                     (svg-tag-make "DONE" :face 'org-modern-done :inverse nil :margin 0))))
+                     (svg-tag-make "DONE"
+                                   :face 'org-modern-done
+                                   :inverse nil :margin 0 :radius 8))))
 
         ;; Citation of the form [cite:@Knuth:1984]
         ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
@@ -720,24 +732,37 @@ and bibliographies.")
         ;; Active date (with or without day name, with or without time)
         (,(format "\\(<%s>\\)" date-re) .
          ((lambda (tag)
-            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+            (svg-tag-make tag
+                          :face 'org-modern-date-active
+                          :inverse t :beg 1 :end -1 :margin 0))))
+
         (,(format "\\(<%s \\)%s>" date-re day-time-re) .
          ((lambda (tag)
-            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+            (svg-tag-make tag
+                          :face 'org-modern-date-active
+                          :beg 1 :inverse t :crop-right t :margin 0))))
         (,(format "<%s \\(%s>\\)" date-re day-time-re) .
          ((lambda (tag)
-            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+            (svg-tag-make tag
+                          :face 'org-modern-time-active
+                          :end -1 :inverse t :crop-left t :margin 0))))
 
         ;; Inactive date  (with or without day name, with or without time)
         (,(format "\\(\\[%s\\]\\)" date-re) .
          ((lambda (tag)
-            (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+            (svg-tag-make tag
+                          :face 'org-modern-date-inactive
+                          :beg 1 :end -1 :inverse t :margin 0 :face))))
         (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
          ((lambda (tag)
-            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+            (svg-tag-make tag
+                          :face 'org-modern-date-inactive
+                          :beg 1 :inverse t :crop-right t :margin 0))))
         (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
          ((lambda (tag)
-            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
+            (svg-tag-make tag
+                          :face 'org-modern-time-inactive
+                          :end -1 :inverse t :crop-left t :margin 0)))))))
 
 (use-package! org-glossary
   :after org
@@ -768,6 +793,19 @@ and bibliographies.")
 (use-package! org-agenda
   :defer t
   :config
+  (defface org-glossary-term
+    '((default :inherit (popup-tip-face)
+        :weight normal))
+    "Base face used for term references.")
+  (face-spec-set 'org-agenda-date
+                 '((default :weight normal)))
+  (face-spec-set 'org-agenda-date-weekend
+                 '((default :foreground "#399ee6" :weight normal)))
+  (face-spec-set 'org-agenda-diary
+                 '((default :weight normal :foreground "#86b300")))
+  (face-spec-set 'org-agenda-date-today
+                 '((default :foreground "#f07171" :slant italic :weight normal)))
+
   (setq org-agenda-file-regexp            "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
         org-agenda-files                  (list org-directory
                                                 org-roam-directory
@@ -778,9 +816,9 @@ and bibliographies.")
         org-agenda-skip-deadline-if-done  t
         org-agenda-skip-scheduled-if-done t
         org-agenda-skip-timestamp-if-done t
+        org-agenda-start-on-weekday       1
         org-agenda-todo-ignore-deadlines  t
         org-agenda-todo-ignore-scheduled  t
-        org-agenda-start-on-weekday       1
         org-agenda-use-tag-inheritance    nil
         org-icalendar-combined-agenda-file
         (expand-file-name "org.ics" org-directory)
