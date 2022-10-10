@@ -14,16 +14,23 @@
         doom-themes-enable-italic t
         doom-themes-padded-modeline t)
   (load-theme 'doom-ayu-light t)
-
   (doom-themes-visual-bell-config)
   (setq doom-themes-treemacs-theme "doom-ayu-light")
   (doom-themes-treemacs-config)
   (doom-themes-org-config)
   (face-spec-set 'doom-themes-visual-bell
-                 '((default :weight normal :background "firebrick2"
+                 '((default :weight normal
+                     :background "firebrick2"
+                     :foreground "white")))
+  (face-spec-set 'cursor
+                 '((default :weight normal
+                     :background "gray20"
                      :foreground "white")))
   (face-spec-set 'hl-line
-                 '((default :weight normal :background "linen"))))
+                 '((default :weight bold
+                     :background "cornsilk1"
+                     :distanct-foreground "black"
+                     :box "gray70"))))
 
 ;; tab width
 (setq-default tab-width 2)
