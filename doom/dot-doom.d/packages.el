@@ -64,6 +64,7 @@
 (package! adoc-mode)
 (package! consult-company)
 (package! consult-yasnippet)
+(package! consult-org-roam :recipe(:host github :repo "jgru/consult-org-roam"))
 (package! dirvish)
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! google-this)

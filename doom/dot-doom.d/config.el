@@ -434,8 +434,7 @@ degrees in the echo area."
   (use-package! vertico
     :demand t
     :bind
-    (("M-."      . #'embark-act)
-     ("C-x B"    . #'+vertico/switch-workspace-buffer)
+    (("C-x B"    . #'+vertico/switch-workspace-buffer)
      :map vertico-map
      ("C-l"      . #'vertico-directory-up)) ;; behave like helm to go up a level
     :config
@@ -463,11 +462,40 @@ degrees in the echo area."
      ("C-x 4 b" . #'consult-buffer-other-window)
      ("C-x 5 b" . #'consult-buffer-other-frame)
      ("C-x r b" . #'consult-bookmark)
-     ("M-g g"   . #'consult-goto-line))))
+     ("M-g g"   . #'consult-goto-line)
+     ("C-c s r" . #'consult-ripgrep)
+     ("C-x r i" . #'consult-register-load)
+     ("C-x r s" . #'consult-register-store)
+     ("C-h W"   . #'consult-man)
+     ("M-s g"   . #'consult-git-grep)))
+
+  (use-package! embark
+    :bind
+    (("C-." . embark-act)         ;; pick some comfortable binding
+     ("M-." . embark-dwim)        ;; good alternative: M-.
+     ) ;; alternative for `describe-bindings'
+
+  ;; Optionally replace the key help with a completing-read interface
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  ;; Hide the mode line of the Embark live/completions buffers
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package! embark-consult
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode)))
 
 (when (modulep! :completion company)
   (use-package! company
-    :defer t
     :config
     (setq company-idle-delay 0.9)))
 
@@ -572,9 +600,11 @@ and bibliographies.")
 (use-package! org
   :defer t
   :init
-  (setq org-directory              (expand-file-name "content" +info-dir))
+  (setq org-directory (expand-file-name "content" +info-dir)
+        org-modules   '(ol-bibtex ol-bookmark ol-docview
+                        ol-doi org-checklist org-id
+                        ol-notmuch org-tempo))
 
-  ;;
   (setq
    org-roam-directory         (expand-file-name "roam" org-directory)
    org-roam-dailies-directory "journal/"
@@ -614,11 +644,11 @@ and bibliographies.")
         org-use-sub-superscripts           "{}")
 
   ;; refiling
-  (setq org-refile-use-cache               t
-        org-refile-use-outline-path        t
-           org-refile-targets
-        '((nil :maxlevel . 5)
-          (org-agenda-files :maxlevel . 5)))
+  (setq org-refile-use-cache                   t ;; use C-0 C-c C-w to clear cache
+        org-refile-use-outline-path            t
+        org-refile-allow-creating-parent-nodes t
+        org-refile-targets                     '((nil :maxlevel . 5)
+                                                 (org-agenda-files :maxlevel . 5)))
   ;; todo
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WIP(w)" "WAIT(a)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
@@ -645,25 +675,48 @@ and bibliographies.")
         (expand-file-name "etc/org-clock-save.el" doom-cache-dir))
 
   ;; capture
-  (setq +org-capture-changelog-file "changelog.org.gpg"
-        +org-capture-notes-file "notes.org.gpg"
-        +org-capture-projects-file "projects.org.gpg"
-        +org-capture-todo-file "todo.org.gpg"
-        +org-capture-journal-file "journal.org.gpg"
-
+  (setq +org-capture-changelog-file "changelog.org"
+        +org-capture-notes-file     "notes.org"
+        +org-capture-projects-file  "projects.org"
+        +org-capture-todo-file      "todo.org"
+        +org-capture-journal-file   "journal.org"
         org-capture-templates
-        `(("t" "Todo" entry (file+headline "todo.org.gpg" "Todos")
+        `(("t" "Todo" entry (file+headline "todo.org" "Todos")
            "* TODO %^{Task} %^G")))
   (map!
-   (:when (modulep! :lang org +roam2)
-    :desc "Rebuild Roam cache" "C-c n r b" #'custom/org-rebuild-cache)
    (:map org-mode-map
-    "C-. o b" #'custom/org-bold-word
-    "C-. o c" #'custom/org-code-word
-    "C-. o i" #'custom/org-italicize-word
-    "C-. o s" #'custom/org-strike-word
-    "C-. o u" #'custom/org-underline-word
-    "C-. o v" #'custom/org-verbatim-word)))
+    "C-| o b" #'custom/org-bold-word
+    "C-| o c" #'custom/org-code-word
+    "C-| o i" #'custom/org-italicize-word
+    "C-| o s" #'custom/org-strike-word
+    "C-| o u" #'custom/org-underline-word
+    "C-| o v" #'custom/org-verbatim-word)))
+
+(use-package! consult-org-roam
+   :defer t
+   :after org
+   :init
+   (require 'consult-org-roam)
+   (consult-org-roam-mode 1)
+   :custom
+   (consult-org-roam-grep-func #'consult-ripgrep)
+   ;; Configure a custom narrow key for `consult-buffer'
+   (consult-org-roam-buffer-narrow-key ?r)
+   ;; Display org-roam buffers right after non-org-roam buffers
+   ;; in consult-buffer (and not down at the bottom)
+   (consult-org-roam-buffer-after-buffers t)
+   :config
+   ;; Eventually suppress previewing for certain functions
+   (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-."))
+   ;; Define some convenient keybindings as an addition
+   :bind
+   ("C-c n r o f" . consult-org-roam-file-find)
+   ("C-c n r o b" . consult-org-roam-backlinks)
+   ("C-c n r o l" . consult-org-roam-forward-links)
+   ("C-c n r o s" . consult-org-roam-search)
+   ("C-c n r c"   . custom/org-rebuild-cache))
 
 (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
 (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
@@ -723,7 +776,7 @@ and bibliographies.")
                                    :inverse nil :margin 0 :radius 8))))
         ("HOLD" . ((lambda (tag)
                      (svg-tag-make "HOLD"
-                                   :face 'pulsar-yello
+                                   :face 'pulsar-yellow
                                    :inverse t :margin 0 :radius 8))))
         ("DONE" . ((lambda (tag)
                      (svg-tag-make "DONE"
@@ -791,7 +844,8 @@ and bibliographies.")
   (setq org-glossary-fontify-types-differently nil)
   (map!
    (:map org-mode-map
-    "C-. o g" #'org-glossary-create-definition)))
+    "C-| o g" #'org-glossary-create-definition
+    "C-| o G" #'org-glossary-goto-term-definition)))
 
 (use-package! zotxt
   :after org
