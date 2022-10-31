@@ -55,8 +55,12 @@
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (setq +doom-dashboard-banner-dir
-      (expand-file-name "etc/banners" doom-private-dir)
-      fancy-splash-image (expand-file-name "splash.png" +doom-dashboard-banner-dir))
+      (expand-file-name "etc/banners" doom-private-dir))
+
+(setq +doom-dashboard-banner-file
+      (expand-file-name "splash.png" +doom-dashboard-banner-dir))
+
+(setq fancy-splash-image +doom-dashboard-banner-file)
 
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"

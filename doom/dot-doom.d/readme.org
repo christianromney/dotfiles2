@@ -98,8 +98,12 @@ variable ensures return will continue commenting on the new line.
 My customization of the Doom dashboard.
 #+begin_src elisp
 (setq +doom-dashboard-banner-dir
-      (expand-file-name "etc/banners" doom-private-dir)
-      fancy-splash-image (expand-file-name "splash.png" +doom-dashboard-banner-dir))
+      (expand-file-name "etc/banners" doom-private-dir))
+
+(setq +doom-dashboard-banner-file
+      (expand-file-name "splash.png" +doom-dashboard-banner-dir))
+
+(setq fancy-splash-image +doom-dashboard-banner-file)
 
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"
