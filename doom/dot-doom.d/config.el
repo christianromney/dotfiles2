@@ -3,8 +3,7 @@
 
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
-      display-line-numbers-type   t
-      fancy-splash-image          (concat doom-private-dir "splash.png"))
+      display-line-numbers-type   t)
 
 (use-package! doom-themes
   :ensure t
@@ -47,6 +46,55 @@
 '((show-paren-match . (:inherit pulsar-yellow))      ;; yellow highlight
   (show-paren-mismatch . (:inherit flycheck-error))) ;; red squiggly underline
 )
+
+(setq +default-want-RET-continue-comments nil
+      +file-templates-dir                 (expand-file-name "etc/snippets" doom-private-dir)
+      doom-cache-dir                      user-emacs-directory)
+
+(add-to-list 'doom-large-file-size-alist
+             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
+
+(setq +doom-dashboard-banner-dir
+      (expand-file-name "banners" doom-private-dir)
+      fancy-splash-image (expand-file-name "splash.png" +doom-dashboard-banner-dir))
+
+(setq +doom-dashboard-menu-sections
+      '(("Reload last session"
+         :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
+         :when (cond ((modulep! :ui workspaces)
+                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
+                     ((require 'desktop nil t)
+                      (file-exists-p (desktop-full-file-name))))
+         :face (:inherit (doom-dashboard-menu-title bold))
+         :action doom/quickload-session)
+        ("Open org-agenda"
+         :icon (all-the-icons-octicon "calendar" :face 'doom-dashboard-menu-title)
+         :when (fboundp 'org-agenda)
+         :action org-agenda)
+        ("Open mail"
+         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
+         :when (modulep! :email mu4e)
+         :action =mu4e)
+        ("Open mail"
+         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
+         :when (modulep! :email notmuch)
+         :action notmuch-hello)
+        ("Recently opened files"
+         :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
+         :action recentf-open-files)
+        ("Open project"
+         :icon (all-the-icons-octicon "briefcase" :face 'doom-dashboard-menu-title)
+         :action projectile-switch-project)
+        ("Jump to bookmark"
+         :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
+         :action bookmark-jump)
+        ("Open private configuration"
+         :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
+         :when (file-directory-p doom-user-dir)
+         :action doom/open-private-config)
+        ("Open documentation"
+         :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
+         :action doom/help)))
 
 (defun +mkdirp (path)
   "Ensures the directory path exists, creating any parents as
@@ -133,6 +181,7 @@ degrees in the echo area."
     (message-temperature-conversions num)))
 
 (setq confirm-kill-emacs          nil
+      use-short-answers           t
       enable-dir-local-variables  t
       enable-local-variables      t
       initial-major-mode          'lisp-interaction-mode
@@ -140,13 +189,6 @@ degrees in the echo area."
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
 (setq native-comp-async-report-warnings-errors 'silent)
-
-(setq +default-want-RET-continue-comments nil
-      +file-templates-dir                 (expand-file-name "snippets" doom-private-dir)
-      doom-cache-dir                      user-emacs-directory)
-
-(add-to-list 'doom-large-file-size-alist
-             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (require 'smtpmail)
 (setq smtpmail-queue-mail nil)
@@ -287,64 +329,25 @@ degrees in the echo area."
 (after! notmuch
   (set-popup-rule! "^\\*notmuch-hello" :ignore t))
 
-(setq +doom-dashboard-menu-sections
-      '(("Reload last session"
-         :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
-         :when (cond ((modulep! :ui workspaces)
-                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
-                     ((require 'desktop nil t)
-                      (file-exists-p (desktop-full-file-name))))
-         :face (:inherit (doom-dashboard-menu-title bold))
-         :action doom/quickload-session)
-        ("Open org-agenda"
-         :icon (all-the-icons-octicon "calendar" :face 'doom-dashboard-menu-title)
-         :when (fboundp 'org-agenda)
-         :action org-agenda)
-        ("Open mail"
-         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
-         :when (modulep! :email mu4e)
-         :action =mu4e)
-        ("Open mail"
-         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
-         :when (modulep! :email notmuch)
-         :action notmuch-hello)
-        ("Recently opened files"
-         :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
-         :action recentf-open-files)
-        ("Open project"
-         :icon (all-the-icons-octicon "briefcase" :face 'doom-dashboard-menu-title)
-         :action projectile-switch-project)
-        ("Jump to bookmark"
-         :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
-         :action bookmark-jump)
-        ("Open private configuration"
-         :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
-         :when (file-directory-p doom-user-dir)
-         :action doom/open-private-config)
-        ("Open documentation"
-         :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
-         :action doom/help)))
-
 (setq abbrev-file-name "~/.doom.d/abbrev_defs"
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 
-(setq bookmark-default-file     (+touch
-                                 (expand-file-name "etc/bookmarks" doom-cache-dir))
+(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-user-dir)
       bookmark-old-default-file bookmark-default-file
       bookmark-file             bookmark-default-file
       bookmark-sort-flag        t)
 
 (when (modulep! :checkers spell)
   (setq spell-fu-directory
-        (+mkdirp (expand-file-name "etc/spell-fu/" doom-cache-dir)))
+        (+mkdirp (expand-file-name "etc/spell-fu/" doom-private-dir)))
   (add-hook 'spell-fu-mode-hook
             (lambda ()
               (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
               (spell-fu-dictionary-add
                (spell-fu-get-personal-dictionary
                 "en-personal"
-                (expand-file-name "aspell.en.pws" doom-private-dir))))))
+                (expand-file-name "aspell.en.pws" spell-fu-directory))))))
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 
