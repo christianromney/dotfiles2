@@ -55,7 +55,7 @@
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (setq +doom-dashboard-banner-dir
-      (expand-file-name "banners" doom-private-dir)
+      (expand-file-name "etc/banners" doom-private-dir)
       fancy-splash-image (expand-file-name "splash.png" +doom-dashboard-banner-dir))
 
 (setq +doom-dashboard-menu-sections
@@ -329,11 +329,11 @@ degrees in the echo area."
 (after! notmuch
   (set-popup-rule! "^\\*notmuch-hello" :ignore t))
 
-(setq abbrev-file-name "~/.doom.d/abbrev_defs"
+(setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 
-(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-user-dir)
+(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-private-dir)
       bookmark-old-default-file bookmark-default-file
       bookmark-file             bookmark-default-file
       bookmark-sort-flag        t)

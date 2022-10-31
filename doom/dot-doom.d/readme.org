@@ -98,7 +98,7 @@ variable ensures return will continue commenting on the new line.
 My customization of the Doom dashboard.
 #+begin_src elisp
 (setq +doom-dashboard-banner-dir
-      (expand-file-name "banners" doom-private-dir)
+      (expand-file-name "etc/banners" doom-private-dir)
       fancy-splash-image (expand-file-name "splash.png" +doom-dashboard-banner-dir))
 
 (setq +doom-dashboard-menu-sections
@@ -419,7 +419,7 @@ Keep my abbreviations file in my source-controlled Doom directory, and do what I
 say without question.
 
 #+begin_src elisp
-(setq abbrev-file-name "~/.doom.d/abbrev_defs"
+(setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
       save-abbrevs     'silent)
 (setq-default abbrev-mode t)
 #+end_src
@@ -428,7 +428,7 @@ say without question.
 Save file locations.
 
 #+begin_src elisp
-(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-user-dir)
+(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-private-dir)
       bookmark-old-default-file bookmark-default-file
       bookmark-file             bookmark-default-file
       bookmark-sort-flag        t)
