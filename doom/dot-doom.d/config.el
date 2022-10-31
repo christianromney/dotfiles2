@@ -60,8 +60,6 @@
 (setq +doom-dashboard-banner-file
       (expand-file-name "splash.png" +doom-dashboard-banner-dir))
 
-(setq fancy-splash-image +doom-dashboard-banner-file)
-
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"
          :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
