@@ -16,7 +16,7 @@ Post-processing new mail tags\n"
 
 # mailing list handling
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/ally -- tag:lists/155657 or from:email@email.ally.com
-/usr/local/bin/notmuch tag -new -inbox +lists +lists/amazon -- 'from:customer-reviews-messages@amazon.com or from:"(^@)+@marketplace.amazon.com"'
+/usr/local/bin/notmuch tag -new -inbox +lists +lists/amazon -- 'from:customer-reviews-messages@amazon.com or from:"(^@)+@marketplace.amazon.com" or from:no-reply@amazon.com'
 /usr/local/bin/notmuch tag -new +inbox +lists +lists/amazon -- from:auto-confirm@amazon.com or from:shipment-tracking@amazon.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/amex -- tag:lists/7201234 or from:americanexpress@member.americanexpress.com
 /usr/local/bin/notmuch tag -new -inbox +lists +lists/bestbuy -- tag:lists/97338

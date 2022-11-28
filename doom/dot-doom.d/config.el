@@ -36,7 +36,7 @@
 
 ;; ligature support
 (mac-auto-operator-composition-mode)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; double rainbow
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)

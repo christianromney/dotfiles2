@@ -16,7 +16,7 @@ end
 
 status --is-interactive; and source (pyenv init -|psub)
 status --is-interactive; and source (rbenv init -|psub)
-status --is-interactive; and source (jenv  init -|psub)
+status --is-interactive; and source /usr/local/opt/asdf/libexec/asdf.fish
 
 eval (direnv hook fish)
 
