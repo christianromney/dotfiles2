@@ -1086,7 +1086,8 @@ with large files for some reason."
   :config
   (setq dall-e-n 3
         dall-e-size "256x256"
-        dall-e-display-width 200))
+        dall-e-display-width 200
+        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
 (message "=> loaded Dall-E")
 
 (use-package org-ai
