@@ -35,8 +35,8 @@
 (setq-default tab-width 2)
 
 ;; ligature support
-(mac-auto-operator-composition-mode)
-;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (mac-auto-operator-composition-mode)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; double rainbow
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -59,44 +59,6 @@
 
 (setq +doom-dashboard-banner-file
       (expand-file-name "splash.png" +doom-dashboard-banner-dir))
-
-(setq +doom-dashboard-menu-sections
-      '(("Reload last session"
-         :icon (all-the-icons-octicon "history" :face 'doom-dashboard-menu-title)
-         :when (cond ((modulep! :ui workspaces)
-                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
-                     ((require 'desktop nil t)
-                      (file-exists-p (desktop-full-file-name))))
-         :face (:inherit (doom-dashboard-menu-title bold))
-         :action doom/quickload-session)
-        ("Open org-agenda"
-         :icon (all-the-icons-octicon "calendar" :face 'doom-dashboard-menu-title)
-         :when (fboundp 'org-agenda)
-         :action org-agenda)
-        ("Open mail"
-         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
-         :when (modulep! :email mu4e)
-         :action =mu4e)
-        ("Open mail"
-         :icon (all-the-icons-faicon "inbox" :face 'doom-dashboard-menu-title)
-         :when (modulep! :email notmuch)
-         :action notmuch-hello)
-        ("Recently opened files"
-         :icon (all-the-icons-octicon "file-text" :face 'doom-dashboard-menu-title)
-         :action recentf-open-files)
-        ("Open project"
-         :icon (all-the-icons-octicon "briefcase" :face 'doom-dashboard-menu-title)
-         :action projectile-switch-project)
-        ("Jump to bookmark"
-         :icon (all-the-icons-octicon "bookmark" :face 'doom-dashboard-menu-title)
-         :action bookmark-jump)
-        ("Open private configuration"
-         :icon (all-the-icons-octicon "tools" :face 'doom-dashboard-menu-title)
-         :when (file-directory-p doom-user-dir)
-         :action doom/open-private-config)
-        ("Open documentation"
-         :icon (all-the-icons-octicon "book" :face 'doom-dashboard-menu-title)
-         :action doom/help)))
 
 (defun +mkdirp (path)
   "Ensures the directory path exists, creating any parents as
@@ -191,145 +153,6 @@ degrees in the echo area."
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
                                             kill-buffer-query-functions))
 (setq native-comp-async-report-warnings-errors 'silent)
-
-(require 'smtpmail)
-(setq smtpmail-queue-mail nil)
-
-(require 'sendmail)
-(setq sendmail-program (executable-find "msmtp")
-      send-mail-function #'smtpmail-send-it)
-
-(require 'message)
-(setq compose-mail-user-agent-warnings nil
-      mail-envelope-from 'header
-      mail-specify-envelope-from t
-      mail-user-agent 'message-user-agent
-      message-confirm-send nil
-      message-directory "~/.mail"
-      message-kill-buffer-on-exit t
-      message-mail-user-agent t
-      message-sendmail-envelope-from 'header
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-sendmail-f-is-evil t
-      message-wide-reply-confirm-recipients t
-      message-send-mail-function #'smtpmail-send-it)
-
-(use-package! notmuch
-  :bind (("C-c m m" . #'notmuch-hello)
-         ("C-c m u" . #'+notmuch/update)
-         ("C-c m c" . #'+notmuch/compose))
-  :config
-  (setq +notmuch-sync-backend             'mbsync
-        notmuch-hello-auto-refresh        t
-        notmuch-hello-recent-searches-max 20
-        notmuch-message-headers           '("To" "Cc" "Subject" "Date")
-        notmuch-message-headers-visible   t
-        notmuch-search-oldest-first       nil
-        notmuch-show-all-tags-list        t
-        notmuch-show-logo                 nil
-        notmuch-unthreaded-show-out       nil
-        notmuch-wash-wrap-lines-length    120)
-
-  (setq notmuch-saved-searches
-        '((:name "unread (inbox)"
-           :query "tag:unread and tag:inbox"
-           :key "u"
-           :sort-order newest-first)
-
-          (:name "unread (all)"
-           :query "tag:unread not tag:archived"
-           :key "U"
-           :sort-order newest-first)
-
-          (:name "inbox"
-           :query "tag:inbox"
-           :key "i"
-           :sort-order newest-first)
-
-          (:name "flagged"
-           :query "tag:flagged"
-           :key "f"
-           :sort-order newest-first)
-
-          (:name "all mail"
-           :query "*"
-           :key "a"
-           :sort-order newest-first)
-
-          (:name "attachments"
-           :query "tag:attachment"
-           :key "A"
-           :sort-order newest-first)
-
-          (:name "sent"
-           :query "tag:sent"
-           :key "t"
-           :sort-order newest-first)
-
-          (:name "todo"
-           :query "tag:todo not tag:archived"
-           :key "T"
-           :sort-order newest-first)
-
-          (:name "drafts"
-           :query "tag:draft not tag:archived"
-           :key "d"
-           :sort-order newest-first)
-
-          (:name "mailing lists"
-           :query "tag:lists not tag:archived"
-           :key "M"
-           :sort-order newest-first)
-
-          (:name "lists/clojure"
-           :query "(tag:lists/clojure or tag:lists/clojure-dev) not tag:archived"
-           :key "C"
-           :sort-order newest-first)
-
-          (:name "lists/datomic"
-           :query "tag:lists/datomic not tag:archived"
-           :key "D"
-           :sort-order newest-first)))
-  ;; tags
-  (setq notmuch-archive-tags           '("-inbox" "+archived")
-        notmuch-message-replied-tags   '("+replied")
-        notmuch-message-forwarded-tags '("+forwarded")
-        notmuch-show-mark-read-tags    '("-unread")
-        notmuch-draft-tags             '("+draft")
-        notmuch-draft-folder           "drafts"
-        notmuch-draft-save-plaintext   'ask)
-
-  (setq notmuch-tag-formats
-        '(("unread" (propertize tag 'face 'notmuch-tag-unread))
-          ("flag"   (propertize tag 'face 'notmuch-tag-flagged))))
-
-  (setq notmuch-tag-deleted-formats
-        '(("unread" (notmuch-apply-face bare-tag `notmuch-tag-deleted))
-          (".*"     (notmuch-apply-face tag `notmuch-tag-deleted))))
-
-  ;; Writing email
-  (setq notmuch-address-command 'internal
-        notmuch-always-prompt-for-sender t
-        notmuch-crypto-get-keys-asynchronously t
-        notmuch-crypto-process-mime t
-        notmuch-maildir-use-notmuch-insert t
-        notmuch-mua-cite-function 'message-cite-original-without-signature
-        notmuch-mua-compose-in 'current-window
-        notmuch-mua-hidden-headers nil
-        notmuch-mua-reply-insert-header-p-function 'notmuch-show-reply-insert-header-p-never
-        notmuch-mua-user-agent-function #'notmuch-mua-user-agent-full)
-
-  ;; Reading email
-  (setq notmuch-show-relative-dates                  t
-        notmuch-show-all-multipart/alternative-parts nil
-        notmuch-show-indent-messages-width           0
-        notmuch-show-indent-multipart                nil
-        notmuch-show-part-button-default-action
-        'notmuch-show-view-part)
-  (message "-> done loading notmuch config."))
-
-(after! notmuch
-  (set-popup-rule! "^\\*notmuch-hello" :ignore t))
 
 (setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
       save-abbrevs     'silent)
@@ -608,7 +431,7 @@ and bibliographies.")
   (setq org-directory (expand-file-name "content" +info-dir)
         org-modules   '(ol-bibtex ol-bookmark ol-docview
                         ol-doi org-checklist org-id
-                        ol-notmuch org-tempo))
+                        org-tempo))
 
   (setq
    org-roam-directory         (expand-file-name "roam" org-directory)
@@ -722,6 +545,17 @@ and bibliographies.")
    ("C-c n r o l" . consult-org-roam-forward-links)
    ("C-c n r o s" . consult-org-roam-search)
    ("C-c n r c"   . custom/org-rebuild-cache))
+
+(use-package org-ai
+  :commands (org-ai-mode)
+  :after org
+  :hook (org-mode . org-ai-mode)
+  :init
+  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
+  (org-ai-global-mode)
+  :config
+  (org-ai-install-yasnippets)
+  (setq org-ai-openai-api-token "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"))
 
 (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
 (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
@@ -1159,6 +993,7 @@ with large files for some reason."
   :after clojure
   :config
   (map! :map clojure-mode-map
+        "C-c c p"    #'+inf-clojure-pretty-print
         "C-c r c"    #'+inf-clojure-socket-repl-connect
         "C-c j c"    #'inf-clojure
         "C-c j C"    #'inf-clojure-connect

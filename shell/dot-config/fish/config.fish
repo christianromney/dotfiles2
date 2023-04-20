@@ -1,5 +1,5 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
-set PATH /usr/local/MacGPG2/bin $HOME/bin $HOME/.cargo/bin $HOME/.emacs.d/bin $HOME/.jenv/bin /usr/local/Cellar/gawk/5.1.1/bin $PATH
+set PATH /usr/local/MacGPG2/bin $HOME/bin $HOME/.cargo/bin $HOME/.config/emacs/bin /usr/local/Cellar/gawk/5.1.1/bin $HOME/.jenv/bin $PATH
 set -g fish_user_paths /usr/local/sbin $fish_user_paths
 
 # ensure gpg-agent is running and add ssh keys quietly
@@ -9,6 +9,7 @@ ssh-add -q
 set EDITOR emacs
 set -x GPG_TTY (tty)
 set -x GPG_AGENT_INFO "~/.gnupg/S.gpg-agent:"(pgrep gpg-agent)":1"
+set -gx HOMEBREW_GITHUB_API_TOKEN (security find-internet-password -s api.github.com -w)
 
 if test -f $HOME/.nurc
     bass source $HOME/.nurc

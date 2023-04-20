@@ -2,6 +2,10 @@
  :user {:plugins [[lein-ancient "0.6.15"]
                   [lein-pprint "1.3.2"]]}
 
+
+ :socket {:jvm-opts ["-Dclojure.server.repl={:port 5555 :accept clojure.core.server/repl}"]
+          :dependencies [[compliment/compliment "0.3.12"]]}
+
  ;; -- tooling --
  :depviz  {:plugins [[lein-ns-dep-graph "0.2.0-SNAPSHOT"]]}
  :datomic {:dependencies [[com.datomic/dev-local "0.9.195"]]}

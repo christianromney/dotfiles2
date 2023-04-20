@@ -88,7 +88,7 @@
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
 (package! zotxt) ;; zotero bibliography support C-c " "
-
+(package! org-ai)
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------

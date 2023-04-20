@@ -171,10 +171,10 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        (web +lsp +tree-sitter)          ; the tubes
        (yaml +lsp)         ; JSON, but readable
-       :email
+       ;; :email
        ;; (mu4e +gmail +org)
-       (notmuch +afew +org)
-       ;;(wanderlust +gmail)
+       ;; (notmuch +afew +org)
+       ;; (wanderlust +gmail)
 
        :app
        ;;calendar
