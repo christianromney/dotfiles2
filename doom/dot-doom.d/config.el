@@ -87,6 +87,12 @@ Returns the expanded pathname."
      (insert-file-contents (expand-file-name path))
      (buffer-string))))
 
+(defun custom/keychain-api-token-for-host (host)
+  "Reads the keychain internet password for the given host."
+  (string-trim
+   (shell-command-to-string
+    (string-join `("security find-internet-password -s " ,host " -w") ""))))
+
 (defun custom/port-open-p (port)
   "Returns t if the given port is in use, nil otherwise."
   (= 0 (call-process "lsof" nil nil nil "-P" "-i"
@@ -546,17 +552,6 @@ and bibliographies.")
    ("C-c n r o s" . consult-org-roam-search)
    ("C-c n r c"   . custom/org-rebuild-cache))
 
-(use-package org-ai
-  :commands (org-ai-mode)
-  :after org
-  :hook (org-mode . org-ai-mode)
-  :init
-  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
-  (org-ai-global-mode)
-  :config
-  (org-ai-install-yasnippets)
-  (setq org-ai-openai-api-token "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"))
-
 (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
 (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
 (defconst day-re "[A-Za-z]\\{3\\}")
@@ -668,6 +663,17 @@ and bibliographies.")
             (svg-tag-make tag
                           :face 'org-modern-time-inactive
                           :end -1 :inverse t :crop-left t :margin 0)))))))
+
+(use-package org-ai
+  :commands (org-ai-mode)
+  :after org
+  :hook (org-mode . org-ai-mode)
+  :init
+  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
+  (org-ai-global-mode)
+  :config
+  (org-ai-install-yasnippets)
+  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
 
 (use-package! org-glossary
   :after org
@@ -869,6 +875,7 @@ and bibliographies.")
           right-margin-width 2)))
 
 (message "=> loaded org configuration")
+(message "open-ai: " (or (custom/read-auth-password :host "api.openai.com") "not-found"))
 
 (use-package paren
   :config
