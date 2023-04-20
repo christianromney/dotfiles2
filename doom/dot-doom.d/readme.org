@@ -1378,6 +1378,12 @@ Initialize the OpenAI library before the front-ends.
 
 (message "=> loaded openai package")
 
+#+end_src
+
+Load the ChatGPT front-end.
+
+#+begin_src elisp
+
 (use-package chatgpt
   :after openai
   :commands (chatgpt)
@@ -1388,7 +1394,11 @@ Initialize the OpenAI library before the front-ends.
         chatgpt-animate-text nil
         chatgpt-animate-fps 20))
 (message "=> loaded ChatGPT")
+#+end_src
 
+Load Dall-E for image generation.
+
+#+begin_src elisp
 (use-package dall-e
   :after openai
   :commands (dall-e)
@@ -1399,9 +1409,7 @@ Initialize the OpenAI library before the front-ends.
         dall-e-display-width 200
         dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
 (message "=> loaded Dall-E")
-
 #+end_src
-
 ** org-ai
 Open AI in org-mode documents.
 #+begin_src elisp
