@@ -78,6 +78,12 @@
 (when (modulep! :checkers syntax)
   (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
 
+;; -----------------------------------------------------------------------------
+;; Open AI
+;; -----------------------------------------------------------------------------
+(package! openai :recipe (:host github :repo "emacs-openai/openai"))
+(package! chatgpt :recipe (:host github :repo "emacs-openai/chatgpt"))
+(package! dall-e :recipe (:host github :repo "emacs-openai/dall-e"))
 ;; ------------------------------------------------------------------------------
 ;;  Org mode
 ;; ------------------------------------------------------------------------------
@@ -87,13 +93,15 @@
 (package! org-super-agenda)
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
-(package! zotxt) ;; zotero bibliography support C-c " "
 (package! org-ai)
+(package! zotxt) ;; zotero bibliography support C-c " "
+
 ;; -----------------------------------------------------------------------------
 ;; Prolog
 ;; ------------------------------------------------------------------------------
 (package! ediprolog) ;; https://github.com/triska/ediprolog
 (package! ob-prolog)
+
 ;; ------------------------------------------------------------------------------
 ;; C
 ;; ------------------------------------------------------------------------------

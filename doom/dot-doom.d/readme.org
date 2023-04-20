@@ -22,6 +22,7 @@ This enables ligature support (see [[https://github.com/tonsky/FiraCode/wiki/Ema
 First, I let emacs know who I am.
 
 #+begin_src elisp
+(message "> Beginning Emacs initialization.")
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 #+end_src
@@ -37,7 +38,6 @@ and I prefer emacs to use all available screen real estate when it starts up.
       display-line-numbers-type   t)
 
 (use-package! doom-themes
-  :ensure t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (setq doom-themes-enable-bold t
@@ -822,23 +822,7 @@ Use svg-tag-mode to beautify org-mode tags, deadlines, and todos.
                           :face 'org-modern-time-inactive
                           :end -1 :inverse t :crop-left t :margin 0)))))))
 #+end_src
-*** org-ai
-Open AI in org-mode documents.
-
-#+begin_src elisp
-(use-package org-ai
-  :commands (org-ai-mode)
-  :after org
-  :hook (org-mode . org-ai-mode)
-  :init
-  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
-  (org-ai-global-mode)
-  :config
-  (org-ai-install-yasnippets)
-  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
-#+end_src
-
-**** Glossary
+*** Glossary
 The [[https://github.com/tecosaur/org-glossary][org-glossary]] package adds terms to a top-level =Glossary= heading and expands
 the definition in the minibuffer whenever the cursor is over a glossary term.
 
@@ -861,7 +845,7 @@ the definition in the minibuffer whenever the cursor is over a glossary term.
     "C-| o G" #'org-glossary-goto-term-definition)))
 #+end_src
 
-**** Citations
+*** Citations
 I am still experimenting with bibliography management and citation embedding. I
 often refer to computer science papers from my notes and am experimenting both
 with [[https://github.com/emacs-citar/citar][Citar]] and [[https://www.zotero.org/][Zotero]] to manage references.
@@ -879,7 +863,7 @@ with [[https://github.com/emacs-citar/citar][Citar]] and [[https://www.zotero.or
          (list (expand-file-name "references.bib" +info-dir))))
 #+end_src
 
-**** Agenda
+*** Agenda
 The [[https://orgmode.org/manual/Agenda-Views.html][agenda]] is org-mode's todo list manager. Todo items can be given various
 states, priorities, deadlines and other properties. Agenda views can display
 upcoming deadlines and todo items in a calendar, topic, or priority view. The
@@ -940,7 +924,7 @@ upcoming deadlines and todo items in a calendar, topic, or priority view. The
 #+RESULTS:
 : t
 
-**** Calendar
+*** Calendar
 Calendar preferences include holidays, week start, and geographical location.
 #+begin_src elisp
 (use-package! calendar
@@ -988,7 +972,7 @@ Calendar preferences include holidays, week start, and geographical location.
                 brazilian-holidays-sp-holidays)))
 #+end_src
 
-**** Literate Programming (org-babel)
+*** Literate Programming (org-babel)
 Org-mode's [[https://orgmode.org/worg/org-contrib/babel/][Babel]] feature allows mixing of prose and language blocks (this
 configuration file is a prime example) for literate programming. Tangling
 exports code blocks into separate files which can be compiled or interpreted by
@@ -1041,7 +1025,7 @@ tangled code files in sync on save.
        (sql        . t)))))
 #+end_src
 
-**** Export Settings
+*** Export Settings
 I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]] HTML presentation.
 #+begin_src elisp
 (after! org
@@ -1064,7 +1048,7 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
         reveal_inter_presentation_links    t))
 #+end_src
 
-**** Appearance
+*** Appearance
 The [[https://github.com/minad/org-modern][org-modern]] package adds some nice aesthetic touches to org-mode buffers.
 
 #+begin_src elisp
@@ -1091,7 +1075,6 @@ The [[https://github.com/minad/org-modern][org-modern]] package adds some nice a
           right-margin-width 2)))
 
 (message "=> loaded org configuration")
-(message "open-ai: " (or (custom/read-auth-password :host "api.openai.com") "not-found"))
 #+end_src
 
 * Programming
@@ -1377,6 +1360,66 @@ useful. This configuration is active when ~:lang cc~ is enabled in init.el.
   (message "=> loaded C configuration"))
 #+end_src
 
+* Artificial Intelligence
+** ChatGPT
+Dedicated ChatGPT and Dall-E modes inside Emacs. These packages depend on having
+the OpenAI API Token in Keychain:
+
+#+begin_example
+security add-internet-password -A -r http -s api.openai.com -a <username> -w <api-token> -U -l "openai"
+#+end_example
+
+Initialize the OpenAI library before the front-ends.
+
 #+begin_src elisp
-(message "=> loaded all configuration.")
+(use-package openai
+  :init
+  (setq openai-key (custom/keychain-api-token-for-host "api.openai.com")))
+
+(message "=> loaded openai package")
+
+(use-package chatgpt
+  :after openai
+  :commands (chatgpt)
+  :bind
+  (("C-c M-c" . chatgpt))
+  :config
+  (setq chatgpt-model "gpt-3.5-turbo"
+        chatgpt-animate-text nil
+        chatgpt-animate-fps 20))
+(message "=> loaded ChatGPT")
+
+(use-package dall-e
+  :after openai
+  :commands (dall-e)
+  :bind (("C-c M-d" . dall-e))
+  :config
+  (setq dall-e-n 3
+        dall-e-size "256x256"
+        dall-e-display-width 200))
+(message "=> loaded Dall-E")
+
+#+end_src
+
+** org-ai
+Open AI in org-mode documents.
+#+begin_src elisp
+(use-package org-ai
+  :commands (org-ai-mode)
+  :after org
+  :hook (org-mode . org-ai-mode)
+  :init
+  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
+  (org-ai-global-mode)
+  :config
+  (org-ai-install-yasnippets)
+  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
+(message "=> loaded org-ai")
+#+end_src
+
+* Conclusion
+If this message appears in the ~*Messages*~ buffer, then all configuration loaded
+successfully.
+#+begin_src elisp
+(message "> Emacs initialization complete.")
 #+end_src

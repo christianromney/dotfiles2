@@ -1,3 +1,4 @@
+(message "> Beginning Emacs initialization.")
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 
@@ -6,7 +7,6 @@
       display-line-numbers-type   t)
 
 (use-package! doom-themes
-  :ensure t
   :config
   (mapc #'disable-theme custom-enabled-themes)
   (setq doom-themes-enable-bold t
@@ -664,17 +664,6 @@ and bibliographies.")
                           :face 'org-modern-time-inactive
                           :end -1 :inverse t :crop-left t :margin 0)))))))
 
-(use-package org-ai
-  :commands (org-ai-mode)
-  :after org
-  :hook (org-mode . org-ai-mode)
-  :init
-  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
-  (org-ai-global-mode)
-  :config
-  (org-ai-install-yasnippets)
-  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
-
 (use-package! org-glossary
   :after org
   :hook (org-mode . org-glossary-mode)
@@ -875,7 +864,6 @@ and bibliographies.")
           right-margin-width 2)))
 
 (message "=> loaded org configuration")
-(message "open-ai: " (or (custom/read-auth-password :host "api.openai.com") "not-found"))
 
 (use-package paren
   :config
@@ -1074,4 +1062,43 @@ with large files for some reason."
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
   (message "=> loaded C configuration"))
 
-(message "=> loaded all configuration.")
+(use-package openai
+  :init
+  (setq openai-key (custom/keychain-api-token-for-host "api.openai.com")))
+
+(message "=> loaded openai package")
+
+(use-package chatgpt
+  :after openai
+  :commands (chatgpt)
+  :bind
+  (("C-c M-c" . chatgpt))
+  :config
+  (setq chatgpt-model "gpt-3.5-turbo"
+        chatgpt-animate-text nil
+        chatgpt-animate-fps 20))
+(message "=> loaded ChatGPT")
+
+(use-package dall-e
+  :after openai
+  :commands (dall-e)
+  :bind (("C-c M-d" . dall-e))
+  :config
+  (setq dall-e-n 3
+        dall-e-size "256x256"
+        dall-e-display-width 200))
+(message "=> loaded Dall-E")
+
+(use-package org-ai
+  :commands (org-ai-mode)
+  :after org
+  :hook (org-mode . org-ai-mode)
+  :init
+  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
+  (org-ai-global-mode)
+  :config
+  (org-ai-install-yasnippets)
+  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
+(message "=> loaded org-ai")
+
+(message "> Emacs initialization complete.")
