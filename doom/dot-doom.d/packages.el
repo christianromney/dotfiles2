@@ -93,7 +93,7 @@
 (package! org-super-agenda)
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
-(package! org-ai)
+(package! org-ai :recipe (:host github :repo "rksm/org-ai"))
 (package! zotxt) ;; zotero bibliography support C-c " "
 
 ;; -----------------------------------------------------------------------------
