@@ -1361,6 +1361,8 @@ useful. This configuration is active when ~:lang cc~ is enabled in init.el.
 #+end_src
 
 * Artificial Intelligence
+Packages that integrate with narrow AI LLMs from Open AI.
+
 ** ChatGPT
 Dedicated ChatGPT and Dall-E modes inside Emacs. These packages depend on having
 the OpenAI API Token in Keychain:
