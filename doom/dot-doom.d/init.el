@@ -33,14 +33,16 @@
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        ;;ligatures         ; ligatures and symbols to make your code pretty again
+       ;; nav-flash
        (modeline +light)   ; snazzy, Atom-inspired modeline, plus API
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
-       (treemacs +lsp)     ; a project drawer, like neotree but cooler
+       ;;(treemacs +lsp)     ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        (vc-gutter
-        +diff-hl +pretty)  ; vcs diff in the fringe
+        +diff-hl
+        +pretty)  ; vcs diff in the fringe
        vi-tilde-fringe     ; fringe tildes to mark beyond EOB
        (window-select
         +numbers)          ; visually switch windows
@@ -48,8 +50,8 @@
        ;;zen               ; distraction-free coding or writing
 
        :editor
-       file-templates      ; auto-snippets for empty files
-       fold                ; (nigh) universal code folding
+       ;;file-templates      ; auto-snippets for empty files
+       ;;fold                ; (nigh) universal code folding
        (format +onsave)    ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
@@ -114,13 +116,13 @@
        ;;(cc +lsp)         ; C/C++/Obj-C madness
        ;; clojure          ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
-       coq               ; proofs-as-programs
+       ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
        ;;csharp            ; unity, .NET, and mono shenanigans
        data                ; config/data formats
-       (dart
-        +flutter
-        +lsp)              ; paint ui and not much else
+       ;; (dart
+       ;;  +flutter
+       ;; +lsp)              ; paint ui and not much else
        ;;elixir            ; erlang done right
        ;;elm               ; care for a cup of TEA?
        emacs-lisp          ; drown in parentheses
@@ -135,7 +137,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        (json +lsp +tree-sitter) ; At least it ain't XML
-       (java +lsp +tree-sitter) ; the poster child for carpal tunnel syndrome
+       (java +lsp +tree-sitter) ; TODO: brew install clang-format
        (javascript +lsp +tree-sitter) ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
@@ -154,7 +156,7 @@
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       ;;(python +lsp)     ; beautiful is better than ugly
+       (python +lsp)     ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        (racket +xp)        ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6

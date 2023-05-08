@@ -14,22 +14,26 @@
         doom-themes-padded-modeline t)
   (load-theme 'doom-ayu-light t)
   (doom-themes-visual-bell-config)
-  (setq doom-themes-treemacs-theme "doom-ayu-light")
-  (doom-themes-treemacs-config)
   (doom-themes-org-config)
+
+  (when (modulep! :ui treemacs)
+    (setq doom-themes-treemacs-theme "doom-ayu-light")
+    (doom-themes-treemacs-config))
+
+
   (face-spec-set 'doom-themes-visual-bell
                  '((default :weight normal
-                     :background "firebrick2"
-                     :foreground "white")))
+                    :background "firebrick2"
+                    :foreground "white")))
   (face-spec-set 'cursor
                  '((default :weight normal
-                     :background "gray20"
-                     :foreground "white")))
+                    :background "gray20"
+                    :foreground "white")))
   (face-spec-set 'hl-line
                  '((default :weight bold
-                     :background "cornsilk1"
-                     :distanct-foreground "black"
-                     :box "gray70"))))
+                    :background "cornsilk1"
+                    :foreground "black"
+                    :box "gray70"))))
 
 ;; tab width
 (setq-default tab-width 2)
@@ -155,9 +159,9 @@ degrees in the echo area."
       enable-dir-local-variables  t
       enable-local-variables      t
       initial-major-mode          'lisp-interaction-mode
-      user-emacs-directory        (+mkdirp (expand-file-name "~/.local/emacs/cache/"))
+      user-emacs-directory        doom-cache-dir
       kill-buffer-query-functions (remq 'process-kill-buffer-query-function
-                                            kill-buffer-query-functions))
+                                        kill-buffer-query-functions))
 (setq native-comp-async-report-warnings-errors 'silent)
 
 (setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
@@ -287,7 +291,7 @@ degrees in the echo area."
   (use-package! consult
     :config
     (setq consult-grep-args
-          "grep --null --line-buffered --color=never --ignore-case \
+          "ggrep --null --line-buffered --color=never --ignore-case \
 --exclude-dir=.git --line-number -I -r .")
     :bind
     (("M-i"     . #'consult-imenu)
@@ -349,7 +353,7 @@ degrees in the echo area."
                        :nick ,user
                        :sasl-username ,user
                        :sasl-password ,pass
-                       :channels ("#clojure" "#emacs")))))
+                       :channels ("#clojure" "#datomic" "#emacs")))))
 
 (map! "C-e"       #'move-end-of-line
       "C-'"       #'avy-goto-line
@@ -497,10 +501,6 @@ and bibliographies.")
           (:endgrouptag)
           (:startgrouptag)
           ("work"       . ?w)
-          (:grouptags)
-          ("cognicast"  . ?c)
-          ("perf-cycle" . ?p)
-          (:endgrouptag)
           ("personal"   . ?m)
           ("FLAGGED"    . ?f)))
 
@@ -552,117 +552,119 @@ and bibliographies.")
    ("C-c n r o s" . consult-org-roam-search)
    ("C-c n r c"   . custom/org-rebuild-cache))
 
-(defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-(defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-(defconst day-re "[A-Za-z]\\{3\\}")
-(defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+;; disabled
+(when nil
+  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+  (defconst day-re "[A-Za-z]\\{3\\}")
+  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
 
-(defun svg-progress-percent (value)
-  (svg-image (svg-lib-concat
-              (svg-lib-progress-bar (/ (string-to-number value) 100.0)
-                                    nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-              (svg-lib-tag (concat value "%")
-                           nil :stroke 0 :margin 0)) :ascent 'center))
-
-(defun svg-progress-count (value)
-  (let* ((seq (mapcar #'string-to-number (split-string value "/")))
-         (count (float (car seq)))
-         (total (float (cadr seq))))
+  (defun svg-progress-percent (value)
     (svg-image (svg-lib-concat
-                (svg-lib-progress-bar (/ count total) nil
-                                      :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-                (svg-lib-tag value nil
-                             :stroke 0 :margin 0)) :ascent 'center)))
+                (svg-lib-progress-bar (/ (string-to-number value) 100.0)
+                                      nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                (svg-lib-tag (concat value "%")
+                             nil :stroke 0 :margin 0)) :ascent 'center))
 
-(use-package! svg-tag-mode
-  :hook ((org-agenda-mode org-super-agenda-mode). svg-tag-mode)
-  :config
-  (setq svg-tag-tags
-      `(
-        ;; Org tags
-        (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
-                                    (svg-tag-make tag :face 'org-modern-tag
-                                                  :padding 1 :radius 3))))
-        (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
+  (defun svg-progress-count (value)
+    (let* ((seq (mapcar #'string-to-number (split-string value "/")))
+           (count (float (car seq)))
+           (total (float (cadr seq))))
+      (svg-image (svg-lib-concat
+                  (svg-lib-progress-bar (/ count total) nil
+                                        :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                  (svg-lib-tag value nil
+                               :stroke 0 :margin 0)) :ascent 'center)))
 
-        ;; Task priority
-        ("\\[#[A-Z]\\]" . ( (lambda (tag)
-                              (svg-tag-make tag :radius 8 :beg 2 :end -1 :margin 0))))
+  (use-package! svg-tag-mode
+    :hook ((org-agenda-mode org-super-agenda-mode). svg-tag-mode)
+    :config
+    (setq svg-tag-tags
+          `(
+            ;; Org tags
+            (":\\([A-Za-z0-9]+\\)" . ((lambda (tag)
+                                        (svg-tag-make tag :face 'org-modern-tag
+                                                      :padding 1 :radius 3))))
+            (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
 
-        ;; Progress
-        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-                                            (svg-progress-percent (substring tag 1 -2)))))
+            ;; Task priority
+            ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                                  (svg-tag-make tag :radius 8 :beg 2 :end -1 :margin 0))))
 
-        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-                                          (svg-progress-count (substring tag 1 -1)))))
+            ;; Progress
+            ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+                                                (svg-progress-percent (substring tag 1 -2)))))
 
-        ;; Task Statuses
-        ("TODO" . ((lambda (tag)
-                     (svg-tag-make "TODO" :face 'org-modern-todo
-                                   :inverse t :margin 0 :radius 8))))
-        ("WIP" . ((lambda (tag)
-                    (svg-tag-make "WIP"
-                                  :face 'org-modern-todo
-                                  :inverse nil :margin 0 :radius 8))))
-        ("WAIT" . ((lambda (tag)
-                     (svg-tag-make "WAIT"
-                                   :face 'pulsar-yellow
-                                   :inverse nil :margin 0 :radius 8))))
-        ("HOLD" . ((lambda (tag)
-                     (svg-tag-make "HOLD"
-                                   :face 'pulsar-yellow
-                                   :inverse t :margin 0 :radius 8))))
-        ("DONE" . ((lambda (tag)
-                     (svg-tag-make "DONE"
-                                   :face 'org-modern-done
-                                   :inverse nil :margin 0 :radius 8))))
+            ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+                                              (svg-progress-count (substring tag 1 -1)))))
 
-        ;; Citation of the form [cite:@Knuth:1984]
-        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-                                          (svg-tag-make tag
-                                                        :inverse t
-                                                        :beg 7 :end -1
-                                                        :crop-right t))))
-        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-                                                   (svg-tag-make tag
-                                                                 :end -1
-                                                                 :crop-left t))))
+            ;; Task Statuses
+            ("TODO" . ((lambda (tag)
+                         (svg-tag-make "TODO" :face 'org-modern-todo
+                                       :inverse t :margin 0 :radius 8))))
+            ("WIP" . ((lambda (tag)
+                        (svg-tag-make "WIP"
+                                      :face 'org-modern-todo
+                                      :inverse nil :margin 0 :radius 8))))
+            ("WAIT" . ((lambda (tag)
+                         (svg-tag-make "WAIT"
+                                       :face 'pulsar-yellow
+                                       :inverse nil :margin 0 :radius 8))))
+            ("HOLD" . ((lambda (tag)
+                         (svg-tag-make "HOLD"
+                                       :face 'pulsar-yellow
+                                       :inverse t :margin 0 :radius 8))))
+            ("DONE" . ((lambda (tag)
+                         (svg-tag-make "DONE"
+                                       :face 'org-modern-done
+                                       :inverse nil :margin 0 :radius 8))))
+
+            ;; Citation of the form [cite:@Knuth:1984]
+            ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                              (svg-tag-make tag
+                                                            :inverse t
+                                                            :beg 7 :end -1
+                                                            :crop-right t))))
+            ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                                       (svg-tag-make tag
+                                                                     :end -1
+                                                                     :crop-left t))))
 
 
-        ;; Active date (with or without day name, with or without time)
-        (,(format "\\(<%s>\\)" date-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-date-active
-                          :inverse t :beg 1 :end -1 :margin 0))))
+            ;; Active date (with or without day name, with or without time)
+            (,(format "\\(<%s>\\)" date-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-date-active
+                              :inverse t :beg 1 :end -1 :margin 0))))
 
-        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-date-active
-                          :beg 1 :inverse t :crop-right t :margin 0))))
-        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-time-active
-                          :end -1 :inverse t :crop-left t :margin 0))))
+            (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-date-active
+                              :beg 1 :inverse t :crop-right t :margin 0))))
+            (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-time-active
+                              :end -1 :inverse t :crop-left t :margin 0))))
 
-        ;; Inactive date  (with or without day name, with or without time)
-        (,(format "\\(\\[%s\\]\\)" date-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-date-inactive
-                          :beg 1 :end -1 :inverse t :margin 0 :face))))
-        (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-date-inactive
-                          :beg 1 :inverse t :crop-right t :margin 0))))
-        (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-         ((lambda (tag)
-            (svg-tag-make tag
-                          :face 'org-modern-time-inactive
-                          :end -1 :inverse t :crop-left t :margin 0)))))))
+            ;; Inactive date  (with or without day name, with or without time)
+            (,(format "\\(\\[%s\\]\\)" date-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-date-inactive
+                              :beg 1 :end -1 :inverse t :margin 0 :face))))
+            (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-date-inactive
+                              :beg 1 :inverse t :crop-right t :margin 0))))
+            (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+             ((lambda (tag)
+                (svg-tag-make tag
+                              :face 'org-modern-time-inactive
+                              :end -1 :inverse t :crop-left t :margin 0))))))))
 
 (use-package! org-glossary
   :after org
@@ -837,7 +839,8 @@ and bibliographies.")
         org-re-reveal-pdfseparatefragments nil
         org-re-reveal-progress             t
         org-re-reveal-rolling-links        nil
-        org-re-reveal-root                 "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/"
+        org-re-reveal-root
+        "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"
         org-re-reveal-title-slide          "%t"
         reveal_inter_presentation_links    t))
 
@@ -1068,18 +1071,16 @@ with large files for some reason."
 
 (message "=> loaded openai package")
 
-(use-package chatgpt
+(use-package! chatgpt
   :after openai
   :commands (chatgpt)
-  :bind
-  (("C-c M-c" . chatgpt))
   :config
   (setq chatgpt-model "gpt-3.5-turbo"
         chatgpt-animate-text nil
         chatgpt-animate-fps 20))
 (message "=> loaded ChatGPT")
 
-(use-package dall-e
+(use-package! dall-e
   :after openai
   :commands (dall-e)
   :bind (("C-c M-d" . dall-e))
@@ -1090,7 +1091,14 @@ with large files for some reason."
         dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
 (message "=> loaded Dall-E")
 
-(use-package org-ai
+(use-package! gptel
+  :defer t
+  :commands (gptel)
+  :bind (("C-c M-c" . gptel))
+  :config
+  (setq! gptel-api-key (custom/keychain-api-token-for-host "api.openai.com")))
+
+(use-package! org-ai
   :commands (org-ai-mode)
   :after org
   :hook (org-mode . org-ai-mode)

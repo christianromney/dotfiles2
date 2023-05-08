@@ -48,7 +48,7 @@
 ;; ------------------------------------------------------------------------------
 ;; Appearance
 ;; ------------------------------------------------------------------------------
-(package! svg-tag-mode :recipe (:host github :repo "rougier/svg-tag-mode"))
+;;(package! svg-tag-mode :recipe (:host github :repo "rougier/svg-tag-mode"))
 (package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
 (package! xterm-color)
 
@@ -70,13 +70,25 @@
 (package! google-this)
 (package! helpful)
 (package! reveal-in-osx-finder)
+
 ;; ------------------------------------------------------------------------------
 ;;  Clojure support
 ;; ------------------------------------------------------------------------------
 (package! clojure-snippets)
-(package! inf-clojure :pin "c23c55e662c16ec94e684b2ec9611e78531921a8")
+(package! inf-clojure :pin "b153e5126419910c38691088aab569b7c281068c")
 (when (modulep! :checkers syntax)
-  (package! flycheck-clj-kondo :pin "a558bda44c4cb65b69fa53df233e8941ebd195c5"))
+  (package! flycheck-clj-kondo :pin "ff7bed2315755cfe02ef471edf522e27b78cd5ca"))
+
+;; ------------------------------------------------------------------------------
+;;  Org mode
+;; ------------------------------------------------------------------------------
+(package! brazilian-holidays)
+(package! graphviz-dot-mode)
+(package! org-modern)
+(package! org-super-agenda) ;; do I need this?
+(package! org-auto-tangle)
+(package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
+(package! zotxt) ;; zotero bibliography support C-c " "
 
 ;; -----------------------------------------------------------------------------
 ;; Open AI
@@ -84,17 +96,8 @@
 (package! openai :recipe (:host github :repo "emacs-openai/openai"))
 (package! chatgpt :recipe (:host github :repo "emacs-openai/chatgpt"))
 (package! dall-e :recipe (:host github :repo "emacs-openai/dall-e"))
-;; ------------------------------------------------------------------------------
-;;  Org mode
-;; ------------------------------------------------------------------------------
-(package! brazilian-holidays)
-(package! graphviz-dot-mode)
-(package! org-modern)
-(package! org-super-agenda)
-(package! org-auto-tangle)
-(package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
-(package! org-ai :recipe (:host github :repo "rksm/org-ai"))
-(package! zotxt) ;; zotero bibliography support C-c " "
+(package! gptel)
+(package! org-ai)
 
 ;; -----------------------------------------------------------------------------
 ;; Prolog
