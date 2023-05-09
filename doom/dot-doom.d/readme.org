@@ -672,12 +672,14 @@ and bibliographies.")
            "* TODO %^{Task} %^G")))
   (map!
    (:map org-mode-map
-    "C-| o b" #'custom/org-bold-word
-    "C-| o c" #'custom/org-code-word
-    "C-| o i" #'custom/org-italicize-word
-    "C-| o s" #'custom/org-strike-word
-    "C-| o u" #'custom/org-underline-word
-    "C-| o v" #'custom/org-verbatim-word)))
+    :desc "org markup"
+    :prefix ("C-, o" . "org markup word")
+    :desc "bold"          "b" #'custom/org-bold-word
+    :desc "code"          "c" #'custom/org-code-word
+    :desc "italics"       "i" #'custom/org-italicize-word
+    :desc "strikethrough" "s" #'custom/org-strike-word
+    :desc "underline"     "u" #'custom/org-underline-word
+    :desc "verbatim"      "v" #'custom/org-verbatim-word)))
 
 (use-package! consult-org-roam
    :defer t
