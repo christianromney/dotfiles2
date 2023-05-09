@@ -1081,27 +1081,32 @@ with large files for some reason."
 (use-package! gptel
   :after openai
   :commands (gptel)
-  :bind (("C-c M-h c" . gptel))
+  :init
+  (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
   :config
   (setq! gptel-api-key openai-key))
 
 (use-package! codegpt
   :after openai
   :commands (codegpt)
-  :bind (("C-c M-h o g" . codegpt)
-         ("C-c M-h o d" . codegpt-doc)
-         ("C-c M-h o e" . codegpt-explain)
-         ("C-c M-h o f" . codegpt-fix)
-         ("C-c M-h o i" . codegpt-improve))
+  :init
+  (map!
+   :prefix ("C-c M-h o" . "coding assistant")
+   :desc "CodeGPT" "g" #'codegpt
+   :desc "Document code" "d" #'codegpt-doc
+   :desc "Explain code" "e" #'codegpt-explain
+   :desc "Fix code" "f" #'codegpt-fix
+   :desc "Improve code" "i" #'codegpt-improve)
   :config
-  (setq codegpt-tunnel 'completion
+  (setq codegpt-tunnel 'chat
         codegpt-model "gpt-3.5-turbo"))
 (message "=> loaded CodeGPT")
 
 (use-package! dall-e
   :after openai
   :commands (dall-e)
-  :bind (("C-c M-h d" . dall-e))
+  :init
+  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
   :config
   (setq dall-e-n 3
         dall-e-size "256x256"
