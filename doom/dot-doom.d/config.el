@@ -4,7 +4,8 @@
 
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
-      display-line-numbers-type   t)
+      display-line-numbers-type   t
+      cursor-type                 'hollow)
 
 (use-package! doom-themes
   :config
@@ -30,10 +31,10 @@
                     :background "gray20"
                     :foreground "white")))
   (face-spec-set 'hl-line
-                 '((default :weight bold
-                    :background "cornsilk1"
+                 '((default :weight normal
+                    :background "white smoke"
                     :foreground "black"
-                    :box "gray70"))))
+                    :box "gray90"))))
 
 ;; tab width
 (setq-default tab-width 2)
@@ -391,46 +392,50 @@ degrees in the echo area."
     (org-roam-db-sync)
     (org-roam-update-org-id-locations)))
 
-(defun custom/org-markup-word (theChar)
-  (if (use-region-p)
-      (let ((beg (region-beginning))
-            (end (+ 1 (region-end))))
-        (save-excursion
-          (goto-char beg)
-          (insert-char theChar)
-
-          (goto-char end)
-          (insert-char theChar)))
-    (save-excursion
-      (backward-word)
-      (insert-char theChar)
-      (forward-word)
-      (insert-char theChar)))
-  (forward-char))
+(defun custom/markup-word (markup-char)
+  "Wraps the active region or the word at point with MARKUP-CHAR."
+  (cl-destructuring-bind (text start end)
+      (if (use-region-p)
+          (list
+           (buffer-substring-no-properties (region-beginning) (region-end))
+           (region-beginning)
+           (region-end))
+        (let ((bounds (bounds-of-thing-at-point 'word)))
+          (list (thing-at-point 'word)
+                (car bounds)
+                (cdr bounds))))
+    (progn
+      (save-excursion
+        (replace-region-contents
+         start end
+         (lambda ()
+           (s-wrap text
+                   (char-to-string markup-char)
+                   (char-to-string markup-char))))))))
 
 (defun custom/org-italicize-word ()
   (interactive)
-  (custom/org-markup-word #x00002F))
+  (custom/markup-word #x00002F))
 
 (defun custom/org-bold-word ()
   (interactive)
-  (custom/org-markup-word #x00002A))
+  (custom/markup-word #x00002A))
 
 (defun custom/org-code-word ()
   (interactive)
-  (custom/org-markup-word #x00007E))
+  (custom/markup-word #x00007E))
 
 (defun custom/org-underline-word ()
   (interactive)
-  (custom/org-markup-word #x00005F))
+  (custom/markup-word #x00005F))
 
 (defun custom/org-verbatim-word ()
   (interactive)
-  (custom/org-markup-word #x00003D))
+  (custom/markup-word #x00003D))
 
 (defun custom/org-strike-word ()
   (interactive)
-  (custom/org-markup-word #x00002B))
+  (custom/markup-word #x00002B))
 
 (defvar +info-dir "~/Documents/personal/notes"
   "The root for all notes, calendars, agendas, todos, attachments,
@@ -1065,25 +1070,36 @@ with large files for some reason."
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
   (message "=> loaded C configuration"))
 
-(use-package openai
+(use-package! openai
   :init
   (setq openai-key (custom/keychain-api-token-for-host "api.openai.com")))
 
 (message "=> loaded openai package")
 
-(use-package! chatgpt
+(use-package! gptel
   :after openai
-  :commands (chatgpt)
+  :commands (gptel)
+  :bind (("C-c M-h c" . gptel))
   :config
-  (setq chatgpt-model "gpt-3.5-turbo"
-        chatgpt-animate-text nil
-        chatgpt-animate-fps 20))
-(message "=> loaded ChatGPT")
+  (setq! gptel-api-key openai-key))
+
+(use-package! codegpt
+  :after openai
+  :commands (codegpt)
+  :bind (("C-c M-h o g" . codegpt)
+         ("C-c M-h o d" . codegpt-doc)
+         ("C-c M-h o e" . codegpt-explain)
+         ("C-c M-h o f" . codegpt-fix)
+         ("C-c M-h o i" . codegpt-improve))
+  :config
+  (setq codegpt-tunnel 'completion
+        codegpt-model "gpt-3.5-turbo"))
+(message "=> loaded CodeGPT")
 
 (use-package! dall-e
   :after openai
   :commands (dall-e)
-  :bind (("C-c M-d" . dall-e))
+  :bind (("C-c M-h d" . dall-e))
   :config
   (setq dall-e-n 3
         dall-e-size "256x256"
@@ -1091,23 +1107,17 @@ with large files for some reason."
         dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
 (message "=> loaded Dall-E")
 
-(use-package! gptel
-  :defer t
-  :commands (gptel)
-  :bind (("C-c M-c" . gptel))
-  :config
-  (setq! gptel-api-key (custom/keychain-api-token-for-host "api.openai.com")))
-
 (use-package! org-ai
-  :commands (org-ai-mode)
-  :after org
+  :commands (org-ai-mode org-ai-global-mode)
+  :after (org openai)
   :hook (org-mode . org-ai-mode)
   :init
   (add-to-list 'org-structure-template-alist '("ai" . "ai"))
   (org-ai-global-mode)
   :config
   (org-ai-install-yasnippets)
-  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com")))
+  (setq org-ai-openai-api-token openai-key
+        org-ai-default-chat-model "gpt-3.5-turbo"))
 (message "=> loaded org-ai")
 
 (message "> Emacs initialization complete.")

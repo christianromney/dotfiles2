@@ -93,11 +93,12 @@
 ;; -----------------------------------------------------------------------------
 ;; Open AI
 ;; -----------------------------------------------------------------------------
-(package! openai :recipe (:host github :repo "emacs-openai/openai"))
-(package! chatgpt :recipe (:host github :repo "emacs-openai/chatgpt"))
-(package! dall-e :recipe (:host github :repo "emacs-openai/dall-e"))
+(package! openai  :recipe (:host github :repo "emacs-openai/openai"))  ;; core
+(package! codegpt :recipe (:host github :repo "emacs-openai/codegpt")) ;; code
+(package! dall-e  :recipe (:host github :repo "emacs-openai/dall-e"))  ;; draw
 (package! gptel)
 (package! org-ai)
+;;(package! chatgpt :recipe (:host github :repo "emacs-openai/chatgpt")) ;; chat
 
 ;; -----------------------------------------------------------------------------
 ;; Prolog
