@@ -5,7 +5,7 @@
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
       display-line-numbers-type   t
-      cursor-type                 'hollow)
+      cursor-type                 'bar)
 
 (use-package! doom-themes
   :config
@@ -13,14 +13,9 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t
         doom-themes-padded-modeline t)
-  (load-theme 'doom-ayu-light t)
+  (load-theme 'doom-one-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
-
-  (when (modulep! :ui treemacs)
-    (setq doom-themes-treemacs-theme "doom-ayu-light")
-    (doom-themes-treemacs-config))
-
 
   (face-spec-set 'doom-themes-visual-bell
                  '((default :weight normal
@@ -30,11 +25,16 @@
                  '((default :weight normal
                     :background "gray20"
                     :foreground "white")))
-  (face-spec-set 'hl-line
-                 '((default :weight normal
-                    :background "white smoke"
-                    :foreground "black"
-                    :box "gray90"))))
+
+  ;; (face-spec-set 'hl-line
+  ;;                '((default :weight normal
+  ;;                   :background "white smoke"
+  ;;                   :foreground "black"
+  ;;                   :box "gray90")))
+
+  (when (modulep! :ui treemacs)
+    (setq doom-themes-treemacs-theme "doom-one-light")
+    (doom-themes-treemacs-config)))
 
 ;; tab width
 (setq-default tab-width 2)
