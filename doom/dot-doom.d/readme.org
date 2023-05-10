@@ -1384,6 +1384,12 @@ security add-internet-password -A -r http \
   -U -l "openai"
 #+end_example
 
+This may come in handy
+#+begin_example
+(and (custom/port-open-p 3005)
+     (custom/work-computer-p))
+#+end_example
+
 *** Core
 Initialize the OpenAI library before the front-ends.
 #+begin_src elisp
