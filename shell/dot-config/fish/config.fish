@@ -1,5 +1,6 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
-set PATH /usr/local/MacGPG2/bin $HOME/bin $HOME/.cargo/bin $HOME/.config/emacs/bin /usr/local/Cellar/gawk/5.1.1/bin $HOME/.jenv/bin $PATH
+
+set PATH $HOME/bin $HOME/.config/emacs/bin /usr/local/opt/grep/libexec/gnubin /usr/local/MacGPG2/bin $HOME/.cargo/bin /usr/local/Cellar/gawk/5.2.1_1/bin $HOME/.jenv/bin $PATH
 set -g fish_user_paths /usr/local/sbin $fish_user_paths
 
 # ensure gpg-agent is running and add ssh keys quietly
@@ -19,6 +20,12 @@ status --is-interactive; and source (pyenv init -|psub)
 status --is-interactive; and source (rbenv init -|psub)
 status --is-interactive; and source /usr/local/opt/asdf/libexec/asdf.fish
 
-eval (direnv hook fish)
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /usr/local/Caskroom/miniconda/base/bin/conda
+    eval /usr/local/Caskroom/miniconda/base/bin/conda "shell.fish" hook $argv | source
+end
+# <<< conda initialize <<<
 
 starship init fish | source
+eval (direnv hook fish)
