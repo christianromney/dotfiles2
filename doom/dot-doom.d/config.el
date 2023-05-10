@@ -121,9 +121,9 @@ Returns the expanded pathname."
 
 (defun custom/work-computer-p ()
   "Uses a heuristic to determine whether this is my work laptop."
-  (s-equals?
-     (s-trim (shell-command-to-string "hostname"))
-     (s-trim (shell-command-to-string "whoami"))))
+  (string-equal
+     (string-trim (shell-command-to-string "hostname"))
+     (string-trim (shell-command-to-string "whoami"))))
 
 (defun custom/just-one-space ()
   "Command to delete all but one whitespace character."
@@ -1080,7 +1080,10 @@ with large files for some reason."
 
 (use-package! openai
   :init
-  (setq openai-key (custom/keychain-api-token-for-host "api.openai.com")))
+  (setq openai-key (custom/keychain-api-token-for-host "api.openai.com"))
+  (when (and (custom/port-open-p 3005)
+             (custom/work-computer-p))
+    (setq openai-base-url "http://0.0.0.0:3005/v1")))
 
 (message "=> loaded openai package")
 
@@ -1090,7 +1093,12 @@ with large files for some reason."
   :init
   (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
   :config
-  (setq! gptel-api-key openai-key))
+  (setq gptel-api-key openai-key
+        gptel-model "gpt-3.5-turbo")
+  (when (and (custom/port-open-p 3005)
+             (custom/work-computer-p))
+    (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
+          gptel-stream nil)))
 
 (use-package! codegpt
   :after openai
@@ -1098,11 +1106,11 @@ with large files for some reason."
   :init
   (map!
    :prefix ("C-c M-h o" . "coding assistant")
-   :desc "CodeGPT" "g" #'codegpt
-   :desc "Document code" "d" #'codegpt-doc
-   :desc "Explain code" "e" #'codegpt-explain
-   :desc "Fix code" "f" #'codegpt-fix
-   :desc "Improve code" "i" #'codegpt-improve)
+   :desc "CodeGPT"        "g" #'codegpt
+   :desc "Document code"  "d" #'codegpt-doc
+   :desc "Explain code"   "e" #'codegpt-explain
+   :desc "Fix code"       "f" #'codegpt-fix
+   :desc "Improve code"   "i" #'codegpt-improve)
   :config
   (setq codegpt-tunnel 'chat
         codegpt-model "gpt-3.5-turbo"))
@@ -1129,8 +1137,12 @@ with large files for some reason."
   (org-ai-global-mode)
   :config
   (org-ai-install-yasnippets)
-  (setq org-ai-openai-api-token openai-key
-        org-ai-default-chat-model "gpt-3.5-turbo"))
+  (setq org-ai-openai-api-token (custom/keychain-api-token-for-host "api.openai.com"))
+  (when (and (custom/port-open-p 3005)
+             (custom/work-computer-p))
+    (setq org-ai-openai-chat-endpoint "http://0.0.0.0:3005/v1/chat/completions"
+          org-ai-openai-completion-endpoint "http://0.0.0.0:3005/v1/completions"
+          org-ai-on-project-use-stream nil)))
 (message "=> loaded org-ai")
 
 (message "> Emacs initialization complete.")
