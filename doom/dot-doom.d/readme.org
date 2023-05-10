@@ -173,6 +173,12 @@ Returns the expanded pathname."
 (defun custom/read-auth-password (&rest params)
   (apply #'custom/read-auth-field :secret params))
 
+(defun custom/work-computer-p ()
+  "Uses a heuristic to determine whether this is my work laptop."
+  (s-equals?
+     (s-trim (shell-command-to-string "hostname"))
+     (s-trim (shell-command-to-string "whoami"))))
+
 (defun custom/just-one-space ()
   "Command to delete all but one whitespace character."
   (interactive)
