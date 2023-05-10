@@ -4,8 +4,7 @@
 
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
-      display-line-numbers-type   t
-      cursor-type                 'bar)
+      display-line-numbers-type   t)
 
 (use-package! doom-themes
   :config
@@ -13,7 +12,7 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t
         doom-themes-padded-modeline t)
-  (load-theme 'doom-one-light t)
+  (load-theme 'doom-nord-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
 
@@ -26,18 +25,13 @@
                     :background "gray20"
                     :foreground "white")))
 
-  ;; (face-spec-set 'hl-line
-  ;;                '((default :weight normal
-  ;;                   :background "white smoke"
-  ;;                   :foreground "black"
-  ;;                   :box "gray90")))
-
   (when (modulep! :ui treemacs)
-    (setq doom-themes-treemacs-theme "doom-one-light")
-    (doom-themes-treemacs-config)))
+    (setq doom-themes-treemacs-theme "doom-nord-light")
+    (doom-themes-treemacs-config))
 
 ;; tab width
-(setq-default tab-width 2)
+  (setq-default tab-width 2)
+  (setq  cursor-type 'bar))
 
 ;; ligature support
 ;; (mac-auto-operator-composition-mode)
