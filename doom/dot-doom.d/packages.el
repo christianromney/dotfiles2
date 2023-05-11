@@ -48,10 +48,10 @@
 ;; ------------------------------------------------------------------------------
 ;; Appearance
 ;; ------------------------------------------------------------------------------
-;;(package! svg-tag-mode :recipe (:host github :repo "rougier/svg-tag-mode"))
 (package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
 (package! xterm-color)
-(package! apropospriate-theme)
+(package! nano-theme :recipe (:host github :repo "rougier/nano-theme"))
+
 ;; ------------------------------------------------------------------------------
 ;;  Git extras
 ;; ------------------------------------------------------------------------------

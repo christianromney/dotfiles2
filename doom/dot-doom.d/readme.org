@@ -1,4 +1,3 @@
-
 #+title: Emacs Configuration
 * Introduction
 This file contains my [[https://github.com/doomemacs/doomemacs][literate Doom Emacs]] configuration for Mac OS. I use Doom
@@ -31,45 +30,46 @@ Next, I configure emacs' appearance so that it's easy on the eyes. I like the
 and I prefer emacs to use all available screen real estate when it starts up.
 
 #+begin_src elisp
+;; reset themeing
+(mapc #'disable-theme custom-enabled-themes)
+
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
       display-line-numbers-type   t)
 
-(use-package! doom-themes
-  :config
-  (mapc #'disable-theme custom-enabled-themes)
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t
-        doom-themes-padded-modeline t)
-  (load-theme 'doom-nord-light t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-org-config)
+(use-package nano-theme
+ :init
+ (require 'nano-theme)
+ (setq-default tab-width 2)
+ (setq-default cursor-type 'bar)
+ (setq nano-fonts-use nil)
+ (setq nano-font-family-monospaced "JetBrains Mono")
+ (setq nano-font-size 20)
 
-  (face-spec-set 'doom-themes-visual-bell
-                 '((default :weight normal
-                    :background "firebrick2"
-                    :foreground "white")))
-  (face-spec-set 'cursor
-                 '((default :weight normal
-                    :background "gray20"
-                    :foreground "white")))
-
-  (when (modulep! :ui treemacs)
-    (setq doom-themes-treemacs-theme "doom-nord-light")
-    (doom-themes-treemacs-config))
-
-;; tab width
-  (setq-default tab-width 2)
-  (setq  cursor-type 'bar))
-
-;; ligature support
-;; (mac-auto-operator-composition-mode)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+ ;; Default frame settings
+ (setq default-frame-alist
+       (append (list
+                '(min-height . 1)  '(height . 45)
+                '(min-width  . 1)  '(width  . 81)
+                '(vertical-scroll-bars . nil)
+                '(internal-border-width . 24)
+                '(left-fringe . 0)
+                '(right-fringe . 0)
+                '(undecorated-round . t) ;; emacs-plus@29 only
+                '(tool-bar-lines . 0)
+                '(menu-bar-lines . 0)
+                '(fullscreen . maximized)
+                )))
+ (load-theme 'doom-one-light t)
+ (nano-light))
 
 ;; double rainbow
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'rainbow-mode)
 #+end_src
+
+#+RESULTS:
+| rainbow-mode | rainbow-delimiters-mode | hl-todo-mode | display-line-numbers-mode | highlight-numbers-mode | vi-tilde-fringe-mode |
 
 *** Face Remapping
 Sometimes I want control over previously defined (or default) faces. We can't
@@ -80,11 +80,11 @@ by partial specs.
 #+begin_src elisp
 (setq face-remapping-alist
 '((show-paren-match . (:inherit pulsar-yellow))      ;; yellow highlight
-  (show-paren-mismatch . (:inherit flycheck-error))) ;; red squiggly underline
-)
+  (show-paren-mismatch . (:inherit flycheck-error))  ;; red squiggly underline
+  ))
 #+end_src
 
-** Doom-Specific Settings
+*** Doom-Specific Settings
 These variables are all specific to the Doom emacs distribution. The comment
 variable ensures return will continue commenting on the new line.
 
@@ -97,7 +97,7 @@ variable ensures return will continue commenting on the new line.
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 #+end_src
 
-*** Dashboard
+**** Dashboard
 My customization of the Doom dashboard.
 #+begin_src elisp
 (setq +doom-dashboard-banner-dir
@@ -107,7 +107,7 @@ My customization of the Doom dashboard.
       (expand-file-name "splash.png" +doom-dashboard-banner-dir))
 #+end_src
 
-** Custom Functions
+*** Custom Functions
 These helpers are used by the configuration that follows. Most functions have to
 do with file and directory handling and parsing. Others are for wrangling
 whitespace.
@@ -214,7 +214,7 @@ degrees in the echo area."
     (message-temperature-conversions num)))
 #+end_src
 
-** Global Behaviors
+*** Global Behaviors
 These settings should apply across all major modes. Disable the quit nannies and
 enable file and dir local variables. Ensure the ~*scratch*~ buffer allows [[https://www.gnu.org/software/emacs/manual/html_node/eintr/][Emacs
 Lisp]] evaluation.
@@ -231,7 +231,7 @@ Lisp]] evaluation.
 (setq native-comp-async-report-warnings-errors 'silent)
 #+end_src
 
-** Abbrev Mode
+*** Abbrev Mode
 Keep my abbreviations file in my source-controlled Doom directory, and do what I
 say without question.
 
@@ -241,7 +241,7 @@ say without question.
 (setq-default abbrev-mode t)
 #+end_src
 
-** Bookmarks
+*** Bookmarks
 Save file locations.
 
 #+begin_src elisp
@@ -251,7 +251,7 @@ Save file locations.
       bookmark-sort-flag        t)
 #+end_src
 
-** Spelling
+*** Spelling
 Ensure spelling dictionaries are source controlled.
 
 #+begin_src elisp
@@ -267,7 +267,7 @@ Ensure spelling dictionaries are source controlled.
                 (expand-file-name "aspell.en.pws" spell-fu-directory))))))
 #+end_src
 
-** Smartparens
+*** Smartparens
 [[https://github.com/Fuco1/smartparens][Smartparens]] doesn't play nicely with org-mode. This is one of the places where
 Doom is uncharacteristically heavy-handed with its defaults. I remove the global
 hook and enable smartparens (strict mode) where I want it, especially in Lisp
@@ -288,7 +288,7 @@ buffers. I also don't like smartparens' default rules.
     (sp-pair open close :unless '(:add sp-in-string-p))))
 #+end_src
 
-** Navigation
+*** Navigation
 I like repeated searches to remain in the middle of the screen so I don't have
 to scan my monitor for the place where I've landed. I can always stare at the
 center of the screen and find my search results. With [[https://protesilaos.com/emacs/pulsar][pulsar]] I can recenter
@@ -320,7 +320,7 @@ after jumps and highlight the search term.
   (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
 #+end_src
 
-** Dired
+*** Dired
 These settings are optimized for Mac OS with the [[https://brew.sh/][Homebrew]] version of the GNU ~ls~
 utility. I also like the keybindings for navigating up and opening Finder.app.
 
@@ -377,7 +377,7 @@ Dirvish is a new enhancement for Dired.
    ("M-j" . dirvish-fd-jump)))
 #+end_src
 
-** Completion
+*** Completion
 The combination of [[https://company-mode.github.io/][company-mode]] with the modern suite of [[https://github.com/minad/vertico][Vertico]], [[https://github.com/oantolin/orderless][Orderless]],
 [[https://github.com/minad/consult][Consult]], [[https://github.com/oantolin/embark][Embark]] and [[https://github.com/minad/marginalia][Marginalia]] is really well behaved and contains all the
 features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
@@ -454,7 +454,7 @@ API as intended.
     (setq company-idle-delay 0.9)))
 #+end_src
 
-** Magit
+*** Magit
 I use source control for everything, and enjoy a few extras for [[https://magit.vc/][Magit]].
 
 #+begin_src elisp
@@ -464,7 +464,7 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
 (add-hook! 'magit-mode-hook (lambda () (magit-delta-mode +1)))
 #+end_src
 
-** Internet Relay Chat (IRC)
+*** Internet Relay Chat (IRC)
 I use [[https://github.com/emacs-circe/circe][circe]] to connect to [[https://libera.chat/][Libera]] and read my credentials from an encrypted
 [[https://www.gnu.org/software/emacs/manual/html_mono/epa.html][authinfo.gpg]].
 
@@ -485,7 +485,7 @@ I use [[https://github.com/emacs-circe/circe][circe]] to connect to [[https://li
 
 #+RESULTS:
 
-** Global Key Bindings
+*** Global Key Bindings
 My idiosyncratic global keybinding preferences.
 
 #+begin_src elisp
@@ -513,7 +513,7 @@ My idiosyncratic global keybinding preferences.
       "C-x t c"   #'display-temperature-at-point-conversions)
 #+end_src
 
-** Miscellaneous
+*** Miscellaneous
 Every Emacs configuration contains a few little odds and ends.
 
 #+begin_src elisp

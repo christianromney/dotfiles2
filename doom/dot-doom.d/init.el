@@ -25,7 +25,7 @@
 
        :ui
        doom                ; what makes DOOM look the way it does
-       doom-dashboard      ; a nifty splash screen for Emacs
+       ;;doom-dashboard      ; a nifty splash screen for Emacs
        (emoji
         +ascii
         +github
@@ -43,7 +43,7 @@
        (vc-gutter
         +diff-hl
         +pretty)  ; vcs diff in the fringe
-       vi-tilde-fringe     ; fringe tildes to mark beyond EOB
+       ;; vi-tilde-fringe     ; fringe tildes to mark beyond EOB
        (window-select
         +numbers)          ; visually switch windows
        workspaces          ; tab emulation, persistence & separate workspaces

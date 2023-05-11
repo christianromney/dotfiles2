@@ -2,40 +2,38 @@
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 
+;; reset themeing
+(mapc #'disable-theme custom-enabled-themes)
+
 (setq doom-font                   "JetBrains Mono:pixelsize=20"
       inhibit-startup-message     t
       display-line-numbers-type   t)
 
-(use-package! doom-themes
-  :config
-  (mapc #'disable-theme custom-enabled-themes)
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t
-        doom-themes-padded-modeline t)
-  (load-theme 'doom-nord-light t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-org-config)
+(use-package nano-theme
+ :init
+ (require 'nano-theme)
+ (setq-default tab-width 2)
+ (setq-default cursor-type 'bar)
+ (setq nano-fonts-use nil)
+ (setq nano-font-family-monospaced "JetBrains Mono")
+ (setq nano-font-size 20)
 
-  (face-spec-set 'doom-themes-visual-bell
-                 '((default :weight normal
-                    :background "firebrick2"
-                    :foreground "white")))
-  (face-spec-set 'cursor
-                 '((default :weight normal
-                    :background "gray20"
-                    :foreground "white")))
-
-  (when (modulep! :ui treemacs)
-    (setq doom-themes-treemacs-theme "doom-nord-light")
-    (doom-themes-treemacs-config))
-
-;; tab width
-  (setq-default tab-width 2)
-  (setq  cursor-type 'bar))
-
-;; ligature support
-;; (mac-auto-operator-composition-mode)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+ ;; Default frame settings
+ (setq default-frame-alist
+       (append (list
+                '(min-height . 1)  '(height . 45)
+                '(min-width  . 1)  '(width  . 81)
+                '(vertical-scroll-bars . nil)
+                '(internal-border-width . 24)
+                '(left-fringe . 0)
+                '(right-fringe . 0)
+                '(undecorated-round . t) ;; emacs-plus@29 only
+                '(tool-bar-lines . 0)
+                '(menu-bar-lines . 0)
+                '(fullscreen . maximized)
+                )))
+ (load-theme 'doom-one-light t)
+ (nano-light))
 
 ;; double rainbow
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -43,8 +41,8 @@
 
 (setq face-remapping-alist
 '((show-paren-match . (:inherit pulsar-yellow))      ;; yellow highlight
-  (show-paren-mismatch . (:inherit flycheck-error))) ;; red squiggly underline
-)
+  (show-paren-mismatch . (:inherit flycheck-error))  ;; red squiggly underline
+  ))
 
 (setq +default-want-RET-continue-comments nil
       +file-templates-dir                 (expand-file-name "etc/snippets" doom-private-dir)
