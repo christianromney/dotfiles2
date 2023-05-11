@@ -8,6 +8,7 @@ $docker_context\
 $dart\
 $custom\
 $java\
+$conda\
 $env_var\
 $line_break\
 $jobs\
@@ -32,8 +33,8 @@ format = "via [🐳 $context](blue bold)"
 commit_hash_length = 8
 
 [custom.clj]
-command = "clojure --help | head -n 1 | awk '{print $2}'"  # shows output of command
+command = "find /usr/local/Cellar/clojure -type f -iname INSTALL_RECEIPT.json | jq -r '.source.versions.stable'"  # shows output of command
 files = ["deps.edn"]       # can specify filters
-symbol = "λ clojure"
+symbol = "𝛌 clojure"
 style = "bold green"
 format = "[$symbol $output]($style) "

@@ -1,21 +1,41 @@
-function man --wraps man -d "Run man with added colors"
-    set --local --export MANPATH $MANPATH
+function man --wraps man --description 'Format and display manual pages'
+    set -q man_blink; and set -l blink (set_color $man_blink); or set -l blink (set_color -o red)
+    set -q man_bold; and set -l bold (set_color $man_bold); or set -l bold (set_color -o 5fafd7)
+    set -q man_standout; and set -l standout (set_color $man_standout); or set -l standout (set_color 949494)
+    set -q man_underline; and set -l underline (set_color $man_underline); or set -l underline (set_color -u afafd7)
 
-    # special case for NetBSD and FreeBSD: set MANPATH if not already set
-    # see https://github.com/fish-shell/fish-shell/blob/555af37616893160ad1afb208a957d6a01a7a315/share/functions/man.fish#L15
+    set -l end (printf "\e[0m")
+
+    set -lx LESS_TERMCAP_mb $blink
+    set -lx LESS_TERMCAP_md $bold
+    set -lx LESS_TERMCAP_me $end
+    set -lx LESS_TERMCAP_so $standout
+    set -lx LESS_TERMCAP_se $end
+    set -lx LESS_TERMCAP_us $underline
+    set -lx LESS_TERMCAP_ue $end
+    set -lx LESS '-R -s'
+
+    set -lx GROFF_NO_SGR yes # fedora
+
+    set -lx MANPATH (string join : $MANPATH)
     if test -z "$MANPATH"
-        if set path (command man -p 2>/dev/null)
-            set MANPATH (string replace --regex '[^/]+$' '' $path)
-        else
-            set MANPATH ""
-        end
+        type -q manpath
+        and set MANPATH (command manpath)
     end
 
-    # prepend the directory of fish manpages to MANPATH
-    set fish_manpath $__fish_data_dir/man
-    if test -d $fish_manpath
-        set --prepend MANPATH $fish_manpath
+    # Check data dir for Fish 2.x compatibility
+    set -l fish_data_dir
+    if set -q __fish_data_dir
+        set fish_data_dir $__fish_data_dir
+    else
+        set fish_data_dir $__fish_datadir
     end
 
-    cless (command --search man) $argv
+    set -l fish_manpath (dirname $fish_data_dir)/fish/man
+    if test -d "$fish_manpath" -a -n "$MANPATH"
+        set MANPATH "$fish_manpath":$MANPATH
+        command man $argv
+        return
+    end
+    command man $argv
 end
