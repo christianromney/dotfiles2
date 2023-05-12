@@ -470,7 +470,7 @@ and bibliographies.")
   (setq org-startup-folded t
         org-startup-indented t
         org-startup-with-inline-images t
-        org-startup-with-latex-preview t
+        org-startup-with-latex-preview nil
         org-M-RET-may-split-line       t)
 
   ;; behaviors
