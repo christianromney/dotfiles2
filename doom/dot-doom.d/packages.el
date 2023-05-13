@@ -49,8 +49,7 @@
 ;; Appearance
 ;; ------------------------------------------------------------------------------
 (package! pulsar :recipe (:host github :repo "protesilaos/pulsar"))
-(package! xterm-color)
-(package! nano-theme :recipe (:host github :repo "rougier/nano-theme"))
+;;(package! xterm-color)
 
 ;; ------------------------------------------------------------------------------
 ;;  Git extras
@@ -65,10 +64,8 @@
 (package! consult-company)
 (package! consult-yasnippet)
 (package! consult-org-roam :recipe(:host github :repo "jgru/consult-org-roam"))
-(package! dirvish)
 (package! free-keys :recipe (:host github :repo "Fuco1/free-keys"))
 (package! google-this)
-(package! helpful)
 (package! reveal-in-osx-finder)
 
 ;; ------------------------------------------------------------------------------
@@ -85,10 +82,9 @@
 (package! brazilian-holidays)
 (package! graphviz-dot-mode)
 (package! org-modern)
-(package! org-super-agenda) ;; do I need this?
 (package! org-auto-tangle)
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary"))
-(package! zotxt) ;; zotero bibliography support C-c " "
+(package! zotxt)
 
 ;; -----------------------------------------------------------------------------
 ;; Open AI
@@ -98,16 +94,3 @@
 (package! dall-e  :recipe (:host github :repo "emacs-openai/dall-e"))  ;; draw
 (package! gptel   :recipe (:host github :repo "christianromney/gptel"))
 (package! org-ai)
-;;(package! chatgpt :recipe (:host github :repo "emacs-openai/chatgpt")) ;; chat
-
-;; -----------------------------------------------------------------------------
-;; Prolog
-;; ------------------------------------------------------------------------------
-(package! ediprolog) ;; https://github.com/triska/ediprolog
-(package! ob-prolog)
-
-;; ------------------------------------------------------------------------------
-;; C
-;; ------------------------------------------------------------------------------
-(when (modulep! :lang cc)
-  (package! disaster :recipe (:host github :repo "jart/disaster")))
