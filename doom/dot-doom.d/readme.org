@@ -500,6 +500,32 @@ capture, appearance, tags, todos, and refiling.
 
   ;; Open in focused buffer, despite popups
   (advice-add #'org-roam-node-visit :around #'+popup-save-a))
+
+(use-package! consult-org-roam
+   :defer t
+   :after org
+   :init
+   (require 'consult-org-roam)
+   (consult-org-roam-mode 1)
+   :custom
+   (consult-org-roam-grep-func #'consult-ripgrep)
+   ;; Configure a custom narrow key for `consult-buffer'
+   (consult-org-roam-buffer-narrow-key ?r)
+   ;; Display org-roam buffers right after non-org-roam buffers
+   ;; in consult-buffer (and not down at the bottom)
+   (consult-org-roam-buffer-after-buffers t)
+   :config
+   ;; Eventually suppress previewing for certain functions
+   (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-."))
+   ;; Define some convenient keybindings as an addition
+   :bind
+   ("C-c n r o f" . consult-org-roam-file-find)
+   ("C-c n r o b" . consult-org-roam-backlinks)
+   ("C-c n r o l" . consult-org-roam-forward-links)
+   ("C-c n r o s" . consult-org-roam-search)
+   ("C-c n r c"   . custom/org-rebuild-cache))
 #+end_src
 
 *** Calendar
