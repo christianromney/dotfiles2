@@ -705,6 +705,7 @@ API as intended.
 (when (modulep! :completion vertico)
   (use-package! vertico
     :demand t
+    :defer t
     :bind
     (("C-x B"    . #'+vertico/switch-workspace-buffer)
      :map vertico-map
@@ -723,6 +724,7 @@ API as intended.
           marginalia-align              'right))
 
   (use-package! consult
+    :defer t
     :config
     (setq consult-grep-args
           "ggrep --null --line-buffered --color=never --ignore-case \
@@ -742,6 +744,7 @@ API as intended.
      ("M-s g"   . #'consult-git-grep)))
 
   (use-package! embark
+    :defer t
     :bind
     (("C-." . embark-act)         ;; pick some comfortable binding
      ("M-." . embark-dwim)        ;; good alternative: M-.
@@ -759,6 +762,7 @@ API as intended.
 
 ;; Consult users will also want the embark-consult package.
 (use-package! embark-consult
+  :defer t
   :after (embark consult)
   :demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an
@@ -768,6 +772,7 @@ API as intended.
 
 (when (modulep! :completion company)
   (use-package! company
+    :defer t
     :config
     (setq company-idle-delay 0.5)))
 #+end_src
@@ -780,6 +785,7 @@ after jumps and highlight the search term.
 -------------------------------------------------------------------------------
 #+begin_src elisp
 (use-package! pulsar
+  :defer t
   :init
   (setq pulsar-pulse t
         pulsar-delay 0.065
@@ -874,7 +880,8 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
 (after! magit
   (setq magit-revision-show-gravatars t
         forge-database-file
-        (expand-file-name "forge/forge-database.sqlite" doom-cache-dir))
+        (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
+        magit-no-confirm '(stage-all-changes unstage-all-changes))
   (add-hook 'magit-mode-hook #'magit-delta-mode))
 #+end_src
 
@@ -1046,6 +1053,7 @@ Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]
 #+begin_src elisp
 (when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
+    :defer t
     :when (modulep! :checkers syntax)
     :after flycheck))
 
@@ -1114,6 +1122,7 @@ useful. This configuration is active when ~:lang cc~ is enabled in init.el.
 
   ;; disassembler
   (use-package! disaster
+    :defer t
     :commands (disaster)
     :init
     (setq disaster-assembly-mode 'nasm-mode)
@@ -1138,10 +1147,11 @@ security add-internet-password -A -r http \
 #+end_example
 
 
-**** Core
+*** Core
 Initialize the OpenAI library before the front-ends.
 #+begin_src elisp
 (use-package! openai
+  :defer t
   :init
   (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
   (when (cr/port-open-p 3005)
@@ -1150,12 +1160,13 @@ Initialize the OpenAI library before the front-ends.
 (message "=> loaded openai package")
 #+end_src
 
-**** gptel
+*** gptel
 ChatGPT emacs front-end with a nicer UI.
 
 #+begin_src elisp
 (use-package! gptel
   :after openai
+  :defer t
   :commands (gptel)
   :init
   (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
@@ -1167,7 +1178,7 @@ ChatGPT emacs front-end with a nicer UI.
               gptel-stream nil)))
 #+end_src
 
-**** CodeGPT
+*** CodeGPT
 Generate code for me to correct.
 
 #+begin_src elisp
@@ -1188,12 +1199,13 @@ Generate code for me to correct.
 (message "=> loaded CodeGPT")
 #+end_src
 
-**** Dall-E
+*** Dall-E
 Generate images from a textual description.
 
 #+begin_src elisp
 (use-package! dall-e
   :after openai
+  :defer t
   :commands (dall-e)
   :init
   (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
@@ -1209,6 +1221,7 @@ Generate images from a textual description.
 Open AI in org-mode documents.
 #+begin_src elisp
 (use-package! org-ai
+  :defer t
   :commands (org-ai-mode org-ai-global-mode)
   :after (org openai)
   :hook (org-mode . org-ai-mode)

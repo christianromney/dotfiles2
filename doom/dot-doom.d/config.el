@@ -574,6 +574,7 @@ degrees in the echo area."
 (when (modulep! :completion vertico)
   (use-package! vertico
     :demand t
+    :defer t
     :bind
     (("C-x B"    . #'+vertico/switch-workspace-buffer)
      :map vertico-map
@@ -592,6 +593,7 @@ degrees in the echo area."
           marginalia-align              'right))
 
   (use-package! consult
+    :defer t
     :config
     (setq consult-grep-args
           "ggrep --null --line-buffered --color=never --ignore-case \
@@ -611,6 +613,7 @@ degrees in the echo area."
      ("M-s g"   . #'consult-git-grep)))
 
   (use-package! embark
+    :defer t
     :bind
     (("C-." . embark-act)         ;; pick some comfortable binding
      ("M-." . embark-dwim)        ;; good alternative: M-.
@@ -628,6 +631,7 @@ degrees in the echo area."
 
 ;; Consult users will also want the embark-consult package.
 (use-package! embark-consult
+  :defer t
   :after (embark consult)
   :demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an
@@ -637,10 +641,12 @@ degrees in the echo area."
 
 (when (modulep! :completion company)
   (use-package! company
+    :defer t
     :config
     (setq company-idle-delay 0.5)))
 
 (use-package! pulsar
+  :defer t
   :init
   (setq pulsar-pulse t
         pulsar-delay 0.065
@@ -704,7 +710,8 @@ degrees in the echo area."
 (after! magit
   (setq magit-revision-show-gravatars t
         forge-database-file
-        (expand-file-name "forge/forge-database.sqlite" doom-cache-dir))
+        (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
+        magit-no-confirm '(stage-all-changes unstage-all-changes))
   (add-hook 'magit-mode-hook #'magit-delta-mode))
 
 (use-package! clojure-mode
@@ -846,6 +853,7 @@ with large files for some reason."
 
 (when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
+    :defer t
     :when (modulep! :checkers syntax)
     :after flycheck))
 
@@ -873,6 +881,7 @@ with large files for some reason."
 
   ;; disassembler
   (use-package! disaster
+    :defer t
     :commands (disaster)
     :init
     (setq disaster-assembly-mode 'nasm-mode)
@@ -884,6 +893,7 @@ with large files for some reason."
   (message "=> loaded C configuration"))
 
 (use-package! openai
+  :defer t
   :init
   (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
   (when (cr/port-open-p 3005)
@@ -893,6 +903,7 @@ with large files for some reason."
 
 (use-package! gptel
   :after openai
+  :defer t
   :commands (gptel)
   :init
   (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
@@ -921,6 +932,7 @@ with large files for some reason."
 
 (use-package! dall-e
   :after openai
+  :defer t
   :commands (dall-e)
   :init
   (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
@@ -932,6 +944,7 @@ with large files for some reason."
 (message "=> loaded Dall-E")
 
 (use-package! org-ai
+  :defer t
   :commands (org-ai-mode org-ai-global-mode)
   :after (org openai)
   :hook (org-mode . org-ai-mode)
