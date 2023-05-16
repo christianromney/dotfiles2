@@ -53,6 +53,7 @@ Set the initial mode, define basic global behaviors, and control the frame.
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
+(display-line-numbers-mode -1)
 (message "=> loaded init settings")
 #+end_src
 

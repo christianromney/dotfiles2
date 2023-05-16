@@ -26,6 +26,7 @@
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
+(display-line-numbers-mode -1)
 (message "=> loaded init settings")
 
 (mapc #'disable-theme custom-enabled-themes)
