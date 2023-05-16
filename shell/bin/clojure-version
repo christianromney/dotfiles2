@@ -1,0 +1,2 @@
+#!/bin/sh
+find /usr/local/Cellar/clojure -type f -iname INSTALL_RECEIPT.json -exec cat {} \; | jq -r '.source.versions.stable'

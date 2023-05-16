@@ -905,27 +905,24 @@ with large files for some reason."
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
   (message "=> loaded C configuration"))
 
-(use-package! openai
-  :defer t
-  :init
+(progn
+  (require 'openai)
+
   (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
   (when (cr/port-open-p 3005)
-        (setq openai-base-url "http://0.0.0.0:3005/v1")))
+    (setq openai-base-url "http://0.0.0.0:3005/v1"))
 
-(message "=> loaded openai package")
+  (message "=> loaded openai package"))
 
-(use-package! gptel
-  :after openai
-  :defer t
-  :commands (gptel)
-  :init
-  (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
-  :config
+(after! openai
   (setq gptel-api-key openai-key
         gptel-model "gpt-3.5-turbo")
+
   (when (cr/port-open-p 3005)
-        (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
-              gptel-stream nil)))
+    (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
+          gptel-stream nil))
+
+  (map! :desc "ChatGPT" "C-c M-h c" #'gptel))
 
 (use-package! codegpt
   :after openai
@@ -956,22 +953,17 @@ with large files for some reason."
         dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
 (message "=> loaded Dall-E")
 
-(use-package! org-ai
-  :defer t
-  :commands (org-ai-mode org-ai-global-mode)
-  :after (org openai)
-  :hook (org-mode . org-ai-mode)
-  :init
-  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
-  (org-ai-global-mode)
-  :config
-  (org-ai-install-yasnippets)
+(after! org
   (setq org-ai-openai-api-token (cr/keychain-api-token-for-host "api.openai.com"))
+  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
+  (org-ai-install-yasnippets)
   (when (cr/port-open-p 3005)
     (setq org-ai-openai-chat-endpoint "http://0.0.0.0:3005/v1/chat/completions"
           org-ai-openai-completion-endpoint "http://0.0.0.0:3005/v1/completions"
-          org-ai-on-project-use-stream nil)))
-(message "=> loaded org-ai")
+          org-ai-on-project-use-stream nil))
+  (add-hook 'org-mode #'org-ai-mode)
+  (org-ai-global-mode)
+  (message "=> loaded org-ai"))
 
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
 

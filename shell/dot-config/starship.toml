@@ -1,3 +1,4 @@
+
 format = """
 $directory\
 $git_branch\
@@ -33,7 +34,8 @@ format = "via [🐳 $context](blue bold)"
 commit_hash_length = 8
 
 [custom.clj]
-command = "find /usr/local/Cellar/clojure -type f -iname INSTALL_RECEIPT.json | jq -r '.source.versions.stable'"  # shows output of command
+command = "clojure-version"  # shows output of command
+ignore_timeout = true
 files = ["deps.edn"]       # can specify filters
 symbol = "𝛌 clojure"
 style = "bold green"
