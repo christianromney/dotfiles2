@@ -32,7 +32,7 @@ Set the initial mode, define basic global behaviors, and control the frame.
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       initial-major-mode              'lisp-interaction-mode
       inhibit-startup-message         t
-      display-line-numbers-type       t)
+      display-line-numbers-type       nil)
 
 (setq confirm-kill-emacs          nil
       use-short-answers           t
@@ -891,12 +891,10 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
 
 #+begin_src elisp
 (after! magit
-  (require 'magit-delta)
   (setq magit-revision-show-gravatars t
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
-        magit-no-confirm '(stage-all-changes unstage-all-changes))
-  (add-hook 'magit-mode-hook #'magit-delta-mode))
+        magit-no-confirm '(stage-all-changes unstage-all-changes)))
 #+end_src
 
 *** Clojure

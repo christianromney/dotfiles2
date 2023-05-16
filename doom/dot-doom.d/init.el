@@ -21,7 +21,7 @@
 
        :completion
        (company +tng)      ; the ultimate code completion backend
-       (vertico +icons)
+       vertico
 
        :ui
        doom                ; what makes DOOM look the way it does
@@ -65,7 +65,7 @@
        :emacs
        dired               ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
-       (ibuffer +icons)    ; interactive buffer management
+       ibuffer    ; interactive buffer management
        (undo +tree)        ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
@@ -141,9 +141,9 @@
        (javascript +lsp +tree-sitter) ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       (latex
-        +cdlatex
-        +lsp)              ; writing papers in Emacs has never been so fun
+       ;; (latex
+       ;;  +cdlatex
+       ;;  +lsp)              ; writing papers in Emacs has never been so fun
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs

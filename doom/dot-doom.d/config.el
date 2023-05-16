@@ -5,7 +5,7 @@
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       initial-major-mode              'lisp-interaction-mode
       inhibit-startup-message         t
-      display-line-numbers-type       t)
+      display-line-numbers-type       nil)
 
 (setq confirm-kill-emacs          nil
       use-short-answers           t
@@ -721,12 +721,10 @@ degrees in the echo area."
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
 (after! magit
-  (require 'magit-delta)
   (setq magit-revision-show-gravatars t
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
-        magit-no-confirm '(stage-all-changes unstage-all-changes))
-  (add-hook 'magit-mode-hook #'magit-delta-mode))
+        magit-no-confirm '(stage-all-changes unstage-all-changes)))
 
 (use-package! clojure-mode
   :defer t

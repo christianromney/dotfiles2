@@ -54,7 +54,7 @@
 ;; ------------------------------------------------------------------------------
 ;;  Git extras
 ;; ------------------------------------------------------------------------------
-(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
+;;(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta"))
 (package! git-link)
 
 ;; ------------------------------------------------------------------------------
