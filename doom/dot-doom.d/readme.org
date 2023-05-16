@@ -891,6 +891,7 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
 
 #+begin_src elisp
 (after! magit
+  (require 'magit-delta)
   (setq magit-revision-show-gravatars t
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
@@ -1192,10 +1193,10 @@ ChatGPT emacs front-end with a nicer UI.
 Generate code for me to correct.
 
 #+begin_src elisp
-(use-package! codegpt
-  :after openai
-  :commands (codegpt)
-  :init
+(after! openai
+  (require 'codegpt)
+  (setq codegpt-tunnel 'chat
+        codegpt-model "gpt-3.5-turbo")
   (map!
    :prefix ("C-c M-h o" . "coding assistant")
    :desc "CodeGPT"        "g" #'codegpt
@@ -1203,38 +1204,34 @@ Generate code for me to correct.
    :desc "Explain code"   "e" #'codegpt-explain
    :desc "Fix code"       "f" #'codegpt-fix
    :desc "Improve code"   "i" #'codegpt-improve)
-  :config
-  (setq codegpt-tunnel 'chat
-        codegpt-model "gpt-3.5-turbo"))
-(message "=> loaded CodeGPT")
+
+  (message "=> loaded CodeGPT"))
 #+end_src
 
 *** Dall-E
 Generate images from a textual description.
 
 #+begin_src elisp
-(use-package! dall-e
-  :after openai
-  :defer t
-  :commands (dall-e)
-  :init
-  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
-  :config
+(after! openai
+  (require 'dall-e)
   (setq dall-e-n 3
         dall-e-size "256x256"
         dall-e-display-width 200
-        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
-(message "=> loaded Dall-E")
+        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir))
+  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
+  (message "=> loaded Dall-E"))
 #+end_src
 
 *** org-ai
 Open AI in org-mode documents.
 #+begin_src elisp
 (after! org
+  (require 'org-ai)
   (setq org-ai-openai-api-token (cr/keychain-api-token-for-host "api.openai.com"))
   (add-to-list 'org-structure-template-alist '("ai" . "ai"))
   (org-ai-install-yasnippets)
   (when (cr/port-open-p 3005)
+    (message "=> using openai proxy")
     (setq org-ai-openai-chat-endpoint "http://0.0.0.0:3005/v1/chat/completions"
           org-ai-openai-completion-endpoint "http://0.0.0.0:3005/v1/completions"
           org-ai-on-project-use-stream nil))

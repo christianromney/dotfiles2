@@ -721,6 +721,7 @@ degrees in the echo area."
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
 (after! magit
+  (require 'magit-delta)
   (setq magit-revision-show-gravatars t
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
@@ -924,10 +925,10 @@ with large files for some reason."
 
   (map! :desc "ChatGPT" "C-c M-h c" #'gptel))
 
-(use-package! codegpt
-  :after openai
-  :commands (codegpt)
-  :init
+(after! openai
+  (require 'codegpt)
+  (setq codegpt-tunnel 'chat
+        codegpt-model "gpt-3.5-turbo")
   (map!
    :prefix ("C-c M-h o" . "coding assistant")
    :desc "CodeGPT"        "g" #'codegpt
@@ -935,29 +936,25 @@ with large files for some reason."
    :desc "Explain code"   "e" #'codegpt-explain
    :desc "Fix code"       "f" #'codegpt-fix
    :desc "Improve code"   "i" #'codegpt-improve)
-  :config
-  (setq codegpt-tunnel 'chat
-        codegpt-model "gpt-3.5-turbo"))
-(message "=> loaded CodeGPT")
 
-(use-package! dall-e
-  :after openai
-  :defer t
-  :commands (dall-e)
-  :init
-  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
-  :config
+  (message "=> loaded CodeGPT"))
+
+(after! openai
+  (require 'dall-e)
   (setq dall-e-n 3
         dall-e-size "256x256"
         dall-e-display-width 200
-        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir)))
-(message "=> loaded Dall-E")
+        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir))
+  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
+  (message "=> loaded Dall-E"))
 
 (after! org
+  (require 'org-ai)
   (setq org-ai-openai-api-token (cr/keychain-api-token-for-host "api.openai.com"))
   (add-to-list 'org-structure-template-alist '("ai" . "ai"))
   (org-ai-install-yasnippets)
   (when (cr/port-open-p 3005)
+    (message "=> using openai proxy")
     (setq org-ai-openai-chat-endpoint "http://0.0.0.0:3005/v1/chat/completions"
           org-ai-openai-completion-endpoint "http://0.0.0.0:3005/v1/completions"
           org-ai-on-project-use-stream nil))
