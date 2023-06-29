@@ -1,6 +1,6 @@
 set fish_greeting ">>> Welcome back, "(whoami)". <<<"
 
-set PATH $HOME/bin $HOME/.config/emacs/bin /usr/local/opt/grep/libexec/gnubin /usr/local/MacGPG2/bin $HOME/.cargo/bin /usr/local/Cellar/gawk/5.2.1_1/bin $HOME/.jenv/bin $PATH
+set PATH $HOME/bin $HOME/.config/emacs/bin /usr/local/opt/grep/libexec/gnubin /usr/local/MacGPG2/bin $HOME/.cargo/bin /usr/local/Cellar/gawk/5.2.1_1/bin $HOME/.jenv/bin $HOME/.docker/bin $PATH
 set -g fish_user_paths /usr/local/sbin $fish_user_paths
 
 # ensure gpg-agent is running and add ssh keys quietly

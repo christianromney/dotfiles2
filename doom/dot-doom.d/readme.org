@@ -64,13 +64,15 @@ I configure emacs' appearance so that it's easy on the eyes. I like the
 and I prefer emacs to use all available screen real estate when it starts up.
 
 #+begin_src elisp
-(mapc #'disable-theme custom-enabled-themes)
 (setq doom-theme 'doom-tomorrow-day
-      doom-font "JetBrains Mono:pixelsize=20"
+      ;;doom-font "JetBrains Mono:pixelsize=20"
+      doom-font (font-spec :family "JetBrains Mono" :size 20)
+      doom-variable-pitch-font (font-spec :family "Proxima Nova" :size 18)
+      doom-serif-font (font-spec :family "Times New Roman" :size 20)
       doom-themes-enable-bold     t
       doom-themes-enable-italic   t
       doom-themes-padded-modeline t)
-(load-theme doom-theme t)
+
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 
