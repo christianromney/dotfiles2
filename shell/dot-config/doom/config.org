@@ -13,10 +13,11 @@ brew install emacs-plus@29 \
 #+end_example
 
 ** General Configuration
+Prefer [[https://jwiegley.github.io/use-package/keywords/][use-package]] for configuration.
 *** Personal Information
 
 #+begin_src elisp
-(message "> Beginning Emacs initialization.")
+(message "> Initializing Emacs...")
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 #+end_src
@@ -51,7 +52,8 @@ Define the initial major mode, basic global behaviors, and frame configuration.
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (display-line-numbers-mode -1)
-(message "=> loaded init settings")
+
+(message "...global behavor...")
 #+end_src
 
 ** Appearance
@@ -98,7 +100,7 @@ The following fonts are defined by Doom emacs:
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'rainbow-mode)
 
-(message "=> loaded ui theme")
+(message "...appearance...")
 #+end_src
 
 ** Built-In Modes
@@ -139,7 +141,7 @@ utility. I also like the keybindings for navigating up and opening Finder.app.
     (map!
      :map dired-mode-map
      "r"  #'reveal-in-osx-finder)))
- (message "=> loaded built-in modes")
+ (message "...built-in modes...")
 #+end_src
 
 ** Custom Functions
@@ -242,7 +244,7 @@ degrees in the echo area."
   (when-let ((num (number-at-point)))
     (cr/message-temperature-conversions num)))
 
-(message "=> loaded custom functions")
+(message "...custom elisp functions...")
 #+end_src
 
 ** Org Mode
@@ -276,6 +278,7 @@ Set up all directory and file paths.
       +org-capture-todo-file      "todo.org"
       +org-capture-journal-file   "journal.org")
 
+(message "...org directories and files...")
 #+end_src
 
 *** Markup Functions
@@ -326,7 +329,7 @@ These commands let me markup org words quickly.
   (interactive)
   (cr/markup-word #x00002B))
 
-(message "=> loaded org custom functions")
+(message "...org custom markup functions...")
 #+end_src
 
 *** Core Settings
@@ -437,9 +440,9 @@ capture, appearance, tags, todos, and refiling.
         org-startup-indented               t)
 
   ;; add frame borders and window dividers
-  (modify-all-frames-parameters
-   '((right-divider-width . 40)
-     (internal-border-width . 40)))
+  ;; (modify-all-frames-parameters
+  ;;  '((right-divider-width . 40)
+  ;;    (internal-border-width . 40)))
 
   (dolist (face '(window-divider
                   window-divider-first-pixel
@@ -473,7 +476,7 @@ capture, appearance, tags, todos, and refiling.
     :desc "verbatim"        "v" #'cr/org-verbatim-word
 
     )))
-(message "=> loaded base org configuration")
+(message "...org startup, bindings, agenda, tags, todos...")
 #+end_src
 
 *** Modern Appearance
@@ -485,7 +488,7 @@ Make org mode more aesthetically pleasing.
   (setq org-modern-star
         '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾"))
   (global-org-modern-mode))
-(message "=> loaded modern org")
+(message "...org appearance...")
 #+end_src
 
 *** Calendar
@@ -530,7 +533,7 @@ Make org mode more aesthetically pleasing.
                 brazilian-holidays--general-holidays
                 brazilian-holidays-sp-holidays))
   (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
-  (message "=> loaded org calendar")
+  (message "...org calendar...")
 #+end_src
 
 *** Glossary
@@ -538,22 +541,22 @@ The [[https://github.com/tecosaur/org-glossary][org-glossary]] package adds term
 the definition in the minibuffer whenever the cursor is over a glossary term.
 
 #+begin_src elisp
-(defface org-glossary-term
+(use-package! org-glossary
+  :hook org-mode
+  :init
+  (defface org-glossary-term
   '((default :inherit (popup-tip-face)
      :weight normal))
   "Base face used for term references.")
-
-(after! org
-  (require 'org-glossary)
+  :config
   (setq org-glossary-fontify-types-differently nil)
   (map!
    (:map org-mode-map
     :prefix ("C-c y" . "glossary")
     :desc "define term"     "d" #'org-glossary-create-definition
-    :desc "goto definition" "g" #'org-glossary-goto-term-definition))
-  (add-hook 'org-mode-hook #'org-glossary-mode))
-(message "=> loaded org glossary")
+    :desc "goto definition" "g" #'org-glossary-goto-term-definition)))
 
+(message "...org glossary...")
 #+end_src
 
 *** Citations
@@ -568,7 +571,8 @@ Bibliography management and citation embedding via with [[https://github.com/ema
   (setq bibtex-dialect                  'biblatex
         org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir))
   (add-hook 'org-mode-hook #'org-zotxt-mode))
-  (message "=> loaded org citations")
+
+(message "...org citations, zotero, citar...")
 #+end_src
 
 *** Literate Programming (org-babel)
@@ -581,8 +585,6 @@ the relevant program.
 (after! org
   (setq org-auto-tangle-default t)
   (add-hook 'org-mode-hook #'org-auto-tangle-mode))
-
-(message "=> loaded org babel")
 #+end_src
 
 #+begin_comment
@@ -599,8 +601,6 @@ tangled code files in sync on save.
   :defer t
   :config
   (setq graphviz-dot-indent-width 2))
-
-(message "=> loaded org graphviz")
 
 (after! org
   (when (modulep! :lang plantuml)
@@ -624,8 +624,9 @@ tangled code files in sync on save.
      (sed        . t)
      (shell      . t)
      (sql        . t))))
-  (message "=> loaded org babel")
-  #+end_src
+
+(message "...org babel...")
+#+end_src
 
 *** Export Settings
 I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-reveal][org-re-reveal]] HTML presentation.
@@ -650,12 +651,8 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
         org-re-reveal-root
         "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"))
 
-(message "=> loaded org reveal")
+(message "...org reveal...")
 #+end_src
-
-
-
-
 
 ** Global Key Bindings
 My idiosyncratic global keybinding preferences.
@@ -682,6 +679,8 @@ My idiosyncratic global keybinding preferences.
       "M-\\"      #'cr/delete-horizontal-space
       "M-o"       #'other-window
       "M-p"       #'fill-paragraph)
+
+(message "...global keybindings...")
 #+end_src
 
 ** Completion
@@ -764,6 +763,7 @@ API as intended.
     :defer t
     :config
     (setq company-idle-delay 0.5)))
+(message "...completion...")
 #+end_src
 
 ** Navigation
@@ -813,6 +813,8 @@ Ensure custom spelling dictionaries are source controlled.
                (spell-fu-get-personal-dictionary
                 "en-personal"
                 (expand-file-name "aspell.en.pws" spell-fu-directory))))))
+
+(message "...spell checking...")
 #+end_src
 
 ** Programming Modes
@@ -844,6 +846,8 @@ buffers. I also don't like smartparens' default rules.
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
+
+(message "...smartparens...")
 #+end_src
 
 *** Projects
@@ -859,6 +863,8 @@ Have projectile save things where I want them.
         (expand-file-name "projectile/projectile.projects" doom-cache-dir))
 
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
+
+(message "...projectile...")
 #+end_src
 
 
@@ -871,6 +877,8 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
         magit-no-confirm '(stage-all-changes unstage-all-changes)))
+
+(message "...magit...")
 #+end_src
 
 *** Clojure
@@ -915,6 +923,8 @@ nice features than make living without Cider bearable.
 (add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
+
+(message "...clojure editing...")
 #+end_src
 
 **** Inferior Clojure Mode
@@ -1033,6 +1043,8 @@ Inferior clojure mode keybindings.
 
 (add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
+
+(message "...clojure REPL...")
 #+end_src
 
 **** Syntax Checking
@@ -1045,11 +1057,11 @@ Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]
     :when (modulep! :checkers syntax)
     :after flycheck))
 
-(message "=> loaded clojure configuration")
+(message "...clojure static analysis...")
 #+end_src
 
 **** Morse Support
-;; update below for inf-clojure and morse.
+I need to update this section to work with inf-clojure and morse.
 
 #+begin_example
  ;; Similar to C-x C-e, but sends to REBL
@@ -1068,10 +1080,7 @@ Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]
           (reblized (concat "(cognitect.rebl/inspect " s ")")))
      (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
 
- (map! :map clojure-mode-map
-       "<f5>"    #'cider-jack-in
-       "M-<f5>"  #'cider-jack-in-clj&cljs
-       :map cider-mode-map
+ (map! :map inf-clojure-minor-mode-map
        "C-s-x"   #'rebl-eval-defun-at-point
        "C-x C-r" #'rebl-eval-last-sexp)
 #+end_example
@@ -1095,7 +1104,8 @@ Programming Languages]], the Little books, or [[https://en.wikipedia.org/wiki/St
         "C-c I u" #'xscheme-send-control-u-interrupt
         "C-c I b" #'xscheme-send-breakpoint-interrupt
         "C-c I p" #'xscheme-send-proceed)
-  (message "=> loaded scheme configuration"))
+
+(message "... scheme..."))
 #+end_src
 
 *** C
@@ -1119,7 +1129,7 @@ useful. This configuration is active when ~:lang cc~ is enabled in init.el.
     ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
     ;; Target: x86_64-apple-darwin20.4.0
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-  (message "=> loaded C configuration"))
+(message "...C..."))
 #+end_src
 
 ** Artificial Intelligence
@@ -1144,30 +1154,36 @@ Initialize the OpenAI library before the front-ends.
   (when (cr/port-open-p 3005)
     (setq openai-base-url "http://0.0.0.0:3005/v1"))
 
-  (message "=> loaded openai package"))
+(message "...openai..."))
 #+end_src
 
 *** gptel
 ChatGPT emacs front-end with a nicer UI.
 
 #+begin_src elisp
-(after! openai
+(use-package! gptel
+  :after openai
+  :init
+  (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
+  :config
   (setq gptel-api-key openai-key
         gptel-model "gpt-3.5-turbo")
-
   (when (cr/port-open-p 3005)
     (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
-          gptel-stream nil))
+          gptel-stream nil)))
 
-  (map! :desc "ChatGPT" "C-c M-h c" #'gptel))
+(message "...ChatGPT...")
 #+end_src
 
 *** CodeGPT
 Generate code for me to correct.
 
 #+begin_src elisp
-(after! openai
+(use-package! codegpt
+  :after openai
+  :init
   (require 'codegpt)
+  :config
   (setq codegpt-tunnel 'chat
         codegpt-model "gpt-3.5-turbo")
   (map!
@@ -1176,23 +1192,8 @@ Generate code for me to correct.
    :desc "Document code"  "d" #'codegpt-doc
    :desc "Explain code"   "e" #'codegpt-explain
    :desc "Fix code"       "f" #'codegpt-fix
-   :desc "Improve code"   "i" #'codegpt-improve)
-
-  (message "=> loaded CodeGPT"))
-#+end_src
-
-*** Dall-E
-Generate images from a textual description.
-
-#+begin_src elisp
-(after! openai
-  (require 'dall-e)
-  (setq dall-e-n 3
-        dall-e-size "256x256"
-        dall-e-display-width 200
-        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir))
-  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
-  (message "=> loaded Dall-E"))
+   :desc "Improve code"   "i" #'codegpt-improve))
+(message "...CodeGPT...")
 #+end_src
 
 *** org-ai
@@ -1210,7 +1211,8 @@ Open AI in org-mode documents.
           org-ai-on-project-use-stream nil))
   (add-hook 'org-mode #'org-ai-mode)
   (org-ai-global-mode)
-  (message "=> loaded org-ai"))
+
+(message "...org-ai..."))
 #+end_src
 
 ** Miscellaneous

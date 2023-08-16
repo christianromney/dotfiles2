@@ -1,4 +1,4 @@
-(message "> Beginning Emacs initialization.")
+(message "> Initializing Emacs...")
 (setq user-full-name    "Christian Romney"
       user-mail-address "christian.a.romney@gmail.com")
 
@@ -28,7 +28,8 @@
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
 (display-line-numbers-mode -1)
-(message "=> loaded init settings")
+
+(message "...global behavor...")
 
 (setq doom-theme 'doom-tomorrow-day
       doom-font (font-spec :family "JetBrains Mono" :size 20)
@@ -60,7 +61,7 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'rainbow-mode)
 
-(message "=> loaded ui theme")
+(message "...appearance...")
 
 (setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
       save-abbrevs     'silent)
@@ -83,7 +84,7 @@
     (map!
      :map dired-mode-map
      "r"  #'reveal-in-osx-finder)))
- (message "=> loaded built-in modes")
+ (message "...built-in modes...")
 
 (defun cr/mkdirp (path)
   "Ensures the directory path exists, creating any parents as
@@ -175,7 +176,7 @@ degrees in the echo area."
   (when-let ((num (number-at-point)))
     (cr/message-temperature-conversions num)))
 
-(message "=> loaded custom functions")
+(message "...custom elisp functions...")
 
 ;; main directory
 (defvar +info-dir "~/Documents/personal/notes"
@@ -202,6 +203,8 @@ degrees in the echo area."
       +org-capture-projects-file  "projects.org"
       +org-capture-todo-file      "todo.org"
       +org-capture-journal-file   "journal.org")
+
+(message "...org directories and files...")
 
 (defun cr/markup-word (markup-char)
   "Wraps the active region or the word at point with MARKUP-CHAR."
@@ -247,7 +250,7 @@ degrees in the echo area."
   (interactive)
   (cr/markup-word #x00002B))
 
-(message "=> loaded org custom functions")
+(message "...org custom markup functions...")
 
 ;; which modules to load
 (setq org-modules
@@ -352,9 +355,9 @@ degrees in the echo area."
         org-startup-indented               t)
 
   ;; add frame borders and window dividers
-  (modify-all-frames-parameters
-   '((right-divider-width . 40)
-     (internal-border-width . 40)))
+  ;; (modify-all-frames-parameters
+  ;;  '((right-divider-width . 40)
+  ;;    (internal-border-width . 40)))
 
   (dolist (face '(window-divider
                   window-divider-first-pixel
@@ -388,14 +391,14 @@ degrees in the echo area."
     :desc "verbatim"        "v" #'cr/org-verbatim-word
 
     )))
-(message "=> loaded base org configuration")
+(message "...org startup, bindings, agenda, tags, todos...")
 
 ;; org-modern-star (appearance)
 (after! org
   (setq org-modern-star
         '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾"))
   (global-org-modern-mode))
-(message "=> loaded modern org")
+(message "...org appearance...")
 
 (defface +calendar-holiday
   '((t . (:inherit pulsar-cyan)))
@@ -435,23 +438,24 @@ degrees in the echo area."
                 brazilian-holidays--general-holidays
                 brazilian-holidays-sp-holidays))
   (add-hook 'calendar-today-visible-hook #'calendar-mark-today))
-  (message "=> loaded org calendar")
+  (message "...org calendar...")
 
-(defface org-glossary-term
+(use-package! org-glossary
+  :hook org-mode
+  :init
+  (defface org-glossary-term
   '((default :inherit (popup-tip-face)
      :weight normal))
   "Base face used for term references.")
-
-(after! org
-  (require 'org-glossary)
+  :config
   (setq org-glossary-fontify-types-differently nil)
   (map!
    (:map org-mode-map
     :prefix ("C-c y" . "glossary")
     :desc "define term"     "d" #'org-glossary-create-definition
-    :desc "goto definition" "g" #'org-glossary-goto-term-definition))
-  (add-hook 'org-mode-hook #'org-glossary-mode))
-(message "=> loaded org glossary")
+    :desc "goto definition" "g" #'org-glossary-goto-term-definition)))
+
+(message "...org glossary...")
 
 (after! org
   (when (modulep! :tools biblio)
@@ -460,20 +464,17 @@ degrees in the echo area."
   (setq bibtex-dialect                  'biblatex
         org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir))
   (add-hook 'org-mode-hook #'org-zotxt-mode))
-  (message "=> loaded org citations")
+
+(message "...org citations, zotero, citar...")
 
 (after! org
   (setq org-auto-tangle-default t)
   (add-hook 'org-mode-hook #'org-auto-tangle-mode))
 
-(message "=> loaded org babel")
-
 (use-package! graphviz-dot-mode
   :defer t
   :config
   (setq graphviz-dot-indent-width 2))
-
-(message "=> loaded org graphviz")
 
 (after! org
   (when (modulep! :lang plantuml)
@@ -497,7 +498,8 @@ degrees in the echo area."
      (sed        . t)
      (shell      . t)
      (sql        . t))))
-  (message "=> loaded org babel")
+
+(message "...org babel...")
 
 (after! org
   (setq reveal_inter_presentation_links    t
@@ -519,7 +521,7 @@ degrees in the echo area."
         org-re-reveal-root
         "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"))
 
-(message "=> loaded org reveal")
+(message "...org reveal...")
 
 (map! "<s-left>"  #'sp-forward-barf-sexp
       "<s-right>" #'sp-forward-slurp-sexp
@@ -543,6 +545,8 @@ degrees in the echo area."
       "M-\\"      #'cr/delete-horizontal-space
       "M-o"       #'other-window
       "M-p"       #'fill-paragraph)
+
+(message "...global keybindings...")
 
 (when (modulep! :completion vertico)
   (use-package! vertico
@@ -617,6 +621,7 @@ degrees in the echo area."
     :defer t
     :config
     (setq company-idle-delay 0.5)))
+(message "...completion...")
 
 (use-package! pulsar
   :defer t
@@ -654,6 +659,8 @@ degrees in the echo area."
                 "en-personal"
                 (expand-file-name "aspell.en.pws" spell-fu-directory))))))
 
+(message "...spell checking...")
+
 (setq blink-matching-paren t
       show-paren-mode t
       show-paren-style 'parenthesis
@@ -670,6 +677,8 @@ degrees in the echo area."
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
 
+(message "...smartparens...")
+
 (after! projectile
   (cr/mkdirp (expand-file-name "projectile" doom-cache-dir))
 
@@ -680,11 +689,15 @@ degrees in the echo area."
 
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
+(message "...projectile...")
+
 (after! magit
   (setq magit-revision-show-gravatars t
         forge-database-file
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
         magit-no-confirm '(stage-all-changes unstage-all-changes)))
+
+(message "...magit...")
 
 (use-package! clojure-mode
   :defer t
@@ -721,6 +734,8 @@ degrees in the echo area."
 (add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
+
+(message "...clojure editing...")
 
 (defun +inf-clojure-run-tests ()
   "Run clojure.test suite for the current namespace."
@@ -823,13 +838,15 @@ with large files for some reason."
 (add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
 
+(message "...clojure REPL...")
+
 (when (modulep! :checkers syntax)
   (use-package! flycheck-clj-kondo
     :defer t
     :when (modulep! :checkers syntax)
     :after flycheck))
 
-(message "=> loaded clojure configuration")
+(message "...clojure static analysis...")
 
 (when (modulep! :lang scheme)
   (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
@@ -844,7 +861,8 @@ with large files for some reason."
         "C-c I u" #'xscheme-send-control-u-interrupt
         "C-c I b" #'xscheme-send-breakpoint-interrupt
         "C-c I p" #'xscheme-send-proceed)
-  (message "=> loaded scheme configuration"))
+
+(message "... scheme..."))
 
 (when (modulep! :lang cc)
   (map! :map c-mode-base-map
@@ -862,7 +880,7 @@ with large files for some reason."
     ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
     ;; Target: x86_64-apple-darwin20.4.0
     (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-  (message "=> loaded C configuration"))
+(message "...C..."))
 
 (progn
   (require 'openai)
@@ -871,20 +889,26 @@ with large files for some reason."
   (when (cr/port-open-p 3005)
     (setq openai-base-url "http://0.0.0.0:3005/v1"))
 
-  (message "=> loaded openai package"))
+(message "...openai..."))
 
-(after! openai
+(use-package! gptel
+  :after openai
+  :init
+  (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
+  :config
   (setq gptel-api-key openai-key
         gptel-model "gpt-3.5-turbo")
-
   (when (cr/port-open-p 3005)
     (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
-          gptel-stream nil))
+          gptel-stream nil)))
 
-  (map! :desc "ChatGPT" "C-c M-h c" #'gptel))
+(message "...ChatGPT...")
 
-(after! openai
+(use-package! codegpt
+  :after openai
+  :init
   (require 'codegpt)
+  :config
   (setq codegpt-tunnel 'chat
         codegpt-model "gpt-3.5-turbo")
   (map!
@@ -893,18 +917,8 @@ with large files for some reason."
    :desc "Document code"  "d" #'codegpt-doc
    :desc "Explain code"   "e" #'codegpt-explain
    :desc "Fix code"       "f" #'codegpt-fix
-   :desc "Improve code"   "i" #'codegpt-improve)
-
-  (message "=> loaded CodeGPT"))
-
-(after! openai
-  (require 'dall-e)
-  (setq dall-e-n 3
-        dall-e-size "256x256"
-        dall-e-display-width 200
-        dall-e-cache-dir (expand-file-name "dall-e" doom-cache-dir))
-  (map! :desc "Dall-E" "C-c M-h d" #'dall-e)
-  (message "=> loaded Dall-E"))
+   :desc "Improve code"   "i" #'codegpt-improve))
+(message "...CodeGPT...")
 
 (after! org
   (require 'org-ai)
@@ -918,7 +932,8 @@ with large files for some reason."
           org-ai-on-project-use-stream nil))
   (add-hook 'org-mode #'org-ai-mode)
   (org-ai-global-mode)
-  (message "=> loaded org-ai"))
+
+(message "...org-ai..."))
 
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
 
