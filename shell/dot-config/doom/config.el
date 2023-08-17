@@ -33,7 +33,7 @@
 
 (setq doom-theme 'doom-tomorrow-day
       doom-font (font-spec :family "JetBrains Mono" :size 20)
-      doom-variable-pitch-font (font-spec :family "Proxima Nova" :size 18)
+      doom-variable-pitch-font (font-spec :family "Metropolis" :size 18)
       doom-serif-font (font-spec :family "Times New Roman" :size 20)
       doom-themes-enable-bold     t
       doom-themes-enable-italic   t
