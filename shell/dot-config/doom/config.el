@@ -897,7 +897,7 @@ with large files for some reason."
   (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
   :config
   (setq gptel-api-key openai-key
-        gptel-model "gpt-3.5-turbo")
+        gptel-model "gpt-4-1106-preview")
   (when (cr/port-open-p 3005)
     (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
           gptel-stream nil)))
