@@ -910,7 +910,7 @@ with large files for some reason."
   (require 'codegpt)
   :config
   (setq codegpt-tunnel 'chat
-        codegpt-model "gpt-3.5-turbo")
+        codegpt-model "gpt-4-1106-preview")
   (map!
    :prefix ("C-c M-h o" . "coding assistant")
    :desc "CodeGPT"        "g" #'codegpt
