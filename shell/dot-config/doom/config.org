@@ -1,35 +1,16 @@
-* Emacs configuration
-This file contains my literate [[https://github.com/doomemacs/doomemacs][(Doom)]] configuration for Emacs on Mac OS.
-
-I install Emacs with the following command:
-
-#+begin_example
-brew install emacs-plus@29 \
-  --with-native-comp \
-  --with-memeplex-slim-icon \
-  --with-mailutils \
-  --with-imagemagick \
-  --with-xwidgets
-#+end_example
-
-** General Configuration
-Prefer [[https://jwiegley.github.io/use-package/keywords/][use-package]] for configuration.
-*** Personal Information
-
+* My Doom Emacs Configuration
+** Global Settings
 #+begin_src elisp
-(message "> Initializing Emacs...")
-(setq user-full-name    "Christian Romney"
-      user-mail-address "christian.a.romney@gmail.com")
-#+end_src
+(message "> Initializing Emacs")
+(setq user-full-name         "Christian Romney"
+      user-mail-address      "christian.a.romney@gmail.com"
+      calendar-location-name "Pembroke Pines, FL"
+      calendar-latitude      26.0
+      calendar-longitude     -80.3)
 
-*** Initial Startup
-Define the initial major mode, basic global behaviors, and frame configuration.
-
-#+begin_src elisp
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode
       initial-major-mode              'lisp-interaction-mode
-      inhibit-startup-message         t
-      display-line-numbers-type       nil)
+      inhibit-startup-message         t)
 
 (setq confirm-kill-emacs              nil
       use-short-answers               t
@@ -39,109 +20,7 @@ Define the initial major mode, basic global behaviors, and frame configuration.
                                             kill-buffer-query-functions))
 
 (setq native-comp-async-report-warnings-errors 'silent)
-
-;; default frame settings
-(setq default-frame-alist
-      '((fullscreen . maximized)))
-
-(setq doom-cache-dir user-emacs-directory)
-(setq +file-templates-dir (expand-file-name "snippets" doom-private-dir))
-(setq +default-want-RET-continue-comments nil)
-
-(add-to-list 'doom-large-file-size-alist
-             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
-
-(display-line-numbers-mode -1)
-
-(message "...global behavor...")
-#+end_src
-
-** Appearance
-*** Doom Theme
-I configure emacs' appearance so that it's easy on the eyes. I like the
-[[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] font in a large size and a light theme. I prefer emacs to use all
-available screen real estate when it starts up.
-
-The following fonts are defined by Doom emacs:
-- `doom-font' -- the primary font to use
-- `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-- `doom-big-font' -- used for `doom-big-font-mode' use this for presentations or streaming
-- `doom-unicode-font' -- for unicode glyphs
-- `doom-serif-font' -- for the `fixed-pitch-serif' face
-
-#+begin_src elisp
-(setq doom-theme 'doom-tomorrow-day
-      doom-font (font-spec :family "JetBrains Mono" :size 20)
-      doom-variable-pitch-font (font-spec :family "Metropolis" :size 18)
-      doom-serif-font (font-spec :family "Times New Roman" :size 20)
-      doom-themes-enable-bold     t
-      doom-themes-enable-italic   t
-      doom-themes-padded-modeline t)
-
-(doom-themes-visual-bell-config)
-(doom-themes-org-config)
-
-(setq-default tab-width 2)
-(setq-default cursor-type 'bar)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-;; faces
-(face-spec-set 'doom-themes-visual-bell
-                '((default :weight normal
-                   :background "firebrick2"
-                   :foreground "white")))
-(setq face-remapping-alist
-      '((show-paren-match . (:inherit pulsar-yellow)) ;; yellow highlight
-       (show-paren-mismatch . (:inherit flycheck-error))))
-
-;; double rainbow
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'prog-mode-hook #'rainbow-mode)
-
-(message "...appearance...")
-#+end_src
-
-** Built-In Modes
-*** Abbrev Mode
-Keep my abbreviations file in my source-controlled Doom directory, and do what I
-say without question.
-
-#+begin_src elisp
-(setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
-      save-abbrevs     'silent)
-
-(setq-default abbrev-mode t)
-#+end_src
-
-*** Bookmarks
-Save file locations.
-
-#+begin_src elisp
-(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-private-dir)
-      bookmark-old-default-file bookmark-default-file
-      bookmark-file             bookmark-default-file
-      bookmark-sort-flag        t)
-#+end_src
-
-*** Dired
-These settings are optimized for Mac OS with the [[https://brew.sh/][Homebrew]] version of the GNU ~ls~
-utility. I also like the keybindings for navigating up and opening Finder.app.
-
-#+begin_src elisp
-(after! dired
-  (add-hook 'dired-mode-hook #'diredfl-mode)
-  (map!
-   :map dired-mode-map
-   "C-l" #'dired-up-directory)
-  (when IS-MAC
-    (setq insert-directory-program "/usr/local/bin/gls"
-          dired-listing-switches   "-aBhl --group-directories-first")
-    (map!
-     :map dired-mode-map
-     "r"  #'reveal-in-osx-finder)))
- (message "...built-in modes...")
+(message "> configuring: ")
 #+end_src
 
 ** Custom Functions
@@ -150,6 +29,7 @@ do with file and directory handling and parsing. Others are for wrangling
 whitespace.
 
 #+begin_src elisp
+(message "  ...custom functions...")
 (defun cr/mkdirp (path)
   "Ensures the directory path exists, creating any parents as
 needed. Returns the expanded pathname."
@@ -217,34 +97,222 @@ Doom loads early."
   (sp-backward-delete-char))
 #+end_src
 
-These functions interpret a number as a temperature in Celsius and Farenheit.
+** Appearance
+#+begin_src elisp
+(message "  ...appearance...")
+(setq default-frame-alist
+      '((fullscreen . maximized)))
+
+(setq display-line-numbers-type       nil
+      doom-theme 'doom-tomorrow-day
+      doom-font (font-spec :family "JetBrains Mono" :size 20)
+      doom-variable-pitch-font (font-spec :family "Metropolis" :size 18)
+      doom-serif-font (font-spec :family "Times New Roman" :size 20)
+      doom-themes-enable-bold     t
+      doom-themes-enable-italic   t
+      doom-themes-padded-modeline t)
+
+(setq-default tab-width 2)
+(setq-default cursor-type 'bar)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'rainbow-mode)
+#+end_src
+
+** Doom-Specific Settings
+#+begin_src elisp
+(message "  ...Doom customizations...")
+(doom-themes-visual-bell-config)
+
+(add-to-list 'doom-large-file-size-alist
+             '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
+
+;; (when (modulep! :lang org)
+;;   (doom-themes-org-config))
+
+;; file locations
+(setq doom-cache-dir user-emacs-directory)
+(setq +file-templates-dir (cr/mkdirp (expand-file-name "snippets" doom-private-dir)))
+(setq +default-want-RET-continue-comments nil)
+#+end_src
+
+** Built-In Modes and Packages
+*** Abbrev Mode
+Enable abbreviations. Keep my abbreviations file in my source-controlled Doom directory.
 
 #+begin_src elisp
-(defun cr/temperature-conversions (num)
-  "Interprets the given num as farenheit and celsius degrees and
-returns the conversion of each to the other. "
-  (let ((celsius (* 5.0 (/ (- num 32.0) 9.0)))
-        (farenheit (+ 32.0 (* 9.0 (/ num 5.0)))))
-     `((farenheit . ,farenheit)
-       (celsius . ,celsius))))
+(message "  ...built-ins...")
+(setq abbrev-file-name (expand-file-name  "etc/abbrev_defs" doom-private-dir)
+      save-abbrevs     'silent)
 
-(defun cr/message-temperature-conversions (num)
-  "Interprets the given num as farenheit and celsius degrees and
-displays the conversions of each to the other in the echo area."
-  (let* ((temps (cr/temperature-conversions num))
-         (degf  (alist-get 'farenheit temps))
-         (degc  (alist-get 'celsius temps)))
-    (message "Temperatures: %2.1f℃ => %2.1f℉; %2.1f℉ => %2.1f℃"
-             num degf num degc)))
+(setq-default abbrev-mode t)
+#+end_src
 
-(defun cr/display-temperature-at-point-conversions ()
-  "Displays the number at point as both farenheit and celsius
-degrees in the echo area."
-  (interactive)
-  (when-let ((num (number-at-point)))
-    (cr/message-temperature-conversions num)))
+*** Bookmarks
+Save file locations.
 
-(message "...custom elisp functions...")
+#+begin_src elisp
+(setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-private-dir)
+      bookmark-old-default-file bookmark-default-file
+      bookmark-file             bookmark-default-file
+      bookmark-sort-flag        t)
+#+end_src
+
+*** Dired
+These settings are optimized for Mac OS with the [[https://brew.sh/][Homebrew]] version of the GNU ~ls~
+utility. I also like the keybindings for navigating up and opening Finder.app.
+
+#+begin_src elisp
+(after! dired
+  (add-hook 'dired-mode-hook #'diredfl-mode)
+  (map!
+   :map dired-mode-map
+   "C-l" #'dired-up-directory)
+  (when IS-MAC
+    (setq insert-directory-program "/usr/local/bin/gls"
+          dired-listing-switches   "-aBhl --group-directories-first")
+    (map!
+     :map dired-mode-map
+     "r"  #'+macos/reveal-in-finder)))
+#+end_src
+
+** Completion
+The combination of [[https://company-mode.github.io/][company-mode]] with the modern suite of [[https://github.com/minad/vertico][Vertico]], [[https://github.com/oantolin/orderless][Orderless]],
+[[https://github.com/minad/consult][Consult]], [[https://github.com/oantolin/embark][Embark]] and [[https://github.com/minad/marginalia][Marginalia]] is really well-behaved.
+
+#+begin_src elisp
+(message "  ...completion...")
+(when (modulep! :completion vertico)
+  (use-package! vertico
+    :demand t
+    :defer t
+    :bind
+    (("C-x B"    . #'+vertico/switch-workspace-buffer)
+     :map vertico-map
+     ("C-l"      . #'vertico-directory-up)) ;; behave like helm to go up a level
+    :config
+    (setq vertico-cycle t
+          read-extended-command-predicate #'command-completion-default-include-p
+          orderless-matching-styles     '(orderless-literal
+                                          orderless-initialism
+                                          orderless-regexp)
+          completion-category-defaults  '((email (styles substring)))
+          completion-category-overrides '((file (styles +vertico-basic-remote
+                                                        orderless
+                                                        partial-completion)))
+
+          marginalia-align              'right))
+
+  (use-package! consult
+    :defer t
+    :config
+    (setq consult-grep-args
+          "ggrep --null --line-buffered --color=never --ignore-case \
+--exclude-dir=.git --line-number -I -r .")
+    :bind
+    (("M-i"     . #'consult-imenu)
+     ("C-c M-o" . #'consult-multi-occur)
+     ("C-x b"   . #'consult-buffer)
+     ("C-x 4 b" . #'consult-buffer-other-window)
+     ("C-x 5 b" . #'consult-buffer-other-frame)
+     ("C-x r b" . #'consult-bookmark)
+     ("M-g g"   . #'consult-goto-line)
+     ("C-c s r" . #'consult-ripgrep)
+     ("C-x r i" . #'consult-register-load)
+     ("C-x r s" . #'consult-register-store)
+     ("C-h W"   . #'consult-man)
+     ("M-s g"   . #'consult-git-grep)))
+
+  (use-package! embark
+    :defer t
+    :bind
+    (("C-." . embark-act)         ;; pick some comfortable binding
+     ("M-." . embark-dwim)        ;; good alternative: M-.
+     ) ;; alternative for `describe-bindings'
+
+  ;; Optionally replace the key help with a completing-read interface
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  ;; Hide the mode line of the Embark live/completions buffers
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package! embark-consult
+  :defer t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode)))
+
+(when (modulep! :completion company)
+  (use-package! company
+    :defer t
+    :config
+    (setq company-idle-delay 0.5)))
+#+end_src
+
+
+** Navigation
+I like repeated searches to remain in the middle of the screen so I don't have
+to scan my monitor for the place where I've landed. I can always stare at the
+center of the screen and find my search results. With [[https://protesilaos.com/emacs/pulsar][pulsar]] I can recenter
+after jumps and highlight the search term.
+-------------------------------------------------------------------------------
+#+begin_src elisp
+(message "  ...navigation...")
+(use-package! pulsar
+  :defer t
+  :after consult
+  :init
+  (setq pulsar-pulse t
+        pulsar-delay 0.065
+        pulsar-iterations 9
+        pulsar-face 'pulsar-green
+        pulsar-highlight-face 'pulsar-red)
+  (pulsar-global-mode t)
+  :config
+  ;; integration with the `consult' package:
+  (add-hook 'consult-after-jump-hook #'pulsar-recenter-middle)
+  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
+
+  ;; integration with the built-in `isearch':
+  (add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
+  (advice-add 'isearch-forward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-repeat-forward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-backward :after #'pulsar-recenter-middle)
+  (advice-add 'isearch-repeat-backward :after #'pulsar-recenter-middle)
+
+  ;; integration with the built-in `imenu':
+  (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+  (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
+#+end_src
+
+** Spell Checking
+Ensure custom spelling dictionaries are source controlled.
+
+#+begin_src elisp
+(when (modulep! :checkers spell)
+  (message "  ...spell checking...")
+  (setq spell-fu-directory
+        (cr/mkdirp (expand-file-name "etc/spell-fu/" doom-private-dir)))
+  (add-hook 'spell-fu-mode-hook
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add
+               (spell-fu-get-personal-dictionary
+                "en-personal"
+                (expand-file-name "aspell.en.pws" spell-fu-directory))))))
+
 #+end_src
 
 ** Org Mode
@@ -278,7 +346,7 @@ Set up all directory and file paths.
       +org-capture-todo-file      "todo.org"
       +org-capture-journal-file   "journal.org")
 
-(message "...org directories and files...")
+(message "  ...org directories and files...")
 #+end_src
 
 *** Markup Functions
@@ -329,7 +397,7 @@ These commands let me markup org words quickly.
   (interactive)
   (cr/markup-word #x00002B))
 
-(message "...org custom markup functions...")
+(message "  ...org custom markup functions...")
 #+end_src
 
 *** Core Settings
@@ -337,7 +405,7 @@ Basic org-mode configuration and startup behavior. Configuration for agenda,
 capture, appearance, tags, todos, and refiling.
 
 #+begin_src elisp
-;; which modules to load
+;; which modules to load when org starts
 (setq org-modules
       '(ol-bibtex
         ol-bookmark
@@ -476,7 +544,7 @@ capture, appearance, tags, todos, and refiling.
     :desc "verbatim"        "v" #'cr/org-verbatim-word
 
     )))
-(message "...org startup, bindings, agenda, tags, todos...")
+(message "  ...org startup, bindings, agenda, tags, todos...")
 #+end_src
 
 *** Modern Appearance
@@ -488,11 +556,11 @@ Make org mode more aesthetically pleasing.
   (setq org-modern-star
         '("◉" "○" "▣" "□" "◈" "◇" "✦" "✧" "✻" "✾"))
   (global-org-modern-mode))
-(message "...org appearance...")
+(message "  ...org appearance...")
 #+end_src
 
 *** Calendar
-      Calendar preferences include holidays, week start, and geographical location.
+Calendar preferences include holidays, week start, and geographical location.
 
 #+begin_src elisp
 (defface +calendar-holiday
@@ -509,10 +577,7 @@ Make org mode more aesthetically pleasing.
 
 (after! org
   (require 'brazilian-holidays)
-  (setq calendar-location-name               "Pembroke Pines, FL"
-        calendar-latitude                    26.0
-        calendar-longitude                   -80.3
-        calendar-week-start-day              0
+  (setq calendar-week-start-day              0
         calendar-mark-holidays-flag          t
         calendar-mark-diary-entries-flag     t
         calendar-christian-all-holidays-flag nil
@@ -542,7 +607,8 @@ the definition in the minibuffer whenever the cursor is over a glossary term.
 
 #+begin_src elisp
 (use-package! org-glossary
-  :hook org-mode
+  :defer t
+  :hook (org-mode . org-glossary-mode)
   :init
   (defface org-glossary-term
   '((default :inherit (popup-tip-face)
@@ -556,7 +622,7 @@ the definition in the minibuffer whenever the cursor is over a glossary term.
     :desc "define term"     "d" #'org-glossary-create-definition
     :desc "goto definition" "g" #'org-glossary-goto-term-definition)))
 
-(message "...org glossary...")
+(message "  ...org glossary...")
 #+end_src
 
 *** Citations
@@ -572,7 +638,7 @@ Bibliography management and citation embedding via with [[https://github.com/ema
         org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir))
   (add-hook 'org-mode-hook #'org-zotxt-mode))
 
-(message "...org citations, zotero, citar...")
+(message "  ...org citations, zotero, citar...")
 #+end_src
 
 *** Literate Programming (org-babel)
@@ -580,12 +646,11 @@ Org-mode's [[https://orgmode.org/worg/org-contrib/babel/][Babel]] feature allows
 configuration file is a prime example) for literate programming. Tangling
 exports code blocks into separate files which can be compiled or interpreted by
 the relevant program.
-
-#+begin_src elisp
-(after! org
-  (setq org-auto-tangle-default t)
-  (add-hook 'org-mode-hook #'org-auto-tangle-mode))
-#+end_src
+# #+begin_src elisp
+# (after! org
+#   (setq org-auto-tangle-default t)
+#   (add-hook 'org-mode-hook #'org-auto-tangle-mode))
+# #+end_src
 
 #+begin_comment
 If tangling gives an error about "pdf-info-process-assert-running" re-compile
@@ -625,7 +690,7 @@ tangled code files in sync on save.
      (shell      . t)
      (sql        . t))))
 
-(message "...org babel...")
+(message "  ...org babel...")
 #+end_src
 
 *** Export Settings
@@ -651,170 +716,73 @@ I most often export my org notes to PDF or [[https://gitlab.com/oer/org-re-revea
         org-re-reveal-root
         "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"))
 
-(message "...org reveal...")
+(message "  ...org reveal...")
 #+end_src
 
-** Global Key Bindings
-My idiosyncratic global keybinding preferences.
+** Artificial Intelligence
+
+Dedicated ChatGPT and Dall-E modes inside Emacs. These packages depend on having
+the OpenAI API Token in Keychain:
+
+#+begin_example
+security add-internet-password -A -r http \
+  -s api.openai.com \
+  -a <username> \
+  -w <api-token> \
+  -U -l "openai"
+#+end_example
+
+*** Core
+Initialize the OpenAI library before the front-ends.
 #+begin_src elisp
-(map! "<s-left>"  #'sp-forward-barf-sexp
-      "<s-right>" #'sp-forward-slurp-sexp
-      "C-'"       #'avy-goto-line
-      "C-:"       #'avy-goto-char
-      "C-M-%"     #'anzu-query-replace-regexp
-      "C-c M-t"   #'transpose-sentences
-      "C-c a"     #'org-agenda
-      "C-c g"     #'google-this
-      "C-e"       #'move-end-of-line
-      "C-x M-s"   #'transpose-sexps
-      "C-x M-t"   #'transpose-paragraphs
-      "C-x P"     #'print-buffer
-      "C-x \\"    #'align-regexp
-      "C-x g"     #'magit-status
-      "C-x r I"   #'string-insert-rectangle
-      "C-x t c"   #'cr/display-temperature-at-point-conversions
-      "M-%"       #'anzu-query-replace
-      "M-/"       #'hippie-expand
-      "M-SPC"     #'cr/just-one-space
-      "M-\\"      #'cr/delete-horizontal-space
-      "M-o"       #'other-window
-      "M-p"       #'fill-paragraph)
-
-(message "...global keybindings...")
-#+end_src
-
-** Completion
-The combination of [[https://company-mode.github.io/][company-mode]] with the modern suite of [[https://github.com/minad/vertico][Vertico]], [[https://github.com/oantolin/orderless][Orderless]],
-[[https://github.com/minad/consult][Consult]], [[https://github.com/oantolin/embark][Embark]] and [[https://github.com/minad/marginalia][Marginalia]] is really well behaved and contains all the
-features I liked from Helm and Ivy while remaining snappy and leveraging Emacs'
-API as intended.
-
-#+begin_src elisp
-(when (modulep! :completion vertico)
-  (use-package! vertico
-    :demand t
-    :defer t
-    :bind
-    (("C-x B"    . #'+vertico/switch-workspace-buffer)
-     :map vertico-map
-     ("C-l"      . #'vertico-directory-up)) ;; behave like helm to go up a level
-    :config
-    (setq vertico-cycle t
-          read-extended-command-predicate #'command-completion-default-include-p
-          orderless-matching-styles     '(orderless-literal
-                                          orderless-initialism
-                                          orderless-regexp)
-          completion-category-defaults  '((email (styles substring)))
-          completion-category-overrides '((file (styles +vertico-basic-remote
-                                                        orderless
-                                                        partial-completion)))
-
-          marginalia-align              'right))
-
-  (use-package! consult
-    :defer t
-    :config
-    (setq consult-grep-args
-          "ggrep --null --line-buffered --color=never --ignore-case \
---exclude-dir=.git --line-number -I -r .")
-    :bind
-    (("M-i"     . #'consult-imenu)
-     ("C-c M-o" . #'consult-multi-occur)
-     ("C-x b"   . #'consult-buffer)
-     ("C-x 4 b" . #'consult-buffer-other-window)
-     ("C-x 5 b" . #'consult-buffer-other-frame)
-     ("C-x r b" . #'consult-bookmark)
-     ("M-g g"   . #'consult-goto-line)
-     ("C-c s r" . #'consult-ripgrep)
-     ("C-x r i" . #'consult-register-load)
-     ("C-x r s" . #'consult-register-store)
-     ("C-h W"   . #'consult-man)
-     ("M-s g"   . #'consult-git-grep)))
-
-  (use-package! embark
-    :defer t
-    :bind
-    (("C-." . embark-act)         ;; pick some comfortable binding
-     ("M-." . embark-dwim)        ;; good alternative: M-.
-     ) ;; alternative for `describe-bindings'
-
-  ;; Optionally replace the key help with a completing-read interface
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  ;; Hide the mode line of the Embark live/completions buffers
-  :config
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
-
-;; Consult users will also want the embark-consult package.
-(use-package! embark-consult
+(use-package! openai
   :defer t
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode)))
-
-(when (modulep! :completion company)
-  (use-package! company
-    :defer t
-    :config
-    (setq company-idle-delay 0.5)))
-(message "...completion...")
-#+end_src
-
-** Navigation
-I like repeated searches to remain in the middle of the screen so I don't have
-to scan my monitor for the place where I've landed. I can always stare at the
-center of the screen and find my search results. With [[https://protesilaos.com/emacs/pulsar][pulsar]] I can recenter
-after jumps and highlight the search term.
--------------------------------------------------------------------------------
-#+begin_src elisp
-(use-package! pulsar
-  :defer t
-  :init
-  (setq pulsar-pulse t
-        pulsar-delay 0.065
-        pulsar-iterations 9
-        pulsar-face 'pulsar-green
-        pulsar-highlight-face 'pulsar-red)
-  (pulsar-global-mode t)
   :config
-  ;; integration with the `consult' package:
-  (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
-  (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
-
-  ;; integration with the built-in `isearch':
-  (add-hook 'isearch-mode-end-hook #'pulsar-recenter-middle)
-  (advice-add 'isearch-forward :after #'pulsar-recenter-middle)
-  (advice-add 'isearch-repeat-forward :after #'pulsar-recenter-middle)
-  (advice-add 'isearch-backward :after #'pulsar-recenter-middle)
-  (advice-add 'isearch-repeat-backward :after #'pulsar-recenter-middle)
-
-  ;; integration with the built-in `imenu':
-  (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
-  (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
+  (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
+  (when (cr/port-open-p 3005)
+    (setq openai-base-url "http://0.0.0.0:3005/v1"))
+  (message "  ...openai..."))
 #+end_src
 
-** Spell Checking
-Ensure custom spelling dictionaries are source controlled.
+*** gptel
+ChatGPT emacs front-end with a nicer UI.
 
 #+begin_src elisp
-(when (modulep! :checkers spell)
-  (setq spell-fu-directory
-        (cr/mkdirp (expand-file-name "etc/spell-fu/" doom-private-dir)))
-  (add-hook 'spell-fu-mode-hook
-            (lambda ()
-              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
-              (spell-fu-dictionary-add
-               (spell-fu-get-personal-dictionary
-                "en-personal"
-                (expand-file-name "aspell.en.pws" spell-fu-directory))))))
+(use-package! gptel
+  :defer t
+  :commands (gptel)
+  :config
+  (require 'openai)
+  (setq gptel-api-key openai-key
+        gptel-model "gpt-4-1106-preview")
+  (when (cr/port-open-p 3005)
+    (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
+          gptel-stream nil)))
 
-(message "...spell checking...")
+(map! :desc "ChatGPT" "C-c C-|" #'gptel)
+(message "  ...chatgpt...")
+#+end_src
+
+*** CodeGPT
+Generate code for me to correct.
+
+#+begin_src elisp
+(use-package! codegpt
+  :defer t
+  :commands (codegpt codegpt-doc codegpt-explain codegpt-fix codegpt-improve)
+  :config
+  (require 'openai)
+  (setq codegpt-tunnel 'chat
+        codegpt-model "gpt-4-1106-preview"))
+
+(map!
+   :prefix ("C-c M-h o" . "coding assistant")
+   :desc "CodeGPT"        "g" #'codegpt
+   :desc "Document code"  "d" #'codegpt-doc
+   :desc "Explain code"   "e" #'codegpt-explain
+   :desc "Fix code"       "f" #'codegpt-fix
+   :desc "Improve code"   "i" #'codegpt-improve)
+(message "  ...CodeGPT...")
 #+end_src
 
 ** Programming Modes
@@ -845,9 +813,9 @@ buffers. I also don't like smartparens' default rules.
     (sp-pair open close :unless '(:add sp-in-string-p)))
 
 (remove-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
-(add-hook! 'doom-first-buffer-hook #'smartparens-global-mode)
+(add-hook! 'doom-first-buffer-hook #'smartparens-global-strict-mode)
 
-(message "...smartparens...")
+(message "  ...smartparens...")
 #+end_src
 
 *** Projects
@@ -864,7 +832,7 @@ Have projectile save things where I want them.
 
   (pushnew! projectile-project-root-files "project.clj" "deps.edn"))
 
-(message "...projectile...")
+(message "  ...projectile...")
 #+end_src
 
 
@@ -878,7 +846,7 @@ I use source control for everything, and enjoy a few extras for [[https://magit.
         (expand-file-name "forge/forge-database.sqlite" doom-cache-dir)
         magit-no-confirm '(stage-all-changes unstage-all-changes)))
 
-(message "...magit...")
+(message "  ...magit...")
 #+end_src
 
 *** Clojure
@@ -918,21 +886,20 @@ nice features than make living without Cider bearable.
           lsp-file-watch-threshold 2000
           lsp-enable-snippet       t)))
 
-(add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'clojure-mode-hook :append #'subword-mode)
-(add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
-(add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
-(add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
+;; these should be covered by global-smartparents-strict-mode
+;;(add-hook! 'clojure-mode-hook #'turn-on-smartparens-strict-mode)
+;;(add-hook! 'clojurescript-mode-hook #'turn-on-smartparens-strict-mode)
+;;(add-hook! 'clojurec-mode-hook #'turn-on-smartparens-strict-mode)
+;;(add-hook! 'clojurex-mode-hook #'turn-on-smartparens-strict-mode)
 
-(message "...clojure editing...")
+(message "  ...clojure editing...")
 #+end_src
 
 **** Inferior Clojure Mode
-Inferior clojure mode is /simple/. With it, one can connect to a socket and send
-commands. That's all I want between Emacs and the REPL.
+Inferior clojure mode is /simple/ and doesn't break as often as Cider. These
+functions allow me to recreate some Cider functionality for inf-clojure mode.
 
-These functions allow me to recreate some Cider functionality for inf-clojure
-mode.
 ***** Custom Functions
 #+begin_src elisp
 (defun +inf-clojure-run-tests ()
@@ -997,9 +964,6 @@ with large files for some reason."
      "(compliment.core/completions \"%s\")")))
 #+end_src
 
-#+RESULTS:
-: +inf-clojure-reconfigure
-
 ***** Package Configuration
 Inferior clojure mode keybindings.
 
@@ -1041,184 +1005,43 @@ Inferior clojure mode keybindings.
         "C-c ,"      #'inf-clojure-clear-repl-buffer
         "C-c j R"    #'inf-clojure-restart))
 
-(add-hook! 'inf-clojure-mode-hook #'turn-on-smartparens-strict-mode)
 (add-hook! 'inf-clojure-mode-hook #'+inf-clojure-reconfigure)
 
-(message "...clojure REPL...")
-#+end_src
-
-**** Syntax Checking
-Static analysis courtesy of [[https://github.com/clj-kondo/clj-kondo][clj-kondo]].
-
-#+begin_src elisp
-(when (modulep! :checkers syntax)
-  (use-package! flycheck-clj-kondo
-    :defer t
-    :when (modulep! :checkers syntax)
-    :after flycheck))
-
-(message "...clojure static analysis...")
-#+end_src
-
-**** Morse Support
-I need to update this section to work with inf-clojure and morse.
-
-#+begin_example
- ;; Similar to C-x C-e, but sends to REBL
- (defun rebl-eval-last-sexp ()
-   (interactive)
-   (let* ((bounds (cider-last-sexp 'bounds))
-          (s (cider-last-sexp))
-          (reblized (concat "(cognitect.rebl/inspect " s ")")))
-     (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
-
- ;; Similar to C-M-x, but sends to REBL
- (defun rebl-eval-defun-at-point ()
-   (interactive)
-   (let* ((bounds (cider-defun-at-point 'bounds))
-          (s (cider-defun-at-point))
-          (reblized (concat "(cognitect.rebl/inspect " s ")")))
-     (cider-interactive-eval reblized nil bounds (cider--nrepl-print-request-map))))
-
- (map! :map inf-clojure-minor-mode-map
-       "C-s-x"   #'rebl-eval-defun-at-point
-       "C-x C-r" #'rebl-eval-last-sexp)
-#+end_example
-
-*** Scheme
-I most often use [[https://www.scheme.com/tspl4/][Scheme]] when working through exercises in [[https://eopl3.com/][Essentials of
-Programming Languages]], the Little books, or [[https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs][SICP]].
-
-[[https://www.nongnu.org/geiser/][Geiser]] mode is mostly ok, but it's a nightmare with [[https://www.gnu.org/software/mit-scheme/][mit-scheme]].
-#+begin_src elisp
-(when (modulep! :lang scheme)
-  (add-hook! 'scheme-mode-hook #'turn-on-smartparens-strict-mode)
-  (add-hook! 'scheme-mode-hook (lambda () (require 'xscheme)))
-  (map! :map scheme-mode-map
-        "C-c C-b" #'xscheme-send-buffer
-        "C-c C-e" #'xscheme-send-previous-expression
-        "C-c C-r" #'xscheme-send-region
-        "C-c C-z" #'xscheme-select-process-buffer
-        "C-c C-c" #'xscheme-send-control-g-interrupt
-        "C-c I x" #'xscheme-send-control-x-interrupt
-        "C-c I u" #'xscheme-send-control-u-interrupt
-        "C-c I b" #'xscheme-send-breakpoint-interrupt
-        "C-c I p" #'xscheme-send-proceed)
-
-(message "... scheme..."))
-#+end_src
-
-*** C
-It's rare that I need to write C code, but the disassembler is occasionally
-useful. This configuration is active when ~:lang cc~ is enabled in init.el.
-
-#+begin_src elisp
-(when (modulep! :lang cc)
-  (map! :map c-mode-base-map
-        ;; disassembler (objdump)
-        "C-c o a"    #'disaster)
-
-  ;; disassembler
-  (use-package! disaster
-    :defer t
-    :commands (disaster)
-    :init
-    (setq disaster-assembly-mode 'nasm-mode)
-    :config
-    ;; the default -M att argument doesn't work for me using
-    ;; Apple clang version 12.0.5 (clang-1205.0.22.9)
-    ;; Target: x86_64-apple-darwin20.4.0
-    (setq disaster-objdump "objdump -d -Sl --no-show-raw-insn"))
-(message "...C..."))
-#+end_src
-
-** Artificial Intelligence
-Dedicated ChatGPT and Dall-E modes inside Emacs. These packages depend on having
-the OpenAI API Token in Keychain:
-
-#+begin_example
-security add-internet-password -A -r http \
-  -s api.openai.com \
-  -a <username> \
-  -w <api-token> \
-  -U -l "openai"
-#+end_example
-
-*** Core
-Initialize the OpenAI library before the front-ends.
-#+begin_src elisp
-(progn
-  (require 'openai)
-
-  (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
-  (when (cr/port-open-p 3005)
-    (setq openai-base-url "http://0.0.0.0:3005/v1"))
-
-(message "...openai..."))
-#+end_src
-
-*** gptel
-ChatGPT emacs front-end with a nicer UI.
-
-#+begin_src elisp
-(use-package! gptel
-  :after openai
-  :init
-  (map! :desc "ChatGPT" "C-c M-h c" #'gptel)
-  :config
-  (setq gptel-api-key openai-key
-        gptel-model "gpt-4-1106-preview")
-  (when (cr/port-open-p 3005)
-    (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
-          gptel-stream nil)))
-
-(message "...ChatGPT...")
-#+end_src
-
-*** CodeGPT
-Generate code for me to correct.
-
-#+begin_src elisp
-(use-package! codegpt
-  :after openai
-  :init
-  (require 'codegpt)
-  :config
-  (setq codegpt-tunnel 'chat
-        codegpt-model "gpt-4-1106-preview")
-  (map!
-   :prefix ("C-c M-h o" . "coding assistant")
-   :desc "CodeGPT"        "g" #'codegpt
-   :desc "Document code"  "d" #'codegpt-doc
-   :desc "Explain code"   "e" #'codegpt-explain
-   :desc "Fix code"       "f" #'codegpt-fix
-   :desc "Improve code"   "i" #'codegpt-improve))
-(message "...CodeGPT...")
-#+end_src
-
-*** org-ai
-Open AI in org-mode documents.
-#+begin_src elisp
-(after! org
-  (require 'org-ai)
-  (setq org-ai-openai-api-token (cr/keychain-api-token-for-host "api.openai.com"))
-  (add-to-list 'org-structure-template-alist '("ai" . "ai"))
-  (org-ai-install-yasnippets)
-  (when (cr/port-open-p 3005)
-    (message "=> using openai proxy")
-    (setq org-ai-openai-chat-endpoint "http://0.0.0.0:3005/v1/chat/completions"
-          org-ai-openai-completion-endpoint "http://0.0.0.0:3005/v1/completions"
-          org-ai-on-project-use-stream nil))
-  (add-hook 'org-mode #'org-ai-mode)
-  (org-ai-global-mode)
-
-(message "...org-ai..."))
+(message "  ...clojure repl...")
 #+end_src
 
 ** Miscellaneous
 Every Emacs configuration contains a few little odds and ends.
 #+begin_src elisp
 (add-to-list 'auto-mode-alist (cons "\\.adoc\\'" 'adoc-mode))
+#+end_src
+
+** Global Key Bindings
+My global keybinding preferences.
+
+#+begin_src elisp
+(message "  ...global keybindings...")
+(map! "<s-left>"  #'sp-forward-barf-sexp
+      "<s-right>" #'sp-forward-slurp-sexp
+      "C-'"       #'avy-goto-line
+      "C-:"       #'avy-goto-char
+      "C-M-%"     #'anzu-query-replace-regexp
+      "C-c M-t"   #'transpose-sentences
+      "C-c a"     #'org-agenda
+      "C-c g"     #'google-this
+      "C-e"       #'move-end-of-line
+      "C-x M-s"   #'transpose-sexps
+      "C-x M-t"   #'transpose-paragraphs
+      "C-x P"     #'print-buffer
+      "C-x \\"    #'align-regexp
+      "C-x g"     #'magit-status
+      "C-x r I"   #'string-insert-rectangle
+      "M-%"       #'anzu-query-replace
+      "M-/"       #'hippie-expand
+      "M-SPC"     #'cr/just-one-space
+      "M-\\"      #'cr/delete-horizontal-space
+      "M-o"       #'other-window
+      "M-p"       #'fill-paragraph)
 #+end_src
 
 ** Conclusion
