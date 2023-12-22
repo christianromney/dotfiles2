@@ -131,9 +131,6 @@ Doom loads early."
 (add-to-list 'doom-large-file-size-alist
              '("\\.\\(?:clj[sc]?\\|dtm\\|edn\\)\\'" . 0.5))
 
-;; (when (modulep! :lang org)
-;;   (doom-themes-org-config))
-
 ;; file locations
 (setq doom-cache-dir user-emacs-directory)
 (setq +file-templates-dir (cr/mkdirp (expand-file-name "snippets" doom-private-dir)))
