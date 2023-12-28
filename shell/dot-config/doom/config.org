@@ -807,7 +807,9 @@ Initialize the OpenAI library before the front-ends.
   (message "  ...openai..."))
 
 (use-package! greader
-  :defer t)
+  :defer t
+  :config
+  (message "  ...greader..."))
 
 (use-package! whisper
   :defer t
@@ -820,7 +822,8 @@ Initialize the OpenAI library before the front-ends.
   (when IS-MAC
     (rk/select-default-audio-device "MacBook Pro Microphone")
     (when rk/default-audio-device
-      (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device)))))
+      (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device))))
+  (message "  ...whisper..."))
 
 (map! :desc "Whisper" "C-s-\\" #'whisper-run)
 
@@ -841,7 +844,7 @@ ChatGPT emacs front-end with a nicer UI.
   (when (cr/port-open-p 3005)
     (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
           gptel-stream nil))
-  (message ":> loaded gptel"))
+  (message "  ...gptel..."))
 
 (map! :desc "ChatGPT" "C-c C-|" #'gptel)
 (message "  ...chatgpt...")
@@ -870,6 +873,18 @@ Generate code for me to correct.
 #+end_src
 
 *** org-ai
+For speech-to-text to work, I need to give emacs access to the microphone. I typed this at the shell:
+
+#+begin_example
+cd ~/src/open
+git clone https://github.com/DocSystem/tccutil
+cd tccutil
+sudo python ./tccutil.py -p /usr/local/Cellar/emacs-plus@29/29.1/Emacs.app -e --microphone
+#+end_example
+
+Now I can configure org-ai to use speech-to-text. I also use the premium Apple
+voice "Jamie" for text-to-speech via the ~say~ utility.
+
 #+begin_src elisp
 (use-package! org-ai
   :defer t
@@ -877,11 +892,14 @@ Generate code for me to correct.
   :config
   (require 'whisper)
   (require 'org-ai-talk)
-  (setq org-ai-image-directory (cr/mkdirp "~/Pictures/ai-generated")
-        org-ai-default-completion-model "gpt-4-1106-preview")
   (org-ai-install-yasnippets)
-  (setq org-ai-talk-say-words-per-minute 210)
-  (setq org-ai-talk-say-voice "Jamie"))
+  (setq org-ai-image-directory (cr/mkdirp "~/Pictures/ai-generated")
+        org-ai-default-completion-model "gpt-4-1106-preview"
+        org-ai-default-chat-system-prompt
+        "You are a helpful, succinct research and coding assistant running in Emacs.")
+  (setq org-ai-talk-say-words-per-minute 160) ;; natural pace
+  (setq org-ai-talk-say-voice "Jamie")
+  (message "  ...org-ai..."))
 #+end_src
 ** Programming Modes
 Configuration for additional programming modes.

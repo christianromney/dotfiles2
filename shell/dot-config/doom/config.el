@@ -671,7 +671,9 @@ Doom loads early."
   (message "  ...openai..."))
 
 (use-package! greader
-  :defer t)
+  :defer t
+  :config
+  (message "  ...greader..."))
 
 (use-package! whisper
   :defer t
@@ -681,10 +683,11 @@ Doom loads early."
         whisper-model "small"
         whisper-language "en"
         whisper-translate nil)
-  (when *is-a-mac*
-    (rk/select-default-audio-device "Macbook Pro Microphone")
+  (when IS-MAC
+    (rk/select-default-audio-device "MacBook Pro Microphone")
     (when rk/default-audio-device
-      (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device)))))
+      (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device))))
+  (message "  ...whisper..."))
 
 (map! :desc "Whisper" "C-s-\\" #'whisper-run)
 
@@ -699,7 +702,7 @@ Doom loads early."
   (when (cr/port-open-p 3005)
     (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
           gptel-stream nil))
-  (message ":> loaded gptel"))
+  (message "  ...gptel..."))
 
 (map! :desc "ChatGPT" "C-c C-|" #'gptel)
 (message "  ...chatgpt...")
@@ -727,11 +730,14 @@ Doom loads early."
   :config
   (require 'whisper)
   (require 'org-ai-talk)
-  (setq org-ai-image-directory (cr/mkdirp "~/Pictures/ai-generated")
-        org-ai-default-completion-model "gpt-4-1106-preview")
   (org-ai-install-yasnippets)
-  (setq org-ai-talk-say-words-per-minute 210)
-  (setq org-ai-talk-say-voice "Jamie"))
+  (setq org-ai-image-directory (cr/mkdirp "~/Pictures/ai-generated")
+        org-ai-default-completion-model "gpt-4-1106-preview"
+        org-ai-default-chat-system-prompt
+        "You are a helpful, succinct research and coding assistant running in Emacs.")
+  (setq org-ai-talk-say-words-per-minute 160) ;; natural pace
+  (setq org-ai-talk-say-voice "Jamie")
+  (message "  ...org-ai..."))
 
 (setq blink-matching-paren t
       show-paren-mode t
