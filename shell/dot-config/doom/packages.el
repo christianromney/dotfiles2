@@ -17,11 +17,12 @@
 ;; -----------------------------------------------------------------------------
 ;; Open AI
 ;; -----------------------------------------------------------------------------
+(package! gptel)
+(package! greader)
 (package! openai  :recipe (:host github :repo "emacs-openai/openai"))  ;; core
 (package! codegpt :recipe (:host github :repo "emacs-openai/codegpt")) ;; code
 (package! dall-e  :recipe (:host github :repo "emacs-openai/dall-e"))  ;; draw
-(package! gptel   :recipe (:host github :repo "christianromney/gptel"))
-
+(package! whisper :recipe (:host github :repo "natrys/whisper.el"))
 ;; ------------------------------------------------------------------------------
 ;; Org
 ;; ------------------------------------------------------------------------------
