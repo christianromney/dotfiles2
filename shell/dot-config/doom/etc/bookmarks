@@ -1,0 +1,11 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-refile-last-stored"
+ (filename . "~/Documents/personal/notes/content/roam/20230413171045-artificial_intelligence.org")
+ (front-context-string . "***** What is th")
+ (rear-context-string . "ech recognition\n")
+ (position . 5200)
+ (last-modified 25998 53284 79030 0))
+)

@@ -666,8 +666,6 @@ Doom loads early."
   :defer t
   :config
   (setq openai-key (cr/keychain-api-token-for-host "api.openai.com"))
-  (when (cr/port-open-p 3005)
-    (setq openai-base-url "http://0.0.0.0:3005/v1"))
   (message "  ...openai..."))
 
 (use-package! greader
@@ -698,14 +696,14 @@ Doom loads early."
   (setq gptel-model "gpt-4-1106-preview")
   :config
   (require 'openai)
-  (setq gptel-api-key openai-key)
-  (when (cr/port-open-p 3005)
-    (setq gptel-openai-endpoint "http://0.0.0.0:3005/v1"
-          gptel-stream nil))
+  (setq gptel-api-key openai-key
+        gptel-default-mode 'org-mode)
+  (add-hook 'gptel-post-response-hook 'gptel-end-of-response)
   (message "  ...gptel..."))
 
 (map! :desc "ChatGPT" "C-c C-|" #'gptel)
-(message "  ...chatgpt...")
+;; sends everything up to (point) or the active region
+(map! :desc "Send to ChatGPT" "C->" #'gptel-send)
 
 (use-package! codegpt
   :defer t
