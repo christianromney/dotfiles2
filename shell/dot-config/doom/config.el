@@ -677,7 +677,7 @@ Doom loads early."
   :defer t
   :commands (whisper-run)
   :config
-  (setq whisper-install-directory "/tmp/"
+  (setq whisper-install-directory (cr/mkdirp (expand-file-name "whisper" doom-cache-dir))
         whisper-model "small"
         whisper-language "en"
         whisper-translate nil)
@@ -729,7 +729,7 @@ Doom loads early."
   (require 'whisper)
   (require 'org-ai-talk)
   (org-ai-install-yasnippets)
-  (setq org-ai-image-directory (cr/mkdirp "~/Pictures/ai-generated")
+  (setq org-ai-image-directory (cr/mkdirp (expand-file-name "dall-e" org-directory))
         org-ai-default-completion-model "gpt-4-1106-preview"
         org-ai-default-chat-system-prompt
         "You are a helpful, succinct research and coding assistant running in Emacs.")
