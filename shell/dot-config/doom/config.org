@@ -396,11 +396,14 @@ Set up all directory and file paths.
       org-roam-db-location       (expand-file-name ".org-roam.db" org-directory ))
 
 ;; agenda
-(setq org-agenda-file-regexp              "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
-      org-agenda-files                   (list org-directory
-                                               org-roam-directory
-                                               org-roam-dailies-directory)
-      org-icalendar-combined-agenda-file (expand-file-name "org.ics" org-directory))
+(setq org-agenda-file-regexp     "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
+      org-agenda-files           (directory-files-recursively org-directory "\\.org$"))
+
+(after! org
+    (add-hook 'org-agenda-mode-hook
+              (lambda ()
+                (setq org-agenda-files
+                      (directory-files-recursively org-directory "\\.org$")))))
 
 ;; capture
 (setq +org-capture-changelog-file "changelog.org"
@@ -537,7 +540,7 @@ capture, appearance, tags, todos, and refiling.
 
   ;; todos
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WIP(w)" "WAIT(a)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
+        '((sequence "TODO(t)" "WIP(w)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
 
   ;; tags
   (setq org-tag-alist
@@ -869,7 +872,6 @@ Generate code for me to correct.
    :desc "Improve code"   "i" #'codegpt-improve)
 (message "  ...CodeGPT...")
 #+end_src
-
 *** org-ai
 For speech-to-text to work, I need to give emacs access to the microphone. I typed this at the shell:
 

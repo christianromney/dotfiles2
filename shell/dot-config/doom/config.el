@@ -336,11 +336,14 @@ Doom loads early."
       org-roam-db-location       (expand-file-name ".org-roam.db" org-directory ))
 
 ;; agenda
-(setq org-agenda-file-regexp              "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
-      org-agenda-files                   (list org-directory
-                                               org-roam-directory
-                                               org-roam-dailies-directory)
-      org-icalendar-combined-agenda-file (expand-file-name "org.ics" org-directory))
+(setq org-agenda-file-regexp     "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
+      org-agenda-files           (directory-files-recursively org-directory "\\.org$"))
+
+(after! org
+    (add-hook 'org-agenda-mode-hook
+              (lambda ()
+                (setq org-agenda-files
+                      (directory-files-recursively org-directory "\\.org$")))))
 
 ;; capture
 (setq +org-capture-changelog-file "changelog.org"
@@ -466,7 +469,7 @@ Doom loads early."
 
   ;; todos
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WIP(w)" "WAIT(a)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
+        '((sequence "TODO(t)" "WIP(w)" "PAUSE(p)" "|" "DONE(d)" "KILL(k)" "ASSIGNED(a)")))
 
   ;; tags
   (setq org-tag-alist
