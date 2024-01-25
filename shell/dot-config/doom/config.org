@@ -214,7 +214,15 @@ Enable abbreviations. Keep my abbreviations file in my source-controlled Doom di
 
 (setq-default abbrev-mode t)
 #+end_src
+*** Auto-Save Mode
+Automatically save org-mode files after 5 seconds of inactivity.
 
+#+begin_src elisp
+(use-package auto-save-mode
+  :hook (org-mode . auto-save-visited-mode)
+  :init
+  (setq auto-save-visited-interval 5)) ;; seconds
+  #+end_src
 *** Bookmarks
 Save file locations.
 
@@ -484,7 +492,7 @@ capture, appearance, tags, todos, and refiling.
 (after! org
   ;; startup configuration
   (setq org-startup-with-inline-images t
-        org-startup-with-latex-preview nil
+        org-startup-with-latex-preview t
         org-M-RET-may-split-line       t)
 
   ;; behaviors
@@ -572,11 +580,6 @@ capture, appearance, tags, todos, and refiling.
         org-insert-heading-respect-content t
         org-startup-folded                 t
         org-startup-indented               t)
-
-  ;; add frame borders and window dividers
-  ;; (modify-all-frames-parameters
-  ;;  '((right-divider-width . 40)
-  ;;    (internal-border-width . 40)))
 
   (dolist (face '(window-divider
                   window-divider-first-pixel
@@ -743,6 +746,7 @@ tangled code files in sync on save.
      (css        . t)
      (dot        . t)
      (emacs-lisp . t)
+     (gnuplot    . t)
      (java       . t)
      (js         . t)
      (makefile   . t)
@@ -892,15 +896,18 @@ voice "Jamie" for text-to-speech via the ~say~ utility.
   :config
   (require 'whisper)
   (require 'org-ai-talk)
-  (org-ai-install-yasnippets)
   (setq org-ai-image-directory (cr/mkdirp (expand-file-name "dall-e" org-directory))
         org-ai-default-completion-model "gpt-4-1106-preview"
+        org-ai-default-chat-model "gpt-4-1106-preview"
+        org-ai-talk-say-voice "Jamie"
+        org-ai-talk-say-words-per-minute 160
         org-ai-default-chat-system-prompt
         "You are a helpful, succinct research and coding assistant running in Emacs.")
-  (setq org-ai-talk-say-words-per-minute 160) ;; natural pace
-  (setq org-ai-talk-say-voice "Jamie")
   (message "  ...org-ai..."))
 #+end_src
+
+#+RESULTS:
+| org-zotxt-mode | +lookup--init-org-mode-handlers-h | (closure (t) (&rest _) (add-hook 'before-save-hook 'org-encrypt-entries nil t)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5] | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | org-ai-mode | org-glossary-mode | doom-disable-show-paren-mode-h | doom-disable-show-trailing-whitespace-h | +org-make-last-point-visible-h | toc-org-enable | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | writegood-mode | +literate-enable-recompile-h |
 
 ** Programming Modes
 Configuration for additional programming modes.

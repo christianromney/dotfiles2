@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: org-ai-block
+# key: ai
+# --
+* ${1:AI Block}
+#+begin_ai
+${2:[SYS]: ${3:You are a helpful, succinct research and coding assistant running in Emacs.}
+
+}[ME]: $0
+#+end_ai

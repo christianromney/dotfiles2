@@ -192,6 +192,11 @@ Doom loads early."
 
 (setq-default abbrev-mode t)
 
+(use-package auto-save-mode
+  :hook (org-mode . auto-save-visited-mode)
+  :init
+  (setq auto-save-visited-interval 5)) ;; seconds
+
 (setq bookmark-default-file     (expand-file-name "etc/bookmarks" doom-private-dir)
       bookmark-old-default-file bookmark-default-file
       bookmark-file             bookmark-default-file
@@ -413,7 +418,7 @@ Doom loads early."
 (after! org
   ;; startup configuration
   (setq org-startup-with-inline-images t
-        org-startup-with-latex-preview nil
+        org-startup-with-latex-preview t
         org-M-RET-may-split-line       t)
 
   ;; behaviors
@@ -501,11 +506,6 @@ Doom loads early."
         org-insert-heading-respect-content t
         org-startup-folded                 t
         org-startup-indented               t)
-
-  ;; add frame borders and window dividers
-  ;; (modify-all-frames-parameters
-  ;;  '((right-divider-width . 40)
-  ;;    (internal-border-width . 40)))
 
   (dolist (face '(window-divider
                   window-divider-first-pixel
@@ -628,6 +628,7 @@ Doom loads early."
      (css        . t)
      (dot        . t)
      (emacs-lisp . t)
+     (gnuplot    . t)
      (java       . t)
      (js         . t)
      (makefile   . t)
@@ -731,13 +732,13 @@ Doom loads early."
   :config
   (require 'whisper)
   (require 'org-ai-talk)
-  (org-ai-install-yasnippets)
   (setq org-ai-image-directory (cr/mkdirp (expand-file-name "dall-e" org-directory))
         org-ai-default-completion-model "gpt-4-1106-preview"
+        org-ai-default-chat-model "gpt-4-1106-preview"
+        org-ai-talk-say-voice "Jamie"
+        org-ai-talk-say-words-per-minute 160
         org-ai-default-chat-system-prompt
         "You are a helpful, succinct research and coding assistant running in Emacs.")
-  (setq org-ai-talk-say-words-per-minute 160) ;; natural pace
-  (setq org-ai-talk-say-voice "Jamie")
   (message "  ...org-ai..."))
 
 (setq blink-matching-paren t
