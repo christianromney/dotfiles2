@@ -86,6 +86,17 @@ If `DEVICE-NAME' is provided, it will be used instead of prompting the user."
     (when (boundp 'whisper--ffmpeg-input-device)
       (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device)))))
 
+(defun cr/find-microphone-by-name (partial-name)
+  "Finds a microphone with PARTIAL-NAME in the label (cdr)."
+  (seq-find
+   (lambda (device)
+     (string-match-p (regexp-quote partial-name) (cdr device)))
+   (cadr (rk/get-ffmpeg-device))))
+
+(defun cr/microphone-name (device)
+  "Extracts the label from the microphone DEVICE pair (index . label)."
+  (cdr device))
+
 (defun cr/mkdirp (path)
   "Ensures the directory path exists, creating any parents as
 needed. Returns the expanded pathname."
@@ -685,8 +696,13 @@ Doom loads early."
         whisper-model "small"
         whisper-language "en"
         whisper-translate nil)
+
   (when IS-MAC
-    (rk/select-default-audio-device "MacBook Pro Microphone")
+    (let ((mic (cr/find-microphone-by-name "rode")))
+      (rk/select-default-audio-device
+       (if mic
+           (cr/microphone-name mic)
+         "MacBook Pro Microphone")))
     (when rk/default-audio-device
       (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device))))
   (message "  ...whisper..."))
