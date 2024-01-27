@@ -679,6 +679,9 @@ Doom loads early."
 
 (message "  ...org reveal...")
 
+(defvar gpt-default-model "gpt-4-turbo-preview"
+  "My preferred Open AI GPT model.")
+
 (use-package! openai
   :defer t
   :config
@@ -718,7 +721,7 @@ Doom loads early."
   :defer t
   :commands (gptel)
   :init
-  (setq gptel-model "gpt-4-1106-preview")
+  (setq gptel-model gpt-default-model)
   :config
   (require 'openai)
   (setq gptel-api-key openai-key
@@ -736,7 +739,7 @@ Doom loads early."
   :config
   (require 'openai)
   (setq codegpt-tunnel 'chat
-        codegpt-model "gpt-4-1106-preview"))
+        codegpt-model  gpt-default-model))
 
 (map!
    :prefix ("C-c M-h o" . "coding assistant")
@@ -754,8 +757,8 @@ Doom loads early."
   (require 'whisper)
   (require 'org-ai-talk)
   (setq org-ai-image-directory (cr/mkdirp (expand-file-name "dall-e" org-directory))
-        org-ai-default-completion-model "gpt-4-1106-preview"
-        org-ai-default-chat-model "gpt-4-1106-preview"
+        org-ai-default-completion-model gpt-default-model
+        org-ai-default-chat-model gpt-default-model
         org-ai-talk-say-voice "Jamie"
         org-ai-talk-say-words-per-minute 160
         org-ai-default-chat-system-prompt
