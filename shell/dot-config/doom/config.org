@@ -102,7 +102,7 @@ If `DEVICE-NAME' is provided, it will be used instead of prompting the user."
   (cl-second (rk/get-ffmpeg-device)))
 
 (defun cr/re-find-microphone (regex)
-  (cl-rassoc regex (list-microphones)
+  (cl-rassoc regex (cr/list-microphones)
              :test (lambda (pred s) (string-match-p pred s))))
 
 (defun cr/microphone-name (device)
