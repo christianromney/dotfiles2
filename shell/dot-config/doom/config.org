@@ -32,8 +32,8 @@ whitespace.
 #+begin_src elisp
 (message "  ...custom functions...")
 
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; whisper, everything below this point is only needed if you want speech input
+(require 'cl-lib)
+(require 'cl-seq)
 
 (defun rk/get-ffmpeg-device ()
   "Gets the list of devices available to ffmpeg.
@@ -96,12 +96,14 @@ If `DEVICE-NAME' is provided, it will be used instead of prompting the user."
     (when (boundp 'whisper--ffmpeg-input-device)
       (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device)))))
 
-(defun cr/find-microphone-by-name (partial-name)
-  "Finds a microphone with PARTIAL-NAME in the label (cdr)."
-  (seq-find
-   (lambda (device)
-     (string-match-p (regexp-quote partial-name) (cdr device)))
-   (cadr (rk/get-ffmpeg-device))))
+(defun cr/list-microphones ()
+  "Gets the system audio devices"
+  ;; rk/get-ffmpeg-device returns video then audio alists
+  (cl-second (rk/get-ffmpeg-device)))
+
+(defun cr/re-find-microphone (regex)
+  (cl-rassoc regex (list-microphones)
+             :test (lambda (pred s) (string-match-p pred s))))
 
 (defun cr/microphone-name (device)
   "Extracts the label from the microphone DEVICE pair (index . label)."
@@ -831,17 +833,20 @@ Initialize the OpenAI library before the front-ends.
   :defer t
   :commands (whisper-run)
   :config
-  (setq whisper-install-directory (cr/mkdirp (expand-file-name "whisper" doom-cache-dir))
+  (setq whisper-install-directory
+        (cr/mkdirp (expand-file-name "whisper" doom-cache-dir))
         whisper-model "small"
         whisper-language "en"
         whisper-translate nil)
 
   (when IS-MAC
-    (let ((mic (cr/find-microphone-by-name "rode")))
-      (rk/select-default-audio-device
-       (if mic
-           (cr/microphone-name mic)
-         "MacBook Pro Microphone")))
+    (let ((mic (cr/microphone-name
+                (cl-some #'identity
+                         (list (cr/re-find-microphone "rode")
+                               (cr/re-find-microphone "mac"))))))
+      (message (format " using microphone: %s" mic))
+      (rk/select-default-audio-device mic))
+
     (when rk/default-audio-device
       (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device))))
   (message "  ...whisper..."))
