@@ -256,18 +256,19 @@ Doom loads early."
           "ggrep --null --line-buffered --color=never --ignore-case \
 --exclude-dir=.git --line-number -I -r .")
     :bind
-    (("M-i"     . #'consult-imenu)
+    (("M-g g"   . #'consult-goto-line)
+     ("M-i"     . #'consult-imenu)
      ("C-c M-o" . #'consult-multi-occur)
      ("C-x b"   . #'consult-buffer)
      ("C-x 4 b" . #'consult-buffer-other-window)
      ("C-x 5 b" . #'consult-buffer-other-frame)
-     ("C-x r b" . #'consult-bookmark)
-     ("M-g g"   . #'consult-goto-line)
      ("C-c s r" . #'consult-ripgrep)
+     ("C-c s g" . #'consult-git-grep)
+     ("C-x r b" . #'consult-bookmark)
      ("C-x r i" . #'consult-register-load)
      ("C-x r s" . #'consult-register-store)
-     ("C-h W"   . #'consult-man)
-     ("M-s g"   . #'consult-git-grep)))
+     ("C-h P"   . #'describe-package)
+     ("C-h W"   . #'consult-man)))
 
   (use-package! embark
     :defer t
