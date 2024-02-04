@@ -616,15 +616,16 @@ Doom loads early."
 
 (message "  ...org glossary...")
 
-(after! org
-  (when (modulep! :tools biblio)
-    (setq! citar-bibliography
-           (list (expand-file-name "references.bib" +info-dir))))
-  (setq bibtex-dialect                  'biblatex
-        org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir))
-  (add-hook 'org-mode-hook #'org-zotxt-mode))
-
-(message "  ...org citations, zotero, citar...")
+(when (modulep! :tools biblio)
+  (after! org
+    (let ((biblio (list (expand-file-name "references.bib" +info-dir))))
+      (setq! citar-bibliography biblio
+             bibtex-completion-bibliography biblio)
+      (setq bibtex-dialect 'biblatex
+            org-cite-csl-styles-dir
+            (expand-file-name "zotero/styles/" +info-dir)))
+    (add-hook 'org-mode-hook #'org-zotxt-mode))
+  (message "  ...org citations, zotero, citar..."))
 
 (use-package! graphviz-dot-mode
   :defer t

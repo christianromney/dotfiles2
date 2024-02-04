@@ -712,15 +712,16 @@ Bibliography management and citation embedding via with [[https://github.com/ema
 (primarily for computer science paper references from my notes).
 
 #+begin_src elisp
-(after! org
-  (when (modulep! :tools biblio)
-    (setq! citar-bibliography
-           (list (expand-file-name "references.bib" +info-dir))))
-  (setq bibtex-dialect                  'biblatex
-        org-cite-csl-styles-dir         (expand-file-name "zotero/styles/" +info-dir))
-  (add-hook 'org-mode-hook #'org-zotxt-mode))
-
-(message "  ...org citations, zotero, citar...")
+(when (modulep! :tools biblio)
+  (after! org
+    (let ((biblio (list (expand-file-name "references.bib" +info-dir))))
+      (setq! citar-bibliography biblio
+             bibtex-completion-bibliography biblio)
+      (setq bibtex-dialect 'biblatex
+            org-cite-csl-styles-dir
+            (expand-file-name "zotero/styles/" +info-dir)))
+    (add-hook 'org-mode-hook #'org-zotxt-mode))
+  (message "  ...org citations, zotero, citar..."))
 #+end_src
 
 *** Literate Programming (org-babel)
