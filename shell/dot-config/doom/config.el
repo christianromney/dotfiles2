@@ -357,6 +357,8 @@ Doom loads early."
 (setq org-agenda-file-regexp     "\\`[^.].*\\.org\\(\\.gpg\\)?\\'"
       org-agenda-files           (directory-files-recursively org-directory "\\.org$"))
 
+;; (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
+
 (after! org
     (add-hook 'org-agenda-mode-hook
               (lambda ()
