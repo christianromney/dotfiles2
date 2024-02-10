@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+brew list --casks | xargs brew desc --eval-all --casks

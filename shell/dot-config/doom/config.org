@@ -861,6 +861,8 @@ Initialize the OpenAI library before the front-ends.
 
 #+end_src
 
+#+RESULTS:
+
 *** gptel
 ChatGPT emacs front-end with a nicer UI.
 

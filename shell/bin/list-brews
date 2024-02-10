@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+brew list --formulae | xargs brew desc --eval-all --formulae
